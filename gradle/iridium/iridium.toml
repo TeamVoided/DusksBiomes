@@ -1,8 +1,8 @@
-projectTitle = "TemplateMod"
-modId = "template"
-githubRepo = "Teamvoided/TeamVoidedTemplateMod"
+projectTitle = "DuskAutumnsWorldgen"
+modId = "dusk_autumns_worldgen"
+githubRepo = "Teamvoided/DuskAutumnsWorldgen"
 discordServerInviteId = "KZ5Q364hEg"
-authors = [ "brokenfuse", "theendercore" ]
+authors = [ "Me" ]
 majorMinecraftVersion = "1.20"
 minecraftVersion = "1.20.4"
 fabricLoaderVersion = "0.15.6"
