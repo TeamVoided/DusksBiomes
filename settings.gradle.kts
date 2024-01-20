@@ -4,10 +4,10 @@ pluginManagement {
             name = "Fabric"
         }
         mavenCentral()
+        mavenLocal()
         gradlePluginPortal()
         maven("https://maven.teamvoided.org/releases")
     }
 }
 
 rootProject.name = "DuskAutumnsWorldgen"
-

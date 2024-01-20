@@ -1,10 +1,27 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+//buildscript {
+////    repositories {
+////        flatDir {
+////            dirs("./libs") // <-- folder with jars
+////        }
+////    }
+////    dependencies {
+////        classpath("org.teamvoided.iridium:iridium:3.1.9")
+////    }
+//    dependencies {
+//        classpath(files("libs/iridium-3.1.9.jar"))
+//    }
+//    apply<org.teamvoided.iridium.IridiumPlugin>()
+//}
+
 plugins {
     id("fabric-loom") version "1.5.6"
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.serialization") version "1.9.22"
     id("org.teamvoided.iridium") version "3.1.9"
+//    id("org.teamvoided.iridium")
+
 }
 
 group = project.properties["maven_group"]!!
