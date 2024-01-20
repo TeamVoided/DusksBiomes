@@ -16,7 +16,6 @@ import org.teamvoided.dusk_autumns_worldgen.util.DebugRenderer;
 @Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 abstract class GameRendererMixin {
-
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;draw()V"))
     private void renderCustomGuiRenderer(CallbackInfo ci, @Local(ordinal = 0) GuiGraphics gui) {
         DebugRenderer.INSTANCE.render(gui);

@@ -31,6 +31,5 @@ object DebugRenderer {
             idx++
         }
     }
-
     fun getCords(c: MinecraftClient? = client): BlockPos? = c?.player?.blockPos
 }
