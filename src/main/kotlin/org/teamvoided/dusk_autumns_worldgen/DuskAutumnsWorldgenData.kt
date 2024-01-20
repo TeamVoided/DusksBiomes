@@ -1,9 +1,9 @@
-package org.teamvoided.template
+package org.teamvoided.dusk_autumns_worldgen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistrySetBuilder
-import org.teamvoided.template.DuskAutumnsWorldgen.log
+import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.log
 
 class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {

@@ -3,7 +3,10 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.dusk_autumns_worldgen.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "StructurePoolProjectionMixin",
+    "SurfaceBuilderMixin"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1

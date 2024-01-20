@@ -65,7 +65,7 @@ loom {
             client()
             ideConfigGenerated(true)
             runDir("run")
-            programArg("--quickPlaySingleplayer \"test\"")
+            programArg("--quickPlaySingleplayer\u0020\"test\"")
         }
     }
 }

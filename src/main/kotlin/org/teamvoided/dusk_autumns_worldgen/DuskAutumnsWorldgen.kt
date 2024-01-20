@@ -1,5 +1,6 @@
-package org.teamvoided.template
+package org.teamvoided.dusk_autumns_worldgen
 
+import net.minecraft.structure.pool.StructurePool
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -13,6 +14,7 @@ object DuskAutumnsWorldgen {
 
     fun commonInit() {
         log.info("Hello from Common")
+        StructurePool.Projection.entries.forEach{log.info(it.id)}
     }
 
     fun clientInit() {
