@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumns_worldgen
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.util.DebugInfo
 
 
@@ -15,6 +16,7 @@ object DuskAutumnsWorldgen {
 
     fun commonInit() {
         log.info("Hello from Common")
+        DuskBiomes.init()
     }
 
     fun clientInit() {

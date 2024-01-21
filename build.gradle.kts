@@ -42,7 +42,7 @@ modSettings {
     entrypoint("client", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgenData")
     mixinFile("dusk_autumns_worldgen.mixins.json")
-//    accessWidener("dusk_autumns_worldgen.accesswidener")
+    accessWidener("dusk_autumns_worldgen.accesswidener")
 }
 
 //val player_data: String by project

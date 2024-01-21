@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags;
 
 @Debug(export = true)
 @Mixin(SurfaceBuilder.class)
@@ -44,7 +45,7 @@ public abstract class SurfaceBuilderMixin {
 
     @Redirect(method = "buildSurface", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/Holder;isRegistryKey(Lnet/minecraft/registry/RegistryKey;)Z"))
     private <T> boolean buildSurface(Holder instance, RegistryKey<T> tRegistryKey) {
-        if (tRegistryKey == Biomes.ERODED_BADLANDS) return instance.isIn(BiomeTags.OVERWORLD);
+        if (tRegistryKey == Biomes.ERODED_BADLANDS) return instance.isIn(DuskBiomeTags.HAS_ERODED_PILLAR);
         else return instance.isRegistryKey(tRegistryKey);
 
     }
