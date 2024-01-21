@@ -15,6 +15,7 @@ object DuskConfiguredFeatures {
     val MANGROVE_FROZEN_VEGETATION = create("mangrove_frozen_vegetation")
     val CHERRY_SNOW = create("cherry_snow")
     val CHERRY_SNOW_BEES = create("cherry_snow_bees")
+    val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
 
     fun init() {}

@@ -1,13 +1,19 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
+import com.google.common.collect.ImmutableList
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3i
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
-import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.PlacedFeature
+import net.minecraft.world.gen.feature.PlacementModifier
+import net.minecraft.world.gen.feature.VegetationConfiguredFeatures
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
@@ -115,6 +121,38 @@ object PlacedFeatureCreator {
             placedFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CHERRY_SNOW_BEES),
             list
         )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.CHERRY_ON_SNOW_BEES,
+            placedFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CHERRY_SNOW_BEES),
+            list
+        )
+
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE,
+            placedFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_SNOWY_CHERRY),
+            treePlacementModifiersBase(
+                PlacedFeatureUtil.createCountExtraModifier(
+                    10,
+                    0.1f,
+                    1
+                )
+            ).add(
+                BlockPredicateFilterPlacementModifier.create(
+                    BlockPredicate.matchingBlocks(
+                        Vec3i(0, -1, 0), Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW
+                    )
+                ),
+
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP,
+                    BlockPredicate.matchingBlocks(Blocks.POWDER_SNOW), 8,
+                )
+            )
+                .build()
+        )
+
 
 
         PlacedFeatureUtil.register(
@@ -128,6 +166,11 @@ object PlacedFeatureCreator {
                 BiomePlacementModifier.getInstance()
             )
         )
+    }
 
+    fun treePlacementModifiersBase(modifier: PlacementModifier): ImmutableList.Builder<PlacementModifier> {
+        return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacementModifier.getInstance())
+            .add(SurfaceWaterDepthFilterPlacementModifier.create(0)).add(PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP)
+            .add(BiomePlacementModifier.getInstance())
     }
 }

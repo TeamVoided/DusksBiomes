@@ -14,6 +14,7 @@ object DuskPlacedFeatures {
     val TALL_MANGROVE_FROZEN_CHECKED = create("tall_mangrove_frozen_checked")
     val TREES_MANGROVE_FROZEN = create("trees_mangrove_frozen")
     val CHERRY_ON_SNOW = create("cherry_on_snow")
+    val CHERRY_ON_SNOW_BEES = create("cherry_on_snow_bees")
     val TREES_SNOWY_CHERRY_GROVE = create("trees_snowy_cherry_grove")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val MUSHROOM_GROVE_VEGETATION = create("mushroom_grove_vegetation")

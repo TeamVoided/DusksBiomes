@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.noise.NoiseParametersKeys
 import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
+import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules
 
 object DuskSurfaceRules {
 
@@ -14,38 +15,29 @@ object DuskSurfaceRules {
 
 
     fun overworld(): MaterialRule {
-        val crimsonForest = condition(
-            biome(Biomes.CRIMSON_FOREST), sequence(
-                condition(
-                    UNDER_FLOOR,
-                    sequence(
-                        condition(
-                            noiseThreshold(NoiseParametersKeys.NETHER_WART, 1.17),
-                            block(Blocks.NETHER_WART_BLOCK)
-                        ),
-                        block(Blocks.CRIMSON_NYLIUM)
-                    )
-                ),
-                block(Blocks.NETHERRACK)
-            )
-        )
-
-        val warpedForest = condition(
-            biome(DuskBiomes.RED_DESERT),
+        val podzolAndCoarseDirt = condition(
+            biome(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, Biomes.MUSHROOM_FIELDS, DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
             sequence(
-                condition(
-                    ON_CEILING,
-                    sequence(
-                        block(Blocks.RED_SANDSTONE)
-                    )
-                ),
-                block(Blocks.RED_SAND)
+                condition(surfaceNoiseThreshold(1.75), block(Blocks.COARSE_DIRT)),
+                condition(surfaceNoiseThreshold(-0.95), block(Blocks.PODZOL))
             )
         )
+        val mycelium = condition(
+            biome(DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
+            block(Blocks.MYCELIUM)
+        )
 
-        val end = condition(biome(Biomes.END_HIGHLANDS), sequence(block(Blocks.END_STONE)))
 
+
+        val onFloorAndWater = condition(ON_FLOOR, condition(water(-1, 0), sequence(
+            podzolAndCoarseDirt,
+            mycelium
+        )))
+        val surface = condition(abovePreliminarySurface(), sequence(onFloorAndWater))
         // Return a surface-only sequence of our surface rules
-        return condition(abovePreliminarySurface(), sequence(crimsonForest, warpedForest, end))
+        return sequence(surface)
+    }
+    fun surfaceNoiseThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
 }

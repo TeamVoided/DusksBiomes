@@ -18,12 +18,12 @@ object DuskBiomes {
     val COLD_PLAINS = create("cold_plains")
     val WARM_FOREST = create("warm_forest")
     val WARM_PLAINS = create("warm_plains")
+    val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
     val SNOWY_WINDSWEPT_HILLS = create("snowy_windswept_hills")
     val SNOWY_WINDSWEPT_GRAVELLY_HILLS = create("snowy_windswept_gravelly_hills")
     val SNOWY_WINDSWEPT_FOREST = create("snowy_windswept_forest")
     val SNOWY_OLD_GROWTH_PINE_TAIGA = create("snowy_old_growth_pine_taiga")
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
-    val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
     val WARM_RIVER = create("warm_river")
     val RED_WARM_RIVER = create("red_warm_river")
@@ -39,16 +39,18 @@ object DuskBiomes {
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
     val MUSHROOM_CAVES = create("mushroom_caves")
 
+    val Devils_Roar = create("devils_roar")
+
     fun init() {
         BiomePlacement.addOverworld(
-            Biomes.CRIMSON_FOREST,
+            ERODED_MUSHROOM_ISLAND,
             makeNoise(
-                Range(0.25f, 0.75f),        // Temperature
-                Range(-0.75f, -0.25f),      // Humidity
-                Range(0.5f, 1.0f),          // Continentalness
-                Range(-1.0f, 1.0f),         // Erosion
-                Range(0.0f),         // Depth
-                Range(-1.0f, 1.0f),         // Weirdness
+                Range(-1, 1),        // Temperature
+                Range(-1, -0.35),      // Humidity
+                Range(-1.2, -1.050),          // Continentalness
+                Range(-1.0, 1.0),         // Erosion
+                Range(0.0),         // Depth
+                Range(-1.0, 1.0),         // Weirdness
                 0L                  // Offset
             )
         )

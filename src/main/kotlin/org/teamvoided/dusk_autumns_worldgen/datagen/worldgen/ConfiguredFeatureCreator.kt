@@ -263,10 +263,22 @@ object ConfiguredFeatureCreator {
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
             context, DuskConfiguredFeatures.CHERRY_SNOW_BEES, Feature.TREE, cherry().decorators(
-                List.of<TreeDecorator>(
+                listOf<TreeDecorator>(
                     BeehiveTreeDecorator(0.02f)
                 )
             ).build()
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
+            context, DuskConfiguredFeatures.TREES_SNOWY_CHERRY,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf<WeightedPlacedFeature>(
+                    WeightedPlacedFeature(
+                        placedFeatureProvider.getHolderOrThrow(DuskPlacedFeatures.CHERRY_ON_SNOW_BEES),
+                        0.4f
+                    )
+                ), placedFeatureProvider.getHolderOrThrow(DuskPlacedFeatures.CHERRY_ON_SNOW)
+            )
         )
 
         val randomPetal = DataPool.builder<BlockState>()
