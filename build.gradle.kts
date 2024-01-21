@@ -1,26 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-//buildscript {
-////    repositories {
-////        flatDir {
-////            dirs("./libs") // <-- folder with jars
-////        }
-////    }
-////    dependencies {
-////        classpath("org.teamvoided.iridium:iridium:3.1.9")
-////    }
-//    dependencies {
-//        classpath(files("libs/iridium-3.1.9.jar"))
-//    }
-//    apply<org.teamvoided.iridium.IridiumPlugin>()
-//}
-
 plugins {
     id("fabric-loom") version "1.5.6"
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.serialization") version "1.9.22"
     id("org.teamvoided.iridium") version "3.1.9"
-//    id("org.teamvoided.iridium")
 
 }
 
@@ -32,6 +16,10 @@ val modid: String by project
 
 repositories {
     mavenCentral()
+    exclusiveContent {
+        forRepository { maven("https://maven.terraformersmc.com/") }
+        filter { includeGroup("com.terraformersmc") }
+    }
 }
 
 modSettings {
@@ -45,9 +33,13 @@ modSettings {
     accessWidener("dusk_autumns_worldgen.accesswidener")
 }
 
-//val player_data: String by project
+val biolith: String by project
 dependencies {
-//    modImplementation(include("eu.pb4", "player-data-api", player_data))
+//    modImplementation(include("eu.pb4", "player-data-api", player_data)){
+
+    modImplementation(include("com.terraformersmc", "biolith-fabric", biolith)) {
+        exclude("com.github.glitchfiend")
+    }
 }
 
 loom {

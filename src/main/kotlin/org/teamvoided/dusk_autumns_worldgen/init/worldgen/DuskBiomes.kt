@@ -1,12 +1,16 @@
 package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
+import com.terraformersmc.biolith.api.biome.BiomePlacement
+import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.math.MathHelper
+import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.GenerationSettings
-import net.minecraft.world.gen.feature.DefaultBiomeFeatures
+import net.minecraft.world.biome.Biomes
+import net.minecraft.world.biome.source.util.MultiNoiseUtil
+import net.minecraft.world.biome.source.util.MultiNoiseUtil.NoiseHypercube
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
+
 
 object DuskBiomes {
 
@@ -35,8 +39,54 @@ object DuskBiomes {
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
     val MUSHROOM_CAVES = create("mushroom_caves")
 
-    fun init() {}
+    fun init() {
+        BiomePlacement.addOverworld(
+            Biomes.CRIMSON_FOREST,
+            makeNoise(
+                Range(0.25f, 0.75f),        // Temperature
+                Range(-0.75f, -0.25f),      // Humidity
+                Range(0.5f, 1.0f),          // Continentalness
+                Range(-1.0f, 1.0f),         // Erosion
+                Range(0.0f),         // Depth
+                Range(-1.0f, 1.0f),         // Weirdness
+                0L                  // Offset
+            )
+        )
+
+        BiomePlacement.replaceOverworld(Biomes.PLAINS, RED_DESERT)
+        BiomePlacement.replaceOverworld(Biomes.OCEAN, Biomes.END_HIGHLANDS)
+
+//      For TerraBlender compatibility, it is important the rulesOwner's
+//      namespace should be the identical to the namespace of all biomes to which the rules apply.
+        SurfaceGeneration.addOverworldSurfaceRules(Identifier("rules/overworld"), DuskSurfaceRules.overworld())
+    }
+
+
+
     fun create(id: String): RegistryKey<Biome?> {
         return RegistryKey.of(RegistryKeys.BIOME, id(id))
     }
+
+    fun makeNoise(
+        temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
+        depth: Range, weirdness: Range, offset: Long
+    ): NoiseHypercube = NoiseHypercube(
+        temperature.toMNParaRange(),
+        humidity.toMNParaRange(),
+        continentalness.toMNParaRange(),
+        erosion.toMNParaRange(),
+        depth.toMNParaRange(),
+        weirdness.toMNParaRange(),
+        offset
+    )
+
+    data class Range(val min: Number, val max: Number) {
+        constructor(value: Number) : this(value, value)
+
+        fun min() = min.toFloat()
+        fun max() = max.toFloat()
+        fun toMNParaRange() = MultiNoiseUtil.ParameterRange.of(min(), max())
+
+    }
+
 }
