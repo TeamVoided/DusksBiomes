@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.sound.BiomeAdditionsSound
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
 import net.minecraft.sound.SoundEvents
@@ -47,7 +46,7 @@ object BiomeCreator {
         context.register(DuskBiomes.MUSHROOM_GROVE, createMushroomIsland(context, true))
         context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, false))
 
-        context.register(DuskBiomes.Devils_Roar, createDevilsRoar(context))
+        context.register(DuskBiomes.DEVILS_ROAR, createDevilsRoar(context))
     }
 
     fun createSnowyOldGrowthTaiga(context: BootstrapContext<Biome?>, spruce: Boolean): Biome {
@@ -329,7 +328,6 @@ object BiomeCreator {
     }
 
 
-
     fun createDevilsRoar(context: BootstrapContext<Biome?>): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
@@ -340,11 +338,12 @@ object BiomeCreator {
         DefaultBiomeFeatures.addFossils(generationSettings)
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
-        DefaultBiomeFeatures.addGrassAndClayDisks(generationSettings)
+        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES)
-        return Biome.Builder().hasPrecipitation(true).temperature(0.5f).downfall(1f)
+        return Biome.Builder().hasPrecipitation(true).temperature(0.5f).downfall(0.5f)
             .effects(
-                BiomeEffects.Builder().skyColor(2896703).fogColor(3489616).waterColor(8692872).waterFogColor(3815975)
+                BiomeEffects.Builder().skyColor(2896703).fogColor(3489616).waterColor(4484226).waterFogColor(66051)
+                    .grassColor(6574650).foliageColor(7353113)
                     .moodSound(BiomeMoodSound.CAVE).music(musicSound)
                     .particleConfig(BiomeParticleConfig(ParticleTypes.ASH, 0.0025f))
                     .loopSound(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP)
