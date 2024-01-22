@@ -241,10 +241,10 @@ object BiomeCreator {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SWAMP)
-        return Biome.Builder().hasPrecipitation(true).temperature(0.5f)
-            .temperatureModifier(Biome.TemperatureModifier.FROZEN).downfall(0.9f).effects(
+        return Biome.Builder().hasPrecipitation(true).temperatureModifier(Biome.TemperatureModifier.FROZEN)
+            .temperature(-0.5f).downfall(0.9f).effects(
                 BiomeEffects.Builder().waterColor(8692872).waterFogColor(3815975).fogColor(12638463)
-                    .skyColor(OverworldBiomeCreator.getSkyColor(0.5f))
+                    .skyColor(OverworldBiomeCreator.getSkyColor(-0.5f))
                     .grassColorModifier(GrassColorModifier.SWAMP).moodSound(BiomeMoodSound.CAVE).music(musicSound)
                     .build()
             ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()

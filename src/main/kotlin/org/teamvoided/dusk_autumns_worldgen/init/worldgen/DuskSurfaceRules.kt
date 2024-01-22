@@ -60,7 +60,7 @@ object DuskSurfaceRules {
             ),
             sequence(
                 condition(surfaceNoiseThreshold(1.0), block(Blocks.COARSE_DIRT)),
-                condition(surfaceNoiseThreshold(-0.35), block(Blocks.PODZOL))
+                condition(surfaceNoiseThreshold(-1.0), block(Blocks.PODZOL))
             )
         )
         val devilsRoar = condition(
@@ -70,14 +70,20 @@ object DuskSurfaceRules {
             sequence(
                 condition(surfaceSecondaryNoiseThreshold(-0.95), block(Blocks.BLACKSTONE)),
                 condition(
-                    DEEP_UNDER_FLOOR, condition(
-                        surfaceNoiseThreshold(0.35),
-                        sequence(
-                            condition(
-                                ON_CEILING, block(Blocks.RED_SANDSTONE)
-                            ),
-                            block(Blocks.RED_SAND)
+                    surfaceNoiseThreshold(0.35),
+                    sequence(
+                        condition(
+                            DEEP_UNDER_FLOOR, sequence(
+                                condition(
+                                    ON_CEILING, block(Blocks.RED_SANDSTONE)
+                                ),
+                                block(Blocks.RED_SAND)
+                            )
+                        ),
+                        condition(
+                            DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
                         )
+
                     )
                 )
             )
