@@ -4,6 +4,7 @@ import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
@@ -13,8 +14,10 @@ import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
+import net.minecraft.world.gen.carver.ConfiguredCarver
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
+import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
@@ -45,6 +48,8 @@ object BiomeCreator {
         context.register(DuskBiomes.RED_DESERT, createDesert(context))
         context.register(DuskBiomes.MUSHROOM_GROVE, createMushroomIsland(context, true))
         context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, false))
+
+
 
         context.register(DuskBiomes.DEVILS_ROAR, createDevilsRoar(context))
     }
@@ -282,7 +287,6 @@ object BiomeCreator {
             DEFAULT_MUSIC
         )
     }
-
     fun createMushroomIsland(context: BootstrapContext<Biome?>, grove: Boolean): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
@@ -302,6 +306,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, builder2, DEFAULT_MUSIC)
     }
+
 
     fun createDesert(context: BootstrapContext<Biome?>): Biome {
         val holderProvider = context.lookup(RegistryKeys.PLACED_FEATURE)
@@ -326,6 +331,45 @@ object BiomeCreator {
         val holderProvider2 = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         return OverworldBiomeCreator.createBeach(holderProvider, holderProvider2, snowy, stony)
     }
+
+
+
+    fun createMushroomCave(context: BootstrapContext<Biome?>): Biome {
+        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val builder = SpawnSettings.Builder()
+        DefaultBiomeFeatures.addMushroomMobs(builder)
+        val builder2 = GenerationSettings.Builder(feature, carver)
+        OverworldBiomeCreator.addBasicFeatures(builder2)
+        DefaultBiomeFeatures.addDefaultOres(builder2)
+        DefaultBiomeFeatures.addDefaultDisks(builder2)
+        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION)
+        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_TAIGA)
+        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_TAIGA)
+        DefaultBiomeFeatures.addMushroomFieldsFeatures(builder2)
+        DefaultBiomeFeatures.addDefaultVegetation(builder2)
+        return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, builder2, DEFAULT_MUSIC)
+    }
+    fun createFrozenCaves(
+        features: HolderProvider<PlacedFeature?>?,
+        carvers: HolderProvider<ConfiguredCarver<*>?>?
+    ): Biome {
+        val builder = SpawnSettings.Builder()
+        DefaultBiomeFeatures.addDripstoneCaveMobs(builder)
+        val builder2 = GenerationSettings.Builder(features, carvers)
+        OverworldBiomeCreator.addBasicFeatures(builder2)
+        DefaultBiomeFeatures.addPlainsTallGrass(builder2)
+        DefaultBiomeFeatures.addDefaultOres(builder2, true)
+        DefaultBiomeFeatures.addDefaultDisks(builder2)
+        DefaultBiomeFeatures.addPlainsFeatures(builder2)
+        DefaultBiomeFeatures.addDefaultMushrooms(builder2)
+        DefaultBiomeFeatures.addDefaultVegetation(builder2)
+        DefaultBiomeFeatures.addDripstone(builder2)
+        val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
+        return OverworldBiomeCreator.create(true, 0.8f, 0.4f, builder, builder2, musicSound)
+    }
+
+
 
 
     fun createDevilsRoar(context: BootstrapContext<Biome?>): Biome {

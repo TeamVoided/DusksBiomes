@@ -37,10 +37,13 @@ class AdvancementsProvider(output: FabricDataOutput) : FabricAdvancementProvider
         DuskBiomes.SNOWY_RED_BEACH,
         DuskBiomes.SNOWY_STONY_SHORE,
         DuskBiomes.RED_DESERT,
-        DuskBiomes.FROZEN_CAVERNS,
         DuskBiomes.MUSHROOM_GROVE,
         DuskBiomes.ERODED_MUSHROOM_ISLAND,
-        DuskBiomes.MUSHROOM_CAVES
+
+        DuskBiomes.MUSHROOM_CAVES,
+        DuskBiomes.FROZEN_CAVERNS,
+
+        DuskBiomes.DEVILS_ROAR
     )
     val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
     override fun generateAdvancement(c: Consumer<AdvancementHolder>) {

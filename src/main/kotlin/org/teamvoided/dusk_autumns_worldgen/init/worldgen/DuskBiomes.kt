@@ -37,10 +37,11 @@ object DuskBiomes {
     val SNOWY_RED_BEACH = create("snowy_red_beach")
     val SNOWY_STONY_SHORE = create("snowy_stony_shore")
     val RED_DESERT = create("red_desert")
-    val FROZEN_CAVERNS = create("frozen_caverns")
     val MUSHROOM_GROVE = create("mushroom_grove")
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
+
     val MUSHROOM_CAVES = create("mushroom_caves")
+    val FROZEN_CAVERNS = create("frozen_caverns")
 
     val DEVILS_ROAR = create("devils_roar")
 
@@ -52,7 +53,17 @@ object DuskBiomes {
         )
         val redSandVariant = SubBiomeMatcher.Criterion.ofRange(
             CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-            -1F, -0.223f, false
+            -1F, -0.375f, false
+        )
+        val redSandLandVariant = of(
+            SubBiomeMatcher.Criterion.ofRange(
+                CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
+                -1F, -0.223f, false
+            ),
+            SubBiomeMatcher.Criterion.ofRange(
+                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                -1F, 0f, false
+            )
         )
 
         BiomePlacement.addSubOverworld(
@@ -160,6 +171,11 @@ object DuskBiomes {
             )
         )
         BiomePlacement.addSubOverworld(
+            Biomes.DESERT, RED_DESERT,
+            redSandLandVariant
+        )
+
+        BiomePlacement.addSubOverworld(
             Biomes.RIVER, WARM_RIVER, of(
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
@@ -167,7 +183,8 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, -0.223f, true)
+                    -1F, -0.223f, true
+                )
             )
         )
         BiomePlacement.addSubOverworld(
@@ -177,6 +194,22 @@ object DuskBiomes {
                     0.55f, 1f, false
                 ),
                 redSandVariant
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.RIVER, RED_WARM_RIVER, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.55f, 1f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, -0.223f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, 0f, false
+                )
             )
         )
         BiomePlacement.addSubOverworld(
@@ -200,9 +233,19 @@ object DuskBiomes {
             )
         )
         BiomePlacement.addSubOverworld(
+            Biomes.BEACH, RED_BEACH,
+            redSandLandVariant
+
+        )
+        BiomePlacement.addSubOverworld(
             Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, of(
                 redSandVariant
             )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.SNOWY_BEACH, SNOWY_RED_BEACH,
+            redSandLandVariant
+
         )
         BiomePlacement.addSubOverworld(
             Biomes.STONY_SHORE, SNOWY_STONY_SHORE, of(
