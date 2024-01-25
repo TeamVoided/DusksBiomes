@@ -8,7 +8,8 @@
     "SurfaceBuilderMixin"
   ],
   "client": [
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "IntegratedServerLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

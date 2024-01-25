@@ -20,6 +20,8 @@ repositories {
         forRepository { maven("https://maven.terraformersmc.com/") }
         filter { includeGroup("com.terraformersmc") }
     }
+    maven("https://maven.nucleoid.xyz")
+
 }
 
 modSettings {
@@ -34,12 +36,21 @@ modSettings {
 }
 
 val biolith: String by project
+val polymer: String by project
+val factorytools: String by project
 dependencies {
 //    modImplementation(include("eu.pb4", "player-data-api", player_data)){
 
     modImplementation(include("com.terraformersmc", "biolith-fabric", biolith)) {
         exclude("com.github.glitchfiend")
     }
+
+    modImplementation(include("eu.pb4", "polymer-core", polymer))
+    modImplementation(include("eu.pb4", "polymer-blocks", polymer))
+    modImplementation(include("eu.pb4", "polymer-resource-pack", polymer))
+    modImplementation(include("eu.pb4", "polymer-virtual-entity", polymer))
+    modImplementation(include("eu.pb4", "polymer-autohost", polymer))
+    modImplementation(include("eu.pb4", "factorytools", factorytools))
 }
 
 loom {
