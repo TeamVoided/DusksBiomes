@@ -20,8 +20,11 @@ repositories {
         forRepository { maven("https://maven.terraformersmc.com/") }
         filter { includeGroup("com.terraformersmc") }
     }
+    exclusiveContent {
+        forRepository { maven("https://api.modrinth.com/maven") }
+        filter { includeGroup("maven.modrinth") }
+    }
     maven("https://maven.nucleoid.xyz")
-
 }
 
 modSettings {
@@ -51,6 +54,10 @@ dependencies {
     modImplementation(include("eu.pb4", "polymer-virtual-entity", polymer))
     modImplementation(include("eu.pb4", "polymer-autohost", polymer))
     modImplementation(include("eu.pb4", "factorytools", factorytools))
+    modImplementation(include("maven.modrinth", "biome-tag-villagers", "1.0.0"))
+
+
+
 }
 
 loom {
