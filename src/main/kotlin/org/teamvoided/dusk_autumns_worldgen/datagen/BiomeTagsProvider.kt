@@ -66,6 +66,11 @@ class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: Completable
             .add(DuskBiomes.RED_WARM_OCEAN)
             .add(DuskBiomes.DEVILS_ROAR)
 //Dusk Structure Tags
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_VILLAGE_SWAMP_STRUCTURE)
+            .add(Biomes.SWAMP)
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE)
+            .add(Biomes.MANGROVE_SWAMP)
+            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_DESERT_RUIN)
             .add(Biomes.DESERT)
             .add(DuskBiomes.WARM_RIVER)

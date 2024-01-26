@@ -47,7 +47,7 @@ object BiomeCreator {
         context.register(DuskBiomes.SNOWY_STONY_SHORE, createBeach(context, true, true))
         context.register(DuskBiomes.RED_DESERT, createDesert(context))
         context.register(DuskBiomes.MUSHROOM_GROVE, createMushroomIsland(context, true))
-        context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, false))
+        context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, true))
         context.register(DuskBiomes.MUSHROOM_CAVES, createMushroomCave(context))
         context.register(DuskBiomes.FROZEN_CAVERNS, createFrozenCaves(context))
 
@@ -346,7 +346,6 @@ object BiomeCreator {
         builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION)
         builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_TAIGA)
         builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_TAIGA)
-        DefaultBiomeFeatures.addMushroomFieldsFeatures(builder2)
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, builder2, DEFAULT_MUSIC)
     }
@@ -384,8 +383,8 @@ object BiomeCreator {
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES)
         return Biome.Builder().hasPrecipitation(true).temperature(0.5f).downfall(0.5f)
             .effects(
-                BiomeEffects.Builder().skyColor(2896703).fogColor(3489616).waterColor(4484226).waterFogColor(66051)
-                    .grassColor(6574650).foliageColor(7353113)
+                BiomeEffects.Builder().skyColor(3750977).fogColor(4605784).waterColor(4676715).waterFogColor(66051)
+                    .grassColor(6574650).foliageColor(7877401)
                     .moodSound(BiomeMoodSound.CAVE).music(musicSound)
                     .particleConfig(BiomeParticleConfig(ParticleTypes.ASH, 0.0025f))
                     .loopSound(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP)

@@ -66,6 +66,20 @@ object DuskBiomes {
             )
         )
 
+
+        BiomePlacement.addOverworld(
+            DEVILS_ROAR,
+            makeNoise(
+                Range(-1, 1),        // Temperature
+                Range(-1, 1),      // Humidity
+                Range(-0.415, -1.05),          // Continentalness
+                Range(-0.78, -0.375),         // Erosion
+                Range(0),         // Depth
+                Range(-1, 0),         // Weirdness
+                0L                  // Offset
+            )
+        )
+
         BiomePlacement.addSubOverworld(
             Biomes.FOREST, COLD_FOREST, of(
                 SubBiomeMatcher.Criterion.ofRange(
@@ -260,7 +274,6 @@ object DuskBiomes {
                 )
             )
         )
-
         BiomePlacement.addOverworld(
             ERODED_MUSHROOM_ISLAND,
             makeNoise(
@@ -273,6 +286,52 @@ object DuskBiomes {
                 0L                  // Offset
             )
         )
+        BiomePlacement.addSubOverworld(
+            Biomes.MUSHROOM_FIELDS, MUSHROOM_CAVES, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.DEPTH, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.2f, 0.9f, false
+                )
+            )
+        )
+        BiomePlacement.addOverworld(
+            MUSHROOM_CAVES,
+            makeNoise(
+                Range(-1, 1),        // Temperature
+                Range(-1, -0.1),      // Humidity
+                Range(-1.05, -0.455),          // Continentalness
+                Range(-1, -0.375),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            MUSHROOM_CAVES,
+            makeNoise(
+                Range(-1, 1),        // Temperature
+                Range(-1, -0.1),      // Humidity
+                Range(0.55, 1),          // Continentalness
+                Range(-1, -0.375),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            FROZEN_CAVERNS,
+            makeNoise(
+                Range(-1, -0.1),        // Temperature
+                Range(-1, -0.7),      // Humidity
+                Range(-1, 1),          // Continentalness
+                Range(-1, 1),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+
+
 
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
