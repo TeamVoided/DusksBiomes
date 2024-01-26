@@ -72,7 +72,7 @@ object DuskBiomes {
             makeNoise(
                 Range(-1, 1),        // Temperature
                 Range(-1, 1),      // Humidity
-                Range(-0.415, -1.05),          // Continentalness
+                Range(-1.05, -0.415),          // Continentalness
                 Range(-0.78, -0.375),         // Erosion
                 Range(0),         // Depth
                 Range(-1, 0),         // Weirdness
