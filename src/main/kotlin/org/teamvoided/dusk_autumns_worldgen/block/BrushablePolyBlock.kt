@@ -82,6 +82,6 @@ class BrushablePolyBlock(
         PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(id(id)))
 
     companion object {
-        var times = 0
+        var times = 4
     }
 }

@@ -17,7 +17,7 @@ object DebugInfo {
     val debugKey = keybind("custom key", GLFW.GLFW_KEY_R)
     fun init() {
         ClientTickEvents.END_CLIENT_TICK.register { _ ->
-            DebugRenderer.clear()
+//            DebugRenderer.clear()
             cords()
 //            coolValues()
             if (debugKey.wasPressed()) DebugRenderer.toggle()
