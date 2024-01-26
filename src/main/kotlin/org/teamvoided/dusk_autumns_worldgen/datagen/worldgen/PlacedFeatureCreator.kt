@@ -148,9 +148,6 @@ object PlacedFeatureCreator {
             )
                 .build()
         )
-
-
-
         PlacedFeatureUtil.register(
             context,
             DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION,

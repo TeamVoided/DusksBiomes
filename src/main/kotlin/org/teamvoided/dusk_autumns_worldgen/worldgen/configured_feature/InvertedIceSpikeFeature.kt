@@ -14,18 +14,18 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
         var blockPos = context.origin
         val randomGenerator = context.random
         val structureWorldAccess = context.world
-        while (structureWorldAccess.isAir(blockPos) && blockPos.y > structureWorldAccess.bottomY + 2) {
-            blockPos = blockPos.down()
-        }
+//        while (structureWorldAccess.isAir(blockPos) && blockPos.y > structureWorldAccess.bottomY + 2) {
+//            blockPos = blockPos.down()
+//        }
 
-        if (!structureWorldAccess.getBlockState(blockPos).isOf(Blocks.AIR)) {
-            return false
-        } else {
+//        if (!structureWorldAccess.getBlockState(blockPos).isOf(Blocks.AIR)) {
+//            return false
+//        } else {
             blockPos = blockPos.up(randomGenerator.nextInt(4))
             val i = randomGenerator.nextInt(4) + 7
             val j = i / 4 + randomGenerator.nextInt(2)
-            if (j > 1 && randomGenerator.nextInt(60) == 0) {
-                blockPos = blockPos.up(10 + randomGenerator.nextInt(30))
+            if (j > 1 && randomGenerator.nextInt(1) == 0) {
+                blockPos = blockPos.down(10 + randomGenerator.nextInt(30))
             }
 
             var k: Int
@@ -110,6 +110,6 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
             }
 
             return true
-        }
+//        }
     }
 }
