@@ -1,10 +1,15 @@
 package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.feature.ConfiguredFeature
-import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
+import net.minecraft.world.gen.feature.DefaultFeatureConfig
+import net.minecraft.world.gen.feature.Feature
+import net.minecraft.world.gen.feature.FeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.InvertedIceSpikeFeature
+
 
 object DuskConfiguredFeatures {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
@@ -17,7 +22,16 @@ object DuskConfiguredFeatures {
     val CHERRY_SNOW_BEES = create("cherry_snow_bees")
     val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
+    val INVERTED_ICE_SPIKE_CAVE = create("inverted_ice_spike")
+
+//    Register Configure Feature Types
+
+    val INVERTED_ICE_SPIKE = register("inverted_ice_spike", InvertedIceSpikeFeature(DefaultFeatureConfig.CODEC));
+
 
     fun init() {}
     fun create(id: String) = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
+    private fun <C : FeatureConfig?, F : Feature<C>?> register(name: String, feature: F): F {
+        return Registry.register(Registries.FEATURE, id(name), feature)
+    }
 }

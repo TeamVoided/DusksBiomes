@@ -18,6 +18,7 @@ object DuskPlacedFeatures {
     val TREES_SNOWY_CHERRY_GROVE = create("trees_snowy_cherry_grove")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val MUSHROOM_GROVE_VEGETATION = create("mushroom_grove_vegetation")
+    val INVERTED_ICE_SPIKE_CAVE = create("inverted_ice_spike")
 
     fun init() {}
     fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumnsWorldgen.id(id))

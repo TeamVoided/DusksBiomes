@@ -34,9 +34,6 @@ import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import java.util.*
-import java.util.List
-import kotlin.collections.Iterator
-import kotlin.collections.listOf
 
 object ConfiguredFeatureCreator {
     fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -304,7 +301,10 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
-
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.INVERTED_ICE_SPIKE_CAVE,
+            DuskConfiguredFeatures.INVERTED_ICE_SPIKE
+        )
     }
 }

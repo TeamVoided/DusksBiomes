@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen
 
+import com.theendercore.biome_tag_villagers.BiomeTagVillagers
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags
@@ -244,8 +245,6 @@ class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: Completable
             .add(DuskBiomes.WARM_PLAINS)
             .add(DuskBiomes.RED_BEACH)
             .add(DuskBiomes.DEVILS_ROAR)
-        getOrCreateTagBuilder(ConventionalBiomeTags.DEAD)
-            .add(DuskBiomes.DEVILS_ROAR)
         getOrCreateTagBuilder(ConventionalBiomeTags.DEEP_OCEAN)
             .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
         getOrCreateTagBuilder(ConventionalBiomeTags.DESERT)
@@ -292,6 +291,31 @@ class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: Completable
             .add(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS)
             .add(DuskBiomes.SNOWY_WINDSWEPT_FOREST)
 
-
+//Villager Biome Tags
+        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_TAIGA)
+            .add(DuskBiomes.COLD_FOREST)
+            .add(DuskBiomes.COLD_PLAINS)
+            .add(Biomes.SNOWY_TAIGA)
+            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
+            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
+        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_SNOWY)
+            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
+            .add(DuskBiomes.SNOWY_WINDSWEPT_HILLS)
+            .add(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS)
+            .add(DuskBiomes.SNOWY_WINDSWEPT_FOREST)
+            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
+            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
+            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
+            .add(DuskBiomes.SNOWY_RED_BEACH)
+            .add(DuskBiomes.SNOWY_STONY_SHORE)
+            .add(DuskBiomes.FROZEN_CAVERNS)
+        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_SWAMP)
+            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
+        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_SAVANNA)
+            .add(DuskBiomes.DEVILS_ROAR)
+        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_DESERT)
+            .add(DuskBiomes.WARM_RIVER)
+            .add(DuskBiomes.RED_WARM_RIVER)
+            .add(DuskBiomes.RED_DESERT)
     }
 }
