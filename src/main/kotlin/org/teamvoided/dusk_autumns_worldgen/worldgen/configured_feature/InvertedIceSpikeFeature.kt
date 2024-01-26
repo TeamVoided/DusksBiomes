@@ -79,32 +79,32 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
                 k = 1
             }
 
-            for (o in -k..k) {
-                l = -k
-                while (l <= k) {
-                    var blockPos2 = blockPos.add(o, -1, l)
+            for (o in k..-k) {
+                l = k
+                while (l >= k) {
+                    var blockPos2 = blockPos.add(o, 1, l)
                     var p = 50
                     if (abs(o.toDouble()).toInt() == 1 && abs(l.toDouble()).toInt() == 1) {
                         p = randomGenerator.nextInt(5)
                     }
 
-//                    while (blockPos2.y > 50) {
-//                        val blockState2 = structureWorldAccess.getBlockState(blockPos2)
-//                        if (!blockState2.isAir && !Feature.isSoil(blockState2) && !blockState2.isOf(Blocks.SNOW_BLOCK) && !blockState2.isOf(
-//                                Blocks.ICE
-//                            ) && !blockState2.isOf(Blocks.PACKED_ICE)
-//                        ) {
-//                            break
-//                        }
-//
-//                        this.setBlockState(structureWorldAccess, blockPos2, Blocks.PACKED_ICE.defaultState)
-//                        blockPos2 = blockPos2.down()
-//                        --p
-//                        if (p <= 0) {
-//                            blockPos2 = blockPos2.down(randomGenerator.nextInt(5) + 1)
-//                            p = randomGenerator.nextInt(5)
-//                        }
-//                    }
+                    while (blockPos2.y < 200) {
+                        val blockState2 = structureWorldAccess.getBlockState(blockPos2)
+                        if (!blockState2.isAir && !Feature.isSoil(blockState2) && !blockState2.isOf(Blocks.SNOW_BLOCK) && !blockState2.isOf(
+                                Blocks.ICE
+                            ) && !blockState2.isOf(Blocks.PACKED_ICE)
+                        ) {
+                            break
+                        }
+
+                        this.setBlockState(structureWorldAccess, blockPos2, Blocks.PACKED_ICE.defaultState)
+                        blockPos2 = blockPos2.up()
+                        --p
+                        if (p >= 0) {
+                            blockPos2 = blockPos2.up(randomGenerator.nextInt(5) + 1)
+                            p = randomGenerator.nextInt(5)
+                        }
+                    }
                     ++l
                 }
             }

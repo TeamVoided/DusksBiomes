@@ -19,7 +19,7 @@ object DebugInfo {
         ClientTickEvents.END_CLIENT_TICK.register { _ ->
             DebugRenderer.clear()
             cords()
-            coolValues()
+//            coolValues()
             if (debugKey.wasPressed()) DebugRenderer.toggle()
         }
         ClientTickEvents.END_CLIENT_TICK.register { _ -> }
