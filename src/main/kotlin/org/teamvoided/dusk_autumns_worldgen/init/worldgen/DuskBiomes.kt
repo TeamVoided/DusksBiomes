@@ -29,6 +29,7 @@ object DuskBiomes {
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
     val WARM_RIVER = create("warm_river")
+    val RED_DESERT = create("red_desert")
     val RED_WARM_RIVER = create("red_warm_river")
     val RED_WARM_OCEAN = create("red_warm_ocean")
     val RED_LUKEWARM_OCEAN = create("red_lukewarm_ocean")
@@ -36,7 +37,6 @@ object DuskBiomes {
     val RED_BEACH = create("red_beach")
     val SNOWY_RED_BEACH = create("snowy_red_beach")
     val SNOWY_STONY_SHORE = create("snowy_stony_shore")
-    val RED_DESERT = create("red_desert")
     val MUSHROOM_GROVE = create("mushroom_grove")
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
 

@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
+import net.minecraft.structure.pool.StructurePool
+import net.minecraft.structure.pool.StructurePools
+import net.minecraft.structure.processor.StructureProcessorLists
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.log
 import org.teamvoided.dusk_autumns_worldgen.datagen.BiomeTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.WorldgenProvider

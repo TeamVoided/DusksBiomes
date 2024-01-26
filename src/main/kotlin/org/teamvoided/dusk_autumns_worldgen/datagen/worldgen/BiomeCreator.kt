@@ -48,6 +48,8 @@ object BiomeCreator {
         context.register(DuskBiomes.RED_DESERT, createDesert(context))
         context.register(DuskBiomes.MUSHROOM_GROVE, createMushroomIsland(context, true))
         context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, false))
+        context.register(DuskBiomes.MUSHROOM_CAVES, createMushroomCave(context))
+        context.register(DuskBiomes.FROZEN_CAVERNS, createFrozenCaves(context))
 
 
 
@@ -332,8 +334,6 @@ object BiomeCreator {
         return OverworldBiomeCreator.createBeach(holderProvider, holderProvider2, snowy, stony)
     }
 
-
-
     fun createMushroomCave(context: BootstrapContext<Biome?>): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
@@ -350,13 +350,12 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, builder2, DEFAULT_MUSIC)
     }
-    fun createFrozenCaves(
-        features: HolderProvider<PlacedFeature?>?,
-        carvers: HolderProvider<ConfiguredCarver<*>?>?
-    ): Biome {
+    fun createFrozenCaves(context: BootstrapContext<Biome?>): Biome {
+        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         val builder = SpawnSettings.Builder()
         DefaultBiomeFeatures.addDripstoneCaveMobs(builder)
-        val builder2 = GenerationSettings.Builder(features, carvers)
+        val builder2 = GenerationSettings.Builder(feature, carver)
         OverworldBiomeCreator.addBasicFeatures(builder2)
         DefaultBiomeFeatures.addPlainsTallGrass(builder2)
         DefaultBiomeFeatures.addDefaultOres(builder2, true)
@@ -368,7 +367,6 @@ object BiomeCreator {
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
         return OverworldBiomeCreator.create(true, 0.8f, 0.4f, builder, builder2, musicSound)
     }
-
 
 
 

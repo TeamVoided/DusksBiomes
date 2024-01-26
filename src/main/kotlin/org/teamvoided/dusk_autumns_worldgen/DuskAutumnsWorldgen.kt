@@ -6,6 +6,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumns_worldgen.init.DuskBlocks
 import org.teamvoided.dusk_autumns_worldgen.init.DuskItems
+import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
+import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.util.DebugInfo
 
