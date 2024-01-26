@@ -14,8 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(IntegratedServerLoader.class)
 public class IntegratedServerLoaderMixin {
 
-    @Inject(method = "tryLoad", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setScreen(Lnet/minecraft/client/gui/screen/Screen;)V"))
+    @Inject(method = "tryLoad", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setScreen(Lnet/minecraft/client/gui/screen/Screen;)V"), cancellable = true)
     private static void enderLib$cancelExperimental(MinecraftClient client, CreateWorldScreen parentScreen, Lifecycle dynamicRegistryLifecycle, Runnable successCallback, boolean bl, CallbackInfo ci) {
-        if (dynamicRegistryLifecycle == Lifecycle.experimental()) client.setScreen(parentScreen);
+        if (dynamicRegistryLifecycle == Lifecycle.experimental()) {
+            client.setScreen(parentScreen);
+            ci.cancel();
+        }
     }
 }

@@ -40,7 +40,7 @@ object DebugInfo {
         val noiseRouter = randomState.router
         val singlePointContext = SinglePointContext(pos.x, pos.y, pos.z)
         val d = noiseRouter.weirdness().compute(singlePointContext)
-        "    ".addToRenderer("NoiseRouter")
+        "-------".addToRenderer("NoiseRouter")
         decimalFormat.format(noiseRouter.temperature().compute(singlePointContext)).addToRenderer("Temperature")
         decimalFormat.format(noiseRouter.vegetation().compute(singlePointContext)).addToRenderer("Vegetation")
         decimalFormat.format(noiseRouter.continentalness().compute(singlePointContext)).addToRenderer("Continentalness")
@@ -50,8 +50,8 @@ object DebugInfo {
         decimalFormat.format(NoiseRouterData.method_41546(d.toFloat()).toDouble()).addToRenderer("PV")
         decimalFormat.format(noiseRouter.initialNonJaggedDensity().compute(singlePointContext))
             .addToRenderer("InitialNonJaggedDensity")
-
         decimalFormat.format(noiseRouter.fullNoise().compute(singlePointContext)).addToRenderer("Noise")
+        "-----".addToRenderer("----------")
     }
 
     fun keybind(translationKey: String, keyCode: Int, category: String = "") =

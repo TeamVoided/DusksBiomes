@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.util.math.BlockPos
 
 object DebugRenderer {
-    private var shouldRender = true
+    private var shouldRender = false
     private val debugValues = mutableMapOf<String, Any?>() //Name - Value
     private var client: MinecraftClient? = null
 
