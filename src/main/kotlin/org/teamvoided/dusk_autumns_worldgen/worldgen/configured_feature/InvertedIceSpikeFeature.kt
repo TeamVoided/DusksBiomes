@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature
 
 import com.mojang.serialization.Codec
+import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.gen.feature.DefaultFeatureConfig
@@ -32,35 +33,25 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
         var k = 0
         var l: Int
         while (k < i) {
-            val f = (1f - k / i) * j
+            val f = (1f - k.toFloat() / i.toFloat()) * j.toFloat()
             l = MathHelper.ceil(f)
             for (m in -l..l) {
                 val g = MathHelper.abs(m) - 0.25f
                 for (n in -l..l) {
                     val h = MathHelper.abs(n) - 0.25f
                     if ((m == 0 && n == 0 || !(g * g + h * h > f * f)) && (m != -l && m != l && n != -l && n != l || !(randomGenerator.nextFloat() > 0.75f))) {
-                        var blockState = structureWorldAccess.getBlockState(blockPos.add(m, k, n))
-                        if (blockState.isAir || isSoil(blockState) || blockState.isOf(Blocks.SNOW_BLOCK) || blockState.isOf(
-                                Blocks.ICE
-                            )
-                        ) {
+                        var blockState = structureWorldAccess.getBlockState(blockPos.add(m, -k, n))
+                        if (blockState.replaceable()) {
                             this.setBlockState(
-                                structureWorldAccess,
-                                blockPos.add(m, -k, n),
-                                Blocks.PACKED_ICE.defaultState
+                                structureWorldAccess, blockPos.add(m, -k, n), Blocks.PACKED_ICE.defaultState
                             )
                         }
 
                         if (k != 0 && l > 1) {
-                            blockState = structureWorldAccess.getBlockState(blockPos.add(m, -k, n))
-                            if (blockState.isAir || isSoil(blockState) || blockState.isOf(Blocks.SNOW_BLOCK) || blockState.isOf(
-                                    Blocks.ICE
-                                )
-                            ) {
+                            blockState = structureWorldAccess.getBlockState(blockPos.add(m, k, n))
+                            if (blockState.replaceable()) {
                                 this.setBlockState(
-                                    structureWorldAccess,
-                                    blockPos.add(m, k, n),
-                                    Blocks.PACKED_ICE.defaultState
+                                    structureWorldAccess, blockPos.add(m, k, n), Blocks.PACKED_ICE.defaultState
                                 )
                             }
                         }
@@ -77,7 +68,7 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
             k = 1
         }
 
-        if (!lower) return true
+//        if (!lower) return true
 
         for (o in -k..k) {
             for (q in -k..k) {
@@ -95,5 +86,9 @@ class InvertedIceSpikeFeature(configCodec: Codec<DefaultFeatureConfig>?) : Featu
         }
 
         return true
+    }
+
+    fun BlockState.replaceable(): Boolean {
+        return this.isAir || isSoil(this) || this.isOf(Blocks.SNOW_BLOCK) || this.isOf(Blocks.ICE)
     }
 }
