@@ -28,6 +28,9 @@ object DuskBiomes {
     val SNOWY_OLD_GROWTH_PINE_TAIGA = create("snowy_old_growth_pine_taiga")
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
+    val FROZEN_WINDSWEPT_MANGROVE_SWAMP = create("frozen_windswept_mangrove_swamp")
+    val WINDSWEPT_MANGROVE_SWAMP = create("windswept_mangrove_swamp")
+    val WINDSWEPT_SWAMP = create("windswept_mangrove_swamp")
     val WARM_RIVER = create("warm_river")
     val RED_DESERT = create("red_desert")
     val RED_WARM_RIVER = create("red_warm_river")
@@ -43,10 +46,12 @@ object DuskBiomes {
     val MUSHROOM_CAVES = create("mushroom_caves")
     val FROZEN_CAVERNS = create("frozen_caverns")
 
-    val DEVILS_ROAR = create("devils_roar")
-
 
     fun init() {
+        val windsweptVariant= SubBiomeMatcher.Criterion.ofRange(
+            CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+            -1F, -0.45f, false
+        )
         val snowyVariant = SubBiomeMatcher.Criterion.ofRange(
             CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
             -1F, -0.45f, false
@@ -63,20 +68,6 @@ object DuskBiomes {
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
                 -1F, 0f, false
-            )
-        )
-
-
-        BiomePlacement.addOverworld(
-            DEVILS_ROAR,
-            makeNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, 1),      // Humidity
-                Range(-1.05, -0.415),          // Continentalness
-                Range(-0.78, -0.375),         // Erosion
-                Range(0),         // Depth
-                Range(-1, 0),         // Weirdness
-                0L                  // Offset
             )
         )
 
@@ -367,3 +358,16 @@ object DuskBiomes {
     }
 
 }
+
+//        BiomePlacement.addOverworld(
+//            DEVILS_ROAR,
+//            makeNoise(
+//                Range(-1, 1),        // Temperature
+//                Range(-1, 1),      // Humidity
+//                Range(-1.05, -0.415),          // Continentalness
+//                Range(-0.78, -0.375),         // Erosion
+//                Range(0),         // Depth
+//                Range(-1, 0),         // Weirdness
+//                0L                  // Offset
+//            )
+//        )

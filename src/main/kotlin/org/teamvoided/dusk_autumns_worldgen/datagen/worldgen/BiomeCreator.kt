@@ -3,8 +3,6 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
@@ -14,10 +12,8 @@ import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
-import net.minecraft.world.gen.carver.ConfiguredCarver
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
-import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
@@ -36,7 +32,9 @@ object BiomeCreator {
         context.register(DuskBiomes.SNOWY_WINDSWEPT_FOREST, createWindsweptHills(context, true))
         context.register(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, createSnowyOldGrowthTaiga(context, false))
         context.register(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, createSnowyOldGrowthTaiga(context, true))
-        context.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, createFrozenMangroveSwamp(context))
+        context.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, createMangroveSwamp(context, false, true))
+        context.register(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP, createMangroveSwamp(context, true, true))
+        context.register(DuskBiomes.WINDSWEPT_SWAMP, createSwamp(context, true))
         context.register(DuskBiomes.WARM_RIVER, createWarmRiver(context))
         context.register(DuskBiomes.RED_WARM_RIVER, createWarmRiver(context))
         context.register(DuskBiomes.RED_WARM_OCEAN, createWarmOcean(context))
@@ -50,10 +48,6 @@ object BiomeCreator {
         context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, true))
         context.register(DuskBiomes.MUSHROOM_CAVES, createMushroomCave(context))
         context.register(DuskBiomes.FROZEN_CAVERNS, createFrozenCaves(context))
-
-
-
-        context.register(DuskBiomes.DEVILS_ROAR, createDevilsRoar(context))
     }
 
     fun createSnowyOldGrowthTaiga(context: BootstrapContext<Biome?>, spruce: Boolean): Biome {
@@ -224,37 +218,97 @@ object BiomeCreator {
         return OverworldBiomeCreator.create(true, -0.55f, 0.15f, builder, builder2, DEFAULT_MUSIC)
     }
 
-    fun createFrozenMangroveSwamp(context: BootstrapContext<Biome?>): Biome {
+    fun createMangroveSwamp(context: BootstrapContext<Biome?>, windswept: Boolean, frozen: Boolean): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         val generationSettings = GenerationSettings.Builder(feature, carver)
         val spawnSettings = SpawnSettings.Builder()
-        DefaultBiomeFeatures.addCaveMobs(spawnSettings)
-        DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 20, false)
+        if (frozen) {
+            DefaultBiomeFeatures.addCaveMobs(spawnSettings)
+            DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 20, false)
+            spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
+        } else {
+            DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
+        }
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
-            .spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
         DefaultBiomeFeatures.addFossils(generationSettings)
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addGrassAndClayDisks(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_MANGROVE_FROZEN)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.PATCH_GRASS_NORMAL
-        )
+        if (frozen) {
+            if (windswept){
+
+            }
+            else {
+                generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_MANGROVE_FROZEN)
+                generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
+            }
+        } else {
+            if (windswept){
+
+            }
+            else {
+                DefaultBiomeFeatures.addMangroveSwampFeatures(generationSettings)
+            }
+        }
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION,VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SWAMP)
-        return Biome.Builder().hasPrecipitation(true).temperatureModifier(Biome.TemperatureModifier.FROZEN)
-            .temperature(-0.5f).downfall(0.9f).effects(
-                BiomeEffects.Builder().waterColor(8692872).waterFogColor(3815975).fogColor(12638463)
-                    .skyColor(OverworldBiomeCreator.getSkyColor(-0.5f))
-                    .grassColorModifier(GrassColorModifier.SWAMP).moodSound(BiomeMoodSound.CAVE).music(musicSound)
-                    .build()
-            ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+
+        if (frozen) {
+            return Biome.Builder().hasPrecipitation(true).temperatureModifier(Biome.TemperatureModifier.FROZEN)
+                .temperature(-0.5f).downfall(0.9f).effects(
+                    BiomeEffects.Builder().waterColor(8692872).waterFogColor(3815975).fogColor(12638463)
+                        .skyColor(OverworldBiomeCreator.getSkyColor(-0.5f))
+                        .grassColorModifier(GrassColorModifier.SWAMP).moodSound(BiomeMoodSound.CAVE).music(musicSound)
+                        .build()
+                ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        } else {
+            return Biome.Builder().hasPrecipitation(true).temperature(0.8f).downfall(0.9f).effects(
+                    BiomeEffects.Builder().waterColor(3832426).waterFogColor(5077600).fogColor(12638463)
+                        .skyColor(OverworldBiomeCreator.getSkyColor(0.8f)).grassColorModifier(GrassColorModifier.SWAMP)
+                        .foliageColor(9285927).moodSound(BiomeMoodSound.CAVE).music(musicSound).build()
+                ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        }
+    }
+    fun createSwamp(context: BootstrapContext<Biome?>, windswept: Boolean): Biome {
+        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val generationSettings = GenerationSettings.Builder(feature, carver)
+        val builder = SpawnSettings.Builder()
+        DefaultBiomeFeatures.addFarmAnimals(builder)
+        DefaultBiomeFeatures.addBatsAndMonsters(builder)
+        builder.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
+        builder.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
+        val builder2 = GenerationSettings.Builder(feature, carver)
+        DefaultBiomeFeatures.addFossils(builder2)
+        OverworldBiomeCreator.addBasicFeatures(builder2)
+        DefaultBiomeFeatures.addDefaultOres(builder2)
+        DefaultBiomeFeatures.addClayDisk(builder2)
+        if (windswept) {
+            DefaultBiomeFeatures.addSwampFeatures(builder2)
+        }
+        else {
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.TREES_SWAMP)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_SWAMP)
+        }
+        DefaultBiomeFeatures.addDefaultMushrooms(builder2)
+        DefaultBiomeFeatures.addSwampVegetation(builder2)
+        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
+        val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SWAMP)
+        return Biome.Builder().hasPrecipitation(true).temperature(0.8f).downfall(0.9f).effects(
+            BiomeEffects.Builder().waterColor(6388580).waterFogColor(2302743).fogColor(12638463)
+                .skyColor(OverworldBiomeCreator.getSkyColor(0.8f)).foliageColor(6975545)
+                .grassColorModifier(GrassColorModifier.SWAMP).moodSound(BiomeMoodSound.CAVE).music(musicSound).build()
+        ).spawnSettings(builder.build()).generationSettings(builder2.build()).build()
     }
 
     fun createWarmRiver(context: BootstrapContext<Biome?>): Biome {
@@ -289,6 +343,7 @@ object BiomeCreator {
             DEFAULT_MUSIC
         )
     }
+
     fun createMushroomIsland(context: BootstrapContext<Biome?>, grove: Boolean): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
@@ -349,6 +404,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, builder2, DEFAULT_MUSIC)
     }
+
     fun createFrozenCaves(context: BootstrapContext<Biome?>): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
@@ -368,29 +424,28 @@ object BiomeCreator {
     }
 
 
-
-    fun createDevilsRoar(context: BootstrapContext<Biome?>): Biome {
-        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
-        val generationSettings = GenerationSettings.Builder(feature, carver)
-        val spawnSettings = SpawnSettings.Builder()
-        DefaultBiomeFeatures.addCaveMobs(spawnSettings)
-        DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 100, true)
-        DefaultBiomeFeatures.addFossils(generationSettings)
-        OverworldBiomeCreator.addBasicFeatures(generationSettings)
-        DefaultBiomeFeatures.addDefaultOres(generationSettings)
-        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-        val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES)
-        return Biome.Builder().hasPrecipitation(true).temperature(0.5f).downfall(0.5f)
-            .effects(
-                BiomeEffects.Builder().skyColor(3750977).fogColor(4605784).waterColor(4676715).waterFogColor(66051)
-                    .grassColor(6574650).foliageColor(7877401)
-                    .moodSound(BiomeMoodSound.CAVE).music(musicSound)
-                    .particleConfig(BiomeParticleConfig(ParticleTypes.ASH, 0.0025f))
-                    .loopSound(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP)
-                    .build()
-            ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
-    }
+//    fun createDevilsRoar(context: BootstrapContext<Biome?>): Biome {
+//        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
+//        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
+//        val generationSettings = GenerationSettings.Builder(feature, carver)
+//        val spawnSettings = SpawnSettings.Builder()
+//        DefaultBiomeFeatures.addCaveMobs(spawnSettings)
+//        DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 100, true)
+//        DefaultBiomeFeatures.addFossils(generationSettings)
+//        OverworldBiomeCreator.addBasicFeatures(generationSettings)
+//        DefaultBiomeFeatures.addDefaultOres(generationSettings)
+//        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
+//        val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES)
+//        return Biome.Builder().hasPrecipitation(true).temperature(0.5f).downfall(0.5f)
+//            .effects(
+//                BiomeEffects.Builder().skyColor(3750977).fogColor(4605784).waterColor(4676715).waterFogColor(66051)
+//                    .grassColor(6574650).foliageColor(7877401)
+//                    .moodSound(BiomeMoodSound.CAVE).music(musicSound)
+//                    .particleConfig(BiomeParticleConfig(ParticleTypes.ASH, 0.0025f))
+//                    .loopSound(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP)
+//                    .build()
+//            ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+//    }
 
 //    Generation Steps Reference:
 //      RAW_GENERATION
