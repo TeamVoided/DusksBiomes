@@ -162,7 +162,7 @@ object PlacedFeatureCreator {
         PlacedFeatureUtil.register(
             context,
             DuskPlacedFeatures.INVERTED_ICE_SPIKE_CAVE,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE_CAVE),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE),
             *arrayOf<PlacementModifier>(
                 CountPlacementModifier.create(3),
                 InSquarePlacementModifier.getInstance(),
