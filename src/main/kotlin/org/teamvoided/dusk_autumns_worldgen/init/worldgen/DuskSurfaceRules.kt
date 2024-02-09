@@ -19,7 +19,12 @@ object DuskSurfaceRules {
         //Sorted like the vanilla surface rule locations https://minecraft.wiki/w/World_generation#Surface
         //Surface rule sequence 1: Floor
         val swampWater = condition(
-            biome(DuskBiomes.FROZEN_MANGROVE_SWAMP), condition(
+            biome(
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            ), condition(
                 ON_FLOOR, sequence(
                     condition(
                         aboveY(YOffset.fixed(60), 0),
@@ -63,33 +68,33 @@ object DuskSurfaceRules {
                 condition(surfaceNoiseThreshold(-1.0), block(Blocks.PODZOL))
             )
         )
-        val devilsRoar = condition(
-            biome(
-                DuskBiomes.DEVILS_ROAR
-            ),
-            sequence(
-                condition(surfaceSecondaryNoiseThreshold(-0.95), block(Blocks.BLACKSTONE)),
-                condition(
-                    surfaceNoiseThreshold(0.35),
-                    sequence(
-                        condition(
-                            DEEP_UNDER_FLOOR, sequence(
-                                condition(
-                                    ON_CEILING, block(Blocks.RED_SANDSTONE)
-                                ),
-                                block(Blocks.RED_SAND)
-                            )
-                        ),
-                        condition(
-                            DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
-                        )
-
-                    )
-                )
-            )
-        )
+//        val devilsRoar = condition(
+//            biome(
+//                DuskBiomes.DEVILS_ROAR
+//            ),
+//            sequence(
+//                condition(surfaceSecondaryNoiseThreshold(-0.95), block(Blocks.BLACKSTONE)),
+//                condition(
+//                    surfaceNoiseThreshold(0.35),
+//                    sequence(
+//                        condition(
+//                            DEEP_UNDER_FLOOR, sequence(
+//                                condition(
+//                                    ON_CEILING, block(Blocks.RED_SANDSTONE)
+//                                ),
+//                                block(Blocks.RED_SAND)
+//                            )
+//                        ),
+//                        condition(
+//                            DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
+//                        )
+//
+//                    )
+//                )
+//            )
+//        )
         val mud = condition(
-            biome(DuskBiomes.FROZEN_MANGROVE_SWAMP),
+            biome(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, DuskBiomes.FROZEN_MANGROVE_SWAMP, DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP),
             block(Blocks.MUD)
         )
         val mycelium = condition(
@@ -108,7 +113,7 @@ object DuskSurfaceRules {
             )
         )
         val mudDeep = condition(
-            biome(DuskBiomes.FROZEN_MANGROVE_SWAMP),
+            biome(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, DuskBiomes.FROZEN_MANGROVE_SWAMP, DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP),
             block(Blocks.MUD)
         )
         val redSandstoneDesert = condition(
@@ -163,8 +168,7 @@ object DuskSurfaceRules {
                 onFloorInDeepWater,
                 redSandDeep,
                 redSandstoneDesert,
-                redSandOcean,
-                devilsRoar
+                redSandOcean
             )
         )
         // Return a surface-only sequence of surface rules

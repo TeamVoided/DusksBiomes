@@ -30,7 +30,7 @@ object DuskBiomes {
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
     val FROZEN_WINDSWEPT_MANGROVE_SWAMP = create("frozen_windswept_mangrove_swamp")
     val WINDSWEPT_MANGROVE_SWAMP = create("windswept_mangrove_swamp")
-    val WINDSWEPT_SWAMP = create("windswept_mangrove_swamp")
+    val OLD_GROWTH_SWAMP = create("old_growth_swamp")
     val WARM_RIVER = create("warm_river")
     val RED_DESERT = create("red_desert")
     val RED_WARM_RIVER = create("red_warm_river")

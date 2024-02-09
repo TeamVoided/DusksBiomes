@@ -34,7 +34,8 @@ object BiomeCreator {
         context.register(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, createSnowyOldGrowthTaiga(context, true))
         context.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, createMangroveSwamp(context, false, true))
         context.register(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP, createMangroveSwamp(context, true, true))
-        context.register(DuskBiomes.WINDSWEPT_SWAMP, createSwamp(context, true))
+        context.register(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, createMangroveSwamp(context, true, false))
+        context.register(DuskBiomes.OLD_GROWTH_SWAMP, createSwamp(context, true))
         context.register(DuskBiomes.WARM_RIVER, createWarmRiver(context))
         context.register(DuskBiomes.RED_WARM_RIVER, createWarmRiver(context))
         context.register(DuskBiomes.RED_WARM_OCEAN, createWarmOcean(context))
@@ -238,7 +239,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addGrassAndClayDisks(generationSettings)
         if (frozen) {
             if (windswept){
-
+                generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE_FROZEN)
             }
             else {
                 generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_MANGROVE_FROZEN)
@@ -246,7 +247,7 @@ object BiomeCreator {
             }
         } else {
             if (windswept){
-
+                generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE)
             }
             else {
                 DefaultBiomeFeatures.addMangroveSwampFeatures(generationSettings)
@@ -274,7 +275,7 @@ object BiomeCreator {
                 ).spawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
         }
     }
-    fun createSwamp(context: BootstrapContext<Biome?>, windswept: Boolean): Biome {
+    fun createSwamp(context: BootstrapContext<Biome?>, oldGrowth: Boolean): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         val generationSettings = GenerationSettings.Builder(feature, carver)
@@ -288,11 +289,11 @@ object BiomeCreator {
         OverworldBiomeCreator.addBasicFeatures(builder2)
         DefaultBiomeFeatures.addDefaultOres(builder2)
         DefaultBiomeFeatures.addClayDisk(builder2)
-        if (windswept) {
+        if (!oldGrowth) {
             DefaultBiomeFeatures.addSwampFeatures(builder2)
         }
         else {
-            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.TREES_SWAMP)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
