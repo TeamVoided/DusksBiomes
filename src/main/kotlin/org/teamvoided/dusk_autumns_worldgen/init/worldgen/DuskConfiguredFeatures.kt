@@ -8,7 +8,9 @@ import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.InvertedSpikeFeature
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.MonsterRoomFeature
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.SpikeFeature
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 
 
@@ -30,6 +32,8 @@ object DuskConfiguredFeatures {
 
     val INVERTED_SPIKE = register("inverted_spike", InvertedSpikeFeature(SpikeFeatureConfig.CODEC))
     val SPIKE = register("spike", SpikeFeature(SpikeFeatureConfig.CODEC))
+    val MONSTER_ROOM = register("monster_room", MonsterRoomFeature(MonsterRoomFeatureConfig.CODEC))
+
 
 
     fun init() {}
