@@ -11,6 +11,7 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.log
 import org.teamvoided.dusk_autumns_worldgen.datagen.BiomeTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.WorldgenProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.AdvancementsProvider
+import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructurePoolCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.worldgen.BiomeCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.worldgen.PlacedFeatureCreator
@@ -29,5 +30,6 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
         gen.add(RegistryKeys.BIOME, BiomeCreator::boostrap)
         gen.add(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
+        gen.add(RegistryKeys.STRUCTURE_POOL, StructurePoolCreator::bootstrap)
     }
 }

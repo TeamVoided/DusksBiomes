@@ -313,8 +313,8 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM,
             DuskConfiguredFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
-                BlockStateProvider.of(Blocks.PACKED_ICE),
-                        BlockStateProvider.of(Blocks.SNOW_BLOCK),
+                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
+                BlockStateProvider.of(Blocks.TUFF),
                 listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
             )
         )

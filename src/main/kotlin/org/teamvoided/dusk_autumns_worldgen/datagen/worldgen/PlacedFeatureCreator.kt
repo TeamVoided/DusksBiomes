@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.gen.BootstrapContext
+import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
@@ -222,6 +223,18 @@ object PlacedFeatureCreator {
                 BiomePlacementModifier.getInstance()
             )
         )
+        PlacedFeatureUtil.register(
+            context,
+            UndergroundPlacedFeatures.MONSTER_ROOM_DEEP,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(4),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+
 
     }
 
