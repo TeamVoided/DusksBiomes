@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import net.minecraft.block.*
+import net.minecraft.entity.EntityType
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
@@ -32,6 +33,7 @@ import net.minecraft.world.gen.trunk.CherryTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import java.util.*
 
@@ -303,6 +305,17 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
                 60, 10, 30, BlockStateProvider.of(Blocks.PACKED_ICE), blockTags.getTagOrThrow(BlockTags.REPLACEABLE)
+            )
+        )
+
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.PACKED_ICE),
+                        BlockStateProvider.of(Blocks.SNOW_BLOCK),
+                listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
             )
         )
     }

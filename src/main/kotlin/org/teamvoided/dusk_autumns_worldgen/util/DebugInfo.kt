@@ -17,13 +17,10 @@ object DebugInfo {
     val debugKey = keybind("custom key", GLFW.GLFW_KEY_R)
     fun init() {
         ClientTickEvents.END_CLIENT_TICK.register { _ ->
-//            DebugRenderer.clear()
             cords()
            worldgenInfo()
             if (debugKey.wasPressed()) DebugRenderer.toggle()
         }
-        ClientTickEvents.END_CLIENT_TICK.register { _ -> }
-
     }
 
     fun cords() {

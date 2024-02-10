@@ -27,6 +27,8 @@ object DuskConfiguredFeatures {
     val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val INVERTED_ICE_SPIKE = create("inverted_ice_spike")
+    val CUSTOM_MONSTER_ROOM = create("custom_monster_room")
+
 
 //    Register Configure Feature Types
 
