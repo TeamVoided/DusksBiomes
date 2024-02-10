@@ -32,6 +32,13 @@ object PlacedFeatureCreator {
         )
         PlacedFeatureUtil.register(
             context,
+            DuskPlacedFeatures.TREES_WINDSWEPT_BIRCH,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.BIRCH_TALL),
+            VegetationPlacedFeatures.treePlacementModifiers(PlacedFeatureUtil.createCountExtraModifier(2, 0.1f, 1))
+        )
+
+        PlacedFeatureUtil.register(
+            context,
             DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_CHECKED),
             *arrayOf<PlacementModifier>(
@@ -100,7 +107,7 @@ object PlacedFeatureCreator {
             DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP,
             configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK),
             *arrayOf<PlacementModifier>(
-                PlacedFeatureUtil.createCountExtraModifier(13, 0.1f, 1),
+                PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
                 InSquarePlacementModifier.getInstance(),
                 SurfaceWaterDepthFilterPlacementModifier.create(2),
                 PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,

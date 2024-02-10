@@ -38,13 +38,39 @@ object DuskSurfaceRules {
         )
 
         //Surface rule sequence 4: floor without water
-        val redSandSurface = condition(
-            biome(DuskBiomes.RED_DESERT, DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_BEACH, DuskBiomes.SNOWY_RED_BEACH),
-            sequence(
-                condition(
-                    ON_CEILING, block(Blocks.RED_SANDSTONE)
+        val sandSurface = sequence(
+            condition(
+                biome(
+                    DuskBiomes.WARM_RIVER
                 ),
-                block(Blocks.RED_SAND)
+                sequence(
+                    condition(
+                        ON_CEILING, block(Blocks.SANDSTONE)
+                    ),
+                    block(Blocks.SAND)
+                )
+            ),
+            condition(
+                biome(
+                    DuskBiomes.RED_WARM_RIVER,
+                    DuskBiomes.RED_DESERT,
+                    DuskBiomes.RED_WARM_OCEAN,
+                    DuskBiomes.RED_BEACH,
+                    DuskBiomes.SNOWY_RED_BEACH
+                ),
+                sequence(
+                    condition(
+                        ON_CEILING, block(Blocks.RED_SANDSTONE)
+                    ),
+                    block(Blocks.RED_SAND)
+                )
+            )
+        )
+        val windsweptSurface = condition(
+            biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+            sequence(
+                condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE)),
+                condition(surfaceNoiseThreshold(-0.5), block(Blocks.COARSE_DIRT))
             )
         )
         val podzolAndCoarseDirt = condition(
@@ -68,6 +94,130 @@ object DuskSurfaceRules {
                 condition(surfaceNoiseThreshold(-1.0), block(Blocks.PODZOL))
             )
         )
+        val mud = condition(
+            biome(
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+            ),
+            block(Blocks.MUD)
+        )
+        val mycelium = condition(
+            biome(DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
+            block(Blocks.MYCELIUM)
+        )
+
+        //Deep under floor with water above (or not)
+        val sandDeep = sequence(
+            condition(
+                biome(
+                    DuskBiomes.WARM_RIVER
+                ),
+                sequence(
+                    condition(
+                        ON_CEILING, block(Blocks.SANDSTONE)
+                    ),
+                    block(Blocks.SAND)
+                )
+            ),
+            condition(
+                biome(
+                    DuskBiomes.RED_WARM_RIVER,
+                    DuskBiomes.RED_WARM_OCEAN,
+                    DuskBiomes.RED_BEACH,
+                    DuskBiomes.SNOWY_RED_BEACH
+                ),
+                sequence(
+                    condition(
+                        ON_CEILING, block(Blocks.RED_SANDSTONE)
+                    ),
+                    block(Blocks.RED_SAND)
+                )
+            )
+        )
+        val deepWindsweptSurface = condition(
+            biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+            condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE))
+        )
+        val mudDeep = condition(
+            biome(
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+            ),
+            block(Blocks.MUD)
+        )
+        val sandstoneDesert = condition(
+            biome(DuskBiomes.RED_DESERT),
+            sequence(
+                condition(
+                    DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
+                )
+            )
+        )
+        //Surface rule sequence 5
+        val sandOcean = condition(
+            ON_FLOOR, condition(
+                biome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
+                sequence(
+                    condition(
+                        ON_CEILING, block(Blocks.RED_SANDSTONE)
+                    ),
+                    block(Blocks.RED_SAND)
+                )
+            )
+        )
+
+
+        //Begin the Layout
+        //
+        //
+        val onFloorAndWater = condition(
+            ON_FLOOR, condition(
+                water(-1, 0), sequence(
+                    sandSurface,
+                    windsweptSurface,
+                    podzolAndCoarseDirt,
+                    lessPodzolAndCoarseDirt,
+                    mud,
+                    mycelium
+                )
+            )
+        )
+        val onFloorInDeepWater = condition(
+            DEEP_UNDER_FLOOR, condition(
+                water(-6, 0), sequence(
+                    sandSurface,
+                    deepWindsweptSurface,
+                    mudDeep
+                )
+            )
+        )
+        val surface = condition(
+            abovePreliminarySurface(),
+            sequence(
+                swampWater,
+                onFloorAndWater,
+                onFloorInDeepWater,
+                sandDeep,
+                sandstoneDesert,
+                sandOcean
+            )
+        )
+        // Return a surface-only sequence of surface rules
+        return sequence(surface)
+    }
+
+    fun surfaceNoiseThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
+    }
+
+    fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+    }
+}
+
+
 //        val devilsRoar = condition(
 //            biome(
 //                DuskBiomes.DEVILS_ROAR
@@ -93,93 +243,3 @@ object DuskSurfaceRules {
 //                )
 //            )
 //        )
-        val mud = condition(
-            biome(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, DuskBiomes.FROZEN_MANGROVE_SWAMP, DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP),
-            block(Blocks.MUD)
-        )
-        val mycelium = condition(
-            biome(DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
-            block(Blocks.MYCELIUM)
-        )
-
-        //Deep under floor with water above (or not)
-        val redSandDeep = condition(
-            biome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_BEACH, DuskBiomes.SNOWY_RED_BEACH),
-            sequence(
-                condition(
-                    ON_CEILING, block(Blocks.RED_SANDSTONE)
-                ),
-                block(Blocks.RED_SAND)
-            )
-        )
-        val mudDeep = condition(
-            biome(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, DuskBiomes.FROZEN_MANGROVE_SWAMP, DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP),
-            block(Blocks.MUD)
-        )
-        val redSandstoneDesert = condition(
-            biome(DuskBiomes.RED_DESERT),
-            sequence(
-                condition(
-                    DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
-                )
-            )
-        )
-        //Surface rule sequence 5
-        val redSandOcean = condition(
-            ON_FLOOR, condition(
-                biome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.RED_SANDSTONE)
-                    ),
-                    block(Blocks.RED_SAND)
-                )
-            )
-        )
-
-
-        //Begin the Layout
-        //
-        //
-        val onFloorAndWater = condition(
-            ON_FLOOR, condition(
-                water(-1, 0), sequence(
-                    redSandSurface,
-                    podzolAndCoarseDirt,
-                    lessPodzolAndCoarseDirt,
-                    mud,
-                    mycelium
-                )
-            )
-        )
-        val onFloorInDeepWater = condition(
-            DEEP_UNDER_FLOOR, condition(
-                water(-6, 0), sequence(
-                    redSandSurface,
-                    mudDeep
-                )
-            )
-        )
-        val surface = condition(
-            abovePreliminarySurface(),
-            sequence(
-                swampWater,
-                onFloorAndWater,
-                onFloorInDeepWater,
-                redSandDeep,
-                redSandstoneDesert,
-                redSandOcean
-            )
-        )
-        // Return a surface-only sequence of surface rules
-        return sequence(surface)
-    }
-
-    fun surfaceNoiseThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
-    }
-
-    fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
-    }
-}
