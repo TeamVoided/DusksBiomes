@@ -284,15 +284,12 @@ object BiomeCreator {
         DefaultBiomeFeatures.addBatsAndMonsters(builder)
         builder.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         builder.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
-        val builder2 = GenerationSettings.Builder(feature, carver)
-        DefaultBiomeFeatures.addFossils(builder2)
-        OverworldBiomeCreator.addBasicFeatures(builder2)
-        DefaultBiomeFeatures.addDefaultOres(builder2)
-        DefaultBiomeFeatures.addClayDisk(builder2)
-        if (!oldGrowth) {
-            DefaultBiomeFeatures.addSwampFeatures(builder2)
-        }
-        else {
+        DefaultBiomeFeatures.addFossils(generationSettings)
+        OverworldBiomeCreator.addBasicFeatures(generationSettings)
+        DefaultBiomeFeatures.addDefaultOres(generationSettings)
+        DefaultBiomeFeatures.addClayDisk(generationSettings)
+        if (oldGrowth) {
+            println("This Works")
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
@@ -300,16 +297,18 @@ object BiomeCreator {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_SWAMP)
+        } else {
+            DefaultBiomeFeatures.addSwampFeatures(generationSettings)
         }
-        DefaultBiomeFeatures.addDefaultMushrooms(builder2)
-        DefaultBiomeFeatures.addSwampVegetation(builder2)
-        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
+        DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
+        DefaultBiomeFeatures.addSwampVegetation(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SWAMP)
         return Biome.Builder().hasPrecipitation(true).temperature(0.8f).downfall(0.9f).effects(
             BiomeEffects.Builder().waterColor(6388580).waterFogColor(2302743).fogColor(12638463)
                 .skyColor(OverworldBiomeCreator.getSkyColor(0.8f)).foliageColor(6975545)
                 .grassColorModifier(GrassColorModifier.SWAMP).moodSound(BiomeMoodSound.CAVE).music(musicSound).build()
-        ).spawnSettings(builder.build()).generationSettings(builder2.build()).build()
+        ).spawnSettings(builder.build()).generationSettings(generationSettings.build()).build()
     }
 
     fun createWarmRiver(context: BootstrapContext<Biome?>): Biome {
