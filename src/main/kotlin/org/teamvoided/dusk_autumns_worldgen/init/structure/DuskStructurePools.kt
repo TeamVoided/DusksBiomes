@@ -11,6 +11,7 @@ object DuskStructurePools {
     val DESERT_RUINS_ROADS = create("desert_ruins_roads")
     val DESERT_RUINS_LARGE_RUINS = create("desert_ruins_large_ruins")
     val DESERT_RUINS_SMALL_RUINS = create("desert_ruins_small_ruins")
+    fun init()  {}
 
     fun create(id: String): RegistryKey<StructurePool?> {
         return RegistryKey.of(RegistryKeys.STRUCTURE_POOL, DuskAutumnsWorldgen.id(id))

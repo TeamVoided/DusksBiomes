@@ -7,14 +7,10 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.structure.pool.StructurePoolElement
 import net.minecraft.structure.pool.StructurePools
-import net.minecraft.structure.processor.StructureProcessorList
 import net.minecraft.structure.processor.StructureProcessorLists
-import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.BootstrapContext
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
-import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
-import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
-import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskStructurePools
+import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
 
 object StructurePoolCreator {
     fun bootstrap(c: BootstrapContext<StructurePool>) {
@@ -27,7 +23,7 @@ object StructurePoolCreator {
         val processorLists = context.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
         context.register(
-            DuskStructurePools.DESERT_OBELISK_TOP,
+            DuskStructurePools.DESERT_RUINS_OBELISK_TOP,
             StructurePool(
                 emptyPool,
                 listOf(

@@ -1,13 +1,8 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
-import com.google.common.collect.ImmutableList
-import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.*
-import net.minecraft.structure.rule.AlwaysTrueRuleTest
-import net.minecraft.structure.rule.RandomBlockMatchRuleTest
 import net.minecraft.world.gen.BootstrapContext
 
 object StructureProcessorCreator {
@@ -69,8 +64,7 @@ object StructureProcessorCreator {
 
     private fun register(
         context: BootstrapContext<StructureProcessorList>,
-        key: RegistryKey<StructureProcessorList>,
-        structureProcessorList: List<StructureProcessor>
+        key: RegistryKey<StructureProcessorList>, structureProcessorList: List<StructureProcessor>
     ) {
         context.register(key, StructureProcessorList(structureProcessorList))
     }
