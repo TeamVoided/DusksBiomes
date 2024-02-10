@@ -16,6 +16,7 @@ class WorldgenProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pr
         e.addAll(reg.getLookupOrThrow(RegistryKeys.PLACED_FEATURE))
         e.addAll(reg.getLookupOrThrow(RegistryKeys.CONFIGURED_FEATURE))
         e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_POOL))
+        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_PROCESSOR_LIST))
 
     }
 }
