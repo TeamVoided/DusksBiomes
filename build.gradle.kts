@@ -41,6 +41,7 @@ modSettings {
 val biolith: String by project
 val polymer: String by project
 val factorytools: String by project
+val lithostitched: String by project
 dependencies {
 //    modImplementation(include("eu.pb4", "player-data-api", player_data)){
 
@@ -55,6 +56,7 @@ dependencies {
     modImplementation(include("eu.pb4", "polymer-autohost", polymer))
     modImplementation(include("eu.pb4", "factorytools", factorytools))
     modImplementation(include("maven.modrinth", "biome-tag-villagers", "1.0.0"))
+    modImplementation(include("maven.modrinth", "lithostitched", lithostitched))
 
 
 
