@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.log
 import org.teamvoided.dusk_autumns_worldgen.datagen.BiomeTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.WorldgenProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.AdvancementsProvider
+import org.teamvoided.dusk_autumns_worldgen.datagen.BlockTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureFeatureCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructurePoolCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureProcessorCreator
@@ -24,6 +25,7 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
         pack.addProvider(::AdvancementsProvider)
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::WorldgenProvider)
+        pack.addProvider(::BlockTagsProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
