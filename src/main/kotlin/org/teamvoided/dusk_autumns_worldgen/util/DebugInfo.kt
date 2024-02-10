@@ -19,7 +19,7 @@ object DebugInfo {
         ClientTickEvents.END_CLIENT_TICK.register { _ ->
 //            DebugRenderer.clear()
             cords()
-//            coolValues()
+           worldgenInfo()
             if (debugKey.wasPressed()) DebugRenderer.toggle()
         }
         ClientTickEvents.END_CLIENT_TICK.register { _ -> }
@@ -31,7 +31,7 @@ object DebugInfo {
         "x=${cords.x},y=${cords.y},z=${cords.z}".addToRenderer("Cords")
     }
 
-    fun coolValues() {
+    private fun worldgenInfo() {
         val serverWorld: ServerWorld = getServerWorld() ?: return
         val serverChunkManager: ServerChunkManager = serverWorld.chunkManager
         val randomState = serverChunkManager.randomState
