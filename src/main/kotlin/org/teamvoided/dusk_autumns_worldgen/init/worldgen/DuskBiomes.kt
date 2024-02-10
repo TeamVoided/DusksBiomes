@@ -43,7 +43,6 @@ object DuskBiomes {
     val SNOWY_STONY_SHORE = create("snowy_stony_shore")
     val MUSHROOM_GROVE = create("mushroom_grove")
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
-
     val MUSHROOM_CAVES = create("mushroom_caves")
     val FROZEN_CAVERNS = create("frozen_caverns")
 
@@ -73,18 +72,16 @@ object DuskBiomes {
             CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
             -1F, -0.45f, false
         )
-        val redSandVariant = SubBiomeMatcher.Criterion.ofRange(
-            CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-            -1F, -0.375f, false
-        )
-        val redSandLandVariant = of(
+        val redSandVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
                 -1F, -0.223f, false
-            ),
+            )
+        )
+        val redSandInlandVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, 0f, false
+                CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
+                -1F, 0.05f, false
             )
         )
 
@@ -226,28 +223,19 @@ object DuskBiomes {
         BiomePlacement.addSubOverworld(
             FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
             windsweptVariant
-
         )
         BiomePlacement.addSubOverworld(
             Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
             windsweptVariant
-
         )
         BiomePlacement.addSubOverworld(
             Biomes.SWAMP, OLD_GROWTH_SWAMP,
             oldGrowthVariant
-
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.DESERT, RED_DESERT, of(
-                redSandVariant
-            )
         )
         BiomePlacement.addSubOverworld(
             Biomes.DESERT, RED_DESERT,
-            redSandLandVariant
+            redSandInlandVariant
         )
-
         BiomePlacement.addSubOverworld(
             Biomes.RIVER, WARM_RIVER, of(
                 SubBiomeMatcher.Criterion.ofRange(
@@ -261,63 +249,29 @@ object DuskBiomes {
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.RIVER, RED_WARM_RIVER, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.55f, 1f, false
-                ),
-                redSandVariant
-            )
+            Biomes.RIVER, RED_WARM_RIVER,
+            redSandInlandVariant
         )
         BiomePlacement.addSubOverworld(
-            Biomes.RIVER, RED_WARM_RIVER, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.55f, 1f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, -0.223f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0f, false
-                )
-            )
+            Biomes.WARM_OCEAN, RED_WARM_OCEAN,
+            redSandVariant
         )
         BiomePlacement.addSubOverworld(
-            Biomes.WARM_OCEAN, RED_WARM_OCEAN, of(
-                redSandVariant
-            )
+            Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN,
+            redSandVariant
         )
         BiomePlacement.addSubOverworld(
-            Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN, of(
-                redSandVariant
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN, of(
-                redSandVariant
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.BEACH, RED_BEACH, of(
-                redSandVariant
-            )
+            Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN,
+            redSandVariant
         )
         BiomePlacement.addSubOverworld(
             Biomes.BEACH, RED_BEACH,
-            redSandLandVariant
+            redSandInlandVariant
 
         )
         BiomePlacement.addSubOverworld(
-            Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, of(
-                redSandVariant
-            )
-        )
-        BiomePlacement.addSubOverworld(
             Biomes.SNOWY_BEACH, SNOWY_RED_BEACH,
-            redSandLandVariant
+            redSandInlandVariant
 
         )
         BiomePlacement.addSubOverworld(

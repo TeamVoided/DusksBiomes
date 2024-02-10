@@ -170,6 +170,8 @@ class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: Completable
             .add(DuskBiomes.FROZEN_CAVERNS)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_MESA_STRUCTURE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
+        getOrCreateTagBuilder(BiomeTags.HAS_SWAMP_HUT_STRUCTURE)
+            .add(DuskBiomes.OLD_GROWTH_SWAMP)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)
             .forceAddTag(BiomeTags.HAS_VILLAGE_PLAINS_STRUCTURE)
             .forceAddTag(BiomeTags.HAS_VILLAGE_TAIGA_STRUCTURE)
