@@ -223,17 +223,17 @@ object PlacedFeatureCreator {
                 BiomePlacementModifier.getInstance()
             )
         )
-        PlacedFeatureUtil.register(
-            context,
-            UndergroundPlacedFeatures.MONSTER_ROOM_DEEP,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM),
-            *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(4),
-                InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
-                BiomePlacementModifier.getInstance()
-            )
-        )
+//        PlacedFeatureUtil.register(
+//            context,
+//            UndergroundPlacedFeatures.MONSTER_ROOM_DEEP,
+//            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM),
+//            *arrayOf<PlacementModifier>(
+//                CountPlacementModifier.create(4),
+//                InSquarePlacementModifier.getInstance(),
+//                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
+//                BiomePlacementModifier.getInstance()
+//            )
+//        )
 
 
     }
