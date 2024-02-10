@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
+import net.minecraft.loot.LootTables
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
@@ -315,7 +316,8 @@ object ConfiguredFeatureCreator {
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.TUFF),
-                listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
+                listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER),
+                LootTables.SIMPLE_DUNGEON_CHEST
             )
         )
     }

@@ -5,7 +5,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.MobSpawnerBlockEntity
 import net.minecraft.inventory.LootableInventory
-import net.minecraft.loot.LootTables
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.piece.StructurePiece
 import net.minecraft.util.Util
@@ -27,12 +26,9 @@ class MonsterRoomFeature(codec: Codec<MonsterRoomFeatureConfig>) :
         val blockPos = context.origin
         val random = context.random
         val world = context.world
-        val i = 3
         val j = random.nextInt(2) + 2
         val k = -j - 1
         val l = j + 1
-        val m = -1
-        val n = 4
         val o = random.nextInt(2) + 2
         val p = -o - 1
         val q = o + 1
@@ -132,17 +128,11 @@ class MonsterRoomFeature(codec: Codec<MonsterRoomFeatureConfig>) :
                     continue
                 }
                 this.setBlockStateIf(
-                    world,
-                    blockPos3,
-                    StructurePiece.orientateChest(world, blockPos3, Blocks.CHEST.defaultState),
-                    predicate
+                    world, blockPos3,
+                    StructurePiece.orientateChest(world, blockPos3, Blocks.CHEST.defaultState), predicate
                 )
-                LootableInventory.setupLootTable(
-                    world,
-                    random,
-                    blockPos3,
-                    LootTables.SIMPLE_DUNGEON_CHEST
-                )
+                // LootTables.SIMPLE_DUNGEON_CHEST
+                LootableInventory.setupLootTable(world, random, blockPos3, config.lootTable)
                 ++s
                 continue@block6
                 ++t
