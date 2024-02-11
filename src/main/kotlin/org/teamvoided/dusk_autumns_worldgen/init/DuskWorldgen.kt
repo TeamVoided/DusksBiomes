@@ -6,7 +6,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
-import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures

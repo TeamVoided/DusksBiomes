@@ -16,10 +16,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.WATER)
             .add(Blocks.ICE)
             .add(Blocks.FROSTED_ICE)
-
         getOrCreateTagBuilder(DuskBlockTags.CANE_SUPPORT)
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
-
     }
 }

@@ -16,9 +16,9 @@ object StructureSetCreator {
         val biomes = c.lookup(RegistryKeys.BIOME)
 
         c.register(
-            DuskStructureSets.DESERT_OBELISK_SET,
+            DuskStructureSets.DESERT_RUINS,
             StructureSet(
-                structures.getHolderOrThrow(DuskStructureFeatures.DESERT_OBELISK),
+                structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS),
                 RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357617)
             )
         )

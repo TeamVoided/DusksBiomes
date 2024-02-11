@@ -12,6 +12,7 @@ import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider
 import net.minecraft.world.gen.structure.TerrainAdjustment
+import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
 
@@ -21,19 +22,19 @@ object StructureFeatureCreator {
         val structurePools: HolderProvider<StructurePool> = c.lookup(RegistryKeys.STRUCTURE_POOL)
 
         c.register(
-            DuskStructureFeatures.DESERT_OBELISK,
+            DuskStructureFeatures.DESERT_RUINS,
             JigsawFeature(
                 StructureFeature.StructureSettings(
-                    biomeTags.getTagOrThrow(BiomeTags.HAS_VILLAGE_DESERT_STRUCTURE),
+                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_DESERT_RUIN),
                     mapOf(),
                     GenerationStep.Feature.SURFACE_STRUCTURES,
-                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                    TerrainAdjustment.BURY
                 ),
-                structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK_TOP),
+                structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
                 6,
-                ConstantHeightProvider.create(YOffset.fixed(0)),
+                ConstantHeightProvider.create(YOffset.fixed(-10)),
                 true,
-                Heightmap.Type.WORLD_SURFACE_WG
+                Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
     }

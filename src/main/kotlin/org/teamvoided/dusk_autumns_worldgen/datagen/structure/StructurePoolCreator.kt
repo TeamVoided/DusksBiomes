@@ -29,7 +29,7 @@ object StructurePoolCreator {
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
-                            "trail_ruins/tower/tower_1",
+                            "dusk_autumns_worldgen:desert_ruins/obelisk_top",
                             processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
@@ -37,9 +37,23 @@ object StructurePoolCreator {
                 StructurePool.Projection.RIGID
             )
         )
-
-        //look to BiomeCreator
+        context.register(
+            DuskStructurePools.DESERT_RUINS_OBELISK,
+            StructurePool(
+                emptyPool,
+                listOf(
+                    Pair.of(
+                        StructurePoolElement.ofProcessedSingle(
+                            "dusk_autumns_worldgen:desert_ruins/obelisk_top",
+                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                        ), 1
+                    )
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
     }
+    //look to BiomeCreator
 
     fun init() {}
     fun create(id: String): RegistryKey<StructurePool?> {

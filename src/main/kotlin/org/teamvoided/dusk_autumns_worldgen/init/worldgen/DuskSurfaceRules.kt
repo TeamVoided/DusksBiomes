@@ -38,6 +38,12 @@ object DuskSurfaceRules {
         )
 
         //Surface rule sequence 4: floor without water
+        val windsweptHillSurface = condition(
+            biome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
+            sequence(
+                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
+            )
+        )
         val sandSurface = sequence(
             condition(
                 biome(
@@ -66,11 +72,41 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val windsweptSurface = condition(
+        val windsweptBirchSurface = condition(
             biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
             sequence(
                 condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE)),
                 condition(surfaceNoiseThreshold(-0.5), block(Blocks.COARSE_DIRT))
+            )
+        )
+        val windsweptGravelSurface = condition(
+            biome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+            sequence(
+                condition(
+                    surfaceNoiseThreshold(2.0),
+                    sequence(
+                        condition(
+                            ON_CEILING, block(Blocks.STONE)
+                        ),
+                        block(Blocks.GRAVEL)
+                    )
+                ),
+                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE)),
+                condition(
+                    surfaceNoiseThreshold(-1.0),
+                    sequence(
+                        condition(
+                            ON_FLOOR, block(Blocks.GRASS_BLOCK)
+                        ),
+                        block(Blocks.DIRT)
+                    )
+                ),
+                condition(
+                    ON_CEILING, block(Blocks.STONE)
+                ),
+                block(Blocks.GRAVEL)
+
+
             )
         )
         val podzolAndCoarseDirt = condition(
@@ -108,7 +144,13 @@ object DuskSurfaceRules {
         )
 
         //Deep under floor with water above (or not)
-        val sandDeep = sequence(
+        val deepWindsweptHillSurface = condition(
+            biome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
+            sequence(
+                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
+            )
+        )
+        val deepSand = sequence(
             condition(
                 biome(
                     DuskBiomes.WARM_RIVER
@@ -135,9 +177,34 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val deepWindsweptSurface = condition(
+        val deepWindsweptBirchSurface = condition(
             biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
             condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE))
+        )
+        val deepWindsweptGravelSurface = condition(
+            biome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+            sequence(
+                condition(
+                    surfaceNoiseThreshold(2.0),
+                    sequence(
+                        condition(
+                            ON_CEILING, block(Blocks.STONE)
+                        ),
+                        block(Blocks.GRAVEL)
+                    )
+                ),
+                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE)),
+                condition(
+                    surfaceNoiseThreshold(-1.0),
+                    block(Blocks.DIRT)
+                ),
+                condition(
+                    ON_CEILING, block(Blocks.STONE)
+                ),
+                block(Blocks.GRAVEL)
+
+
+            )
         )
         val mudDeep = condition(
             biome(
@@ -175,8 +242,10 @@ object DuskSurfaceRules {
         val onFloorAndWater = condition(
             ON_FLOOR, condition(
                 water(-1, 0), sequence(
+                    windsweptHillSurface,
                     sandSurface,
-                    windsweptSurface,
+                    windsweptBirchSurface,
+                    windsweptGravelSurface,
                     podzolAndCoarseDirt,
                     lessPodzolAndCoarseDirt,
                     mud,
@@ -187,8 +256,10 @@ object DuskSurfaceRules {
         val onFloorInDeepWater = condition(
             DEEP_UNDER_FLOOR, condition(
                 water(-6, 0), sequence(
+                    deepWindsweptGravelSurface,
                     sandSurface,
-                    deepWindsweptSurface,
+                    deepWindsweptBirchSurface,
+                    deepWindsweptGravelSurface,
                     mudDeep
                 )
             )
@@ -199,7 +270,7 @@ object DuskSurfaceRules {
                 swampWater,
                 onFloorAndWater,
                 onFloorInDeepWater,
-                sandDeep,
+                deepSand,
                 sandstoneDesert,
                 sandOcean
             )

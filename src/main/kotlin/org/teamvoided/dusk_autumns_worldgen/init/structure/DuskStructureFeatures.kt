@@ -7,7 +7,8 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 
 object DuskStructureFeatures {
 
-    val DESERT_OBELISK = createKey("desert_obelisk")
+    val DESERT_RUINS = createKey("desert_ruins")
+    val RED_DESERT_RUINS = createKey("red_desert_ruins")
     fun init()  {}
 
     private fun createKey(id: String): RegistryKey<StructureFeature> {
