@@ -16,286 +16,286 @@ import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
 
 object StructurePoolCreator {
     fun bootstrap(c: BootstrapContext<StructurePool>) {
-        generateDesertRuins(c)
+        val structurePools = c.lookup(RegistryKeys.STRUCTURE_POOL)
+        val empty: Holder<StructurePool> = structurePools.getHolderOrThrow(StructurePools.EMPTY)
+        val procLists = c.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+
+        generateDesertRuins(c, empty, procLists)
+        generateRedDesertRuin(c, empty, procLists)
     }
 
-    fun generateDesertRuins(context: BootstrapContext<StructurePool>) {
-        val structurePools = context.lookup(RegistryKeys.STRUCTURE_POOL)
-        val emptyPool: Holder<StructurePool> = structurePools.getHolderOrThrow(StructurePools.EMPTY)
-        val processorLists = context.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
-
-        context.register(
+    fun generateDesertRuins(c: BootstrapContext<StructurePool>, empty: Holder<StructurePool>, procLists: HolderProvider<StructureProcessorList>) {
+        c.register(
             DuskStructurePools.DESERT_RUINS_OBELISK,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 20
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.DESERT_RUINS_OBELISK_TOP,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk_top",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk_top",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.DESERT_RUINS_ROADS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/long_road_end",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_end_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_3",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_4",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_spacer_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.DESERT_RUINS_LARGE_RUINS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.DESERT_RUINS_RUINS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_3",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_4",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_5",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_6",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_7",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_8",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        generateRedDesertRuin(context, emptyPool, processorLists)
     }
 
-    fun generateRedDesertRuin(context: BootstrapContext<StructurePool>, emptyPool: Holder<StructurePool>, processorLists: HolderProvider<StructureProcessorList>){
-        context.register(
+    fun generateRedDesertRuin(c: BootstrapContext<StructurePool>, empty: Holder<StructurePool>, procLists: HolderProvider<StructureProcessorList>){
+        c.register(
             DuskStructurePools.RED_DESERT_RUINS_OBELISK,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 20
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.RED_DESERT_RUINS_OBELISK_TOP,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk_top",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk_top",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.RED_DESERT_RUINS_ROADS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/long_road_end",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_end_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_3",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_4",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/roads/road_spacer_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.RED_DESERT_RUINS_LARGE_RUINS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofEmpty(), 1
@@ -303,70 +303,70 @@ object StructurePoolCreator {
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 2
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 2
                     )
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        context.register(
+        c.register(
             DuskStructurePools.RED_DESERT_RUINS_RUINS,
             StructurePool(
-                emptyPool,
+                empty,
                 listOf(
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_1",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_2",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_3",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_4",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_5",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_6",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_7",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_8",
-                            processorLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
                         ), 1
                     )
                 ),
