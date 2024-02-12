@@ -10,9 +10,9 @@ import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.function.SetStewEffectLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumns_worldgen.data.DuskLootTables
+import org.teamvoided.dusk_autumns_worldgen.util.Utils.uniformNum
 import java.util.function.BiConsumer
 
 class ArchaeologyLootTablesProvider(output: FabricDataOutput) :
@@ -31,19 +31,16 @@ class ArchaeologyLootTablesProvider(output: FabricDataOutput) :
                         ItemEntry.builder(Items.SUSPICIOUS_STEW)
                             .apply(
                                 SetStewEffectLootFunction.builder()
-                                    .withEffect(StatusEffects.NIGHT_VISION, uniformNumber(7, 10))
-                                    .withEffect(StatusEffects.JUMP_BOOST, uniformNumber(7, 10))
-                                    .withEffect(StatusEffects.WEAKNESS, uniformNumber(6.0, 8))
-                                    .withEffect(StatusEffects.BLINDNESS, uniformNumber(5, 7))
-                                    .withEffect(StatusEffects.POISON, uniformNumber(10, 20))
-                                    .withEffect(StatusEffects.SATURATION, uniformNumber(7.0, 10.0))//can use 0.5 if needed
+                                    .withEffect(StatusEffects.NIGHT_VISION, uniformNum(7, 10))
+                                    .withEffect(StatusEffects.JUMP_BOOST, uniformNum(7, 10))
+                                    .withEffect(StatusEffects.WEAKNESS, uniformNum(6.0, 8))
+                                    .withEffect(StatusEffects.BLINDNESS, uniformNum(5, 7))
+                                    .withEffect(StatusEffects.POISON, uniformNum(10, 20))
+                                    .withEffect(StatusEffects.SATURATION, uniformNum(7.0, 10.0)) //can use 0.5 if needed
                             )
                     )
             )
         )
 
     }
-
-    private fun uniformNumber(x: Number, y: Number): UniformLootNumberProvider =
-        UniformLootNumberProvider.create(x.toFloat(), y.toFloat())
 }
