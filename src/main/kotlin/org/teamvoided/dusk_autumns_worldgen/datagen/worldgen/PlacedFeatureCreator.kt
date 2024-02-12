@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.gen.BootstrapContext
-import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
@@ -20,6 +19,30 @@ object PlacedFeatureCreator {
 
         val configuredFeatureProvider = context.lookup(RegistryKeys.CONFIGURED_FEATURE)
 
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,
+            configuredFeatureProvider.getHolderOrThrow(MiscConfiguredFeatures.FOREST_ROCK),
+            *arrayOfNulls<PlacementModifier>(0)
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SWAMP_VILLAGE_OAK,
+            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK),
+            *arrayOfNulls<PlacementModifier>(0)
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.MANGROVE_VEGETATION),
+            *arrayOfNulls<PlacementModifier>(0)
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.FLOWER_SWAMP),
+            *arrayOfNulls<PlacementModifier>(0)
+        )
         PlacedFeatureUtil.register(
             context,
             DuskPlacedFeatures.COBBLESTONE_ROCK,

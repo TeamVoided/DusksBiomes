@@ -18,5 +18,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DuskBlockTags.CANE_SUPPORT)
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
+            .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
     }
 }

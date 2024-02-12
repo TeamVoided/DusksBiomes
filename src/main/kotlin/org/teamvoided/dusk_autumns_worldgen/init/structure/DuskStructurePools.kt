@@ -6,6 +6,26 @@ import net.minecraft.structure.pool.StructurePool
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
 
 object DuskStructurePools {
+
+    val SWAMP_VILLAGE_VILLAGERS = create("village/swamp/villagers")
+    val SWAMP_VILLAGE_CENTER = create("village/swamp/town_centers")
+    val SWAMP_VILLAGE_STREETS = create("village/swamp/streets")
+    val SWAMP_VILLAGE_HOUSES = create("village/swamp/houses")
+    val SWAMP_VILLAGE_DECOR = create("village/swamp/decor")
+    val SWAMP_VILLAGE_TERMINATORS = create("village/swamp/terminators")
+    val MANGROVE_SWAMP_VILLAGE_CENTER = create("village/mangrove_swamp/town_centers")
+    val MANGROVE_SWAMP_VILLAGE_STREETS = create("village/mangrove_swamp/streets")
+    val MANGROVE_SWAMP_VILLAGE_HOUSES = create("village/mangrove_swamp/houses")
+    val MANGROVE_SWAMP_VILLAGE_DECOR = create("village/mangrove_swamp/decor")
+    val MANGROVE_SWAMP_VILLAGE_TERMINATORS = create("village/mangrove_swamp/terminators")
+
+    val SWAMP_ZOMBIE_VILLAGE_VILLAGERS = create("village/swamp/zombie/villagers")
+    val SWAMP_ZOMBIE_VILLAGE_CENTER = create("village/swamp/zombie/town_centers")
+    val SWAMP_ZOMBIE_VILLAGE_HOUSES = create("village/swamp/zombie/houses")
+    val MANGROVE_ZOMBIE_SWAMP_VILLAGE_CENTER = create("village/mangrove_swamp/zombie/town_centers")
+    val MANGROVE_ZOMBIE_SWAMP_VILLAGE_HOUSES = create("village/mangrove_swamp/zombie/houses")
+    
+
     val DESERT_RUINS_OBELISK = create("desert_ruins/obelisk")
     val DESERT_RUINS_OBELISK_TOP = create("desert_ruins/obelisk_top")
     val DESERT_RUINS_ROADS = create("desert_ruins/roads")

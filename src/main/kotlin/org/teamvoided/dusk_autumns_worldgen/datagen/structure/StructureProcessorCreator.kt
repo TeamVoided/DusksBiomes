@@ -20,6 +20,57 @@ object StructureProcessorCreator {
     // StructureProcessorLists
     fun bootstrap(context: BootstrapContext<StructureProcessorList>) {
         val blockTags = context.lookup(RegistryKeys.BLOCK)
+
+        swampVillageProcessorLists(context)
+        desertRuinsProcessorLists(context)
+    }
+
+    fun swampVillageProcessorLists(context: BootstrapContext<StructureProcessorList>){
+        register(
+            context, DuskStructureProcessorLists.VILLAGE_SWAMP_FARM, listOf(
+                RuleStructureProcessor(
+                    ImmutableList.of(
+                        StructureProcessorRule(
+                            RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                            AlwaysTrueRuleTest.INSTANCE,
+                            Blocks.CARROTS.defaultState
+                        ),
+                        StructureProcessorRule(
+                            RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                            AlwaysTrueRuleTest.INSTANCE,
+                            Blocks.POTATOES.defaultState
+                        ),
+                        StructureProcessorRule(
+                            RandomBlockMatchRuleTest(Blocks.WHEAT, 0.1f),
+                            AlwaysTrueRuleTest.INSTANCE,
+                            Blocks.BEETROOTS.defaultState
+                        ),
+                        StructureProcessorRule(
+                            RandomBlockMatchRuleTest(Blocks.WHEAT, 0.025f),
+                            AlwaysTrueRuleTest.INSTANCE,
+                            Blocks.BLUE_ORCHID.defaultState
+                        )
+                    )
+                )
+            )
+        )
+        register(
+            context, DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE, listOf()
+        )
+        register(
+            context, DuskStructureProcessorLists.VILLAGE_SWAMP_STREET, listOf()
+        )
+    }
+    fun mangroveSwampVillageProcessorLists(context: BootstrapContext<StructureProcessorList>){
+        register(
+            context, DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE, listOf()
+        )
+        register(
+            context, DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET, listOf()
+        )
+    }
+
+    fun desertRuinsProcessorLists(context: BootstrapContext<StructureProcessorList>){
         val genericDesertRuinProcessors = RuleStructureProcessor(
             ImmutableList.of(
                 StructureProcessorRule(
@@ -39,28 +90,6 @@ object StructureProcessorCreator {
                 )
             )
         )
-        val genericRedDesertRuinProcessors = RuleStructureProcessor(
-            ImmutableList.of(
-                StructureProcessorRule(
-                    RandomBlockMatchRuleTest(Blocks.SMOOTH_RED_SANDSTONE, 0.3f),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.RED_SAND.defaultState
-                ),
-                StructureProcessorRule(
-                    RandomBlockMatchRuleTest(Blocks.CUT_RED_SANDSTONE, 0.3f),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.RED_SANDSTONE.defaultState
-                ),
-                StructureProcessorRule(
-                    RandomBlockMatchRuleTest(Blocks.POLISHED_GRANITE, 0.05f),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.EXPOSED_COPPER.defaultState
-                )
-            )
-        )
-
-
-
         register(
             context, DuskStructureProcessorLists.DESERT_RUINS_OBELISK_TOP_ARCHAEOLOGY, listOf(
                 CappedStructureProcessor(
@@ -171,54 +200,27 @@ object StructureProcessorCreator {
                 genericDesertRuinProcessors
             )
         )
-//        register(context, StructureProcessorLists.EMPTY, listOf())
-//        register(
-//            context, StructureProcessorLists.ANCIENT_CITY_START_DEGRADATION, listOf(
-//                RuleStructureProcessor(
-//                    ImmutableList.of(
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.DEEPSLATE_BRICKS, 0.3f),
-//                            AlwaysTrueRuleTest.INSTANCE,
-//                            Blocks.CRACKED_DEEPSLATE_BRICKS.defaultState
-//                        ),
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.DEEPSLATE_TILES, 0.3f),
-//                            AlwaysTrueRuleTest.INSTANCE,
-//                            Blocks.CRACKED_DEEPSLATE_TILES.defaultState
-//                        ),
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.SOUL_LANTERN, 0.05f),
-//                            AlwaysTrueRuleTest.INSTANCE,
-//                            Blocks.AIR.defaultState
-//                        )
-//                    )
-//                ), ProtectedBlocksStructureProcessor(BlockTags.FEATURES_CANNOT_REPLACE)
-//            )
-//        )
-//        register(
-//            context, StructureProcessorLists.ANCIENT_CITY_GENERIC_DEGRADATION, listOf(
-//                BlockRotStructureProcessor(blockTags.getTagOrThrow(BlockTags.ANCIENT_CITY_REPLACEABLE), 0.95f),
-//                RuleStructureProcessor(
-//                    ImmutableList.of(
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.DEEPSLATE_BRICKS, 0.3f),
-//                            AlwaysTrueRuleTest.INSTANCE, Blocks.CRACKED_DEEPSLATE_BRICKS.defaultState
-//                        ),
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.DEEPSLATE_TILES, 0.3f),
-//                            AlwaysTrueRuleTest.INSTANCE,
-//                            Blocks.CRACKED_DEEPSLATE_TILES.defaultState
-//                        ),
-//                        StructureProcessorRule(
-//                            RandomBlockMatchRuleTest(Blocks.SOUL_LANTERN, 0.05f),
-//                            AlwaysTrueRuleTest.INSTANCE,
-//                            Blocks.AIR.defaultState
-//                        )
-//                    )
-//                ),
-//                ProtectedBlocksStructureProcessor(BlockTags.FEATURES_CANNOT_REPLACE)
-//            )
-//        )
+    }
+    fun redDesertRuinsProcessorLists (context: BootstrapContext<StructureProcessorList>){
+        val genericRedDesertRuinProcessors = RuleStructureProcessor(
+            ImmutableList.of(
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.SMOOTH_RED_SANDSTONE, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.RED_SAND.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.CUT_RED_SANDSTONE, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.RED_SANDSTONE.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.POLISHED_GRANITE, 0.05f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.EXPOSED_COPPER.defaultState
+                )
+            )
+        )
     }
 
     private fun register(

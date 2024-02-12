@@ -7,6 +7,8 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 
 object DuskStructureFeatures {
 
+    val SWAMP_VILLAGE = createKey("village/swamp_village")
+    val MANGROVE_SWAMP_VILLAGE = createKey("village/mangrove_swamp_village")
     val DESERT_RUINS = createKey("desert_ruins")
     val RED_DESERT_RUINS = createKey("red_desert_ruins")
     fun init()  {}

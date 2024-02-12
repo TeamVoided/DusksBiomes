@@ -5,6 +5,11 @@ import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
 
 object DuskPlacedFeatures {
+
+    val SWAMP_VILLAGE_ROCK = create("structure/mossy_cobblestone_rock")
+    val SWAMP_VILLAGE_OAK = create("structure/swamp_oak")
+    val SWAMP_VILLAGE_MANGROVE = create("structure/mangrove")
+    val SWAMP_VILLAGE_FLOWERS = create("structure/blue_orchid_patch")
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val TREES_COLD_FOREST = create("trees_cold_forest")
     val TREES_COLD_PLAINS = create("trees_cold_plains")
