@@ -43,7 +43,6 @@ val polymer: String by project
 val factorytools: String by project
 val lithostitched: String by project
 dependencies {
-//    modImplementation(include("eu.pb4", "player-data-api", player_data)){
 
     modImplementation(include("com.terraformersmc", "biolith-fabric", biolith)) {
         exclude("com.github.glitchfiend")

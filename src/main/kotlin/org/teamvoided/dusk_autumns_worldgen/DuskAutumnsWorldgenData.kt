@@ -24,6 +24,8 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
         pack.addProvider(::WorldgenProvider)
         pack.addProvider(::BlockTagsProvider)
         pack.addProvider(::FluidTagsProvider)
+        pack.addProvider(::ChestLootTablesProvider)
+        pack.addProvider(::ArchaeologyLootTablesProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
