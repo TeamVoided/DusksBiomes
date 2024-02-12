@@ -15,12 +15,12 @@ object StructureSetCreator {
         val structures = c.lookup(RegistryKeys.STRUCTURE_FEATURE)
         val biomes = c.lookup(RegistryKeys.BIOME)
 
-        c.register(
-            DuskStructureSets.DESERT_RUINS,
-            StructureSet(
-                structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS),
-                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357617)
-            )
-        )
+//        c.register(
+//            DuskStructureSets.DESERT_RUINS,
+//            StructureSet(
+//                structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS),
+//                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357617)
+//            )
+//        )
     }
 }

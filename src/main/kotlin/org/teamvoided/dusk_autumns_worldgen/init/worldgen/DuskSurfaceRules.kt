@@ -206,7 +206,7 @@ object DuskSurfaceRules {
 
             )
         )
-        val mudDeep = condition(
+        val deepMud = condition(
             biome(
                 DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
                 DuskBiomes.FROZEN_MANGROVE_SWAMP,
@@ -260,7 +260,7 @@ object DuskSurfaceRules {
                     sandSurface,
                     deepWindsweptBirchSurface,
                     deepWindsweptGravelSurface,
-                    mudDeep
+                    deepMud
                 )
             )
         )

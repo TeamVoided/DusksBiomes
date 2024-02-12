@@ -33,9 +33,25 @@ object StructureFeatureCreator {
                 structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(-10)),
-                true,
+                false,
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
+//        c.register(
+//            DuskStructureFeatures.RED_DESERT_RUINS,
+//            JigsawFeature(
+//                StructureFeature.StructureSettings(
+//                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_RED_DESERT_RUIN),
+//                    mapOf(),
+//                    GenerationStep.Feature.SURFACE_STRUCTURES,
+//                    TerrainAdjustment.BURY
+//                ),
+//                structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_OBELISK),
+//                6,
+//                ConstantHeightProvider.create(YOffset.fixed(-10)),
+//                false,
+//                Heightmap.Type.OCEAN_FLOOR_WG
+//            )
+//        )
     }
 }
