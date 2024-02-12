@@ -32,7 +32,7 @@ object StructureFeatureCreator {
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
                 6,
-                ConstantHeightProvider.create(YOffset.fixed(-10)),
+                ConstantHeightProvider.create(YOffset.fixed(-12)),
                 false,
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
@@ -48,7 +48,7 @@ object StructureFeatureCreator {
 //                ),
 //                structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_OBELISK),
 //                6,
-//                ConstantHeightProvider.create(YOffset.fixed(-10)),
+//                ConstantHeightProvider.create(YOffset.fixed(-12)),
 //                false,
 //                Heightmap.Type.OCEAN_FLOOR_WG
 //            )
