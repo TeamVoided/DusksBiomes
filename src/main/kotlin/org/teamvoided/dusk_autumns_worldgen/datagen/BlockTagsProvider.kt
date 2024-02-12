@@ -13,7 +13,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     override fun configure(arg: HolderLookup.Provider?) {
 
         getOrCreateTagBuilder(DuskBlockTags.CANE_HYDRATION)
-            .add(Blocks.WATER)
             .add(Blocks.ICE)
             .add(Blocks.FROSTED_ICE)
         getOrCreateTagBuilder(DuskBlockTags.CANE_SUPPORT)

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags;
+import org.teamvoided.dusk_autumns_worldgen.data.DuskFluidTags;
 
 @Mixin(SugarCaneBlock.class)
 public class SugarCaneBlockMixin {
@@ -24,7 +25,9 @@ public class SugarCaneBlockMixin {
         if (blockState.isIn(DuskBlockTags.CANE_SUPPORT)) {
             BlockPos blockPos = pos.down();
             for (Direction direction : Direction.Type.HORIZONTAL) {
-                if (world.getBlockState(blockPos.offset(direction)).isIn(DuskBlockTags.CANE_HYDRATION)) {
+                BlockPos off = blockPos.offset(direction);
+                if (world.getBlockState(off).isIn(DuskBlockTags.CANE_HYDRATION)
+                        || world.getFluidState(off).isIn(DuskFluidTags.CANE_HYDRATION)) {
                     cir.setReturnValue(true);
                     return;
                 }

@@ -5,10 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.log
-import org.teamvoided.dusk_autumns_worldgen.datagen.BiomeTagsProvider
-import org.teamvoided.dusk_autumns_worldgen.datagen.WorldgenProvider
-import org.teamvoided.dusk_autumns_worldgen.datagen.AdvancementsProvider
-import org.teamvoided.dusk_autumns_worldgen.datagen.BlockTagsProvider
+import org.teamvoided.dusk_autumns_worldgen.datagen.*
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureFeatureCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructurePoolCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureProcessorCreator
@@ -26,6 +23,7 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::WorldgenProvider)
         pack.addProvider(::BlockTagsProvider)
+        pack.addProvider(::FluidTagsProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
