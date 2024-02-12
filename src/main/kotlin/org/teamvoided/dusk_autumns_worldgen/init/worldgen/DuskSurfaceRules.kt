@@ -2,11 +2,11 @@ package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.noise.NoiseParametersKeys
 import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
-import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules
 
 object DuskSurfaceRules {
 
@@ -234,6 +234,93 @@ object DuskSurfaceRules {
                 )
             )
         )
+        //Cave Surface
+        val frozenCaverns = sequence(
+            condition(
+                DEEP_UNDER_FLOOR, sequence(
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                water(-6, 0), sequence(
+                                    condition(
+                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, -0.5, 0.2),
+                                        block(Blocks.PACKED_ICE)
+                                    )
+                                )
+                            ),
+                            condition(
+                                water(0, 0), sequence(
+                                    condition(
+                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, -0.35, 0.6),
+                                        block(Blocks.POWDER_SNOW)
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            condition(
+                                water(-1, 0), sequence(
+                                    condition(
+                                        noiseThreshold
+                                            (NoiseParametersKeys.ICE, -0.0625, 0.025),
+                                        block(Blocks.ICE)
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    condition(
+                        water(-1, 0), sequence(
+                            block(Blocks.SNOW_BLOCK)
+                        )
+                    )
+                )
+            ),
+            condition(
+                stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                    condition(
+                        UNDER_CEILING, sequence(
+                            condition(
+                                water(6, 0), sequence(
+                                    condition(
+                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, -0.5, 0.2),
+                                        block(Blocks.PACKED_ICE)
+                                    )
+                                )
+                            ),
+                            condition(
+                                water(0, 0), sequence(
+                                    condition(
+                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, -0.35, 0.6),
+                                        block(Blocks.POWDER_SNOW)
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            condition(
+                                water(1, 0), sequence(
+                                    condition(
+                                        noiseThreshold
+                                            (NoiseParametersKeys.ICE, -0.0625, 0.025),
+                                        block(Blocks.ICE)
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    condition(
+                        water(1, 0), sequence(
+                            block(Blocks.SNOW_BLOCK)
+                        )
+                    )
+                )
+            )
+        )
 
 
         //Begin the Layout
@@ -275,8 +362,11 @@ object DuskSurfaceRules {
                 sandOcean
             )
         )
+        val cave = sequence(
+            frozenCaverns
+        )
         // Return a surface-only sequence of surface rules
-        return sequence(surface)
+        return sequence(surface, cave)
     }
 
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {

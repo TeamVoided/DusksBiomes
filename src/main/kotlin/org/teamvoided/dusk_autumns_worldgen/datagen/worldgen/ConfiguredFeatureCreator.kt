@@ -32,11 +32,15 @@ import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
+import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import java.util.*
+import java.util.List
+import kotlin.collections.Iterator
+import kotlin.collections.listOf
 
 object ConfiguredFeatureCreator {
     fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -305,9 +309,74 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_ICE_SPIKE,
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                60, 10, 30, BlockStateProvider.of(Blocks.PACKED_ICE), blockTags.getTagOrThrow(BlockTags.REPLACEABLE)
+                60,
+                10,
+                30,
+                BlockStateProvider.of(Blocks.PACKED_ICE),
+                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             )
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.BLUE_ICE_SPIKE,
+            DuskConfiguredFeatures.SPIKE,
+            SpikeFeatureConfig(
+                10,
+                10,
+                30,
+                BlockStateProvider.of(Blocks.BLUE_ICE),
+                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE,
+            DuskConfiguredFeatures.INVERTED_SPIKE,
+            SpikeFeatureConfig(
+                10,
+                10,
+                30,
+                BlockStateProvider.of(Blocks.BLUE_ICE),
+                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
+            context, DuskConfiguredFeatures.ICE_SPIKE_FLOOR,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ),
+                        0.05f
+                    )
+                ),  PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(MiscConfiguredFeatures.ICE_SPIKE),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
+            context, DuskConfiguredFeatures.ICE_SPIKE_CEILING,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ),
+                        0.05f
+                    )
+                ), PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
+            )
+        )
+
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,

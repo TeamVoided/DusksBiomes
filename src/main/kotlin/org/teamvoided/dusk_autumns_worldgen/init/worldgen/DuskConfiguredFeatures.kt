@@ -26,7 +26,11 @@ object DuskConfiguredFeatures {
     val CHERRY_SNOW_BEES = create("cherry_snow_bees")
     val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
+    val ICE_SPIKE_FLOOR = create ("ice_spike_floor")
+    val ICE_SPIKE_CEILING = create ("ice_spike_ceiling")
     val INVERTED_ICE_SPIKE = create("inverted_ice_spike")
+    val BLUE_ICE_SPIKE = create("blue_ice_spike")
+    val INVERTED_BLUE_ICE_SPIKE = create("inverted_blue_ice_spike")
     val CUSTOM_MONSTER_ROOM = create("custom_monster_room")
 
 

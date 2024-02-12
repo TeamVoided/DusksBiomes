@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
-import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
@@ -13,10 +12,9 @@ import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
-import net.minecraft.world.gen.carver.ConfiguredCarver
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
+import net.minecraft.world.gen.feature.MiscPlacedFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
-import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
@@ -544,14 +542,15 @@ object BiomeCreator {
         val builder2 = GenerationSettings.Builder(feature, carver)
         OverworldBiomeCreator.addBasicFeatures(builder2)
         DefaultBiomeFeatures.addPlainsTallGrass(builder2)
-        DefaultBiomeFeatures.addDefaultOres(builder2, true)
+        DefaultBiomeFeatures.addDefaultOres(builder2)
         DefaultBiomeFeatures.addDefaultDisks(builder2)
         DefaultBiomeFeatures.addPlainsFeatures(builder2)
         DefaultBiomeFeatures.addDefaultMushrooms(builder2)
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
-        DefaultBiomeFeatures.addDripstone(builder2)
+        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
+        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_SPIKE_CEILING)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
-        return OverworldBiomeCreator.create(true, 0.8f, 0.4f, builder, builder2, musicSound)
+        return OverworldBiomeCreator.create(true, 0f, 0.4f, builder, builder2, musicSound)
     }
 
 

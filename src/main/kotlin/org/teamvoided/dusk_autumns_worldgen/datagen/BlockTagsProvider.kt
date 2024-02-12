@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
+import org.teamvoided.dusk_autumns_worldgen.init.DuskBlocks
 import java.util.concurrent.CompletableFuture
 
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -19,5 +20,18 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
+        getOrCreateTagBuilder(DuskBlockTags.MOOSHROOM_SPAWNABLE_ON)
+            .add(Blocks.MYCELIUM)
+            .add(Blocks.PODZOL)
+        getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+            .add(Blocks.SNOW_BLOCK)
+            .forceAddTag(BlockTags.REPLACEABLE)
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(Blocks.SNOW_BLOCK)
+
+
+//SUSPICIOUS
+        getOrCreateTagBuilder(BlockTags.SAND)
+            .add(DuskBlocks.SUSPICIOUS_RED_SAND)
     }
 }

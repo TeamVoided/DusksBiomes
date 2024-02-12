@@ -237,12 +237,24 @@ object PlacedFeatureCreator {
         )
         PlacedFeatureUtil.register(
             context,
-            DuskPlacedFeatures.INVERTED_ICE_SPIKE_CAVE,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE),
+            DuskPlacedFeatures.ICE_SPIKE_FLOOR,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE_FLOOR),
             *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(3),
+                CountPlacementModifier.create(4),
                 InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+                BlockPredicateFilterPlacementModifier(blockPredicate.
+                //put snow in here
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.ICE_SPIKE_CEILING,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE_CEILING),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(4),
+                InSquarePlacementModifier.getInstance(),
                 BiomePlacementModifier.getInstance()
             )
         )
