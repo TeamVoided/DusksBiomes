@@ -15,13 +15,39 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
 
 object StructurePoolCreator {
+
+    val zombieChance = (1/50)*100
     fun bootstrap(c: BootstrapContext<StructurePool>) {
         val structurePools = c.lookup(RegistryKeys.STRUCTURE_POOL)
         val empty: Holder<StructurePool> = structurePools.getHolderOrThrow(StructurePools.EMPTY)
         val procLists = c.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
+//        generateSwampVillage(c, empty,procLists)
+//        generateMangroveSwampVillage(c, empty,procLists)
         generateDesertRuins(c, empty, procLists)
         generateRedDesertRuin(c, empty, procLists)
+    }
+
+    fun generateSwampVillage(c: BootstrapContext<StructurePool>, empty: Holder<StructurePool>, procLists: HolderProvider<StructureProcessorList>){
+        c.register(
+            DuskStructurePools.RED_DESERT_RUINS_OBELISK,
+            StructurePool(
+                empty,
+                listOf(
+                    Pair.of(
+                        StructurePoolElement.ofProcessedSingle(
+                            "dusk_autumns_worldgen:village/swamp/town_centers/swamp_meeting_point_1",
+                            procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+                        ), zombieChance
+                    )
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+    }
+
+    fun generateMangroveSwampVillage(c: BootstrapContext<StructurePool>, empty: Holder<StructurePool>, procLists: HolderProvider<StructureProcessorList>){
+
     }
 
     fun generateDesertRuins(c: BootstrapContext<StructurePool>, empty: Holder<StructurePool>, procLists: HolderProvider<StructureProcessorList>) {
@@ -34,7 +60,7 @@ object StructurePoolCreator {
                         StructurePoolElement.ofProcessedSingle(
                             "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk",
                             procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
-                        ), 20
+                        ), 24
                     ),
                     Pair.of(
                         StructurePoolElement.ofProcessedSingle(
