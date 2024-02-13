@@ -14,8 +14,7 @@ class StructurePieceFeatureConfig(
     val processors: Holder<StructureProcessorList>,
     val maxEmptyCorners: Int,
     val heightmap: Heightmap.Type
-) :
-    FeatureConfig {
+) : FeatureConfig {
 
 
     init {
