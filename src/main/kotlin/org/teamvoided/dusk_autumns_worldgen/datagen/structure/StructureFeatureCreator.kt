@@ -49,22 +49,22 @@ object StructureFeatureCreator {
                 Heightmap.Type.WORLD_SURFACE_WG
             )
         )
-//        c.register(
-//            DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE,
-//            JigsawFeature(
-//                StructureFeature.StructureSettings(
-//                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE),
-//                    mapOf(),
-//                    GenerationStep.Feature.SURFACE_STRUCTURES,
-//                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
-//                ),
-//                structurePools.getHolderOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER),
-//                6,
-//                ConstantHeightProvider.create(YOffset.fixed(0)),
-//                true,
-//                Heightmap.Type.WORLD_SURFACE_WG
-//            )
-//        )
+        c.register(
+            DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE,
+            JigsawFeature(
+                StructureFeature.StructureSettings(
+                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE),
+                    mapOf(),
+                    GenerationStep.Feature.SURFACE_STRUCTURES,
+                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                ),
+        structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_CENTER),
+                6,
+                ConstantHeightProvider.create(YOffset.fixed(0)),
+                true,
+                Heightmap.Type.WORLD_SURFACE_WG
+            )
+        )
         c.register(
             DuskStructureFeatures.DESERT_RUINS,
             JigsawFeature(

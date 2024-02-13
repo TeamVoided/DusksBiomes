@@ -14,6 +14,7 @@ import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.util.math.int_provider.WeightedListIntProvider
+import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
@@ -33,11 +34,14 @@ import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
+import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
+import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import java.util.*
 
 object ConfiguredFeatureCreator {
@@ -47,6 +51,7 @@ object ConfiguredFeatureCreator {
             context.lookup(RegistryKeys.CONFIGURED_FEATURE)
         val placedFeatures: HolderProvider<PlacedFeature> =
             context.lookup(RegistryKeys.PLACED_FEATURE)
+        val procLists = context.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context, DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -410,6 +415,19 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.TUFF),
                 listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER),
                 LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.DESERT_WELL,
+            DuskConfiguredFeatures.STRUCTURE_PIECE,
+            StructurePieceFeatureConfig(
+                listOf(
+                    id("village/swamp/town_centers/swamp_meeting_point_1")
+                ),
+                procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE),
+                7,
+                Heightmap.Type.OCEAN_FLOOR_WG,
             )
         )
     }

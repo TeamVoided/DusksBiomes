@@ -10,8 +10,10 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.InvertedSpikeFeature
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.MonsterRoomFeature
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.SpikeFeature
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.StructurePieceFeature
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 
 
 @Suppress("HasPlatformType")
@@ -36,6 +38,8 @@ object DuskConfiguredFeatures {
     val ORE_BLUE_ICE = create("ore_blue_ice")
 
     val CUSTOM_MONSTER_ROOM = create("custom_monster_room")
+    val DESERT_WELL = create("desert_well")
+    val RED_DESERT_WELL = create("red_desert_well")
 
 
 //    Register Configure Feature Types
@@ -43,6 +47,7 @@ object DuskConfiguredFeatures {
     val INVERTED_SPIKE = register("inverted_spike", InvertedSpikeFeature(SpikeFeatureConfig.CODEC))
     val SPIKE = register("spike", SpikeFeature(SpikeFeatureConfig.CODEC))
     val MONSTER_ROOM = register("monster_room", MonsterRoomFeature(MonsterRoomFeatureConfig.CODEC))
+    val STRUCTURE_PIECE = register("structure_piece", StructurePieceFeature(StructurePieceFeatureConfig.CODEC))
 
 
 
