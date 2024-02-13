@@ -8,6 +8,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.world.gen.BootstrapContext
+import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
@@ -246,7 +247,10 @@ object PlacedFeatureCreator {
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
                 EnvironmentScanPlacementModifier.create(
-                    Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK), BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS), 12
+                    Direction.DOWN,
+                    BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK),
+                    BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
+                    12
                 ),
                 RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
                 BiomePlacementModifier.getInstance()
@@ -261,12 +265,37 @@ object PlacedFeatureCreator {
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
                 EnvironmentScanPlacementModifier.create(
-                    Direction.UP, BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK), BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS), 12
+                    Direction.UP,
+                    BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK),
+                    BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
+                    12
                 ),
-                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
                 BiomePlacementModifier.getInstance()
             )
         )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.ORE_ICE,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_ICE),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(-64), YOffset.fixed(160)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.ORE_BLUE_ICE,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_BLUE_ICE),
+            *arrayOf<PlacementModifier>(
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(-64), YOffset.fixed(160)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+
 
 //        PlacedFeatureUtil.register(
 //            context, UndergroundPlacedFeatures.SPORE_BLOSSOM, holder14, *arrayOf<PlacementModifier>(

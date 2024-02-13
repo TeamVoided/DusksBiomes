@@ -16,6 +16,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 //VANILLA
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
             .add(Blocks.SNOW_BLOCK)
+            .add(Blocks.ICE)
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
             .add(Blocks.PODZOL)
 //Dusk Tags

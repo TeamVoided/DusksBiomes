@@ -540,6 +540,7 @@ object BiomeCreator {
         val builder = SpawnSettings.Builder()
         DefaultBiomeFeatures.addDripstoneCaveMobs(builder)
         val builder2 = GenerationSettings.Builder(feature, carver)
+        DefaultBiomeFeatures.addFossils(builder2)
         OverworldBiomeCreator.addBasicFeatures(builder2)
         DefaultBiomeFeatures.addPlainsTallGrass(builder2)
         DefaultBiomeFeatures.addDefaultOres(builder2)
@@ -549,6 +550,8 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
         builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
+        builder2.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeatures.ORE_ICE)
+        builder2.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeatures.ORE_BLUE_ICE)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
         return OverworldBiomeCreator.create(true, 0f, 0.4f, builder, builder2, musicSound)
     }
