@@ -13,6 +13,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
     override fun configure(arg: HolderLookup.Provider?) {
 
+//VANILLA
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(Blocks.SNOW_BLOCK)
+        getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
+            .add(Blocks.PODZOL)
+//Dusk Tags
         getOrCreateTagBuilder(DuskBlockTags.CANE_HYDRATION)
             .add(Blocks.ICE)
             .add(Blocks.FROSTED_ICE)
@@ -20,15 +26,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
-        getOrCreateTagBuilder(DuskBlockTags.MOOSHROOM_SPAWNABLE_ON)
-            .add(Blocks.MYCELIUM)
-            .add(Blocks.PODZOL)
         getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+            .forceAddTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
             .add(Blocks.SNOW_BLOCK)
+            .add(Blocks.PACKED_ICE)
+        getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
             .forceAddTag(BlockTags.REPLACEABLE)
-        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-            .add(Blocks.SNOW_BLOCK)
-
+            .add(Blocks.POWDER_SNOW)
+            .add(Blocks.ICE)
 
 //SUSPICIOUS
         getOrCreateTagBuilder(BlockTags.SAND)

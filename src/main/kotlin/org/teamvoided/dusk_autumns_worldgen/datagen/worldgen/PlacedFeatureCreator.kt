@@ -6,11 +6,13 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
+import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
+import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
@@ -240,11 +242,13 @@ object PlacedFeatureCreator {
             DuskPlacedFeatures.ICE_SPIKE_FLOOR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE_FLOOR),
             *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(4),
+                CountPlacementModifier.create(125),
                 InSquarePlacementModifier.getInstance(),
-                BlockPredicateFilterPlacementModifier(blockPredicate.
-                //put snow in here
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK), BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS), 12
                 ),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
                 BiomePlacementModifier.getInstance()
             )
         )
@@ -253,11 +257,30 @@ object PlacedFeatureCreator {
             DuskPlacedFeatures.ICE_SPIKE_CEILING,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE_CEILING),
             *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(4),
+                CountPlacementModifier.create(125),
                 InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP, BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK), BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS), 12
+                ),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
                 BiomePlacementModifier.getInstance()
             )
         )
+
+//        PlacedFeatureUtil.register(
+//            context, UndergroundPlacedFeatures.SPORE_BLOSSOM, holder14, *arrayOf<PlacementModifier>(
+//                CountPlacementModifier.create(25),
+//                InSquarePlacementModifier.getInstance(),
+//                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+//                EnvironmentScanPlacementModifier.create(
+//                    Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+//                ),
+//                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+//                BiomePlacementModifier.getInstance()
+//            )
+//        )
+
 //        PlacedFeatureUtil.register(
 //            context,
 //            UndergroundPlacedFeatures.MONSTER_ROOM_DEEP,

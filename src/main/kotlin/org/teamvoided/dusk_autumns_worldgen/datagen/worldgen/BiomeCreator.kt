@@ -547,8 +547,8 @@ object BiomeCreator {
         DefaultBiomeFeatures.addPlainsFeatures(builder2)
         DefaultBiomeFeatures.addDefaultMushrooms(builder2)
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
-        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
-        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_SPIKE_CEILING)
+        builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
+        builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
         return OverworldBiomeCreator.create(true, 0f, 0.4f, builder, builder2, musicSound)
     }

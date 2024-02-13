@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 object DuskBiomeTags {
 
     val DUSK_BIOMES: TagKey<Biome> = create("dusk_biomes")
+    val DUSK_LAND_BIOMES:TagKey<Biome> = create("dusk_land_biomes")
     val HAS_FROZEN_VARIANTS: TagKey<Biome> = create("has_snow_variants")
     val HAS_HOT_VARIANTS: TagKey<Biome> = create("has_hot_variants")
     val HAS_VILLAGE_SWAMP_STRUCTURE: TagKey<Biome> = create("has_structure/has_village_swamp")

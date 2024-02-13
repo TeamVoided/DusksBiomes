@@ -7,6 +7,7 @@ import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.int_provider.ConstantIntProvider
@@ -38,9 +39,6 @@ import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import java.util.*
-import java.util.List
-import kotlin.collections.Iterator
-import kotlin.collections.listOf
 
 object ConfiguredFeatureCreator {
     fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -309,7 +307,19 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_ICE_SPIKE,
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                60,
+                20,
+                10,
+                30,
+                BlockStateProvider.of(Blocks.PACKED_ICE),
+                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.ICE_SPIKE,
+            DuskConfiguredFeatures.SPIKE,
+            SpikeFeatureConfig(
+                20,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -321,7 +331,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.SPIKE,
             SpikeFeatureConfig(
-                10,
+                5,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -333,7 +343,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                10,
+                5,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -350,10 +360,10 @@ object ConfiguredFeatureCreator {
                             configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE),
                             *arrayOfNulls<PlacementModifier>(0)
                         ),
-                        0.05f
+                        0.075f
                     )
-                ),  PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(MiscConfiguredFeatures.ICE_SPIKE),
+                ), PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE),
                     *arrayOfNulls<PlacementModifier>(0)
                 )
             )
@@ -368,7 +378,7 @@ object ConfiguredFeatureCreator {
                             configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE),
                             *arrayOfNulls<PlacementModifier>(0)
                         ),
-                        0.05f
+                        0.075f
                     )
                 ), PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE),
@@ -376,6 +386,19 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.ORE_ICE,
+            Feature.ORE,
+            OreFeatureConfig(TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD), Blocks.ICE.defaultState, 64)
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.ORE_BLUE_ICE,
+            Feature.ORE,
+            OreFeatureConfig(TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD), Blocks.BLUE_ICE.defaultState, 64)
+        )
+
 
 
         ConfiguredFeatureUtil.registerConfiguredFeature(

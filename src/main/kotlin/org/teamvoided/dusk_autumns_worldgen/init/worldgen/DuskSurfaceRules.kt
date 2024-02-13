@@ -243,7 +243,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(-6, 0), sequence(
                                     condition(
-                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, -0.5, 0.2),
+                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
                                         block(Blocks.PACKED_ICE)
                                     )
                                 )
@@ -251,7 +251,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(0, 0), sequence(
                                     condition(
-                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, -0.35, 0.6),
+                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
                                         block(Blocks.POWDER_SNOW)
                                     )
                                 )
@@ -264,7 +264,7 @@ object DuskSurfaceRules {
                                 water(-1, 0), sequence(
                                     condition(
                                         noiseThreshold
-                                            (NoiseParametersKeys.ICE, -0.0625, 0.025),
+                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
@@ -285,7 +285,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(6, 0), sequence(
                                     condition(
-                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, -0.5, 0.2),
+                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
                                         block(Blocks.PACKED_ICE)
                                     )
                                 )
@@ -293,7 +293,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(0, 0), sequence(
                                     condition(
-                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, -0.35, 0.6),
+                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
                                         block(Blocks.POWDER_SNOW)
                                     )
                                 )
@@ -306,7 +306,7 @@ object DuskSurfaceRules {
                                 water(1, 0), sequence(
                                     condition(
                                         noiseThreshold
-                                            (NoiseParametersKeys.ICE, -0.0625, 0.025),
+                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
@@ -366,7 +366,13 @@ object DuskSurfaceRules {
             frozenCaverns
         )
         // Return a surface-only sequence of surface rules
-        return sequence(surface, cave)
+        return sequence(
+            condition(
+                aboveY(YOffset.fixed(-55), 0), sequence(
+                    surface, cave
+                )
+            )
+        )
     }
 
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {
