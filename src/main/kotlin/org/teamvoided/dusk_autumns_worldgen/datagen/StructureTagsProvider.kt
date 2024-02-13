@@ -22,10 +22,10 @@ class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLook
         getOrCreateTagBuilder(StructureTags.EYE_OF_ENDER_LOCATED)
             .add(BuiltInStructures.END_CITY)
         getOrCreateTagBuilder(StructureTags.ON_SWAMP_EXPLORER_MAPS)
-            .add(DuskStructures.SWAMP_VILLAGE)
-            .add(DuskStructures.MANGROVE_SWAMP_VILLAGE)
+            .add(DuskStructureFeatures.SWAMP_VILLAGE)
+            .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)
         getOrCreateTagBuilder(StructureTags.VILLAGE)
-            .add(DuskStructures.SWAMP_VILLAGE)
-            .add(DuskStructures.MANGROVE_SWAMP_VILLAGE)
+            .add(DuskStructureFeatures.SWAMP_VILLAGE)
+            .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)
     }
 }
