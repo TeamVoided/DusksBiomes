@@ -27,10 +27,12 @@ object DuskPlacedFeatures {
     val TREES_SNOWY_CHERRY_GROVE = create("trees_snowy_cherry_grove")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val MUSHROOM_GROVE_VEGETATION = create("mushroom_grove_vegetation")
-    val ICE_SPIKE_FLOOR = create("ice_spike_floor")
-    val ICE_SPIKE_CEILING = create("ice_spike_ceiling")
-    val ORE_ICE = create("ore_ice")
-    val ORE_BLUE_ICE = create("ore_blue_ice")
+    val ICE_SPIKE_FLOOR = create("cave/frozen_cavern/ice_spike_floor")
+    val ICE_SPIKE_CEILING = create("cave/frozen_cavern/ice_spike_ceiling")
+    val ORE_ICE = create("cave/frozen_cavern/ore_ice")
+    val ORE_BLUE_ICE = create("cave/frozen_cavern/ore_blue_ice")
+    val DESERT_WELL = create("desert_well")
+    val RED_DESERT_WELL = create("red_desert_well")
 
     fun init() {}
     fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumnsWorldgen.id(id))

@@ -45,32 +45,39 @@ object DuskBiomes {
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
     val MUSHROOM_CAVES = create("mushroom_caves")
     val FROZEN_CAVERNS = create("frozen_caverns")
+    val SANDY_CAVES = create("sandy_caves")
+    val RED_SANDY_CAVES = create("red_sandy_caves")
 
 
     fun init() {
         val windsweptVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, -0.1f, false
-            ),
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                0F, 1f, false
-            )
-        )
-        val oldGrowthVariant = of(
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                0.1F, 1f, false
+                -1F, 0f, false
             ),
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
                 -1F, 0f, false
             )
         )
+        val oldGrowthVariant = of(
+            SubBiomeMatcher.Criterion.ofRange(
+                CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                0F, 1f, false
+            ),
+            SubBiomeMatcher.Criterion.ofRange(
+                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                0F, 1f, false
+
+            )
+        )
         val snowyVariant = SubBiomeMatcher.Criterion.ofRange(
             CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
             -1F, -0.45f, false
+        )
+        val coldRegion = SubBiomeMatcher.Criterion.ofRange(
+            CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+            -1F, -0.3f, false
         )
         val redSandVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
@@ -87,18 +94,12 @@ object DuskBiomes {
 
         BiomePlacement.addSubOverworld(
             Biomes.FOREST, COLD_FOREST, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -0.3F, 0f, false
-                )
+                coldRegion
             )
         )
         BiomePlacement.addSubOverworld(
             Biomes.PLAINS, COLD_PLAINS, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -0.3F, 0f, false
-                )
+                coldRegion
             )
         )
         BiomePlacement.addSubOverworld(
@@ -139,6 +140,14 @@ object DuskBiomes {
                 Range(1),         // Depth
                 Range(0.05, 1),         // Weirdness
                 0L                  // Offset
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, 0.2f, false
+                )
             )
         )
         BiomePlacement.addSubOverworld(

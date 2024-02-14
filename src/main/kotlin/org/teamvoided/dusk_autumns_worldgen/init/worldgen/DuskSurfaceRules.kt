@@ -234,88 +234,89 @@ object DuskSurfaceRules {
                 )
             )
         )
-        //Cave Surface
-        val frozenCaverns = sequence(
-            condition(
-                DEEP_UNDER_FLOOR, sequence(
-                    condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                water(-6, 0), sequence(
-                                    condition(
-                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
-                                        block(Blocks.PACKED_ICE)
+//Cave Surface
+        val frozenCaverns = condition(
+            biome(DuskBiomes.FROZEN_CAVERNS),
+            sequence(
+                condition(
+                    DEEP_UNDER_FLOOR, sequence(
+                        condition(
+                            UNDER_FLOOR, sequence(
+                                condition(
+                                    water(-6, 0), sequence(
+                                        condition(
+                                            noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
+                                            block(Blocks.PACKED_ICE)
+                                        )
                                     )
-                                )
-                            ),
-                            condition(
-                                water(0, 0), sequence(
-                                    condition(
-                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
-                                        block(Blocks.POWDER_SNOW)
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    condition(
-                        ON_FLOOR, sequence(
-                            condition(
-                                water(-1, 0), sequence(
-                                    condition(
-                                        noiseThreshold
-                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
-                                        block(Blocks.ICE)
+                                ),
+                                condition(
+                                    water(0, 0), sequence(
+                                        condition(
+                                            noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
+                                            block(Blocks.POWDER_SNOW)
+                                        )
                                     )
                                 )
                             )
-                        )
-                    ),
-                    condition(
-                        water(-1, 0), sequence(
-                            block(Blocks.SNOW_BLOCK)
+                        ),
+                        condition(
+                            ON_FLOOR, sequence(
+                                condition(
+                                    water(-1, 0), sequence(
+                                        condition(
+                                            noiseThreshold
+                                                (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                            block(Blocks.ICE)
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        condition(
+                            water(-1, 0), sequence(
+                                block(Blocks.SNOW_BLOCK)
+                            )
                         )
                     )
-                )
-            ),
-            condition(
-                stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                    condition(
-                        UNDER_CEILING, sequence(
-                            condition(
-                                water(6, 0), sequence(
-                                    condition(
-                                        noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
-                                        block(Blocks.PACKED_ICE)
-                                    )
-                                )
-                            ),
-                            condition(
-                                water(0, 0), sequence(
-                                    condition(
-                                        noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
-                                        block(Blocks.POWDER_SNOW)
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    condition(
-                        ON_FLOOR, sequence(
-                            condition(
-                                water(1, 0), sequence(
-                                    condition(
-                                        noiseThreshold
-                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
-                                        block(Blocks.ICE)
+                ),
+                condition(
+                    stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                        condition(
+                            UNDER_CEILING, sequence(
+                                condition(
+                                    noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
+                                    block(Blocks.PACKED_ICE)
+
+
+                                ),
+                                condition(
+                                    water(0, 0), sequence(
+                                        condition(
+                                            noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
+                                            block(Blocks.POWDER_SNOW)
+                                        )
                                     )
                                 )
                             )
-                        )
-                    ),
-                    condition(
-                        water(1, 0), sequence(
-                            block(Blocks.SNOW_BLOCK)
+                        ),
+                        condition(
+                            ON_FLOOR, sequence(
+                                condition(
+                                    water(1, 0), sequence(
+                                        condition(
+                                            noiseThreshold
+                                                (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                            block(Blocks.ICE)
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        condition(
+                            water(1, 0), sequence(
+                                block(Blocks.SNOW_BLOCK)
+                            )
                         )
                     )
                 )

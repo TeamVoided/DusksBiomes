@@ -64,6 +64,7 @@ class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: Completable
             .add(DuskBiomes.SNOWY_STONY_SHORE)
             .add(DuskBiomes.FROZEN_CAVERNS)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_HOT_VARIANTS)
+            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
             .add(DuskBiomes.WARM_RIVER)
             .add(DuskBiomes.RED_DESERT)
             .add(DuskBiomes.RED_WARM_RIVER)

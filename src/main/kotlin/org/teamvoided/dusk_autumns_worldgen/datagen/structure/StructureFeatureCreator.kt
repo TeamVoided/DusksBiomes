@@ -58,7 +58,7 @@ object StructureFeatureCreator {
                     GenerationStep.Feature.SURFACE_STRUCTURES,
                     TerrainAdjustment.STRUCTURE_WEIGHT_THIN
                 ),
-        structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_CENTER),
+                structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_CENTER),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(0)),
                 true,
@@ -75,13 +75,10 @@ object StructureFeatureCreator {
                     TerrainAdjustment.BURY
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
-                Optional.of(Identifier("center")),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(-12)),
                 false,
-                Optional.of(Heightmap.Type.OCEAN_FLOOR_WG),
-                80,
-                listOf()
+                Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
         c.register(
@@ -94,13 +91,10 @@ object StructureFeatureCreator {
                     TerrainAdjustment.BURY
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_OBELISK),
-                Optional.of(Identifier("center")),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(-12)),
                 false,
-                Optional.of(Heightmap.Type.OCEAN_FLOOR_WG),
-                80,
-                listOf()
+                Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
     }

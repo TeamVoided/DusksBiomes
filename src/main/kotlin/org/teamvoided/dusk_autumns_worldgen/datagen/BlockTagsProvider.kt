@@ -27,6 +27,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
+        getOrCreateTagBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
+            .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+            .add(Blocks.POWDER_SNOW)
+            .add(Blocks.SNOW_BLOCK)
+            .add(Blocks.PACKED_ICE)
+            .add(Blocks.ICE)
         getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             .forceAddTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
             .add(Blocks.SNOW_BLOCK)
@@ -35,6 +41,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.REPLACEABLE)
             .add(Blocks.POWDER_SNOW)
             .add(Blocks.ICE)
+            .add(Blocks.WATER)
 
 //SUSPICIOUS
         getOrCreateTagBuilder(BlockTags.SAND)

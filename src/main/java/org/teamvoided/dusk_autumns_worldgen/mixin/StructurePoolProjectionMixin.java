@@ -16,6 +16,9 @@ import java.util.Arrays;
 
 @Mixin(StructurePool.Projection.class)
 public class StructurePoolProjectionMixin {
+
+//    TerrainAdjustmentClass ask about and see if that is what causes issues
+
     @Mutable
     @Shadow
     @Final

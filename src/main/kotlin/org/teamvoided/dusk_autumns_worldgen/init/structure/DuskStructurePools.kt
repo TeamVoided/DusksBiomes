@@ -36,6 +36,8 @@ object DuskStructurePools {
     val RED_DESERT_RUINS_ROADS = create("red_desert_ruins/roads")
     val RED_DESERT_RUINS_LARGE_RUINS = create("red_desert_ruins/large_ruins")
     val RED_DESERT_RUINS_RUINS = create("red_desert_ruins/ruins")
+
+    val DESERT_WELL = create("feature/desert_well")
     fun init()  {}
 
     fun create(id: String): RegistryKey<StructurePool?> {

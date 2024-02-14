@@ -27,7 +27,7 @@ class StructurePieceFeatureConfig(
                 instance.group(
                     Identifier.CODEC.listOf().fieldOf("structures").forGetter { it.structures },
                     StructureProcessorType.REGISTRY_CODEC.fieldOf("processors").forGetter { it.processors },
-                    Codec.intRange(0, 7).fieldOf("max_empty_corners_allowed").forGetter { it.maxEmptyCorners },
+                    Codec.intRange(0, 8).fieldOf("max_empty_corners_allowed").forGetter { it.maxEmptyCorners },
                     Heightmap.Type.CODEC.fieldOf("heightmap").forGetter { it.heightmap }
                 ).apply(instance, ::StructurePieceFeatureConfig)
             }

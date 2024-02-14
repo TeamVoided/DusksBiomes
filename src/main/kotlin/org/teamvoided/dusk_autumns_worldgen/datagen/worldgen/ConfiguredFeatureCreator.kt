@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
+import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.loot.LootTables
@@ -7,6 +8,7 @@ import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
@@ -20,6 +22,7 @@ import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
+import net.minecraft.world.gen.foliage.BlobFoliagePlacer
 import net.minecraft.world.gen.foliage.CherryFoliagePlacer
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
 import net.minecraft.world.gen.root.AboveRootPlacement
@@ -30,18 +33,18 @@ import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
-import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer
+import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
-import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
+import org.teamvoided.dusk_autumns_worldgen.worldgen.treedecorator.FixedLeavesVineTreeDecorator
 import java.util.*
 
 object ConfiguredFeatureCreator {
@@ -52,6 +55,7 @@ object ConfiguredFeatureCreator {
         val placedFeatures: HolderProvider<PlacedFeature> =
             context.lookup(RegistryKeys.PLACED_FEATURE)
         val procLists = context.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+        val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context, DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -104,7 +108,7 @@ object ConfiguredFeatureCreator {
             )
                 .decorators(
                     listOf(
-                        LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
+                        FixedLeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                             0.14f, 1, 0, RandomizedIntBlockStateProvider(
                                 BlockStateProvider.of(
                                     Blocks.MANGROVE_PROPAGULE.defaultState.with(
@@ -163,7 +167,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(3, 0, 2)
             )).decorators(
                 listOf(
-                    LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
+                    FixedLeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                         0.14f, 1, 0, RandomizedIntBlockStateProvider(
                             BlockStateProvider.of(
                                 Blocks.MANGROVE_PROPAGULE.defaultState.with(
@@ -189,6 +193,21 @@ object ConfiguredFeatureCreator {
                 placedFeatures.getHolderOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
             )
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.SWAMP_OAK,
+            Feature.TREE,
+            TreeFeatureConfig.Builder(
+                BlockStateProvider.of(Blocks.OAK_LOG),
+                StraightTrunkPlacer(5, 3, 0),
+                BlockStateProvider.of(Blocks.OAK_LEAVES),
+                BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 3),
+                TwoLayersFeatureSize(1, 0, 1)
+            ).decorators(
+                listOf(FixedLeavesVineTreeDecorator(0.25f))
+            ).build()
+        )
+
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
             context, DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE,
             Feature.RANDOM_SELECTOR,
@@ -309,10 +328,10 @@ object ConfiguredFeatureCreator {
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
-            DuskConfiguredFeatures.INVERTED_ICE_SPIKE,
-            DuskConfiguredFeatures.INVERTED_SPIKE,
+            DuskConfiguredFeatures.ICE_SPIKE,
+            DuskConfiguredFeatures.SPIKE,
             SpikeFeatureConfig(
-                20,
+                60,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -321,10 +340,10 @@ object ConfiguredFeatureCreator {
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
-            DuskConfiguredFeatures.ICE_SPIKE,
-            DuskConfiguredFeatures.SPIKE,
+            DuskConfiguredFeatures.INVERTED_ICE_SPIKE,
+            DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                20,
+                60,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -336,7 +355,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.SPIKE,
             SpikeFeatureConfig(
-                5,
+                80,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -348,7 +367,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                5,
+                80,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -395,20 +414,20 @@ object ConfiguredFeatureCreator {
             context,
             DuskConfiguredFeatures.ORE_ICE,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD), Blocks.ICE.defaultState, 64)
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.ICE_ORE_REPLACEABLE), Blocks.ICE.defaultState, 64)
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>>(
             context,
             DuskConfiguredFeatures.ORE_BLUE_ICE,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD), Blocks.BLUE_ICE.defaultState, 64)
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.ICE_ORE_REPLACEABLE), Blocks.BLUE_ICE.defaultState, 64)
         )
 
 
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
-            DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM,
+            DuskConfiguredFeatures.DEEP_MONSTER_ROOM,
             DuskConfiguredFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
@@ -423,10 +442,23 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.STRUCTURE_PIECE,
             StructurePieceFeatureConfig(
                 listOf(
-                    id("village/swamp/town_centers/swamp_meeting_point_1")
+                    id("feature/desert_well")
                 ),
-                procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE),
-                7,
+                procEmpty,
+                8,
+                Heightmap.Type.OCEAN_FLOOR_WG,
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.RED_DESERT_WELL,
+            DuskConfiguredFeatures.STRUCTURE_PIECE,
+            StructurePieceFeatureConfig(
+                listOf(
+                    id("feature/red_desert_well")
+                ),
+                procEmpty,
+                8,
                 Heightmap.Type.OCEAN_FLOOR_WG,
             )
         )

@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.Registries

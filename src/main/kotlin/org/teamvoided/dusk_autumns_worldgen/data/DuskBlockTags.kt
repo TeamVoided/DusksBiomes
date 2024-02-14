@@ -10,6 +10,7 @@ object DuskBlockTags {
     val CANE_SUPPORT: TagKey<Block> = create("cane_support")
     @JvmField
     val CANE_HYDRATION: TagKey<Block> = create("cane_hydration")
+    val ICE_ORE_REPLACEABLE: TagKey<Block> = create("ice_ore_replaceable")
     val ICE_SPIKE_PLACEABLE_BLOCKS: TagKey<Block> = create("ice_spike_placeable_blocks")
     val ICE_SPIKE_IGNORE_BLOCKS: TagKey<Block> = create("ice_spike_ignore_blocks")
 

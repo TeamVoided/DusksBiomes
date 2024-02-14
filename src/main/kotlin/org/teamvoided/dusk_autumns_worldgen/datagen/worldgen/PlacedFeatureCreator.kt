@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
+import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -132,9 +133,9 @@ object PlacedFeatureCreator {
         PlacedFeatureUtil.register(
             context,
             DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP,
-            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SWAMP_OAK),
             *arrayOf<PlacementModifier>(
-                PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
+                PlacedFeatureUtil.createCountExtraModifier(12, 0.1f, 1),
                 InSquarePlacementModifier.getInstance(),
                 SurfaceWaterDepthFilterPlacementModifier.create(2),
                 PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
@@ -252,7 +253,6 @@ object PlacedFeatureCreator {
                     BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
                     12
                 ),
-                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
                 BiomePlacementModifier.getInstance()
             )
         )
@@ -270,7 +270,6 @@ object PlacedFeatureCreator {
                     BlockPredicate.matchingBlockTags(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
                     12
                 ),
-                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
                 BiomePlacementModifier.getInstance()
             )
         )
@@ -281,7 +280,7 @@ object PlacedFeatureCreator {
             *arrayOf<PlacementModifier>(
                 CountPlacementModifier.create(3),
                 InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(-64), YOffset.fixed(160)),
+                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
                 BiomePlacementModifier.getInstance()
             )
         )
@@ -291,7 +290,31 @@ object PlacedFeatureCreator {
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_BLUE_ICE),
             *arrayOf<PlacementModifier>(
                 InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(-64), YOffset.fixed(160)),
+                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DESERT_WELL,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DESERT_WELL),
+            *arrayOf<PlacementModifier>(
+                RarityFilterPlacementModifier.create(1000),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-3)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.RED_DESERT_WELL,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
+            *arrayOf<PlacementModifier>(
+                RarityFilterPlacementModifier.create(1000),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-3)),
                 BiomePlacementModifier.getInstance()
             )
         )

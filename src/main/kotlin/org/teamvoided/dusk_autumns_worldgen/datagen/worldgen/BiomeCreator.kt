@@ -12,10 +12,7 @@ import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
-import net.minecraft.world.gen.feature.DefaultBiomeFeatures
-import net.minecraft.world.gen.feature.MiscPlacedFeatures
-import net.minecraft.world.gen.feature.OceanPlacedFeatures
-import net.minecraft.world.gen.feature.VegetationPlacedFeatures
+import net.minecraft.world.gen.feature.*
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
@@ -38,15 +35,15 @@ object BiomeCreator {
         context.register(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP, createMangroveSwamp(context, true, true))
         context.register(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, createMangroveSwamp(context, true, false))
         context.register(DuskBiomes.OLD_GROWTH_SWAMP, createSwamp(context, true))
-        context.register(DuskBiomes.WARM_RIVER, createWarmRiver(context))
-        context.register(DuskBiomes.RED_WARM_RIVER, createWarmRiver(context))
+        context.register(DuskBiomes.WARM_RIVER, createWarmRiver(context, false))
+        context.register(DuskBiomes.RED_WARM_RIVER, createWarmRiver(context, true))
         context.register(DuskBiomes.RED_WARM_OCEAN, createWarmOcean(context))
         context.register(DuskBiomes.RED_LUKEWARM_OCEAN, createLukewarmOcean(context, false))
         context.register(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN, createLukewarmOcean(context, true))
         context.register(DuskBiomes.RED_BEACH, createBeach(context, false, false))
         context.register(DuskBiomes.SNOWY_RED_BEACH, createBeach(context, true, false))
         context.register(DuskBiomes.SNOWY_STONY_SHORE, createBeach(context, true, true))
-        context.register(DuskBiomes.RED_DESERT, createDesert(context))
+        context.register(DuskBiomes.RED_DESERT, createDesert(context, true))
         context.register(DuskBiomes.MUSHROOM_GROVE, createMushroomIsland(context, true))
         context.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, createMushroomIsland(context, true))
         context.register(DuskBiomes.MUSHROOM_CAVES, createMushroomCave(context))
@@ -168,57 +165,6 @@ object BiomeCreator {
             MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FOREST)
         )
     }
-
-//    fun createForest(context: BootstrapContext<Biome?>, cold: Boolean, warm: Boolean): Biome {
-//        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
-//        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
-//        val builder = GenerationSettings.Builder(feature, carver)
-//        val builder2 = SpawnSettings.Builder()
-//        OverworldBiomeCreator.addBasicFeatures(builder)
-//        val musicSound: MusicSound
-//        if (flower) {
-//            musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST)
-//            builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_FOREST_FLOWERS)
-//        } else {
-//            musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FOREST)
-//            DefaultBiomeFeatures.addForestFlowers(builder)
-//        }
-//
-//        DefaultBiomeFeatures.addDefaultOres(builder)
-//        DefaultBiomeFeatures.addDefaultDisks(builder)
-//        if (flower) {
-//            builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.TREES_FLOWER_FOREST)
-//            builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_FLOWER_FOREST)
-//            DefaultBiomeFeatures.addDefaultGrass(builder)
-//        } else {
-//            if (birch) {
-//                if (oldGrowth) {
-//                    DefaultBiomeFeatures.addTallBirchTrees(builder)
-//                } else {
-//                    DefaultBiomeFeatures.addBirchTrees(builder)
-//                }
-//            } else {
-//                DefaultBiomeFeatures.addForestTrees(builder)
-//            }
-//
-//            DefaultBiomeFeatures.addDefaultFlowers(builder)
-//            DefaultBiomeFeatures.addForestGrass(builder)
-//        }
-//
-//        DefaultBiomeFeatures.addDefaultMushrooms(builder)
-//        DefaultBiomeFeatures.addDefaultVegetation(builder)
-//        val builder2 = SpawnSettings.Builder()
-//        DefaultBiomeFeatures.addFarmAnimals(builder2)
-//        DefaultBiomeFeatures.addBatsAndMonsters(builder2)
-//        if (flower) {
-//            builder2.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 4, 2, 3))
-//        } else if (!birch) {
-//            builder2.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 5, 4, 4))
-//        }
-//
-//        val f = if (birch) 0.6f else 0.7f
-//        return OverworldBiomeCreator.create(true, f, if (birch) 0.6f else 0.8f, builder2, builder, musicSound)
-//    }
 
     fun createWindsweptBirchForest(context: BootstrapContext<Biome?>): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
@@ -431,7 +377,7 @@ object BiomeCreator {
         ).spawnSettings(builder.build()).generationSettings(generationSettings.build()).build()
     }
 
-    fun createWarmRiver(context: BootstrapContext<Biome?>): Biome {
+    fun createWarmRiver(context: BootstrapContext<Biome?>, red: Boolean): Biome {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         val generationSettings = GenerationSettings.Builder(feature, carver)
@@ -441,6 +387,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addBatsAndMonsters(builder)
         builder.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
+        val builder2 = GenerationSettings.Builder(feature, carver)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         DefaultBiomeFeatures.addDefaultFlowers(generationSettings)
@@ -448,7 +395,11 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDesertDeadBushes(generationSettings)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDesertVegetation(generationSettings)
-        DefaultBiomeFeatures.addDesertFeatures(generationSettings)
+        if (red) {
+            builder2.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeatures.RED_DESERT_WELL)
+        } else{
+            builder2.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeatures.DESERT_WELL)
+        }
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_RIVER)
         return OverworldBiomeCreator.create(
             false,
@@ -493,11 +444,34 @@ object BiomeCreator {
         return OverworldBiomeCreator.create(true, 0.9f, 1.0f, builder, generationSettings, DEFAULT_MUSIC)
     }
 
-
-    fun createDesert(context: BootstrapContext<Biome?>): Biome {
-        val holderProvider = context.lookup(RegistryKeys.PLACED_FEATURE)
-        val holderProvider2 = context.lookup(RegistryKeys.CONFIGURED_CARVER)
-        return OverworldBiomeCreator.createDesert(holderProvider, holderProvider2)
+    fun createDesert(context: BootstrapContext<Biome?>, red: Boolean): Biome {
+        val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val builder = SpawnSettings.Builder()
+        DefaultBiomeFeatures.addDesertMobs(builder)
+        val builder2 = GenerationSettings.Builder(feature, carver)
+        DefaultBiomeFeatures.addFossils(builder2)
+        OverworldBiomeCreator.addBasicFeatures(builder2)
+        DefaultBiomeFeatures.addDefaultOres(builder2)
+        DefaultBiomeFeatures.addDefaultDisks(builder2)
+        DefaultBiomeFeatures.addDefaultFlowers(builder2)
+        DefaultBiomeFeatures.addDefaultGrass(builder2)
+        DefaultBiomeFeatures.addDesertDeadBushes(builder2)
+        DefaultBiomeFeatures.addDefaultMushrooms(builder2)
+        DefaultBiomeFeatures.addDesertVegetation(builder2)
+        if (red) {
+            builder2.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeatures.RED_DESERT_WELL)
+        } else{
+            builder2.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeatures.DESERT_WELL)
+        }
+        return OverworldBiomeCreator.create(
+            false,
+            2.0f,
+            0.0f,
+            builder,
+            builder2,
+            MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DESERT)
+        )
     }
 
     fun createWarmOcean(context: BootstrapContext<Biome?>): Biome {
@@ -538,20 +512,23 @@ object BiomeCreator {
         val feature = context.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = context.lookup(RegistryKeys.CONFIGURED_CARVER)
         val builder = SpawnSettings.Builder()
-        DefaultBiomeFeatures.addDripstoneCaveMobs(builder)
+        DefaultBiomeFeatures.addCaveMobs(builder)
+        DefaultBiomeFeatures.addMonsters(builder, 95, 5, 20, false)
+        builder.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
         val builder2 = GenerationSettings.Builder(feature, carver)
         DefaultBiomeFeatures.addFossils(builder2)
         OverworldBiomeCreator.addBasicFeatures(builder2)
-        DefaultBiomeFeatures.addPlainsTallGrass(builder2)
         DefaultBiomeFeatures.addDefaultOres(builder2)
         DefaultBiomeFeatures.addDefaultDisks(builder2)
-        DefaultBiomeFeatures.addPlainsFeatures(builder2)
+        DefaultBiomeFeatures.addSnowySpruceTrees(builder2)
+        DefaultBiomeFeatures.addDefaultFlowers(builder2)
+        DefaultBiomeFeatures.addDefaultGrass(builder2)
         DefaultBiomeFeatures.addDefaultMushrooms(builder2)
         DefaultBiomeFeatures.addDefaultVegetation(builder2)
         builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
         builder2.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
-        builder2.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeatures.ORE_ICE)
-        builder2.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeatures.ORE_BLUE_ICE)
+        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_ICE)
+        builder2.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
         return OverworldBiomeCreator.create(true, 0f, 0.4f, builder, builder2, musicSound)
     }
