@@ -70,7 +70,7 @@ class InvertedSpikeFeature(configCodec: Codec<SpikeFeatureConfig>?) :
 
         for (o in -k..k) {
             for (q in -k..k) {
-                var blockPos2 = context.origin.add(o, -1, q)
+                var blockPos2 = context.origin.add(o, 2, q)
                 var p = if (abs(o) == 1 && abs(q) == 1) random.nextInt(5) else 50
 
                 while (blockPos2.y > blockPos.y) {
