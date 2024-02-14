@@ -355,7 +355,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.SPIKE,
             SpikeFeatureConfig(
-                80,
+                5,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -367,7 +367,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE,
             DuskConfiguredFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
-                80,
+                5,
                 10,
                 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),

@@ -205,6 +205,10 @@ object DuskBiomes {
                 )
             )
         )
+        BiomePlacement.addSubOverworld(
+            FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+            windsweptVariant
+        )
         BiomePlacement.addOverworld(
             FROZEN_MANGROVE_SWAMP,
             makeNoise(
@@ -228,10 +232,6 @@ object DuskBiomes {
                 Range(-0.4, 0.4),         // Weirdness
                 0L                  // Offset
             )
-        )
-        BiomePlacement.addSubOverworld(
-            FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
-            windsweptVariant
         )
         BiomePlacement.addSubOverworld(
             Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
