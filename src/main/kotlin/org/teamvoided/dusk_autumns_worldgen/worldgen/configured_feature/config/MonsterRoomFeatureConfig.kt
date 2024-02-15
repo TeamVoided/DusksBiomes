@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.Registries
@@ -8,7 +7,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
-class MonsterRoomFeatureConfig(
+data class MonsterRoomFeatureConfig(
     val primaryBlock: BlockStateProvider,
     val secondaryBlock: BlockStateProvider,
     val monsterType: List<EntityType<*>>,

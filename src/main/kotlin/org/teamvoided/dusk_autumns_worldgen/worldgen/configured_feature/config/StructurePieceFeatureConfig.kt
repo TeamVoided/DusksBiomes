@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.feature.FeatureConfig
 
-class StructurePieceFeatureConfig(
+data class StructurePieceFeatureConfig(
     val structures: List<Identifier>,
     val processors: Holder<StructureProcessorList>,
     val maxEmptyCorners: Int,

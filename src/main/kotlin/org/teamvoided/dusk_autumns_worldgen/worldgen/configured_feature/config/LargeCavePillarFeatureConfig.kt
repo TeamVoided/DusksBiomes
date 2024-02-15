@@ -7,7 +7,7 @@ import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
-class LargeCavePillarFeatureConfig(
+data class LargeCavePillarFeatureConfig(
     val floorToCeilingSearchRange: Int,
     val columnRadius: IntProvider,
     val heightScale: FloatProvider,

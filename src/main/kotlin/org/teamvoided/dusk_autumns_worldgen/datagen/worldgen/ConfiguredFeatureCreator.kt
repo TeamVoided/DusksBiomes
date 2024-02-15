@@ -244,20 +244,11 @@ object ConfiguredFeatureCreator {
             )
         )
 
-        val randomPetal = DataPool.builder<BlockState>()
-        for (i in 1..4) {
-            Direction.Type.HORIZONTAL.forEach {
-                randomPetal.method_34975(
-                    Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i).with(PinkPetalsBlock.FACING, it),
-                    1
-                )
-            }
-        }
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                        WeightedBlockStateProvider(randomPetal.method_34975(Blocks.SNOW.defaultState, 8))
+                        WeightedBlockStateProvider(getPetalStates().method_34975(Blocks.SNOW.defaultState, 8))
                     )
                 )
             )
@@ -575,6 +566,19 @@ object ConfiguredFeatureCreator {
             ),
             TwoLayersFeatureSize(1, 0, 2)
         ).dirtProvider(BlockStateProvider.of(Blocks.SNOW_BLOCK)).ignoreVines()
+    }
+
+    fun getPetalStates(): DataPool.Builder<BlockState> {
+        val randomPetal = DataPool.builder<BlockState>()
+        for (i in 1..4) {
+            Direction.Type.HORIZONTAL.forEach {
+                randomPetal.method_34975(
+                    Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i).with(PinkPetalsBlock.FACING, it),
+                    1
+                )
+            }
+        }
+        return randomPetal
     }
 
     private fun <FC : FeatureConfig, F : Feature<FC>> BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(

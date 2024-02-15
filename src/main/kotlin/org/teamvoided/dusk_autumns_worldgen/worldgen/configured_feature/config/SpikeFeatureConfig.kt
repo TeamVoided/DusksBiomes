@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
-class SpikeFeatureConfig(
+data class SpikeFeatureConfig(
     val chanceForLongSpike: Int,
     val longSpikeOffsetMin: Int,
     val longSpikeOffsetMax: Int,
