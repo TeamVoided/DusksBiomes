@@ -35,6 +35,7 @@ import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
+import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
@@ -46,7 +47,6 @@ import org.teamvoided.dusk_autumns_worldgen.init.worldgen.VoidFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.treedecorator.FixedLeavesVineTreeDecorator
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -102,7 +102,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(2, 0, 2)
             ).decorators(
                 listOf(
-                    FixedLeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
+                    LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                         0.14f, 1, 0, RandomizedIntBlockStateProvider(
                             BlockStateProvider.of(
                                 Blocks.MANGROVE_PROPAGULE.defaultState.with(MangrovePropaguleBlock.HANGING, true)
@@ -151,7 +151,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(3, 0, 2)
             ).decorators(
                 listOf(
-                    FixedLeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
+                    LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                         0.14f, 1, 0, RandomizedIntBlockStateProvider(
                             BlockStateProvider.of(
                                 Blocks.MANGROVE_PROPAGULE.defaultState.with(MangrovePropaguleBlock.HANGING, true)
@@ -183,7 +183,7 @@ object ConfiguredFeatureCreator {
                 BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 3),
                 TwoLayersFeatureSize(1, 0, 1)
             ).decorators(
-                listOf(FixedLeavesVineTreeDecorator(0.25f))
+                listOf(LeavesVineTreeDecorator(0.25f))
             ).build()
         )
 
