@@ -26,17 +26,22 @@ class LargeCavePillarFeature(codec: Codec<LargeCavePillarFeatureConfig>) :
         val origin = context.origin
         val config = context.config
         val random = context.random
+
         if (!CavePillarHelper.canGenerate(structureWorldAccess, origin)) return false
+
 
         val optional = CaveSurface.create(
             structureWorldAccess, origin,
             config.floorToCeilingSearchRange,
-            CavePillarHelper::canGenerate, CavePillarHelper::canReplaceOrLava
+            { CavePillarHelper.canGenerate(it) },
+            { it.isIn(BlockTags.BASE_STONE_OVERWORLD) }
         )
         if (optional.isEmpty || optional.get() !is Bounded) return false
 
+
         val bounded = optional.get() as Bounded
         if (bounded.height < 4) return false
+
 
         val i = (bounded.height.toFloat() * config.maxColumnRadiusToCaveHeightRatio).toInt()
         val j = MathHelper.clamp(i, config.columnRadius.min, config.columnRadius.max)

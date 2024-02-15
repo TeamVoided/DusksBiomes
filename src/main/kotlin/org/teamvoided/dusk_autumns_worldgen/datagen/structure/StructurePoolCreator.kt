@@ -12,6 +12,7 @@ import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VillagePlacedFeatures
+import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.MODID
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
@@ -736,7 +737,7 @@ object StructurePoolCreator {
     }
 
 
-    fun id(str: String) = "dusk_autumns_worldgen:$str"
+    fun id(str: String) = "$MODID:$str"
 
     fun pairedSingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int

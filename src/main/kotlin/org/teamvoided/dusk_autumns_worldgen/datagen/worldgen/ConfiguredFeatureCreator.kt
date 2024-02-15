@@ -50,6 +50,9 @@ import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.M
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import java.util.*
+import kotlin.collections.forEach
+import kotlin.collections.listOf
+import kotlin.collections.plus
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -344,7 +347,7 @@ object ConfiguredFeatureCreator {
                 UniformFloatProvider.create(0.0f, 0.3f),
                 4,
                 0.6f,
-                BlockStateProvider.of(Blocks.SANDSTONE)
+                BlockStateProvider.of(Blocks.SANDSTONE) //Debug
             )
         )
         c.registerConfiguredFeature(
@@ -364,6 +367,7 @@ object ConfiguredFeatureCreator {
                 Direction.UP, BlockPredicate.IS_AIR, false
             )
         )
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES_ROOF,
             Feature.BLOCK_COLUMN,
@@ -378,7 +382,7 @@ object ConfiguredFeatureCreator {
                         BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                     )
                 ),
-                Direction.DOWN, BlockPredicate.IS_AIR, false
+                Direction.DOWN, BlockPredicate.IS_AIR, true
             )
         )
         c.registerConfiguredFeature(

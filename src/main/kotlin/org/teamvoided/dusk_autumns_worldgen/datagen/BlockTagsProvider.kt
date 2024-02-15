@@ -44,6 +44,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.WATER)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
+            .add(Blocks.CAVE_VINES)
+            .add(Blocks.CAVE_VINES_PLANT)
+            .add(Blocks.SANDSTONE)
+            .add(Blocks.SAND)
+            .add(Blocks.RED_TERRACOTTA)// DEBUG
 
 //SUSPICIOUS
         getOrCreateTagBuilder(BlockTags.SAND)
