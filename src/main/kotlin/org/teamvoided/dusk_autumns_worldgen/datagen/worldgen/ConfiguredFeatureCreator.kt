@@ -14,6 +14,7 @@ import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.float_provider.UniformFloatProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
@@ -44,6 +45,7 @@ import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.VoidFeatures
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.LargeCavePillarFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
@@ -494,6 +496,23 @@ object ConfiguredFeatureCreator {
                 procEmpty,
                 8,
                 Heightmap.Type.OCEAN_FLOOR_WG,
+            )
+        )
+
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.TEST_CAVE_PILLAR,
+            VoidFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.DIAMOND_BLOCK)
             )
         )
     }

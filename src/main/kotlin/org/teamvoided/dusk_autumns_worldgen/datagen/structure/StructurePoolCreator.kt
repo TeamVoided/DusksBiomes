@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Pair
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.pool.SinglePoolElement
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.structure.pool.StructurePoolElement
 import net.minecraft.structure.pool.StructurePools
@@ -742,10 +741,10 @@ object StructurePoolCreator {
     fun pairedSingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(StructurePoolElement.ofProcessedSingle(id(str), processors), weight)
+        Pair(processedSingle(str, processors), weight)
 
     fun processedSingle(
         str: String, processors: Holder<StructureProcessorList>
-    ): Function<StructurePool.Projection, SinglePoolElement> =
+    ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedSingle(id(str), processors)
 }

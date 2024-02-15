@@ -42,6 +42,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.POWDER_SNOW)
             .add(Blocks.ICE)
             .add(Blocks.WATER)
+        getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
+            .forceAddTag(BlockTags.REPLACEABLE)
 
 //SUSPICIOUS
         getOrCreateTagBuilder(BlockTags.SAND)
