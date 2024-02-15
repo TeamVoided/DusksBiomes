@@ -10,9 +10,9 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
-import net.minecraft.world.biome.source.util.MultiNoiseUtil
 import net.minecraft.world.biome.source.util.MultiNoiseUtil.NoiseHypercube
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
+import org.teamvoided.dusk_autumns_worldgen.util.data.Range
 
 
 object DuskBiomes {
@@ -120,7 +120,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             WINDSWEPT_BIRCH_FOREST,
-            makeNoise(
+            createNoise(
                 Range(-0.45, 0.2),        // Temperature
                 Range(-1, 0.3),            // Humidity
                 Range(-0.19, 0.03),          // Continentalness
@@ -132,7 +132,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             WINDSWEPT_BIRCH_FOREST,
-            makeNoise(
+            createNoise(
                 Range(-0.45, 0.2),        // Temperature
                 Range(-1, 0.3),            // Humidity
                 Range(-0.19, 0.03),          // Continentalness
@@ -211,7 +211,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             FROZEN_MANGROVE_SWAMP,
-            makeNoise(
+            createNoise(
                 Range(-1, -0.45),        // Temperature
                 Range(-1, 1),            // Humidity
                 Range(-0.11, 1),          // Continentalness
@@ -223,7 +223,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             FROZEN_MANGROVE_SWAMP,
-            makeNoise(
+            createNoise(
                 Range(-1, -0.45),        // Temperature
                 Range(-1, 1),            // Humidity
                 Range(-0.11, 1),          // Continentalness
@@ -298,7 +298,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             ERODED_MUSHROOM_ISLAND,
-            makeNoise(
+            createNoise(
                 Range(-1, 1),        // Temperature
                 Range(-1, -0.1),      // Humidity
                 Range(-1.2, -0.85),          // Continentalness
@@ -310,7 +310,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             ERODED_MUSHROOM_ISLAND,
-            makeNoise(
+            createNoise(
                 Range(-1, 1),        // Temperature
                 Range(-1, -0.1),      // Humidity
                 Range(-1.2, -0.85),          // Continentalness
@@ -330,7 +330,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             MUSHROOM_CAVES,
-            makeNoise(
+            createNoise(
                 Range(-1, 1),        // Temperature
                 Range(-1, -0.1),      // Humidity
                 Range(-1.05, -0.455),          // Continentalness
@@ -342,7 +342,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             MUSHROOM_CAVES,
-            makeNoise(
+            createNoise(
                 Range(-1, 1),        // Temperature
                 Range(-1, -0.1),      // Humidity
                 Range(0.55, 1),          // Continentalness
@@ -354,7 +354,7 @@ object DuskBiomes {
         )
         BiomePlacement.addOverworld(
             FROZEN_CAVERNS,
-            makeNoise(
+            createNoise(
                 Range(-1, -0.1),        // Temperature
                 Range(-1, -0.7),      // Humidity
                 Range(-1, 1),          // Continentalness
@@ -371,44 +371,33 @@ object DuskBiomes {
         SurfaceGeneration.addOverworldSurfaceRules(Identifier("rules/overworld"), DuskSurfaceRules.overworld())
     }
 
+    fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))
 
-    fun create(id: String): RegistryKey<Biome?> {
-        return RegistryKey.of(RegistryKeys.BIOME, id(id))
-    }
-
-    fun makeNoise(
+    fun createNoise(
         temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
         depth: Range, weirdness: Range, offset: Long
     ): NoiseHypercube = NoiseHypercube(
-        temperature.toMNParaRange(),
-        humidity.toMNParaRange(),
-        continentalness.toMNParaRange(),
-        erosion.toMNParaRange(),
-        depth.toMNParaRange(),
-        weirdness.toMNParaRange(),
+        temperature.toParameterRange(),
+        humidity.toParameterRange(),
+        continentalness.toParameterRange(),
+        erosion.toParameterRange(),
+        depth.toParameterRange(),
+        weirdness.toParameterRange(),
         offset
     )
-
-    data class Range(val min: Number, val max: Number) {
-        constructor(value: Number) : this(value, value)
-
-        fun min() = min.toFloat()
-        fun max() = max.toFloat()
-        fun toMNParaRange() = MultiNoiseUtil.ParameterRange.of(min(), max())
-
-    }
-
 }
 
-//        BiomePlacement.addOverworld(
-//            DEVILS_ROAR,
-//            makeNoise(
-//                Range(-1, 1),        // Temperature
-//                Range(-1, 1),      // Humidity
-//                Range(-1.05, -0.415),          // Continentalness
-//                Range(-0.78, -0.375),         // Erosion
-//                Range(0),         // Depth
-//                Range(-1, 0),         // Weirdness
-//                0L                  // Offset
-//            )
-//        )
+/*
+        BiomePlacement.addOverworld(
+            DEVILS_ROAR,
+            makeNoise(
+                Range(-1, 1),        // Temperature
+                Range(-1, 1),      // Humidity
+                Range(-1.05, -0.415),          // Continentalness
+                Range(-0.78, -0.375),         // Erosion
+                Range(0),         // Depth
+                Range(-1, 0),         // Weirdness
+                0L                  // Offset
+            )
+        )
+ */

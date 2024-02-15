@@ -20,13 +20,16 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
         val pack = gen.createPack()
 
         pack.addProvider(::AdvancementsProvider)
-        pack.addProvider(::BiomeTagsProvider)
+
         pack.addProvider(::WorldgenProvider)
+
+        pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
         pack.addProvider(::FluidTagsProvider)
+        pack.addProvider(::StructureTagsProvider)
+
         pack.addProvider(::ChestLootTablesProvider)
         pack.addProvider(::ArchaeologyLootTablesProvider)
-        pack.addProvider(::StructureTagsProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {

@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.BlockState
 import net.minecraft.util.math.float_provider.FloatProvider
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.world.gen.feature.FeatureConfig

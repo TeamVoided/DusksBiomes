@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture
 
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
-    override fun configure(arg: HolderLookup.Provider?) {
+    override fun configure(arg: HolderLookup.Provider) {
 
 //VANILLA
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)

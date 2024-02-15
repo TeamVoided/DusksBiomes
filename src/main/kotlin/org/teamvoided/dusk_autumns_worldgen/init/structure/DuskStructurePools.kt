@@ -24,7 +24,7 @@ object DuskStructurePools {
     val SWAMP_ZOMBIE_VILLAGE_HOUSES = create("village/swamp/zombie/houses")
     val MANGROVE_ZOMBIE_SWAMP_VILLAGE_CENTER = create("village/mangrove_swamp/zombie/town_centers")
     val MANGROVE_ZOMBIE_SWAMP_VILLAGE_HOUSES = create("village/mangrove_swamp/zombie/houses")
-    
+
 
     val DESERT_RUINS_OBELISK = create("desert_ruins/obelisk")
     val DESERT_RUINS_OBELISK_TOP = create("desert_ruins/obelisk_top")
@@ -38,10 +38,8 @@ object DuskStructurePools {
     val RED_DESERT_RUINS_RUINS = create("red_desert_ruins/ruins")
 
     val DESERT_WELL = create("feature/desert_well")
-    fun init()  {}
+    fun init() {}
 
-    fun create(id: String): RegistryKey<StructurePool?> {
-        return RegistryKey.of(RegistryKeys.STRUCTURE_POOL, DuskAutumnsWorldgen.id(id))
-    }
-
+    fun create(id: String): RegistryKey<StructurePool> =
+        RegistryKey.of(RegistryKeys.STRUCTURE_POOL, DuskAutumnsWorldgen.id(id))
 }

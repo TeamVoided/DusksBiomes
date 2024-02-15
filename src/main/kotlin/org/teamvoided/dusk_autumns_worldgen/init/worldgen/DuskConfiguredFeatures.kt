@@ -1,19 +1,8 @@
 package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.FeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.InvertedSpikeFeature
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.MonsterRoomFeature
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.SpikeFeature
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.StructurePieceFeature
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 
 
 @Suppress("HasPlatformType")
@@ -29,8 +18,8 @@ object DuskConfiguredFeatures {
     val CHERRY_SNOW_BEES = create("cherry_snow_bees")
     val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
-    val ICE_SPIKE_FLOOR = create ("cave/frozen/ice_spike_floor")
-    val ICE_SPIKE_CEILING = create ("cave/frozen/ice_spike_ceiling")
+    val ICE_SPIKE_FLOOR = create("cave/frozen/ice_spike_floor")
+    val ICE_SPIKE_CEILING = create("cave/frozen/ice_spike_ceiling")
     val ICE_SPIKE = create("cave/frozen/ice_spike")
     val INVERTED_ICE_SPIKE = create("cave/frozen/inverted_ice_spike")
     val BLUE_ICE_SPIKE = create("cave/frozen/blue_ice_spike")
@@ -53,17 +42,8 @@ object DuskConfiguredFeatures {
     val RED_DESERT_WELL = create("red_desert_well")
 
 
-//Register Configure Feature Types
-    val INVERTED_SPIKE = register("inverted_spike", InvertedSpikeFeature(SpikeFeatureConfig.CODEC))
-    val SPIKE = register("spike", SpikeFeature(SpikeFeatureConfig.CODEC))
-    val MONSTER_ROOM = register("monster_room", MonsterRoomFeature(MonsterRoomFeatureConfig.CODEC))
-    val STRUCTURE_PIECE = register("structure_piece", StructurePieceFeature(StructurePieceFeatureConfig.CODEC))
-
-
+    val TEST_CAVE_PILLAR = create("test_cave_pillar")
 
     fun init() {}
     fun create(id: String) = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
-    private fun <C : FeatureConfig?, F : Feature<C>> register(name: String, feature: F): F {
-        return Registry.register(Registries.FEATURE, id(name), feature)
-    }
 }

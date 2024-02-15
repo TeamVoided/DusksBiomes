@@ -4,13 +4,9 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.RandomSpreadStructurePlacement
 import net.minecraft.structure.RandomSpreadType
 import net.minecraft.world.gen.BootstrapContext
-import net.minecraft.world.gen.structure.BuiltInStructureSets
-import net.minecraft.world.gen.structure.BuiltInStructures
 import net.minecraft.world.gen.structure.StructureSet
-import net.minecraft.world.gen.structure.StructureSet.StructureSelectionEntry
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureSets
-import java.util.List
 
 object StructureSetCreator {
 

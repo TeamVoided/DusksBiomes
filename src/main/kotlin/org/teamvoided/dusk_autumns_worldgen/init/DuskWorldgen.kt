@@ -9,6 +9,7 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
+import org.teamvoided.dusk_autumns_worldgen.init.worldgen.VoidFeatures
 import org.teamvoided.dusk_autumns_worldgen.worldgen.treedecorator.FixedLeavesVineTreeDecorator
 
 object DuskWorldgen {
@@ -18,6 +19,7 @@ object DuskWorldgen {
         DuskConfiguredFeatures.init()
         DuskPlacedFeatures.init()
         DuskStructures.init()
+        VoidFeatures.init()
     }
 
 

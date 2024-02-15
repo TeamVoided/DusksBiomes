@@ -7,15 +7,14 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BiomeTags
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import java.util.concurrent.CompletableFuture
 
-class BiomeTagsProvider(output: FabricDataOutput?, registriesFuture: CompletableFuture<HolderLookup.Provider>?) :
-    FabricTagProvider<Biome>(output, RegistryKeys.BIOME, registriesFuture) {
+class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
     override fun configure(arg: HolderLookup.Provider?) {
         getOrCreateTagBuilder(DuskBiomeTags.DUSK_BIOMES)
             .add(DuskBiomes.COLD_FOREST)

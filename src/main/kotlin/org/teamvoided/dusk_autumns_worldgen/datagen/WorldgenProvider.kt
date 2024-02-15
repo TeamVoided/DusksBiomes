@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture
 class WorldgenProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricDynamicRegistryProvider(o, r) {
 
-    override fun getName(): String = "Data Gen"
+    override fun getName(): String = "dusk-worldgen"
 
     override fun configure(reg: HolderLookup.Provider, e: Entries) {
         e.addAll(reg.getLookupOrThrow(RegistryKeys.BIOME))

@@ -16,6 +16,10 @@ class StructurePieceFeatureConfig(
     val heightmap: Heightmap.Type
 ) : FeatureConfig {
 
+    constructor(
+        structure: Identifier, processors: Holder<StructureProcessorList>,
+        maxEmptyCorners: Int, heightmap: Heightmap.Type
+    ) : this(listOf(structure), processors, maxEmptyCorners, heightmap)
 
     init {
         require(structures.isNotEmpty()) { "Structure Piece structure lists need at least one entry" }

@@ -11,6 +11,7 @@ import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.pow
 
+@Suppress("unused")
 object CavePillarHelper {
     fun scaleHeightFromRadius(radius: Double, scale: Double, heightScale: Double, bluntness: Double): Double {
         val r = if (radius < bluntness) bluntness else radius
@@ -84,7 +85,7 @@ object CavePillarHelper {
 //        if (blockState.isIn(BlockTags.CavePillar_REPLACEABLE)) {
 //            world.setBlockState(pos, Blocks.CavePillar_BLOCK.defaultState, Block.NOTIFY_LISTENERS)
 //            return true
-//        }
+//        }dded LargeCavePillarFeature
 //        return false
 //    }
 //

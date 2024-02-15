@@ -42,26 +42,26 @@ class BrushablePolyBlock(
         if (times < 3) {
             var buf = PacketByteBuf(Unpooled.buffer())
             be!!.toUpdatePacket()?.write(buf)
-            println(buf)
+//            println(buf)
 
             buf = PacketByteBuf(Unpooled.buffer())
             BlockEntityUpdateS2CPacket.of(be).write(buf)
-            println(buf)
+//            println(buf)
 
             buf = PacketByteBuf(Unpooled.buffer())
             getBrushableBlockPacket(be, pos).write(buf)
-            println(buf)
+//            println(buf)
 
             buf = PacketByteBuf(Unpooled.buffer())
             PolymerBlockUtils.createBlockEntityPacket(pos, BlockEntityType.BRUSHABLE_BLOCK, be.toSyncedNbt()).write(buf)
-            println(buf)
+//            println(buf)
 
-            println(be.toNbt())
-            println(be.toSyncedNbt())
-            println(be.toString())
-            println(be.pos)
-            println(pos)
-            println(be.type)
+//            println(be.toNbt())
+//            println(be.toSyncedNbt())
+//            println(be.toString())
+//            println(be.pos)
+//            println(pos)
+//            println(be.type)
             times++
         }
         player.networkHandler.send(

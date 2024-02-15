@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.world.gen.feature.PlacedFeature
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
 
 object DuskPlacedFeatures {
@@ -54,5 +55,5 @@ object DuskPlacedFeatures {
     val CAVE_RED_DESERT_WELL = create("cave/sand/red_desert_well")
 
     fun init() {}
-    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumnsWorldgen.id(id))
+    fun create(id: String): RegistryKey<PlacedFeature> = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumnsWorldgen.id(id))
 }

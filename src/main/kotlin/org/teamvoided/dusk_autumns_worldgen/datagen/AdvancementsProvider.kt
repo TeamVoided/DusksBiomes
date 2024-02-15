@@ -10,12 +10,11 @@ import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.minecraft.text.component.AdvancementComponent
 import net.minecraft.util.Identifier
-import net.minecraft.world.biome.Biomes
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
 import java.util.function.Consumer
 
-class AdvancementsProvider(output: FabricDataOutput) : FabricAdvancementProvider(output) {
+class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
     val biomes = listOf(
         DuskBiomes.COLD_FOREST,
         DuskBiomes.COLD_PLAINS,
@@ -47,24 +46,24 @@ class AdvancementsProvider(output: FabricDataOutput) : FabricAdvancementProvider
         DuskBiomes.MUSHROOM_CAVES,
         DuskBiomes.FROZEN_CAVERNS,
     )
-    val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
+    private val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
     override fun generateAdvancement(c: Consumer<AdvancementHolder>) {
-        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(
-            Advancement.Builder.create(),
-            biomes
-        ).method_697(
-            Items.IRON_BOOTS,
-            Text.translatable("advancements.adventure.adventuring_time.title"),
-            Text.translatable("advancements.adventure.adventuring_time.description"),
-            null,
-            AdvancementComponent.CHALLENGE,
-            true,
-            true,
-            false
-        )
+
+        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), biomes)
+            .method_697(
+                Items.IRON_BOOTS,
+                Text.translatable("advancements.adventure.adventuring_time.title"),
+                Text.translatable("advancements.adventure.adventuring_time.description"),
+                null,
+                AdvancementComponent.CHALLENGE,
+                true,
+                true,
+                false
+            )
             .rewards(AdvancementRewards.Builder.experience(500))
             .parent(adventuringTime)
-            .build(c, id("adventure/strange_lands").toString());
+            .build(c, id("adventure/strange_lands").toString())
+
     }
 
 }
