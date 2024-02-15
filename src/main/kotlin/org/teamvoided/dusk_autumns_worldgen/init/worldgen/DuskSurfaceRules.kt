@@ -230,7 +230,7 @@ object DuskSurfaceRules {
                         condition(
                             DEEP_UNDER_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.75),
+                                    surfaceNoiseThreshold(1.75),
                                     block(Blocks.SANDSTONE)
                                 )
                             )
@@ -238,7 +238,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, 1.75),
+                                    surfaceNoiseThreshold(1.75),
                                     block(Blocks.SANDSTONE)
                                 )
                             )
@@ -246,7 +246,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.NETHER_STATE_SELECTOR, 1.0),
+                                    surfaceNetherNoiseThreshold(1.0),
                                     sand
                                 )
                             )
@@ -254,7 +254,7 @@ object DuskSurfaceRules {
                         condition(
                             UNDER_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.0),
+                                    surfaceNoiseThreshold( 1.0),
                                     sand
                                 )
                             )
@@ -262,7 +262,7 @@ object DuskSurfaceRules {
                         condition(
                             stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.75),
+                                    surfaceNoiseThreshold( 1.75),
                                     block(Blocks.SANDSTONE)
                                 )
                             )
@@ -270,7 +270,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_CEILING, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, 1.75),
+                                    surfaceSecondaryNoiseThreshold(1.75),
                                     block(Blocks.SANDSTONE)
                                 )
                             )
@@ -278,7 +278,7 @@ object DuskSurfaceRules {
                         condition(
                             UNDER_CEILING, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.0),
+                                    surfaceNoiseThreshold( 1.0),
                                     sand
                                 )
                             )
@@ -291,7 +291,7 @@ object DuskSurfaceRules {
                         condition(
                             DEEP_UNDER_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.75),
+                                    surfaceNoiseThreshold( 1.75),
                                     block(Blocks.RED_SANDSTONE)
                                 )
                             )
@@ -299,7 +299,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, 1.75),
+                                    surfaceSecondaryNoiseThreshold(1.75),
                                     block(Blocks.RED_SANDSTONE)
                                 )
                             )
@@ -307,7 +307,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.NETHER_STATE_SELECTOR, 1.0),
+                                    surfaceNetherNoiseThreshold(1.0),
                                     sandRed
                                 )
                             )
@@ -315,7 +315,7 @@ object DuskSurfaceRules {
                         condition(
                             UNDER_FLOOR, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.0),
+                                    surfaceNoiseThreshold( 1.0),
                                     sandRed
                                 )
                             )
@@ -323,7 +323,7 @@ object DuskSurfaceRules {
                         condition(
                             stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.75),
+                                    surfaceNoiseThreshold( 1.75),
                                     block(Blocks.RED_SANDSTONE)
                                 )
                             )
@@ -331,7 +331,7 @@ object DuskSurfaceRules {
                         condition(
                             ON_CEILING, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, 1.75),
+                                    surfaceSecondaryNoiseThreshold(1.75),
                                     block(Blocks.RED_SANDSTONE)
                                 )
                             )
@@ -339,7 +339,7 @@ object DuskSurfaceRules {
                         condition(
                             UNDER_CEILING, sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.0),
+                                    surfaceNoiseThreshold( 1.0),
                                     sandRed
                                 )
                             )
@@ -488,9 +488,10 @@ object DuskSurfaceRules {
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
-
     fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+    }fun surfaceNetherNoiseThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.NETHER_STATE_SELECTOR, min / 8.25, Double.MAX_VALUE)
     }
 }
 

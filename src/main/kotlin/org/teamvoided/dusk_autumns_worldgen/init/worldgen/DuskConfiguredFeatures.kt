@@ -18,6 +18,7 @@ object DuskConfiguredFeatures {
     val CHERRY_SNOW_BEES = create("cherry_snow_bees")
     val TREES_SNOWY_CHERRY = create("trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
+    val ICE_CAVE_PILLAR = create("cave/frozen/ice_cave_pillar")
     val ICE_SPIKE_FLOOR = create("cave/frozen/ice_spike_floor")
     val ICE_SPIKE_CEILING = create("cave/frozen/ice_spike_ceiling")
     val ICE_SPIKE = create("cave/frozen/ice_spike")
@@ -26,8 +27,10 @@ object DuskConfiguredFeatures {
     val INVERTED_BLUE_ICE_SPIKE = create("cave/frozen/inverted_blue_ice_spike")
     val ORE_ICE = create("cave/frozen/ore_ice")
     val ORE_BLUE_ICE = create("cave/frozen/ore_blue_ice")
+    val SAND_CAVE_PILLAR = create("cave/sand/sand_cave_pillar")
     val SAND_SPIKES = create("cave/sand/spikes")
     val SAND_SPIKES_ROOF = create("cave/sand/spikes_roof")
+    val RED_SAND_CAVE_PILLAR = create("cave/sand/red_sand_cave_pillar")
     val RED_SAND_SPIKES = create("cave/sand/red_spikes")
     val RED_SAND_SPIKES_ROOF = create("cave/sand/red_spikes_roof")
 

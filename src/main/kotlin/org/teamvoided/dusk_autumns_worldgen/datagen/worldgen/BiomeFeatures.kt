@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.world.biome.GenerationSettings
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
+import net.minecraft.world.gen.feature.UndergroundPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
@@ -42,18 +43,18 @@ object BiomeFeatures {
         DefaultBiomeFeatures.addDesertVegetation(generationSettings)
         addSandDungeons(generationSettings, red)
         if (!cave) {
-            if (red) {
-                generationSettings.feature(
-                    GenerationStep.Feature.SURFACE_STRUCTURES,
-                    DuskPlacedFeatures.RED_DESERT_WELL
-                )
-            } else {
-                generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeatures.DESERT_WELL)
-            }
+            generationSettings.feature(
+                GenerationStep.Feature.SURFACE_STRUCTURES,
+                if (red) DuskPlacedFeatures.RED_DESERT_WELL else DuskPlacedFeatures.DESERT_WELL
+            )
         } else {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_VINES)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CACTUS)
             if (red) {
+                generationSettings.feature(
+                    GenerationStep.Feature.LOCAL_MODIFICATIONS,
+                    DuskPlacedFeatures.RED_SAND_CAVE_PILLAR
+                )
                 generationSettings.feature(
                     GenerationStep.Feature.UNDERGROUND_STRUCTURES,
                     DuskPlacedFeatures.CAVE_RED_DESERT_WELL
@@ -67,6 +68,10 @@ object BiomeFeatures {
                     DuskPlacedFeatures.RED_SAND_SPIKES_ROOF
                 )
             } else {
+                generationSettings.feature(
+                    GenerationStep.Feature.LOCAL_MODIFICATIONS,
+                    DuskPlacedFeatures.SAND_CAVE_PILLAR
+                )
                 generationSettings.feature(
                     GenerationStep.Feature.UNDERGROUND_STRUCTURES,
                     DuskPlacedFeatures.CAVE_DESERT_WELL
@@ -99,10 +104,11 @@ object BiomeFeatures {
     }
 
     fun addFrozenCavernsFeatures(generationSettings: GenerationSettings.Builder) {
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
+        addFrozenDungeons(generationSettings)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_ICE)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
     }
 
     fun addLushDungeons(builder: GenerationSettings.Builder) {

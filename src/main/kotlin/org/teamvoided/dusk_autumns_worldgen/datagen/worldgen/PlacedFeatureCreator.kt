@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
+import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -253,13 +254,23 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
+            DuskPlacedFeatures.SAND_CAVE_PILLAR,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(UniformIntProvider.create(10, 48)),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        c.register(
             DuskPlacedFeatures.SAND_SPIKES,
             configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
             CountPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.DOWN, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                Direction.UP, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
             ),
             BiomePlacementModifier.getInstance()
         )
@@ -275,13 +286,23 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
+            DuskPlacedFeatures.RED_SAND_CAVE_PILLAR,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(UniformIntProvider.create(10, 48)),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES,
             configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
             CountPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.DOWN, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                Direction.UP, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
             ),
             BiomePlacementModifier.getInstance()
         )

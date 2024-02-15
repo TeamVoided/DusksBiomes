@@ -332,6 +332,22 @@ object ConfiguredFeatureCreator {
             OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.ICE_ORE_REPLACEABLE), Blocks.BLUE_ICE.defaultState, 64)
         )
         c.registerConfiguredFeature(
+            DuskConfiguredFeatures.SAND_CAVE_PILLAR,
+            VoidFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.SANDSTONE)
+            )
+        )
+        c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES,
             Feature.BLOCK_COLUMN,
             BlockColumnFeatureConfig(
@@ -363,6 +379,22 @@ object ConfiguredFeatureCreator {
                     )
                 ),
                 Direction.DOWN, BlockPredicate.IS_AIR, false
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR,
+            VoidFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.RED_SANDSTONE)
             )
         )
         c.registerConfiguredFeature(
@@ -399,7 +431,22 @@ object ConfiguredFeatureCreator {
                 Direction.DOWN, BlockPredicate.IS_AIR, false
             )
         )
-
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.TEST_CAVE_PILLAR,
+            VoidFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.DIAMOND_BLOCK)
+            )
+        )
 
 //Monster Room features
         val defaultMonstersRoom = listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
@@ -496,23 +543,6 @@ object ConfiguredFeatureCreator {
                 procEmpty,
                 8,
                 Heightmap.Type.OCEAN_FLOOR_WG,
-            )
-        )
-
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.TEST_CAVE_PILLAR,
-            VoidFeatures.LARGE_CAVE_PILLAR,
-            LargeCavePillarFeatureConfig(
-                30,
-                UniformIntProvider.create(3, 19),
-                UniformFloatProvider.create(0.4f, 2.0f),
-                0.33f,
-                UniformFloatProvider.create(0.3f, 0.9f),
-                UniformFloatProvider.create(0.4f, 1.0f),
-                UniformFloatProvider.create(0.0f, 0.3f),
-                4,
-                0.6f,
-                BlockStateProvider.of(Blocks.DIAMOND_BLOCK)
             )
         )
     }

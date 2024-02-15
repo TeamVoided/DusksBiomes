@@ -551,7 +551,7 @@ object BiomeCreator {
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
 
         DefaultBiomeFeatures.addFossils(generation)
-        OverworldBiomeCreator.addBasicFeatures(generation)
+        BiomeFeatures.addBasicFeaturesNoDungeon(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
         DefaultBiomeFeatures.addSnowySpruceTrees(generation)
