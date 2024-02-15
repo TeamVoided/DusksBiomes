@@ -45,8 +45,8 @@ object DuskBiomes {
     val ERODED_MUSHROOM_ISLAND = create("eroded_mushroom_island")
     val MUSHROOM_CAVES = create("mushroom_caves")
     val FROZEN_CAVERNS = create("frozen_caverns")
-    val SANDY_CAVES = create("sandy_caves")
-    val RED_SANDY_CAVES = create("red_sandy_caves")
+    val SAND_CAVES = create("sand_caverns")
+    val RED_SAND_CAVES = create("red_sand_caverns")
 
 
     fun init() {

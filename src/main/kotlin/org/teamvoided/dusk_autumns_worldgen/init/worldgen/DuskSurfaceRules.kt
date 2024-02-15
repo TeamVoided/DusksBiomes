@@ -14,6 +14,19 @@ object DuskSurfaceRules {
         return block(block.defaultState)
     }
 
+    val sand = sequence(
+        condition(
+            ON_CEILING, block(Blocks.SANDSTONE)
+        ),
+        block(Blocks.SAND)
+    )
+    val sandRed = sequence(
+        condition(
+            ON_CEILING, block(Blocks.RED_SANDSTONE)
+        ),
+        block(Blocks.RED_SAND)
+    )
+
 
     fun overworld(): MaterialRule {
         //Sorted like the vanilla surface rule locations https://minecraft.wiki/w/World_generation#Surface
@@ -49,12 +62,7 @@ object DuskSurfaceRules {
                 biome(
                     DuskBiomes.WARM_RIVER
                 ),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.SANDSTONE)
-                    ),
-                    block(Blocks.SAND)
-                )
+                sand
             ),
             condition(
                 biome(
@@ -64,12 +72,7 @@ object DuskSurfaceRules {
                     DuskBiomes.RED_BEACH,
                     DuskBiomes.SNOWY_RED_BEACH
                 ),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.RED_SANDSTONE)
-                    ),
-                    block(Blocks.RED_SAND)
-                )
+                sandRed
             )
         )
         val windsweptBirchSurface = condition(
@@ -155,12 +158,7 @@ object DuskSurfaceRules {
                 biome(
                     DuskBiomes.WARM_RIVER
                 ),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.SANDSTONE)
-                    ),
-                    block(Blocks.SAND)
-                )
+                sand
             ),
             condition(
                 biome(
@@ -169,12 +167,7 @@ object DuskSurfaceRules {
                     DuskBiomes.RED_BEACH,
                     DuskBiomes.SNOWY_RED_BEACH
                 ),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.RED_SANDSTONE)
-                    ),
-                    block(Blocks.RED_SAND)
-                )
+                sandRed
             )
         )
         val deepWindsweptBirchSurface = condition(
@@ -226,15 +219,54 @@ object DuskSurfaceRules {
         val sandOcean = condition(
             ON_FLOOR, condition(
                 biome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
-                sequence(
-                    condition(
-                        ON_CEILING, block(Blocks.RED_SANDSTONE)
-                    ),
-                    block(Blocks.RED_SAND)
-                )
+                sandRed
             )
         )
 //Cave Surface
+        val sandCaves =
+            sequence(
+                condition(
+                    biome(DuskBiomes.SAND_CAVES),
+                    sequence(
+                        condition(
+                            DEEP_UNDER_FLOOR, sequence(
+                                condition(
+                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.75),
+                                    block(Blocks.SANDSTONE)
+                                )
+                            )
+                        ),
+                        condition(
+                            ON_FLOOR, sequence(
+                                condition(
+                                    noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, 1.0),
+                                    block(Blocks.SANDSTONE)
+                                )
+                            )
+                        ),
+                        condition(
+                            ON_FLOOR, sequence(
+                                condition(
+                                    noiseThreshold(NoiseParametersKeys.NETHER_STATE_SELECTOR, 1.0),
+                                    sand
+                                )
+                            )
+                        ),
+                        condition(
+                            UNDER_FLOOR, sequence(
+                                condition(
+                                    noiseThreshold(NoiseParametersKeys.SURFACE, 1.0),
+                                    sand
+                                )
+                            )
+                        )
+                    )
+                ),
+                condition(
+                    biome(DuskBiomes.RED_SAND_CAVES),
+                    sequence()
+                )
+            )
         val frozenCaverns = condition(
             biome(DuskBiomes.FROZEN_CAVERNS),
             sequence(
@@ -261,14 +293,13 @@ object DuskSurfaceRules {
                             )
                         ),
                         condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    water(-1, 0), sequence(
-                                        condition(
-                                            noiseThreshold
-                                                (NoiseParametersKeys.ICE, 0.0, 0.025),
-                                            block(Blocks.ICE)
-                                        )
+                            ON_FLOOR,
+                            condition(
+                                water(-1, 0), sequence(
+                                    condition(
+                                        noiseThreshold
+                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                        block(Blocks.ICE)
                                     )
                                 )
                             )
@@ -287,8 +318,6 @@ object DuskSurfaceRules {
                                 condition(
                                     noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
                                     block(Blocks.PACKED_ICE)
-
-
                                 ),
                                 condition(
                                     water(0, 0), sequence(
@@ -301,14 +330,13 @@ object DuskSurfaceRules {
                             )
                         ),
                         condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    water(1, 0), sequence(
-                                        condition(
-                                            noiseThreshold
-                                                (NoiseParametersKeys.ICE, 0.0, 0.025),
-                                            block(Blocks.ICE)
-                                        )
+                            ON_FLOOR,
+                            condition(
+                                water(1, 0), sequence(
+                                    condition(
+                                        noiseThreshold
+                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                        block(Blocks.ICE)
                                     )
                                 )
                             )

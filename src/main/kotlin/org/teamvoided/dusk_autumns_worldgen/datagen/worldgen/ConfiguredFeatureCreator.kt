@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
-import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.loot.LootTables
@@ -18,6 +17,7 @@ import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.util.math.int_provider.WeightedListIntProvider
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
+import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
@@ -41,11 +41,15 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
+import org.teamvoided.dusk_autumns_worldgen.util.Utils.add
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.treedecorator.FixedLeavesVineTreeDecorator
 import java.util.*
+import java.util.List
+import kotlin.collections.Iterator
+import kotlin.collections.listOf
 
 object ConfiguredFeatureCreator {
     fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -422,8 +426,81 @@ object ConfiguredFeatureCreator {
             Feature.ORE,
             OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.ICE_ORE_REPLACEABLE), Blocks.BLUE_ICE.defaultState, 64)
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.SAND_SPIKES,
+            Feature.BLOCK_COLUMN,
+            BlockColumnFeatureConfig(
+                List.of(
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 7),
+                        BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+                    ),
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 5),
+                        BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                    )
+                ), Direction.UP, BlockPredicate.IS_AIR, false
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.SAND_SPIKES_ROOF,
+            Feature.BLOCK_COLUMN,
+            BlockColumnFeatureConfig(
+                List.of(
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 7),
+                        BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+                    ),
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 5),
+                        BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                    )
+                ), Direction.DOWN, BlockPredicate.IS_AIR, false
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.RED_SAND_SPIKES,
+            Feature.BLOCK_COLUMN,
+            BlockColumnFeatureConfig(
+                List.of(
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(3, 7),
+                        BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+                    ),
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 5),
+                        BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                    )
+                ), Direction.UP, BlockPredicate.IS_AIR, false
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            context,
+            DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF,
+            Feature.BLOCK_COLUMN,
+            BlockColumnFeatureConfig(
+                List.of(
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(3, 7),
+                        BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+                    ),
+                    BlockColumnFeatureConfig.createLayer(
+                        UniformIntProvider.create(1, 5),
+                        BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                    )
+                ), Direction.DOWN, BlockPredicate.IS_AIR, false
+            )
+        )
 
 
+//Monster Room features
+        val defaultMonstersRoom = listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
+        val lushMonstersRoom = defaultMonstersRoom.add()
+        val frozenMonstersRoom = listOf(EntityType.STRAY, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
+        val sandMonstersRoom = listOf(EntityType.SKELETON, EntityType.HUSK, EntityType.ZOMBIE, EntityType.SPIDER)
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
@@ -432,10 +509,77 @@ object ConfiguredFeatureCreator {
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.TUFF),
-                listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER),
+                defaultMonstersRoom,
                 LootTables.SIMPLE_DUNGEON_CHEST
             )
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.LUSH_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.MOSSY_COBBLESTONE),
+                BlockStateProvider.of(Blocks.MUD),
+                lushMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
+                BlockStateProvider.of(Blocks.MUD),
+                lushMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.FROZEN_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.COBBLESTONE),
+                BlockStateProvider.of(Blocks.SNOW_BLOCK),
+                frozenMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
+                BlockStateProvider.of(Blocks.PACKED_ICE),
+                frozenMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.SAND_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.SANDSTONE),
+                BlockStateProvider.of(Blocks.SAND),
+                sandMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            context,
+            DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM,
+            DuskConfiguredFeatures.MONSTER_ROOM,
+            MonsterRoomFeatureConfig(
+                BlockStateProvider.of(Blocks.RED_SANDSTONE),
+                BlockStateProvider.of(Blocks.RED_SAND),
+                sandMonstersRoom,
+                LootTables.SIMPLE_DUNGEON_CHEST
+            )
+        )
+//Structure Piece features
         ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
             DuskConfiguredFeatures.DESERT_WELL,

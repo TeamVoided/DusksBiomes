@@ -3,11 +3,11 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
-import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -296,6 +296,165 @@ object PlacedFeatureCreator {
         )
         PlacedFeatureUtil.register(
             context,
+            DuskPlacedFeatures.SAND_SPIKES,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.DOWN, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SAND_SPIKES_ROOF,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.RED_SAND_SPIKES,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.DOWN, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.RED_SAND_SPIKES_ROOF,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SAND_CACTUS,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(3),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP, BlockPredicate.matchingBlockTags(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+                ),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SAND_CAVE_VINES,
+            configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.CAVE_VINE),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(94),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), BlockPredicate.IS_AIR, 12
+                ),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+
+
+//Monster Room features
+        val upperMonsterRoom =
+            arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(10),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.getTop()),
+                BiomePlacementModifier.getInstance()
+            )
+        val lowerMonsterRoom =
+            arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(4),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
+                BiomePlacementModifier.getInstance()
+            )
+
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DEEP_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_MONSTER_ROOM),
+            *lowerMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.LUSH_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.LUSH_MONSTER_ROOM),
+            *upperMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DEEP_LUSH_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM),
+            *lowerMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.FROZEN_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.FROZEN_MONSTER_ROOM),
+            *upperMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DEEP_FROZEN_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM),
+            *lowerMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            *upperMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            *lowerMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.RED_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            *upperMonsterRoom
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.DEEP_RED_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            *lowerMonsterRoom
+        )
+
+//Structure Piece Features
+        PlacedFeatureUtil.register(
+            context,
             DuskPlacedFeatures.DESERT_WELL,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DESERT_WELL),
             *arrayOf<PlacementModifier>(
@@ -318,6 +477,42 @@ object PlacedFeatureCreator {
                 BiomePlacementModifier.getInstance()
             )
         )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.CAVE_DESERT_WELL,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DESERT_WELL),
+            *arrayOf<PlacementModifier>(
+                RarityFilterPlacementModifier.create(100),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.DOWN,
+                    BlockPredicate.hasSturdyFace(Direction.UP),
+                    BlockPredicate.IS_AIR,
+                    12
+                ),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-3)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        PlacedFeatureUtil.register(
+            context,
+            DuskPlacedFeatures.CAVE_RED_DESERT_WELL,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
+            *arrayOf<PlacementModifier>(
+                RarityFilterPlacementModifier.create(100),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                EnvironmentScanPlacementModifier.create(
+                    Direction.DOWN,
+                    BlockPredicate.hasSturdyFace(Direction.UP),
+                    BlockPredicate.IS_AIR,
+                    12
+                ),
+                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-3)),
+                BiomePlacementModifier.getInstance()
+            )
+        )
 
 
 //        PlacedFeatureUtil.register(
@@ -332,19 +527,6 @@ object PlacedFeatureCreator {
 //                BiomePlacementModifier.getInstance()
 //            )
 //        )
-
-//        PlacedFeatureUtil.register(
-//            context,
-//            UndergroundPlacedFeatures.MONSTER_ROOM_DEEP,
-//            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CUSTOM_MONSTER_ROOM),
-//            *arrayOf<PlacementModifier>(
-//                CountPlacementModifier.create(4),
-//                InSquarePlacementModifier.getInstance(),
-//                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
-//                BiomePlacementModifier.getInstance()
-//            )
-//        )
-
 
     }
 
