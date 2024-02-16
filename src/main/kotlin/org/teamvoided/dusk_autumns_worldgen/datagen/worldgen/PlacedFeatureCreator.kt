@@ -299,7 +299,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_SPIKES,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_SPIKES),
-            CountPlacementModifier.create(60),
+            CountPlacementModifier.create(100),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
@@ -310,11 +310,11 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_SPIKES_ROOF,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_SPIKES_ROOF),
-            CountPlacementModifier.create(60),
+            CountPlacementModifier.create(40),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR, 12
+                Direction.UP, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR_OR_WATER, 12
             ),
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()

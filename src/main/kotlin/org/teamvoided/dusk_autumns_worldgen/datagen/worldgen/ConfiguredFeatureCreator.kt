@@ -12,7 +12,10 @@ import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
-import net.minecraft.util.math.int_provider.*
+import net.minecraft.util.math.int_provider.ConstantIntProvider
+import net.minecraft.util.math.int_provider.IntProvider
+import net.minecraft.util.math.int_provider.UniformIntProvider
+import net.minecraft.util.math.int_provider.WeightedListIntProvider
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -356,7 +359,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.SAND_SPIKES,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                10, PlacedFeatureUtil.placedInline(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -371,16 +374,15 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
                     ),
-                    *arrayOf<PlacementModifier>(
-                        BlockPredicateFilterPlacementModifier.create(
-                            BlockPredicate.bothOf(
-                                BlockPredicate.replaceable(),
-                                BlockPredicate.matchingBlocks(
-                                    Direction.DOWN.vector, *arrayOf<Block>(Blocks.SANDSTONE)
-                                )
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.bothOf(
+                            BlockPredicate.replaceable(),
+                            BlockPredicate.matchingBlocks(
+                                Direction.DOWN.vector, *arrayOf<Block>(Blocks.SANDSTONE)
                             )
                         )
                     )
+
                 )
             )
         )
@@ -388,7 +390,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.SAND_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                10, PlacedFeatureUtil.placedInline(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -401,17 +403,10 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.UP), true
+                        Direction.DOWN, BlockPredicate.IS_AIR_OR_WATER, true
                     ),
-                    *arrayOf<PlacementModifier>(
-                        BlockPredicateFilterPlacementModifier.create(
-                            BlockPredicate.bothOf(
-                                BlockPredicate.replaceable(),
-                                BlockPredicate.matchingBlocks(
-                                    Direction.UP.vector, *arrayOf<Block>(Blocks.SANDSTONE)
-                                )
-                            )
-                        )
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
             )
@@ -437,7 +432,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.RED_SAND_SPIKES,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                10, PlacedFeatureUtil.placedInline(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -452,13 +447,11 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
                     ),
-                    *arrayOf<PlacementModifier>(
-                        BlockPredicateFilterPlacementModifier.create(
-                            BlockPredicate.bothOf(
-                                BlockPredicate.replaceable(),
-                                BlockPredicate.matchingBlocks(
-                                    Direction.DOWN.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
-                                )
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.bothOf(
+                            BlockPredicate.replaceable(),
+                            BlockPredicate.matchingBlocks(
+                                Direction.DOWN.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
                             )
                         )
                     )
@@ -469,7 +462,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                10, PlacedFeatureUtil.placedInline(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -484,13 +477,11 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.UP), true
                     ),
-                    *arrayOf<PlacementModifier>(
-                        BlockPredicateFilterPlacementModifier.create(
-                            BlockPredicate.bothOf(
-                                BlockPredicate.IS_AIR,
-                                BlockPredicate.matchingBlocks(
-                                    Direction.UP.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
-                                )
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.bothOf(
+                            BlockPredicate.IS_AIR,
+                            BlockPredicate.matchingBlocks(
+                                Direction.UP.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
                             )
                         )
                     )
@@ -640,7 +631,7 @@ object ConfiguredFeatureCreator {
         ).dirtProvider(BlockStateProvider.of(Blocks.SNOW_BLOCK)).ignoreVines()
     }
 
-    fun getPetalStates(): DataPool.Builder<BlockState> {
+    private fun getPetalStates(): DataPool.Builder<BlockState> {
         val randomPetal = DataPool.builder<BlockState>()
         for (i in 1..4) {
             Direction.Type.HORIZONTAL.forEach {
