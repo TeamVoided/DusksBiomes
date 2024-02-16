@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
 import net.minecraft.block.Block
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryCodecs
@@ -23,7 +22,7 @@ data class LargeCavePillarFeatureConfig(
     val minRadiusForWind: Int,
     val minBluntnessForWind: Float,
     val mainBlock: BlockStateProvider,
-    var canReplace: HolderSet<Block>
+    var canPlaceOn: HolderSet<Block>
 ) : FeatureConfig {
     companion object {
         val CODEC: Codec<LargeCavePillarFeatureConfig> = RecordCodecBuilder
@@ -46,8 +45,8 @@ data class LargeCavePillarFeatureConfig(
                         Codec.floatRange(0.0f, 5.0f)
                             .fieldOf("min_bluntness_for_wind").forGetter { it.minBluntnessForWind },
                         BlockStateProvider.TYPE_CODEC.fieldOf("main_block").forGetter { it.mainBlock },
-                        RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_replace")
-                            .forGetter { it.canReplace }
+                        RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_place_on")
+                            .forGetter { it.canPlaceOn }
                     )
                     .apply(instance, ::LargeCavePillarFeatureConfig)
             }

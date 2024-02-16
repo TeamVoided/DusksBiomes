@@ -55,6 +55,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .addOptionalTag(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
             .add(Blocks.SANDSTONE)
             .add(Blocks.RED_SANDSTONE)
+            .forceAddTag(BlockTags.SAND)
         getOrCreateTagBuilder(DuskBlockTags.ICE_CAVE_PILLAR_PLACEABLE)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .add(Blocks.PACKED_ICE)

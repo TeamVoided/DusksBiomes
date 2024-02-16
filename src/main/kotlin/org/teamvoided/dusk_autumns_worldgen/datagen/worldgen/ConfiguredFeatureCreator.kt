@@ -217,7 +217,6 @@ object ConfiguredFeatureCreator {
             )
         )
 
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.CHERRY_SNOW,
             Feature.TREE,
@@ -259,10 +258,10 @@ object ConfiguredFeatureCreator {
                 0.33f,
                 UniformFloatProvider.create(0.3f, 0.9f),
                 UniformFloatProvider.create(0.4f, 1.0f),
-                UniformFloatProvider.create(0.0f, 0.9f),
+                UniformFloatProvider.create(0.0f, 2.0f),
                 4,
                 0.6f,
-                BlockStateProvider.of(Blocks.PACKED_ICE),
+                BlockStateProvider.of(Blocks.BLUE_ICE),
                 blockTags.getTagOrThrow(DuskBlockTags.ICE_CAVE_PILLAR_PLACEABLE)
             )
         )
@@ -368,21 +367,15 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(3, 7),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
+                        Direction.UP, BlockPredicate.IS_AIR_OR_WATER, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
-                        BlockPredicate.bothOf(
-                            BlockPredicate.replaceable(),
-                            BlockPredicate.matchingBlocks(
-                                Direction.DOWN.vector, *arrayOf<Block>(Blocks.SANDSTONE)
-                            )
-                        )
+                        BlockPredicate.hasSturdyFace(Direction.UP)
                     )
-
                 )
             )
         )
@@ -399,7 +392,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(3, 7),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
@@ -441,19 +434,14 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(3, 7),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
+                        Direction.UP, BlockPredicate.IS_AIR_OR_WATER, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
-                        BlockPredicate.bothOf(
-                            BlockPredicate.replaceable(),
-                            BlockPredicate.matchingBlocks(
-                                Direction.DOWN.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
-                            )
-                        )
+                        BlockPredicate.hasSturdyFace(Direction.UP)
                     )
                 )
             )
@@ -471,19 +459,14 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(3, 7),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.UP), true
+                        Direction.DOWN, BlockPredicate.IS_AIR_OR_WATER, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
-                        BlockPredicate.bothOf(
-                            BlockPredicate.IS_AIR,
-                            BlockPredicate.matchingBlocks(
-                                Direction.UP.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
-                            )
-                        )
+                        BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
             )
@@ -547,7 +530,7 @@ object ConfiguredFeatureCreator {
             VoidFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLESTONE),
-                BlockStateProvider.of(Blocks.SNOW_BLOCK),
+                BlockStateProvider.of(Blocks.PACKED_ICE),
                 frozenMonstersRoom,
                 LootTables.SIMPLE_DUNGEON_CHEST
             )
@@ -557,7 +540,7 @@ object ConfiguredFeatureCreator {
             VoidFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
-                BlockStateProvider.of(Blocks.PACKED_ICE),
+                BlockStateProvider.of(Blocks.BLUE_ICE),
                 frozenMonstersRoom,
                 LootTables.SIMPLE_DUNGEON_CHEST
             )

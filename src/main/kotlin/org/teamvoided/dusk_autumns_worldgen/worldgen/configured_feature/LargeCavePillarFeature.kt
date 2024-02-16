@@ -33,7 +33,7 @@ class LargeCavePillarFeature(codec: Codec<LargeCavePillarFeatureConfig>) :
             structureWorldAccess, origin,
             config.floorToCeilingSearchRange,
             { CavePillarHelper.canGenerate(it) },
-            { it.isIn(config.canReplace) }
+            { it.isIn(config.canPlaceOn) }
         )
         if (optional.isEmpty || optional.get() !is Bounded) return false
 
@@ -160,7 +160,7 @@ class LargeCavePillarFeature(codec: Codec<LargeCavePillarFeatureConfig>) :
                                 Block.NOTIFY_LISTENERS
                             )
                         } else if (bl && world.getBlockState(blockPos)
-                                .isIn(config.canReplace)
+                                .isIn(config.canPlaceOn)
                         ) continue@block1
                         mutable.move(if (this.isStalagmite) Direction.UP else Direction.DOWN)
                         ++m

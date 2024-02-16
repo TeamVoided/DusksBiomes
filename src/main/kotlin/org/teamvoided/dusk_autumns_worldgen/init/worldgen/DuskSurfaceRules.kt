@@ -254,7 +254,7 @@ object DuskSurfaceRules {
                         UNDER_CEILING, sequence(
                             condition(
                                 surfaceNoiseThreshold(0.0),
-                                sand
+                                block(Blocks.SANDSTONE)
                             )
                         )
                     ),
@@ -267,8 +267,13 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        ON_FLOOR, sequence(
-                            sand
+                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                            sequence(
+                                condition(
+                                    ON_FLOOR, block(Blocks.SAND)
+                                ),
+                                block(Blocks.SANDSTONE)
+                            )
                         )
                     )
                 )
@@ -317,8 +322,13 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        ON_FLOOR, sequence(
-                            sandRed
+                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                            sequence(
+                                condition(
+                                    ON_FLOOR, block(Blocks.RED_SAND)
+                                ),
+                                block(Blocks.RED_SANDSTONE)
+                            )
                         )
                     )
                 )

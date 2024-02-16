@@ -12,8 +12,8 @@ import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.*
 //This is going to the lib
 object VoidFeatures {
 
-    val INVERTED_SPIKE = register("inverted_spike", InvertedSpikeFeature(SpikeFeatureConfig.CODEC))
     val SPIKE = register("spike", SpikeFeature(SpikeFeatureConfig.CODEC))
+    val INVERTED_SPIKE = register("inverted_spike", InvertedSpikeFeature(SpikeFeatureConfig.CODEC))
     val MONSTER_ROOM = register("monster_room", MonsterRoomFeature(MonsterRoomFeatureConfig.CODEC))
     val STRUCTURE_PIECE = register("structure_piece", StructurePieceFeature(StructurePieceFeatureConfig.CODEC))
     val LARGE_CAVE_PILLAR = register("large_cave_pillar", LargeCavePillarFeature(LargeCavePillarFeatureConfig.CODEC))

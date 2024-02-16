@@ -3,7 +3,9 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.sound.BiomeAdditionsSound
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
 import net.minecraft.sound.SoundEvents
