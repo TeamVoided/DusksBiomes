@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature
 import com.mojang.serialization.Codec
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
@@ -34,7 +33,7 @@ class LargeCavePillarFeature(codec: Codec<LargeCavePillarFeatureConfig>) :
             structureWorldAccess, origin,
             config.floorToCeilingSearchRange,
             { CavePillarHelper.canGenerate(it) },
-            { it.isIn(BlockTags.BASE_STONE_OVERWORLD) }
+            { it.isIn(config.canReplace) }
         )
         if (optional.isEmpty || optional.get() !is Bounded) return false
 
@@ -161,7 +160,7 @@ class LargeCavePillarFeature(codec: Codec<LargeCavePillarFeatureConfig>) :
                                 Block.NOTIFY_LISTENERS
                             )
                         } else if (bl && world.getBlockState(blockPos)
-                                .isIn(BlockTags.BASE_STONE_OVERWORLD)
+                                .isIn(config.canReplace)
                         ) continue@block1
                         mutable.move(if (this.isStalagmite) Direction.UP else Direction.DOWN)
                         ++m

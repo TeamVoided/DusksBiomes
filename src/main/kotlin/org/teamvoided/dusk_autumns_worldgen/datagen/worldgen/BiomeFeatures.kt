@@ -105,6 +105,7 @@ object BiomeFeatures {
 
     fun addFrozenCavernsFeatures(generationSettings: GenerationSettings.Builder) {
         addFrozenDungeons(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_CAVE_PILLAR)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_ICE)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
@@ -134,3 +135,16 @@ object BiomeFeatures {
         }
     }
 }
+/*    Generation Steps Reference:
+      RAW_GENERATION
+      LAKES
+      LOCAL_MODIFICATIONS
+      UNDERGROUND_STRUCTURES
+      SURFACE_STRUCTURES
+      STRONGHOLDS
+      UNDERGROUND_ORES
+      UNDERGROUND_DECORATION
+      FLUID_SPRINGS
+      VEGETAL_DECORATION
+      TOP_LAYER_MODIFICATION
+ */

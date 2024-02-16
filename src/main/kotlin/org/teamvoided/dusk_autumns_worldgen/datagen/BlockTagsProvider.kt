@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
@@ -19,7 +20,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.ICE)
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
             .add(Blocks.PODZOL)
-//Dusk Tags
+//Void Tags
         getOrCreateTagBuilder(DuskBlockTags.CANE_HYDRATION)
             .add(Blocks.ICE)
             .add(Blocks.FROSTED_ICE)
@@ -27,6 +28,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
+//Dusk Tags
         getOrCreateTagBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .add(Blocks.POWDER_SNOW)
@@ -41,14 +43,22 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.REPLACEABLE)
             .add(Blocks.POWDER_SNOW)
             .add(Blocks.ICE)
-            .add(Blocks.WATER)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
-            .add(Blocks.CAVE_VINES)
-            .add(Blocks.CAVE_VINES_PLANT)
+            .forceAddTag(BlockTags.CAVE_VINES)
+            .forceAddTag(BlockTags.SAND)
+            .forceAddTag(BlockTags.SNOW)
+            .add(Blocks.POWDER_SNOW)
+            .add(Blocks.ICE)
+        getOrCreateTagBuilder(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
+            .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+            .addOptionalTag(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
             .add(Blocks.SANDSTONE)
-            .add(Blocks.SAND)
-            .add(Blocks.RED_TERRACOTTA)// DEBUG
+            .add(Blocks.RED_SANDSTONE)
+        getOrCreateTagBuilder(DuskBlockTags.ICE_CAVE_PILLAR_PLACEABLE)
+            .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+            .add(Blocks.PACKED_ICE)
+            .add(Blocks.BLUE_ICE)
 
 //SUSPICIOUS
         getOrCreateTagBuilder(BlockTags.SAND)

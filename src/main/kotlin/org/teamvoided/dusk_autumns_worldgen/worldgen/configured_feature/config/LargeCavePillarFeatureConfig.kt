@@ -2,6 +2,11 @@ package org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
+import net.minecraft.block.Block
+import net.minecraft.registry.HolderSet
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.math.float_provider.FloatProvider
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.world.gen.feature.FeatureConfig
@@ -17,7 +22,8 @@ data class LargeCavePillarFeatureConfig(
     val windSpeed: FloatProvider,
     val minRadiusForWind: Int,
     val minBluntnessForWind: Float,
-    val mainBlock: BlockStateProvider
+    val mainBlock: BlockStateProvider,
+    var canReplace: HolderSet<Block>
 ) : FeatureConfig {
     companion object {
         val CODEC: Codec<LargeCavePillarFeatureConfig> = RecordCodecBuilder
@@ -39,7 +45,9 @@ data class LargeCavePillarFeatureConfig(
                         Codec.intRange(0, 100).fieldOf("min_radius_for_wind").forGetter { it.minRadiusForWind },
                         Codec.floatRange(0.0f, 5.0f)
                             .fieldOf("min_bluntness_for_wind").forGetter { it.minBluntnessForWind },
-                        BlockStateProvider.TYPE_CODEC.fieldOf("main_block").forGetter { it.mainBlock }
+                        BlockStateProvider.TYPE_CODEC.fieldOf("main_block").forGetter { it.mainBlock },
+                        RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_replace")
+                            .forGetter { it.canReplace }
                     )
                     .apply(instance, ::LargeCavePillarFeatureConfig)
             }

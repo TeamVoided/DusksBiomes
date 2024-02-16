@@ -14,6 +14,18 @@ object DuskSurfaceRules {
         return block(block.defaultState)
     }
 
+    val grass = sequence(
+        condition(
+            ON_FLOOR, block(Blocks.GRASS_BLOCK)
+        ),
+        block(Blocks.DIRT)
+    )
+    val gravel = sequence(
+        condition(
+            ON_CEILING, block(Blocks.STONE)
+        ),
+        block(Blocks.GRAVEL)
+    )
     val sand = sequence(
         condition(
             ON_CEILING, block(Blocks.SANDSTONE)
@@ -43,7 +55,10 @@ object DuskSurfaceRules {
                         aboveY(YOffset.fixed(60), 0),
                         condition(
                             not(aboveY(YOffset.fixed(63), 0)),
-                            condition(noiseThreshold(NoiseParametersKeys.SURFACE_SWAMP, 0.0), block(Blocks.WATER))
+                            condition(
+                                swampThreshold(0.0),
+                                block(Blocks.WATER)
+                            )
                         )
                     )
                 )
@@ -87,29 +102,17 @@ object DuskSurfaceRules {
             sequence(
                 condition(
                     surfaceNoiseThreshold(2.0),
-                    sequence(
-                        condition(
-                            ON_CEILING, block(Blocks.STONE)
-                        ),
-                        block(Blocks.GRAVEL)
-                    )
+                    gravel
                 ),
-                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE)),
+                condition(
+                    surfaceNoiseThreshold(1.0),
+                    block(Blocks.STONE)
+                ),
                 condition(
                     surfaceNoiseThreshold(-1.0),
-                    sequence(
-                        condition(
-                            ON_FLOOR, block(Blocks.GRASS_BLOCK)
-                        ),
-                        block(Blocks.DIRT)
-                    )
+                    grass
                 ),
-                condition(
-                    ON_CEILING, block(Blocks.STONE)
-                ),
-                block(Blocks.GRAVEL)
-
-
+                gravel
             )
         )
         val podzolAndCoarseDirt = condition(
@@ -172,31 +175,27 @@ object DuskSurfaceRules {
         )
         val deepWindsweptBirchSurface = condition(
             biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
-            condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE))
+            condition(
+                surfaceNoiseThreshold(1.75),
+                block(Blocks.STONE)
+            )
         )
         val deepWindsweptGravelSurface = condition(
             biome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
             sequence(
                 condition(
                     surfaceNoiseThreshold(2.0),
-                    sequence(
-                        condition(
-                            ON_CEILING, block(Blocks.STONE)
-                        ),
-                        block(Blocks.GRAVEL)
-                    )
+                    gravel
                 ),
-                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE)),
+                condition(
+                    surfaceNoiseThreshold(1.0),
+                    block(Blocks.STONE)
+                ),
                 condition(
                     surfaceNoiseThreshold(-1.0),
                     block(Blocks.DIRT)
                 ),
-                condition(
-                    ON_CEILING, block(Blocks.STONE)
-                ),
-                block(Blocks.GRAVEL)
-
-
+                gravel
             )
         )
         val deepMud = condition(
@@ -224,150 +223,126 @@ object DuskSurfaceRules {
         )
 //Cave Surface
         val sandCaves = sequence(
-                condition(
-                    biome(DuskBiomes.SAND_CAVES),
-                    sequence(
-                        condition(
-                            DEEP_UNDER_FLOOR, sequence(
-                                condition(
-                                    surfaceNoiseThreshold(1.75),
-                                    block(Blocks.SANDSTONE)
-                                )
-                            )
-                        ),
-                        condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    surfaceNoiseThreshold(1.75),
-                                    block(Blocks.SANDSTONE)
-                                )
-                            )
-                        ),
-                        condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    surfaceNetherNoiseThreshold(1.0),
-                                    sand
-                                )
-                            )
-                        ),
-                        condition(
-                            UNDER_FLOOR, sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.0),
-                                    sand
-                                )
-                            )
-                        ),
-                        condition(
-                            stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.75),
-                                    block(Blocks.SANDSTONE)
-                                )
-                            )
-                        ),
-                        condition(
-                            ON_CEILING, sequence(
-                                condition(
-                                    surfaceSecondaryNoiseThreshold(1.75),
-                                    block(Blocks.SANDSTONE)
-                                )
-                            )
-                        ),
-                        condition(
-                            UNDER_CEILING, sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.0),
-                                    sand
-                                )
+            condition(
+                biome(DuskBiomes.SAND_CAVES),
+                sequence(
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.5),
+                                sand
                             )
                         )
+                    ),
+                    condition(
+                        DEEP_UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(-1.0),
+                                block(Blocks.SANDSTONE)
+                            )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.0),
+                                block(Blocks.SANDSTONE)
+                            )
+                        )
+                    ),
+                    condition(
+                        UNDER_CEILING, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.0),
+                                sand
+                            )
+                        )
+                    ),
+                    condition(
+                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.5),
+                                block(Blocks.SANDSTONE)
+                            )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            sand
+                        )
                     )
-                ),
-                condition(
-                    biome(DuskBiomes.RED_SAND_CAVES),
-                    sequence(
-                        condition(
-                            DEEP_UNDER_FLOOR, sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.75),
-                                    block(Blocks.RED_SANDSTONE)
-                                )
+                )
+            ),
+            condition(
+                biome(DuskBiomes.RED_SAND_CAVES),
+                sequence(
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.5),
+                                sandRed
                             )
-                        ),
-                        condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    surfaceSecondaryNoiseThreshold(1.75),
-                                    block(Blocks.RED_SANDSTONE)
-                                )
+                        )
+                    ),
+                    condition(
+                        DEEP_UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.0),
+                                block(Blocks.RED_SANDSTONE)
                             )
-                        ),
-                        condition(
-                            ON_FLOOR, sequence(
-                                condition(
-                                    surfaceNetherNoiseThreshold(1.0),
-                                    sandRed
-                                )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.5),
+                                block(Blocks.RED_SANDSTONE)
                             )
-                        ),
-                        condition(
-                            UNDER_FLOOR, sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.0),
-                                    sandRed
-                                )
+                        )
+                    ),
+                    condition(
+                        UNDER_CEILING, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.0),
+                                sandRed
                             )
-                        ),
-                        condition(
-                            stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.75),
-                                    block(Blocks.RED_SANDSTONE)
-                                )
+                        )
+                    ),
+                    condition(
+                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.5),
+                                block(Blocks.RED_SANDSTONE)
                             )
-                        ),
-                        condition(
-                            ON_CEILING, sequence(
-                                condition(
-                                    surfaceSecondaryNoiseThreshold(1.75),
-                                    block(Blocks.RED_SANDSTONE)
-                                )
-                            )
-                        ),
-                        condition(
-                            UNDER_CEILING, sequence(
-                                condition(
-                                    surfaceNoiseThreshold( 1.0),
-                                    sandRed
-                                )
-                            )
+                        )
+                    ),
+                    condition(
+                        ON_FLOOR, sequence(
+                            sandRed
                         )
                     )
                 )
             )
+        )
         val frozenCaverns = condition(
             biome(DuskBiomes.FROZEN_CAVERNS),
             sequence(
                 condition(
                     DEEP_UNDER_FLOOR, sequence(
-                        condition(
-                            UNDER_FLOOR, sequence(
-                                condition(
-                                    water(-6, 0), sequence(
-                                        condition(
-                                            noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
-                                            block(Blocks.PACKED_ICE)
-                                        )
+                        sequence(
+                            condition(
+                                water(-6, 0), sequence(
+                                    condition(
+                                        packedIceNoiseThreshold(0.0, 0.2),
+                                        block(Blocks.PACKED_ICE)
                                     )
-                                ),
-                                condition(
-                                    water(0, 0), sequence(
-                                        condition(
-                                            noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
-                                            block(Blocks.POWDER_SNOW)
-                                        )
+                                )
+                            ),
+                            condition(
+                                water(0, 0), sequence(
+                                    condition(
+                                        powderSnowNoiseThreshold(0.45, 0.58),
+                                        block(Blocks.POWDER_SNOW)
                                     )
                                 )
                             )
@@ -377,8 +352,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(-1, 0), sequence(
                                     condition(
-                                        noiseThreshold
-                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                        iceNoiseThreshold(0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
@@ -394,18 +368,14 @@ object DuskSurfaceRules {
                 condition(
                     stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
                         condition(
-                            UNDER_CEILING, sequence(
+                            packedIceNoiseThreshold(0.0, 0.2),
+                            block(Blocks.PACKED_ICE)
+                        ),
+                        condition(
+                            water(0, 0), sequence(
                                 condition(
-                                    noiseThreshold(NoiseParametersKeys.PACKED_ICE, 0.0, 0.2),
-                                    block(Blocks.PACKED_ICE)
-                                ),
-                                condition(
-                                    water(0, 0), sequence(
-                                        condition(
-                                            noiseThreshold(NoiseParametersKeys.POWDER_SNOW, 0.45, 0.58),
-                                            block(Blocks.POWDER_SNOW)
-                                        )
-                                    )
+                                    powderSnowNoiseThreshold(0.45, 0.58),
+                                    block(Blocks.POWDER_SNOW)
                                 )
                             )
                         ),
@@ -414,8 +384,7 @@ object DuskSurfaceRules {
                             condition(
                                 water(1, 0), sequence(
                                     condition(
-                                        noiseThreshold
-                                            (NoiseParametersKeys.ICE, 0.0, 0.025),
+                                        iceNoiseThreshold(0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
@@ -488,10 +457,25 @@ object DuskSurfaceRules {
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
+
     fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
-    }fun surfaceNetherNoiseThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.NETHER_STATE_SELECTOR, min / 8.25, Double.MAX_VALUE)
+    }
+
+    fun swampThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE_SWAMP, min, Double.MAX_VALUE)
+    }
+
+    fun packedIceNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.PACKED_ICE, min, max)
+    }
+
+    fun iceNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.ICE, min, max)
+    }
+
+    fun powderSnowNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.POWDER_SNOW, min, max)
     }
 }
 

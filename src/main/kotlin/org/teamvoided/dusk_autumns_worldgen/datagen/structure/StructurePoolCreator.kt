@@ -53,24 +53,9 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/villagers/baby",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/villagers/nitwit",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/villagers/unemployed",
-                            procEmpty
-                        ), 10
-                    )
+                    pairedSingle("village/swamp/villagers/baby", procEmpty),
+                    pairedSingle("village/swamp/villagers/nitwit", procEmpty),
+                    pairedSingle("village/swamp/villagers/unemployed", procEmpty, 10)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -80,30 +65,10 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/town_centers/swamp_meeting_point_1",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/town_centers/swamp_meeting_point_2",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/town_centers/swamp_meeting_point_3",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/town_centers/swamp_meeting_point_4",
-                            procHouse
-                        ), 1
-                    )
+                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_1", procStreet),
+                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_2", procStreet),
+                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_3", procStreet),
+                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_4", procStreet)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -113,102 +78,22 @@ object StructurePoolCreator {
             StructurePool(
                 structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_TERMINATORS),
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/corner_01",
-                            procStreet
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/corner_02",
-                            procStreet
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/split_01",
-                            procStreet
-                        ), 3
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/split_02",
-                            procStreet
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/square_01",
-                            procStreet
-                        ), 3
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/square_02",
-                            procStreet
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_01",
-                            procStreet
-                        ), 6
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_02",
-                            procStreet
-                        ), 5
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_03",
-                            procStreet
-                        ), 7
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_04",
-                            procStreet
-                        ), 6
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_05",
-                            procStreet
-                        ), 3
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/straight_06",
-                            procStreet
-                        ), 4
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/crossroads_01",
-                            procStreet
-                        ), 3
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/crossroads_02",
-                            procStreet
-                        ), 3
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/crossroads_03",
-                            procStreet
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/turn_01",
-                            procStreet
-                        ), 2
-                    )
+                    pairedSingle("village/swamp/streets/corner_01", procStreet, 2),
+                    pairedSingle("village/swamp/streets/corner_02", procStreet, 2),
+                    pairedSingle("village/swamp/streets/split_01", procStreet, 3),
+                    pairedSingle("village/swamp/streets/split_02", procStreet, 2),
+                    pairedSingle("village/swamp/streets/square_01", procStreet, 3),
+                    pairedSingle("village/swamp/streets/square_02", procStreet, 2),
+                    pairedSingle("village/swamp/streets/straight_01", procStreet, 6),
+                    pairedSingle("village/swamp/streets/straight_02", procStreet, 5),
+                    pairedSingle("village/swamp/streets/straight_03", procStreet, 7),
+                    pairedSingle("village/swamp/streets/straight_04", procStreet, 6),
+                    pairedSingle("village/swamp/streets/straight_05", procStreet, 3),
+                    pairedSingle("village/swamp/streets/straight_06", procStreet, 4),
+                    pairedSingle("village/swamp/streets/crossroads_01", procStreet, 3),
+                    pairedSingle("village/swamp/streets/crossroads_02", procStreet, 3),
+                    pairedSingle("village/swamp/streets/crossroads_03", procStreet, 2),
+                    pairedSingle("village/swamp/streets/turn_01", procStreet, 2),
                 ),
                 StructurePool.Projection.TERRAIN_MATCHING
             )
@@ -218,168 +103,41 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_small_house_1",
-                            procHouse
-                        ), 2
+                    pairedSingle("village/swamp/houses/swamp_small_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_small_house_2", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_small_house_3", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_small_house_4", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_small_house_5", procHouse),
+                    pairedSingle("village/swamp/houses/swamp_medium_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_medium_house_2", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_butcher_shop_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_tool_smith_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_fletcher_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_shepherds_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_armorer_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_fisher_cottage_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_tannery_1", procHouse),
+                    pairedSingle("village/swamp/houses/swamp_tannery_2", procHouse),
+                    pairedSingle("village/swamp/houses/swamp_cartographer_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_cartographer_house_2", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_library_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_masons_house_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_masons_house_2", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_weaponsmith_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_temple_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_temple_2", procHouse),
+                    pairedSingle(
+                        "village/swamp/houses/swamp_farm_1",
+                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        9
                     ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_small_house_2",
-                            procHouse
-                        ), 2
+                    pairedSingle(
+                        "village/swamp/houses/swamp_farm_2",
+                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        7
                     ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_small_house_3",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_small_house_4",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_small_house_5",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_medium_house_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_medium_house_2",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_butcher_shop_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_tool_smith_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_fletcher_house_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_shepherds_house_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_armorer_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_fisher_cottage_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_tannery_1",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_tannery_2",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_cartographer_house_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_cartographer_house_2",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_library_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_masons_house_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_masons_house_2",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_weaponsmith_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_temple_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_temple_2",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_farm_1",
-                            procHouse
-                        ), 9
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_farm_2",
-                            procHouse
-                        ), 7
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_animal_pen_1",
-                            procHouse
-                        ), 2
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/houses/swamp_animal_pen_2",
-                            procHouse
-                        ), 2
-                    ),
+                    pairedSingle("village/swamp/houses/swamp_animal_pen_1", procHouse, 2),
+                    pairedSingle("village/swamp/houses/swamp_animal_pen_2", procHouse, 2),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -390,27 +148,12 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
+                    pairedSingle("village/swamp/swamp_decoration_5", procHouse),
+                    pairedSingle("village/swamp/swamp_decoration_6", procHouse),
+                    pairedSingle("village/swamp/swamp_decoration_7", procHouse),
                     Pair.of(
                         StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK)),
                         8
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/swamp_decoration_5",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/swamp_decoration_6",
-                            procHouse
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/swamp_decoration_7",
-                            procHouse
-                        ), 1
                     ),
                     Pair.of(
                         StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS)),
@@ -434,36 +177,11 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/terminators/terminator_01",
-                            procStreet
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/terminators/terminator_02",
-                            procStreet
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/terminators/terminator_03",
-                            procStreet
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/terminators/terminator_04",
-                            procStreet
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:village/swamp/streets/turn_01",
-                            procStreet
-                        ), 2
-                    )
+                    pairedSingle("village/swamp/streets/terminator_01", procEmpty),
+                    pairedSingle("village/swamp/streets/terminator_02", procEmpty),
+                    pairedSingle("village/swamp/streets/terminator_03", procEmpty),
+                    pairedSingle("village/swamp/streets/terminator_04", procEmpty),
+                    pairedSingle("village/swamp/streets/turn_01", procEmpty, 2)
                 ),
                 StructurePool.Projection.TERRAIN_MATCHING
             )
@@ -492,18 +210,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk",
-                            procEmpty
-                        ), 24
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk",
-                            procEmpty
-                        ), 1
-                    )
+                    pairedSingle("desert_ruins/desert_ruins/obelisk", procEmpty, 20),
+                    pairedSingle("desert_ruins/desert_ruins/black_obelisk", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -513,18 +221,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/obelisk_top",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruins/black_obelisk_top",
-                            procEmpty
-                        ), 1
-                    )
+                    pairedSingle("desert_ruins/desert_ruins/obelisk_top", procEmpty),
+                    pairedSingle("desert_ruins/desert_ruins/black_obelisk_top", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -534,48 +232,13 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/long_road_end",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_end_1",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_1",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_2",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_3",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_section_4",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/roads/road_spacer_1",
-                            procEmpty
-                        ), 1
-                    )
+                    pairedSingle("desert_ruins/roads/long_road_end", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_end_1", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_section_1", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_section_2", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_section_3", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_section_4", procEmpty),
+                    pairedSingle("desert_ruins/roads/road_spacer_1", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -585,18 +248,9 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_1",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/desert_ruin_2",
-                            procEmpty
-                        ), 1
-                    )
+                    Pair.of(StructurePoolElement.ofEmpty(), 1),
+                    pairedSingle("desert_ruins/desert_ruin_1", procEmpty, 2),
+                    pairedSingle("desert_ruins/desert_ruin_2", procEmpty, 2)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -606,54 +260,14 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_1",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_2",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_3",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_4",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_5",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_6",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_7",
-                            procEmpty
-                        ), 1
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofProcessedSingle(
-                            "dusk_autumns_worldgen:red_desert_ruins/ruins/ruin_8",
-                            procEmpty
-                        ), 1
-                    )
+                    pairedSingle("desert_ruins/ruins/ruin_1", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_2", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_3", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_4", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_5", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_6", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_7", procEmpty),
+                    pairedSingle("desert_ruins/ruins/ruin_8", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -672,7 +286,7 @@ object StructurePoolCreator {
                 poolEmpty,
                 listOf(
                     pairedSingle("red_desert_ruins/desert_ruins/obelisk", procEmpty, 20),
-                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk", procEmpty, 1)
+                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -682,8 +296,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/desert_ruins/obelisk_top", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk_top", procEmpty, 1)
+                    pairedSingle("red_desert_ruins/desert_ruins/obelisk_top", procEmpty),
+                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk_top", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -693,13 +307,13 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/roads/long_road_end", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_end_1", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_section_1", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_section_2", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_section_3", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_section_4", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/roads/road_spacer_1", procEmpty, 1)
+                    pairedSingle("red_desert_ruins/roads/long_road_end", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_end_1", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_section_1", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_section_2", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_section_3", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_section_4", procEmpty),
+                    pairedSingle("red_desert_ruins/roads/road_spacer_1", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -721,23 +335,27 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/ruins/ruin_1", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_2", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_3", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_4", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_5", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_6", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_7", procEmpty, 1),
-                    pairedSingle("red_desert_ruins/ruins/ruin_8", procEmpty, 1)
+                    pairedSingle("red_desert_ruins/ruins/ruin_1", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_2", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_3", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_4", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_5", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_6", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_7", procEmpty),
+                    pairedSingle("red_desert_ruins/ruins/ruin_8", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-
     }
 
 
     fun id(str: String) = "$MODID:$str"
+
+    fun pairedSingle(
+        str: String, processors: Holder<StructureProcessorList>
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedSingle(str, processors), 1)
 
     fun pairedSingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int

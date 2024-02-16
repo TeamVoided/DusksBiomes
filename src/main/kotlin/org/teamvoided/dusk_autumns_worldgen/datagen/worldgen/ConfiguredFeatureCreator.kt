@@ -1,9 +1,6 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.MangrovePropaguleBlock
-import net.minecraft.block.PinkPetalsBlock
+import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.loot.LootTables
 import net.minecraft.registry.HolderSet
@@ -15,15 +12,14 @@ import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
-import net.minecraft.util.math.int_provider.ConstantIntProvider
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.util.math.int_provider.WeightedListIntProvider
+import net.minecraft.util.math.int_provider.*
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
+import net.minecraft.world.gen.decorator.BlockPredicateFilterPlacementModifier
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
+import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer
 import net.minecraft.world.gen.foliage.CherryFoliagePlacer
@@ -50,9 +46,6 @@ import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.M
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import java.util.*
-import kotlin.collections.forEach
-import kotlin.collections.listOf
-import kotlin.collections.plus
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -254,6 +247,23 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
+            DuskConfiguredFeatures.ICE_CAVE_PILLAR,
+            VoidFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                40,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.9f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.PACKED_ICE),
+                blockTags.getTagOrThrow(DuskBlockTags.ICE_CAVE_PILLAR_PLACEABLE)
+            )
+        )
+        c.registerConfiguredFeature(
             DuskConfiguredFeatures.ICE_SPIKE,
             VoidFeatures.SPIKE,
             SpikeFeatureConfig(
@@ -338,42 +348,72 @@ object ConfiguredFeatureCreator {
                 UniformFloatProvider.create(0.0f, 0.3f),
                 4,
                 0.6f,
-                BlockStateProvider.of(Blocks.SANDSTONE) //Debug
+                BlockStateProvider.of(Blocks.SANDSTONE),
+                blockTags.getTagOrThrow(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES,
-            Feature.BLOCK_COLUMN,
-            BlockColumnFeatureConfig(
-                listOf(
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 7),
-                        BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(3, 7),
+                                BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
                     ),
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 5),
-                        BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                    *arrayOf<PlacementModifier>(
+                        BlockPredicateFilterPlacementModifier.create(
+                            BlockPredicate.bothOf(
+                                BlockPredicate.replaceable(),
+                                BlockPredicate.matchingBlocks(
+                                    Direction.DOWN.vector, *arrayOf<Block>(Blocks.SANDSTONE)
+                                )
+                            )
+                        )
                     )
-                ),
-                Direction.UP, BlockPredicate.IS_AIR, false
+                )
             )
         )
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES_ROOF,
-            Feature.BLOCK_COLUMN,
-            BlockColumnFeatureConfig(
-                listOf(
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 7),
-                        BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(3, 7),
+                                BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.UP), true
                     ),
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 5),
-                        BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                    *arrayOf<PlacementModifier>(
+                        BlockPredicateFilterPlacementModifier.create(
+                            BlockPredicate.bothOf(
+                                BlockPredicate.replaceable(),
+                                BlockPredicate.matchingBlocks(
+                                    Direction.UP.vector, *arrayOf<Block>(Blocks.SANDSTONE)
+                                )
+                            )
+                        )
                     )
-                ),
-                Direction.DOWN, BlockPredicate.IS_AIR, true
+                )
             )
         )
         c.registerConfiguredFeature(
@@ -389,41 +429,72 @@ object ConfiguredFeatureCreator {
                 UniformFloatProvider.create(0.0f, 0.3f),
                 4,
                 0.6f,
-                BlockStateProvider.of(Blocks.RED_SANDSTONE)
+                BlockStateProvider.of(Blocks.RED_SANDSTONE),
+                blockTags.getTagOrThrow(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_SPIKES,
-            Feature.BLOCK_COLUMN,
-            BlockColumnFeatureConfig(
-                listOf(
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(3, 7),
-                        BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(3, 7),
+                                BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), true
                     ),
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 5),
-                        BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                    *arrayOf<PlacementModifier>(
+                        BlockPredicateFilterPlacementModifier.create(
+                            BlockPredicate.bothOf(
+                                BlockPredicate.replaceable(),
+                                BlockPredicate.matchingBlocks(
+                                    Direction.DOWN.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
+                                )
+                            )
+                        )
                     )
-                ),
-                Direction.UP, BlockPredicate.IS_AIR, false
+                )
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF,
-            Feature.BLOCK_COLUMN,
-            BlockColumnFeatureConfig(
-                listOf(
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(3, 7),
-                        BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(3, 7),
+                                BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.UP), true
                     ),
-                    BlockColumnFeatureConfig.createLayer(
-                        UniformIntProvider.create(1, 5),
-                        BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                    *arrayOf<PlacementModifier>(
+                        BlockPredicateFilterPlacementModifier.create(
+                            BlockPredicate.bothOf(
+                                BlockPredicate.IS_AIR,
+                                BlockPredicate.matchingBlocks(
+                                    Direction.UP.vector, *arrayOf<Block>(Blocks.RED_SANDSTONE)
+                                )
+                            )
+                        )
                     )
-                ),
-                Direction.DOWN, BlockPredicate.IS_AIR, false
+                )
             )
         )
         c.registerConfiguredFeature(
@@ -439,7 +510,8 @@ object ConfiguredFeatureCreator {
                 UniformFloatProvider.create(0.0f, 0.3f),
                 4,
                 0.6f,
-                BlockStateProvider.of(Blocks.DIAMOND_BLOCK)
+                BlockStateProvider.of(Blocks.DIAMOND_BLOCK),
+                blockTags.getTagOrThrow(BlockTags.BASE_STONE_OVERWORLD)
             )
         )
 
