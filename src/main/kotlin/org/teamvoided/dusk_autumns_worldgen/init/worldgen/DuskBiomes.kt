@@ -246,6 +246,10 @@ object DuskBiomes {
             redSandInlandVariant
         )
         BiomePlacement.addSubOverworld(
+            WARM_RIVER, RED_WARM_RIVER,
+            redSandInlandVariant
+        )
+        BiomePlacement.addSubOverworld(
             Biomes.RIVER, WARM_RIVER, of(
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
@@ -256,10 +260,6 @@ object DuskBiomes {
                     -1F, -0.223f, true
                 )
             )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.RIVER, RED_WARM_RIVER,
-            redSandInlandVariant
         )
         BiomePlacement.addSubOverworld(
             Biomes.WARM_OCEAN, RED_WARM_OCEAN,
