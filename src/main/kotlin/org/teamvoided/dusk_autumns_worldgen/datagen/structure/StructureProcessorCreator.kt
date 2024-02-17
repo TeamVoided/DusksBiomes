@@ -1,9 +1,7 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
-import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
 import net.minecraft.loot.LootTables
-import net.minecraft.predicate.entity.LocationPredicate
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
