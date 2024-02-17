@@ -459,6 +459,36 @@ object DuskBiomes {
         weirdness.toParameterRange(),
         offset
     )
+
+    fun addOverworld(
+        biome: RegistryKey<Biome>, temperature: Range, humidity: Range,
+        continentalness: Range, erosion: Range, weirdness: Range
+    ) {
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(0.0),         // Depth
+                weirdness,         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(1),         // Depth
+                weirdness,         // Weirdness
+                0L                  // Offset
+            )
+        )
+    }
 }
 
 /*

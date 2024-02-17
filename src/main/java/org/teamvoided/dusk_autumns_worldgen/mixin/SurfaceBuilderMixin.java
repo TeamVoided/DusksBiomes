@@ -3,17 +3,16 @@ package org.teamvoided.dusk_autumns_worldgen.mixin;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.Holder;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.chunk.BlockColumn;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags;
 
-@Debug(export = true)
+//@Debug(export = true)
 @Mixin(SurfaceBuilder.class)
 public abstract class SurfaceBuilderMixin {
     @Final
@@ -44,7 +43,7 @@ public abstract class SurfaceBuilderMixin {
 
 
     @Redirect(method = "buildSurface", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/Holder;isRegistryKey(Lnet/minecraft/registry/RegistryKey;)Z"))
-    private <T> boolean buildSurface(Holder instance, RegistryKey<T> tRegistryKey) {
+    private <T> boolean buildSurface(Holder<Biome> instance, RegistryKey<Biome> tRegistryKey) {
         if (tRegistryKey == Biomes.ERODED_BADLANDS) return instance.isIn(DuskBiomeTags.HAS_ERODED_PILLAR);
         else return instance.isRegistryKey(tRegistryKey);
 
