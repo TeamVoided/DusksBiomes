@@ -205,10 +205,6 @@ object DuskBiomes {
                 )
             )
         )
-        BiomePlacement.addSubOverworld(
-            FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
-            windsweptVariant
-        )
         BiomePlacement.addOverworld(
             FROZEN_MANGROVE_SWAMP,
             createNoise(
@@ -232,6 +228,60 @@ object DuskBiomes {
                 Range(-0.4, 0.4),         // Weirdness
                 0L                  // Offset
             )
+        )
+
+        BiomePlacement.addOverworld(
+            FROZEN_MANGROVE_SWAMP,
+            createNoise(
+                Range(-1, -0.45),        // Temperature
+                Range(-1, 1),            // Humidity
+                Range(-0.11, 1),          // Continentalness
+                Range(0.55, 1.0),         // Erosion
+                Range(0.0),         // Depth
+                Range(-1, -0.933),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            FROZEN_MANGROVE_SWAMP,
+            createNoise(
+                Range(-1, -0.45),        // Temperature
+                Range(-1, 1),            // Humidity
+                Range(-0.11, 1),          // Continentalness
+                Range(0.55, 1.0),         // Erosion
+                Range(1),         // Depth
+                Range(-1, -0.933),         // Weirdness
+                0L                  // Offset
+            )
+        )
+
+        BiomePlacement.addOverworld(
+            FROZEN_MANGROVE_SWAMP,
+            createNoise(
+                Range(-1, -0.45),        // Temperature
+                Range(-1, 1),            // Humidity
+                Range(-0.11, 1),          // Continentalness
+                Range(0.55, 1.0),         // Erosion
+                Range(0.0),         // Depth
+                Range(0.933, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            FROZEN_MANGROVE_SWAMP,
+            createNoise(
+                Range(-1, -0.45),        // Temperature
+                Range(-1, 1),            // Humidity
+                Range(-0.11, 1),          // Continentalness
+                Range(0.55, 1.0),         // Erosion
+                Range(1),         // Depth
+                Range(0.933, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+            windsweptVariant
         )
         BiomePlacement.addSubOverworld(
             Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
@@ -355,10 +405,34 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             FROZEN_CAVERNS,
             createNoise(
-                Range(-1, -0.1),        // Temperature
+                Range(-1, -0.3),        // Temperature
                 Range(-1, -0.7),      // Humidity
-                Range(-1, 1),          // Continentalness
+                Range(-1, 0.8),          // Continentalness
                 Range(-1, 1),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            SAND_CAVES,
+            createNoise(
+                Range(0.575, 1),        // Temperature
+                Range(-1, -0.675),      // Humidity
+                Range(-1, 0.8),          // Continentalness
+                Range(0.05, 1),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            RED_SAND_CAVES,
+            createNoise(
+                Range(0.575, 1),        // Temperature
+                Range(-1, -0.675),      // Humidity
+                Range(-1, 0.8),          // Continentalness
+                Range(-1, 0.05),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
                 0L                  // Offset

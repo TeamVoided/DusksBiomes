@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 import com.mojang.datafixers.util.Pair
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderProvider
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.structure.pool.StructurePoolElement
@@ -53,9 +54,9 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("village/swamp/villagers/baby", procEmpty),
-                    pairedSingle("village/swamp/villagers/nitwit", procEmpty),
-                    pairedSingle("village/swamp/villagers/unemployed", procEmpty, 10)
+                    pairedLegacySingle("village/swamp/villagers/baby", procEmpty),
+                    pairedLegacySingle("village/swamp/villagers/nitwit", procEmpty),
+                    pairedLegacySingle("village/swamp/villagers/unemployed", procEmpty, 10)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -65,10 +66,20 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_1", procStreet),
-                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_2", procStreet),
-                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_3", procStreet),
-                    pairedSingle("village/swamp/town_centers/swamp_meeting_point_4", procStreet)
+                    pairedLegacySingle("village/swamp/town_centers/swamp_meeting_point_1", procStreet),
+                    pairedLegacySingle("village/swamp/town_centers/swamp_meeting_point_2", procStreet),
+                    pairedLegacySingle("village/swamp/town_centers/swamp_meeting_point_3", procStreet),
+                    pairedLegacySingle("village/swamp/town_centers/swamp_meeting_point_4", procStreet)
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+        c.register(
+            DuskStructurePools.SWAMP_VILLAGE_CENTER_TREE,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_OAK, placedFeatures),
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -78,22 +89,22 @@ object StructurePoolCreator {
             StructurePool(
                 structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_TERMINATORS),
                 listOf(
-                    pairedSingle("village/swamp/streets/corner_01", procStreet, 2),
-                    pairedSingle("village/swamp/streets/corner_02", procStreet, 2),
-                    pairedSingle("village/swamp/streets/split_01", procStreet, 3),
-                    pairedSingle("village/swamp/streets/split_02", procStreet, 2),
-                    pairedSingle("village/swamp/streets/square_01", procStreet, 3),
-                    pairedSingle("village/swamp/streets/square_02", procStreet, 2),
-                    pairedSingle("village/swamp/streets/straight_01", procStreet, 6),
-                    pairedSingle("village/swamp/streets/straight_02", procStreet, 5),
-                    pairedSingle("village/swamp/streets/straight_03", procStreet, 7),
-                    pairedSingle("village/swamp/streets/straight_04", procStreet, 6),
-                    pairedSingle("village/swamp/streets/straight_05", procStreet, 3),
-                    pairedSingle("village/swamp/streets/straight_06", procStreet, 4),
-                    pairedSingle("village/swamp/streets/crossroads_01", procStreet, 3),
-                    pairedSingle("village/swamp/streets/crossroads_02", procStreet, 3),
-                    pairedSingle("village/swamp/streets/crossroads_03", procStreet, 2),
-                    pairedSingle("village/swamp/streets/turn_01", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/corner_01", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/corner_02", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/split_01", procStreet, 3),
+                    pairedLegacySingle("village/swamp/streets/split_02", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/square_01", procStreet, 3),
+                    pairedLegacySingle("village/swamp/streets/square_02", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/straight_01", procStreet, 6),
+                    pairedLegacySingle("village/swamp/streets/straight_02", procStreet, 5),
+                    pairedLegacySingle("village/swamp/streets/straight_03", procStreet, 7),
+                    pairedLegacySingle("village/swamp/streets/straight_04", procStreet, 6),
+                    pairedLegacySingle("village/swamp/streets/straight_05", procStreet, 3),
+                    pairedLegacySingle("village/swamp/streets/straight_06", procStreet, 4),
+                    pairedLegacySingle("village/swamp/streets/crossroads_01", procStreet, 3),
+                    pairedLegacySingle("village/swamp/streets/crossroads_02", procStreet, 3),
+                    pairedLegacySingle("village/swamp/streets/crossroads_03", procStreet, 2),
+                    pairedLegacySingle("village/swamp/streets/turn_01", procStreet, 2),
                 ),
                 StructurePool.Projection.TERRAIN_MATCHING
             )
@@ -103,41 +114,41 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("village/swamp/houses/swamp_small_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_small_house_2", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_small_house_3", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_small_house_4", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_small_house_5", procHouse),
-                    pairedSingle("village/swamp/houses/swamp_medium_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_medium_house_2", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_butcher_shop_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_tool_smith_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_fletcher_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_shepherds_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_armorer_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_fisher_cottage_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_tannery_1", procHouse),
-                    pairedSingle("village/swamp/houses/swamp_tannery_2", procHouse),
-                    pairedSingle("village/swamp/houses/swamp_cartographer_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_cartographer_house_2", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_library_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_masons_house_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_masons_house_2", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_weaponsmith_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_temple_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_temple_2", procHouse),
-                    pairedSingle(
+                    pairedLegacySingle("village/swamp/houses/swamp_small_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_small_house_2", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_small_house_3", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_small_house_4", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_small_house_5", procHouse),
+                    pairedLegacySingle("village/swamp/houses/swamp_medium_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_medium_house_2", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_butcher_shop_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_tool_smith_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_fletcher_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_shepherds_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_armorer_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_fisher_cottage_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_tannery_1", procHouse),
+                    pairedLegacySingle("village/swamp/houses/swamp_tannery_2", procHouse),
+                    pairedLegacySingle("village/swamp/houses/swamp_cartographer_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_cartographer_house_2", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_library_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_masons_house_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_masons_house_2", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_weaponsmith_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_temple_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_temple_2", procHouse),
+                    pairedLegacySingle(
                         "village/swamp/houses/swamp_farm_1",
                         procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         9
                     ),
-                    pairedSingle(
+                    pairedLegacySingle(
                         "village/swamp/houses/swamp_farm_2",
                         procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         7
                     ),
-                    pairedSingle("village/swamp/houses/swamp_animal_pen_1", procHouse, 2),
-                    pairedSingle("village/swamp/houses/swamp_animal_pen_2", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_animal_pen_1", procHouse, 2),
+                    pairedLegacySingle("village/swamp/houses/swamp_animal_pen_2", procHouse, 2),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -148,25 +159,13 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("village/swamp/swamp_decoration_5", procHouse),
-                    pairedSingle("village/swamp/swamp_decoration_6", procHouse),
-                    pairedSingle("village/swamp/swamp_decoration_7", procHouse),
-                    Pair.of(
-                        StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK)),
-                        8
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS)),
-                        8
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK)),
-                        5
-                    ),
-                    Pair.of(
-                        StructurePoolElement.ofFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY)),
-                        7
-                    ),
+                    pairedLegacySingle("village/swamp/swamp_decoration_5", procHouse),
+                    pairedLegacySingle("village/swamp/swamp_decoration_6", procHouse, 6),
+                    pairedLegacySingle("village/swamp/swamp_decoration_7", procHouse),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK, 8, placedFeatures),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS, 8, placedFeatures),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_OAK, 5, placedFeatures),
+                    pairedFeature(VillagePlacedFeatures.PILE_HAY, 7, placedFeatures),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -177,11 +176,10 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("village/swamp/streets/terminator_01", procEmpty),
-                    pairedSingle("village/swamp/streets/terminator_02", procEmpty),
-                    pairedSingle("village/swamp/streets/terminator_03", procEmpty),
-                    pairedSingle("village/swamp/streets/terminator_04", procEmpty),
-                    pairedSingle("village/swamp/streets/turn_01", procEmpty, 2)
+                    pairedLegacySingle("village/swamp/streets/terminator_01", procStreet),
+                    pairedLegacySingle("village/swamp/streets/terminator_02", procStreet),
+                    pairedLegacySingle("village/swamp/streets/terminator_03", procStreet),
+                    pairedLegacySingle("village/swamp/streets/terminator_04", procStreet)
                 ),
                 StructurePool.Projection.TERRAIN_MATCHING
             )
@@ -196,6 +194,148 @@ object StructurePoolCreator {
         procEmpty: Holder.Reference<StructureProcessorList>,
         placedFeatures: HolderProvider<PlacedFeature>
     ) {
+        val procHouse = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE)
+        val procStreet = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET)
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/town_centers/mangrove_swamp_meeting_point_1",
+                        procStreet
+                    ),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/town_centers/mangrove_swamp_meeting_point_2",
+                        procStreet
+                    ),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/town_centers/mangrove_swamp_meeting_point_3",
+                        procStreet
+                    ),
+                    pairedLegacySingle("village/mangrove_swamp/town_centers/mangrove_swamp_meeting_point_4", procStreet)
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER_TREE,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE, placedFeatures),
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_STREETS,
+            StructurePool(
+                structurePools.getHolderOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_TERMINATORS),
+                listOf(
+                    pairedLegacySingle("village/mangrove_swamp/streets/corner_01", procStreet, 2),
+                    pairedLegacySingle("village/mangrove_swamp/streets/corner_02", procStreet, 2),
+                    pairedLegacySingle("village/mangrove_swamp/streets/split_01", procStreet, 3),
+                    pairedLegacySingle("village/mangrove_swamp/streets/split_02", procStreet, 2),
+                    pairedLegacySingle("village/mangrove_swamp/streets/square_01", procStreet, 3),
+                    pairedLegacySingle("village/mangrove_swamp/streets/square_02", procStreet, 2),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_01", procStreet, 6),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_02", procStreet, 5),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_03", procStreet, 7),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_04", procStreet, 6),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_05", procStreet, 3),
+                    pairedLegacySingle("village/mangrove_swamp/streets/straight_06", procStreet, 4),
+                    pairedLegacySingle("village/mangrove_swamp/streets/crossroads_01", procStreet, 3),
+                    pairedLegacySingle("village/mangrove_swamp/streets/crossroads_02", procStreet, 3),
+                    pairedLegacySingle("village/mangrove_swamp/streets/crossroads_03", procStreet, 2),
+                    pairedLegacySingle("village/mangrove_swamp/streets/turn_01", procStreet, 2),
+                ),
+                StructurePool.Projection.TERRAIN_MATCHING
+            )
+        )
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_HOUSES,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_small_house_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_small_house_2", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_small_house_3", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_small_house_4", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_small_house_5", procHouse),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_medium_house_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_medium_house_2", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_butcher_shop_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_tool_smith_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_fletcher_house_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_shepherds_house_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_armorer_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_fisher_cottage_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_tannery_1", procHouse),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_tannery_2", procHouse),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/houses/mangrove_swamp_cartographer_house_1",
+                        procHouse,
+                        2
+                    ),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/houses/mangrove_swamp_cartographer_house_2",
+                        procHouse,
+                        2
+                    ),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_library_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_masons_house_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_masons_house_2", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_weaponsmith_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_temple_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_temple_2", procHouse),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/houses/mangrove_swamp_farm_1",
+                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        9
+                    ),
+                    pairedLegacySingle(
+                        "village/mangrove_swamp/houses/mangrove_swamp_farm_2",
+                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        7
+                    ),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_animal_pen_1", procHouse, 2),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_animal_pen_2", procHouse, 2),
+                    Pair.of(StructurePoolElement.ofEmpty(), 8)
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_DECOR,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_5", procHouse),
+                    pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_6", procHouse, 6),
+                    pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_7", procHouse),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK, 8, placedFeatures),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS, 8, placedFeatures),
+                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE, 5, placedFeatures),
+                    pairedFeature(VillagePlacedFeatures.PILE_HAY, 7, placedFeatures),
+                    Pair.of(StructurePoolElement.ofEmpty(), 8)
+                ),
+                StructurePool.Projection.RIGID
+            )
+        )
+        c.register(
+            DuskStructurePools.MANGROVE_SWAMP_VILLAGE_TERMINATORS,
+            StructurePool(
+                poolEmpty,
+                listOf(
+                    pairedLegacySingle("village/mangrove_swamp/streets/terminator_01", procStreet),
+                    pairedLegacySingle("village/mangrove_swamp/streets/terminator_02", procStreet),
+                    pairedLegacySingle("village/mangrove_swamp/streets/terminator_03", procStreet),
+                    pairedLegacySingle("village/mangrove_swamp/streets/terminator_04", procStreet)
+                ),
+                StructurePool.Projection.TERRAIN_MATCHING
+            )
+        )
 
     }
 
@@ -210,8 +350,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("desert_ruins/desert_ruins/obelisk", procEmpty, 20),
-                    pairedSingle("desert_ruins/desert_ruins/black_obelisk", procEmpty)
+                    pairedLegacySingle("desert_ruins/obelisk", procEmpty, 20),
+                    pairedLegacySingle("desert_ruins/black_obelisk", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -221,8 +361,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("desert_ruins/desert_ruins/obelisk_top", procEmpty),
-                    pairedSingle("desert_ruins/desert_ruins/black_obelisk_top", procEmpty)
+                    pairedLegacySingle("desert_ruins/obelisk_top", procEmpty),
+                    pairedLegacySingle("desert_ruins/black_obelisk_top", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -232,13 +372,13 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("desert_ruins/roads/long_road_end", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_end_1", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_section_1", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_section_2", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_section_3", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_section_4", procEmpty),
-                    pairedSingle("desert_ruins/roads/road_spacer_1", procEmpty)
+                    pairedLegacySingle("desert_ruins/roads/long_road_end", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_end_1", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_section_1", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_section_2", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_section_3", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_section_4", procEmpty),
+                    pairedLegacySingle("desert_ruins/roads/road_spacer_1", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -249,8 +389,8 @@ object StructurePoolCreator {
                 poolEmpty,
                 listOf(
                     Pair.of(StructurePoolElement.ofEmpty(), 1),
-                    pairedSingle("desert_ruins/desert_ruin_1", procEmpty, 2),
-                    pairedSingle("desert_ruins/desert_ruin_2", procEmpty, 2)
+                    pairedLegacySingle("desert_ruins/desert_ruin_1", procEmpty, 2),
+                    pairedLegacySingle("desert_ruins/desert_ruin_2", procEmpty, 2)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -260,14 +400,14 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("desert_ruins/ruins/ruin_1", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_2", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_3", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_4", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_5", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_6", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_7", procEmpty),
-                    pairedSingle("desert_ruins/ruins/ruin_8", procEmpty)
+                    pairedLegacySingle("desert_ruins/ruins/ruin_1", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_2", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_3", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_4", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_5", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_6", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_7", procEmpty),
+                    pairedLegacySingle("desert_ruins/ruins/ruin_8", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -285,8 +425,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/desert_ruins/obelisk", procEmpty, 20),
-                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk", procEmpty)
+                    pairedLegacySingle("red_desert_ruins/obelisk", procEmpty, 20),
+                    pairedLegacySingle("red_desert_ruins/black_obelisk", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -296,8 +436,8 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/desert_ruins/obelisk_top", procEmpty),
-                    pairedSingle("red_desert_ruins/desert_ruins/black_obelisk_top", procEmpty)
+                    pairedLegacySingle("red_desert_ruins/obelisk_top", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/black_obelisk_top", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -307,13 +447,13 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/roads/long_road_end", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_end_1", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_section_1", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_section_2", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_section_3", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_section_4", procEmpty),
-                    pairedSingle("red_desert_ruins/roads/road_spacer_1", procEmpty)
+                    pairedLegacySingle("red_desert_ruins/roads/long_road_end", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_end_1", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_section_1", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_section_2", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_section_3", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_section_4", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/roads/road_spacer_1", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -324,8 +464,8 @@ object StructurePoolCreator {
                 poolEmpty,
                 listOf(
                     Pair.of(StructurePoolElement.ofEmpty(), 1),
-                    pairedSingle("red_desert_ruins/desert_ruin_1", procEmpty, 2),
-                    pairedSingle("red_desert_ruins/desert_ruin_2", procEmpty, 2)
+                    pairedLegacySingle("red_desert_ruins/desert_ruin_1", procEmpty, 2),
+                    pairedLegacySingle("red_desert_ruins/desert_ruin_2", procEmpty, 2)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -335,14 +475,14 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedSingle("red_desert_ruins/ruins/ruin_1", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_2", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_3", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_4", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_5", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_6", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_7", procEmpty),
-                    pairedSingle("red_desert_ruins/ruins/ruin_8", procEmpty)
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_1", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_2", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_3", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_4", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_5", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_6", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_7", procEmpty),
+                    pairedLegacySingle("red_desert_ruins/ruins/ruin_8", procEmpty)
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -362,8 +502,38 @@ object StructurePoolCreator {
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedSingle(str, processors), weight)
 
+    fun pairedLegacySingle(
+        str: String, processors: Holder<StructureProcessorList>
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedLegacySingle(str, processors), 1)
+
+    fun pairedLegacySingle(
+        str: String, processors: Holder<StructureProcessorList>, weight: Int
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedLegacySingle(str, processors), weight)
+
+    fun pairedFeature(
+        str: RegistryKey<PlacedFeature>, placedFeatures: HolderProvider<PlacedFeature>
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedFeature(placedFeatures.getHolderOrThrow(str)), 1)
+
+    fun pairedFeature(
+        str: RegistryKey<PlacedFeature>, weight: Int, placedFeatures: HolderProvider<PlacedFeature>
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedFeature(placedFeatures.getHolderOrThrow(str)), weight)
+
     fun processedSingle(
         str: String, processors: Holder<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedSingle(id(str), processors)
+
+    fun processedLegacySingle(
+        str: String, processors: Holder<StructureProcessorList>
+    ): Function<StructurePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.ofProcessedLegacySingle(id(str), processors)
+
+    fun processedFeature(
+        str: Holder<PlacedFeature>
+    ): Function<StructurePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.ofFeature(str)
 }
