@@ -32,11 +32,13 @@ object PlacedFeatureCreator {
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_OAK,
-            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK)
+            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK),
+            *arrayOf<PlacementModifier>(PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.OAK_SAPLING))
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE,
-            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.MANGROVE_VEGETATION)
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.MANGROVE_VEGETATION),
+            *arrayOf<PlacementModifier>(PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.MANGROVE_PROPAGULE))
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS,

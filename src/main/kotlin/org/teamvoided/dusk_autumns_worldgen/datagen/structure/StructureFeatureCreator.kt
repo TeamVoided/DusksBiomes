@@ -45,7 +45,7 @@ object StructureFeatureCreator {
                     GenerationStep.Feature.SURFACE_STRUCTURES,
                     TerrainAdjustment.STRUCTURE_WEIGHT_THIN
                 ),
-                structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_CENTER),
+                structurePools.getHolderOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(0)),
                 true,

@@ -1,14 +1,14 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
+import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
 import net.minecraft.loot.LootTables
+import net.minecraft.predicate.entity.LocationPredicate
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.*
-import net.minecraft.structure.rule.AlwaysTruePosRuleTest
-import net.minecraft.structure.rule.AlwaysTrueRuleTest
-import net.minecraft.structure.rule.BlockMatchRuleTest
-import net.minecraft.structure.rule.RandomBlockMatchRuleTest
+import net.minecraft.structure.rule.*
 import net.minecraft.structure.rule.block.entity.AppendLootRuleBlockEntityModifier
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.world.gen.BootstrapContext
@@ -22,6 +22,7 @@ object StructureProcessorCreator {
         val blockTags = c.lookup(RegistryKeys.BLOCK)
 
         swampVillageProcessorLists(c)
+        mangroveSwampVillageProcessorLists(c)
         desertRuinsProcessorLists(c)
     }
 
@@ -51,13 +52,159 @@ object StructureProcessorCreator {
                 )
             )
         )
-        c.register(DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE)
-        c.register(DuskStructureProcessorLists.VILLAGE_SWAMP_STREET)
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSS_CARPET, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.VINE, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DIRT_PATH, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.GRASS_BLOCK.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BLUE_ORCHID.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_RED_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BROWN_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OXEYE_DAISY.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_DARK_OAK_SAPLING.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OAK_SAPLING.defaultState
+                )
+            )
+        )
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_SWAMP_STREET,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.DIRT_PATH),
+                    BlockMatchRuleTest(Blocks.WATER),
+                    Blocks.DARK_OAK_PLANKS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DIRT_PATH, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.GRASS_BLOCK.defaultState
+                ),
+                StructureProcessorRule(
+                    TagMatchRuleTest(BlockTags.DIRT),
+                    BlockMatchRuleTest(Blocks.WATER),
+                    Blocks.WATER.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.DIRT_PATH),
+                    BlockMatchRuleTest(Blocks.MUD),
+                    Blocks.PACKED_MUD.defaultState
+                )
+            )
+        )
     }
 
     fun mangroveSwampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
-        c.register(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE)
-        c.register(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET)
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSS_CARPET, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.VINE, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.PACKED_MUD, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.MUD.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BLUE_ORCHID.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_RED_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BROWN_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OXEYE_DAISY.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_DARK_OAK_SAPLING.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_MANGROVE_PROPAGULE.defaultState
+                )
+            )
+        )
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.PACKED_MUD),
+                    BlockMatchRuleTest(Blocks.WATER),
+                    Blocks.MANGROVE_PLANKS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.PACKED_MUD, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.MUD.defaultState
+                ),
+                StructureProcessorRule(
+                    TagMatchRuleTest(BlockTags.DIRT),
+                    BlockMatchRuleTest(Blocks.WATER),
+                    Blocks.WATER.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.PACKED_MUD),
+                    BlockMatchRuleTest(Blocks.DIRT),
+                    Blocks.DIRT_PATH.defaultState
+                )
+            )
+        )
     }
 
     fun desertRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {
