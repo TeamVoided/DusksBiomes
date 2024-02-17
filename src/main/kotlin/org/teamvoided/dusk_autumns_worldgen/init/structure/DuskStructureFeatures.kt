@@ -11,6 +11,7 @@ object DuskStructureFeatures {
     val MANGROVE_SWAMP_VILLAGE = create("village_mangrove_swamp")
     val DESERT_RUINS = create("desert_ruins")
     val RED_DESERT_RUINS = create("red_desert_ruins")
+    val SAND_CAVE_FOSSILS = create("sand_cave_fossils")
     fun init() {}
 
     private fun create(id: String): RegistryKey<StructureFeature> =

@@ -34,6 +34,7 @@ object DuskConfiguredFeatures {
     val RED_SAND_CAVE_PILLAR = create("cave/sand/red_sand_cave_pillar")
     val RED_SAND_SPIKES = create("cave/sand/red_spikes")
     val RED_SAND_SPIKES_ROOF = create("cave/sand/red_spikes_roof")
+    val SAND_CAVE_SEAGRASS = create("cave/sand/cave_seagrass")
 
     val DEEP_MONSTER_ROOM = create("monster_room/deep_monster_room")
     val FROZEN_MONSTER_ROOM = create("monster_room/frozen_monster_room")

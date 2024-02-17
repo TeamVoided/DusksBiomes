@@ -95,6 +95,9 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.RED_WARM_OCEAN)
             .add(DuskBiomes.RED_LUKEWARM_OCEAN)
             .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_SAND_CAVE_FOSSIL_STRUCTURE)
+            .add(DuskBiomes.SAND_CAVES)
+            .add(DuskBiomes.RED_SAND_CAVES)
 
 //Vanilla Tags
         getOrCreateTagBuilder(BiomeTags.ALLOWS_SURFACE_SLIME_SPAWNS)
@@ -121,6 +124,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.PRODUCES_CORAL_FROM_BONE_MEAL)
             .add(DuskBiomes.RED_WARM_OCEAN)
+            .add(DuskBiomes.SAND_CAVES)
+            .add(DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.REQUIRED_OCEAN_MONUMENT_SURROUNDING)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.SNOW_GOLEM_MELTS)
@@ -162,9 +167,6 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(DuskBiomeTags.DUSK_BIOMES)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_MESA_STRUCTURE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        getOrCreateTagBuilder(BiomeTags.HAS_NETHER_FOSSIL_STRUCTURE)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.HAS_SWAMP_HUT_STRUCTURE)
             .add(DuskBiomes.OLD_GROWTH_SWAMP)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)

@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.loot.LootTables
+import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys

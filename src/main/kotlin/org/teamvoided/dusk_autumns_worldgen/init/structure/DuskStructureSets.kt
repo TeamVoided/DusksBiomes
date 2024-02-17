@@ -7,6 +7,7 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen
 
 object DuskStructureSets {
     val DESERT_RUINS = create("desert_ruins")
+    val SAND_CAVE_FOSSILS = create("sand_cave_fossils")
     fun init() {}
 
     fun create(id: String): RegistryKey<StructureSet> =

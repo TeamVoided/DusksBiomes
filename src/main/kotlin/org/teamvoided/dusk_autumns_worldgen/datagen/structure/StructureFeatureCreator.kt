@@ -11,10 +11,12 @@ import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider
+import net.minecraft.world.gen.heightprovider.UniformHeightProvider
 import net.minecraft.world.gen.structure.TerrainAdjustment
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
+import java.util.Map
 
 object StructureFeatureCreator {
     fun bootstrap(c: BootstrapContext<StructureFeature>) {
@@ -82,8 +84,23 @@ object StructureFeatureCreator {
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
+        c.register(
+            DuskStructureFeatures.SAND_CAVE_FOSSILS,
+            NetherFossilFeature(
+                structureSettings(
+                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_SAND_CAVE_FOSSIL_STRUCTURE),
+                    GenerationStep.Feature.UNDERGROUND_DECORATION,
+                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                ),
+                UniformHeightProvider.create(YOffset.fixed(-54), YOffset.fixed(80))
+            )
+        )
     }
 
-    private fun structureSettings(biomes: HolderSet<Biome>, step: GenerationStep.Feature, terrainAdaptation: TerrainAdjustment) =
+    private fun structureSettings(
+        biomes: HolderSet<Biome>,
+        step: GenerationStep.Feature,
+        terrainAdaptation: TerrainAdjustment
+    ) =
         StructureFeature.StructureSettings(biomes, mapOf(), step, terrainAdaptation)
 }

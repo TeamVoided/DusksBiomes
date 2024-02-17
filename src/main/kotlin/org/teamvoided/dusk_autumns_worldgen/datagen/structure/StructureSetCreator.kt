@@ -4,6 +4,8 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.RandomSpreadStructurePlacement
 import net.minecraft.structure.RandomSpreadType
 import net.minecraft.world.gen.BootstrapContext
+import net.minecraft.world.gen.structure.BuiltInStructureSets
+import net.minecraft.world.gen.structure.BuiltInStructures
 import net.minecraft.world.gen.structure.StructureSet
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureSets
@@ -22,8 +24,18 @@ object StructureSetCreator {
                     StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS), 1),
                     StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.RED_DESERT_RUINS), 1)
                 ),
-                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357617)
+                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 1897563)
             )
         )
+        c.register(
+            DuskStructureSets.SAND_CAVE_FOSSILS,
+            StructureSet(
+                listOf(
+                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.SAND_CAVE_FOSSILS))
+                ),
+                RandomSpreadStructurePlacement(2, 1, RandomSpreadType.LINEAR, 14357921)
+            )
+        )
+
     }
 }

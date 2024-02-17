@@ -15,6 +15,7 @@ object DuskBiomeTags {
     val HAS_DESERT_RUIN = create("has_structure/has_desert_ruin")
     val HAS_RED_DESERT_RUIN = create("has_structure/has_red_desert_ruin")
     val HAS_OCEAN_RUIN_RED_WARM = create("has_structure/has_ocean_ruin_red_warm")
+    val HAS_SAND_CAVE_FOSSIL_STRUCTURE = create("has_structure/has_sand_cave_fossil_structure")
 
 
     @JvmField

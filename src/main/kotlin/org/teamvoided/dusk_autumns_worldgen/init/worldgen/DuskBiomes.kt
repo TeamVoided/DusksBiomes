@@ -118,29 +118,13 @@ object DuskBiomes {
                 )
             )
         )
-        BiomePlacement.addOverworld(
+        addOverworld(
             WINDSWEPT_BIRCH_FOREST,
-            createNoise(
-                Range(-0.45, 0.2),        // Temperature
-                Range(-1, 0.3),            // Humidity
-                Range(-0.19, 0.03),          // Continentalness
-                Range(0.45, 0.55),         // Erosion
-                Range(0.0),         // Depth
-                Range(0.05, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            WINDSWEPT_BIRCH_FOREST,
-            createNoise(
-                Range(-0.45, 0.2),        // Temperature
-                Range(-1, 0.3),            // Humidity
-                Range(-0.19, 0.03),          // Continentalness
-                Range(0.45, 0.55),         // Erosion
-                Range(1),         // Depth
-                Range(0.05, 1),         // Weirdness
-                0L                  // Offset
-            )
+            Range(-0.45, 0.2),        // Temperature
+            Range(-1, 0.3),            // Humidity
+            Range(-0.19, 0.03),          // Continentalness
+            Range(0.45, 0.55),         // Erosion
+            Range(0.05, 1),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
             Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST, of(
@@ -205,79 +189,29 @@ object DuskBiomes {
                 )
             )
         )
-        BiomePlacement.addOverworld(
+        addOverworld(
             FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(0.0),         // Depth
-                Range(-0.4, 0.4),         // Weirdness
-                0L                  // Offset
-            )
+            Range(-1, -0.45),        // Temperature
+            Range(-1, 1),            // Humidity
+            Range(-0.11, 1),          // Continentalness
+            Range(0.55, 1.0),         // Erosion
+            Range(-0.4, 0.4),         // Weirdness
         )
-        BiomePlacement.addOverworld(
+        addOverworld(
             FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(1),         // Depth
-                Range(-0.4, 0.4),         // Weirdness
-                0L                  // Offset
-            )
+            Range(-1, -0.45),        // Temperature
+            Range(-1, 1),            // Humidity
+            Range(-0.11, 1),          // Continentalness
+            Range(0.55, 1.0),         // Erosion
+            Range(-1, -0.933),         // Weirdness
         )
-
-        BiomePlacement.addOverworld(
+        addOverworld(
             FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(0.0),         // Depth
-                Range(-1, -0.933),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(1),         // Depth
-                Range(-1, -0.933),         // Weirdness
-                0L                  // Offset
-            )
-        )
-
-        BiomePlacement.addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(0.0),         // Depth
-                Range(0.933, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            createNoise(
-                Range(-1, -0.45),        // Temperature
-                Range(-1, 1),            // Humidity
-                Range(-0.11, 1),          // Continentalness
-                Range(0.55, 1.0),         // Erosion
-                Range(1),         // Depth
-                Range(0.933, 1),         // Weirdness
-                0L                  // Offset
-            )
+            Range(-1, -0.45),        // Temperature
+            Range(-1, 1),            // Humidity
+            Range(-0.11, 1),          // Continentalness
+            Range(0.55, 1.0),         // Erosion
+            Range(0.933, 1),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
             FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
@@ -346,29 +280,13 @@ object DuskBiomes {
                 )
             )
         )
-        BiomePlacement.addOverworld(
+        addOverworld(
             ERODED_MUSHROOM_ISLAND,
-            createNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, -0.1),      // Humidity
-                Range(-1.2, -0.85),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(0),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            ERODED_MUSHROOM_ISLAND,
-            createNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, -0.1),      // Humidity
-                Range(-1.2, -0.85),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(1),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
+            Range(-1, 1),        // Temperature
+            Range(-1, -0.1),      // Humidity
+            Range(-1.2, -0.85),          // Continentalness
+            Range(-1, 1),         // Erosion
+            Range(-1, 1),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
             Biomes.MUSHROOM_FIELDS, MUSHROOM_CAVES, of(
