@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 import com.mojang.datafixers.util.Pair
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderProvider
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.structure.pool.StructurePoolElement
@@ -78,9 +77,7 @@ object StructurePoolCreator {
             DuskStructurePools.SWAMP_VILLAGE_CENTER_TREE,
             StructurePool(
                 poolEmpty,
-                listOf(
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_OAK, placedFeatures),
-                ),
+                listOf(pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK))),
                 StructurePool.Projection.RIGID
             )
         )
@@ -162,10 +159,10 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/swamp/swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/swamp/swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/swamp/swamp_decoration_7", procHouse),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK, 8, placedFeatures),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS, 8, placedFeatures),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_OAK, 5, placedFeatures),
-                    pairedFeature(VillagePlacedFeatures.PILE_HAY, 7, placedFeatures),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK), 5),
+                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -223,7 +220,7 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE, placedFeatures),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE)),
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -314,10 +311,10 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_7", procHouse),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK, 8, placedFeatures),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS, 8, placedFeatures),
-                    pairedFeature(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE, 5, placedFeatures),
-                    pairedFeature(VillagePlacedFeatures.PILE_HAY, 7, placedFeatures),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE), 5),
+                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -493,47 +490,33 @@ object StructurePoolCreator {
     fun id(str: String) = "$MODID:$str"
 
     fun pairedSingle(
-        str: String, processors: Holder<StructureProcessorList>
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(processedSingle(str, processors), 1)
-
-    fun pairedSingle(
-        str: String, processors: Holder<StructureProcessorList>, weight: Int
+        str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedSingle(str, processors), weight)
-
-    fun pairedLegacySingle(
-        str: String, processors: Holder<StructureProcessorList>
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(processedLegacySingle(str, processors), 1)
-
-    fun pairedLegacySingle(
-        str: String, processors: Holder<StructureProcessorList>, weight: Int
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(processedLegacySingle(str, processors), weight)
-
-    fun pairedFeature(
-        str: RegistryKey<PlacedFeature>, placedFeatures: HolderProvider<PlacedFeature>
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(processedFeature(placedFeatures.getHolderOrThrow(str)), 1)
-
-    fun pairedFeature(
-        str: RegistryKey<PlacedFeature>, weight: Int, placedFeatures: HolderProvider<PlacedFeature>
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(processedFeature(placedFeatures.getHolderOrThrow(str)), weight)
 
     fun processedSingle(
         str: String, processors: Holder<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedSingle(id(str), processors)
 
+
+    fun pairedLegacySingle(
+        str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedLegacySingle(str, processors), weight)
+
     fun processedLegacySingle(
         str: String, processors: Holder<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedLegacySingle(id(str), processors)
 
-    fun processedFeature(
-        str: Holder<PlacedFeature>
-    ): Function<StructurePool.Projection, out StructurePoolElement> =
-        StructurePoolElement.ofFeature(str)
+
+    fun pairedFeature(
+        placedFeatures: Holder<PlacedFeature>, weight: Int = 1
+    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        Pair(processedFeature(placedFeatures), weight)
+
+    fun processedFeature(holder: Holder<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.ofFeature(holder)
+
 }
