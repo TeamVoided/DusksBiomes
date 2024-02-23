@@ -560,19 +560,6 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.SAND_CAVE_SEAGRASS,
-            Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
-                    Feature.SIMPLE_BLOCK,
-                    SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.TALL_SEAGRASS)),
-                    BlockPredicateFilterPlacementModifier.create(
-                        BlockPredicate.hasSturdyFace(Direction.UP)
-                    )
-                )
-            )
-        )
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TEST_CAVE_PILLAR,

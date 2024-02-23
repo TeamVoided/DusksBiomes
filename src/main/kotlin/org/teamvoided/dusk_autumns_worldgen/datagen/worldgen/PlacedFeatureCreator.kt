@@ -439,7 +439,7 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.DOWN,
-                BlockPredicate.hasSturdyFace(Direction.UP),
+                BlockPredicate.matchingBlockTags(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
@@ -453,7 +453,7 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.DOWN,
-                BlockPredicate.hasSturdyFace(Direction.UP),
+                BlockPredicate.matchingBlockTags(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
