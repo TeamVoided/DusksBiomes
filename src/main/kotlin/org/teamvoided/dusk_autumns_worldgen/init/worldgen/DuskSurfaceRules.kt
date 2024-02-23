@@ -16,9 +16,36 @@ object DuskSurfaceRules {
 
     val grass = sequence(
         condition(
-            ON_FLOOR, block(Blocks.GRASS_BLOCK)
-        ),
-        block(Blocks.DIRT)
+            water(-1, 0),
+            sequence(
+                condition(
+                    ON_FLOOR, block(Blocks.GRASS_BLOCK)
+                ),
+                block(Blocks.DIRT)
+            )
+        )
+    )
+    val podzol = sequence(
+        condition(
+            water(-1, 0),
+            sequence(
+                condition(
+                    ON_FLOOR, block(Blocks.PODZOL)
+                ),
+                block(Blocks.DIRT)
+            )
+        )
+    )
+    val mycelium = sequence(
+        condition(
+            water(-1, 0),
+            sequence(
+                condition(
+                    ON_FLOOR, block(Blocks.MYCELIUM)
+                ),
+                block(Blocks.DIRT)
+            )
+        )
     )
     val gravel = sequence(
         condition(
@@ -144,7 +171,7 @@ object DuskSurfaceRules {
             ),
             block(Blocks.MUD)
         )
-        val mycelium = condition(
+        val myceliumSurface = condition(
             biome(DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
             block(Blocks.MYCELIUM)
         )
@@ -222,6 +249,60 @@ object DuskSurfaceRules {
             )
         )
 //Cave Surface
+        val mushroomCaves = sequence(
+            condition(
+                biome(DuskBiomes.MUSHROOM_CAVES),
+                sequence(
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.5),
+                                mycelium
+                            )
+                        )
+                    ),
+                    condition(
+                        DEEP_UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(-1.0),
+                                block(Blocks.COARSE_DIRT)
+                            )
+                        )
+                    ),
+                    condition(
+                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.0),
+                                podzol
+                            )
+                        )
+                    ),
+                    condition(
+                        UNDER_CEILING, sequence(
+                            condition(
+                                surfaceNoiseThreshold(0.0),
+                                block(Blocks.DIRT)
+                            )
+                        )
+                    ),
+                    condition(
+                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                            condition(
+                                surfaceSecondaryNoiseThreshold(0.5),
+                                block(Blocks.COARSE_DIRT)
+                            )
+                        )
+                    ),
+                    condition(
+                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                            sequence(
+                                mycelium
+                            )
+                        )
+                    )
+                )
+            )
+        )
         val sandCaves = sequence(
             condition(
                 biome(DuskBiomes.SAND_CAVES),
@@ -269,10 +350,7 @@ object DuskSurfaceRules {
                     condition(
                         stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                             sequence(
-                                condition(
-                                    ON_FLOOR, block(Blocks.SAND)
-                                ),
-                                block(Blocks.SANDSTONE)
+                                sand
                             )
                         )
                     )
@@ -324,10 +402,7 @@ object DuskSurfaceRules {
                     condition(
                         stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                             sequence(
-                                condition(
-                                    ON_FLOOR, block(Blocks.RED_SAND)
-                                ),
-                                block(Blocks.RED_SANDSTONE)
+                                sandRed
                             )
                         )
                     )
@@ -424,7 +499,7 @@ object DuskSurfaceRules {
                     podzolAndCoarseDirt,
                     lessPodzolAndCoarseDirt,
                     mud,
-                    mycelium
+                    myceliumSurface
                 )
             )
         )
@@ -451,6 +526,7 @@ object DuskSurfaceRules {
             )
         )
         val cave = sequence(
+            mushroomCaves,
             sandCaves,
             frozenCaverns
         )

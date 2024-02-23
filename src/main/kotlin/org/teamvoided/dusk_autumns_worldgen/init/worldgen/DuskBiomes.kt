@@ -230,8 +230,16 @@ object DuskBiomes {
             redSandInlandVariant
         )
         BiomePlacement.addSubOverworld(
-            WARM_RIVER, RED_WARM_RIVER,
-            redSandInlandVariant
+            Biomes.RIVER, RED_WARM_RIVER, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.55f, 1f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, -0.223f, false
+                )
+            )
         )
         BiomePlacement.addSubOverworld(
             Biomes.RIVER, WARM_RIVER, of(
@@ -284,25 +292,17 @@ object DuskBiomes {
             ERODED_MUSHROOM_ISLAND,
             Range(-1, 1),        // Temperature
             Range(-1, -0.1),      // Humidity
-            Range(-1.2, -0.85),          // Continentalness
+            Range(-1.2, -1.075),          // Continentalness
             Range(-1, 1),         // Erosion
             Range(-1, 1),         // Weirdness
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, MUSHROOM_CAVES, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.DEPTH, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.2f, 0.9f, false
-                )
-            )
         )
         BiomePlacement.addOverworld(
             MUSHROOM_CAVES,
             createNoise(
                 Range(-1, 1),        // Temperature
-                Range(-1, -0.1),      // Humidity
-                Range(-1.05, -0.455),          // Continentalness
-                Range(-1, -0.375),         // Erosion
+                Range(-1, 0.7),      // Humidity
+                Range(-1.2, -1.05),          // Continentalness
+                Range(-1, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
                 0L                  // Offset
@@ -312,9 +312,9 @@ object DuskBiomes {
             MUSHROOM_CAVES,
             createNoise(
                 Range(-1, 1),        // Temperature
-                Range(-1, -0.1),      // Humidity
-                Range(0.55, 1),          // Continentalness
-                Range(-1, -0.375),         // Erosion
+                Range(-0.1, 0.1),      // Humidity
+                Range(-1.2, -0.75),          // Continentalness
+                Range(-1, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
                 0L                  // Offset

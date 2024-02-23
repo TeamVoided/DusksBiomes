@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.loot.LootTables
-import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -13,10 +12,7 @@ import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
-import net.minecraft.util.math.int_provider.ConstantIntProvider
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.util.math.int_provider.WeightedListIntProvider
+import net.minecraft.util.math.int_provider.*
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -239,7 +235,6 @@ object ConfiguredFeatureCreator {
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeatures.CHERRY_ON_SNOW)
             )
         )
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty(
@@ -249,6 +244,99 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        c.registerConfiguredFeature<GlowLichenFeatureConfig, Feature<GlowLichenFeatureConfig>>(
+            DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA,
+            Feature.MULTIFACE_GROWTH,
+            GlowLichenFeatureConfig(
+                (Blocks.GLOW_LICHEN as AbstractLichenBlock), 20, true, true, true, 0.75f, HolderSet.createDirect(
+                    { obj: Block -> obj.builtInRegistryHolder },
+                    *arrayOf<Block>(
+                        Blocks.STONE,
+                        Blocks.ANDESITE,
+                        Blocks.DIORITE,
+                        Blocks.GRANITE,
+                        Blocks.DRIPSTONE_BLOCK,
+                        Blocks.CALCITE,
+                        Blocks.TUFF,
+                        Blocks.DEEPSLATE,
+                        Blocks.GRAVEL,
+                        Blocks.MYCELIUM,
+                        Blocks.PODZOL,
+                        Blocks.COARSE_DIRT,
+                        Blocks.RED_MUSHROOM_BLOCK,
+                        Blocks.BROWN_MUSHROOM_BLOCK,
+                        Blocks.MUSHROOM_STEM,
+                        Blocks.PACKED_ICE,
+                        Blocks.BLUE_ICE,
+                        Blocks.SANDSTONE,
+                        Blocks.RED_SANDSTONE
+                    )
+                )
+            )
+        )
+        c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+            DuskConfiguredFeatures.MUSHROOM_CAVE_SURFACE,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                20, PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
+            )
+        )
+
+        c.registerConfiguredFeature<RandomBooleanFeatureConfig, Feature<RandomBooleanFeatureConfig>>(
+            DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS,
+            Feature.RANDOM_BOOLEAN_SELECTOR,
+            RandomBooleanFeatureConfig(
+                PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_RED_MUSHROOM),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(
+                        VegetationConfiguredFeatures.PATCH_BROWN_MUSHROOM
+                    ),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
+            )
+        )
+
+        c.registerConfiguredFeature<RootSystemFeatureConfig, Feature<RootSystemFeatureConfig>>(
+            DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS,
+            Feature.ROOT_SYSTEM,
+            RootSystemFeatureConfig(
+                PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_SURFACE),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                2,
+                2,
+                BlockTags.AZALEA_ROOT_REPLACEABLE,
+                BlockStateProvider.of(Blocks.ROOTED_DIRT),
+                20,
+                100,
+                3,
+                4,
+                BlockStateProvider.of(Blocks.HANGING_ROOTS),
+                20,
+                60,
+                BlockPredicate.bothOf(
+                    BlockPredicate.eitherOf(
+                        BlockPredicate.matchingBlocks(
+                            listOf(
+                                Blocks.AIR,
+                                Blocks.CAVE_AIR,
+                                Blocks.VOID_AIR
+                            )
+                        ), BlockPredicate.matchingBlockTags(BlockTags.REPLACEABLE_BY_TREES)
+                    ), BlockPredicate.matchingBlockTags(
+                        Direction.DOWN.vector, DuskBlockTags.MUSHROOM_ROOT_PLACEABLE
+                    )
+                )
+            )
+        )
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ICE_CAVE_PILLAR,
             VoidFeatures.LARGE_CAVE_PILLAR,
@@ -372,7 +460,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.IS_AIR_OR_WATER, true
+                        Direction.UP, BlockPredicate.IS_AIR, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.UP)
@@ -439,7 +527,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.IS_AIR_OR_WATER, true
+                        Direction.UP, BlockPredicate.IS_AIR, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.UP)
@@ -472,6 +560,20 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.SAND_CAVE_SEAGRASS,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.TALL_SEAGRASS)),
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.UP)
+                    )
+                )
+            )
+        )
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TEST_CAVE_PILLAR,
             VoidFeatures.LARGE_CAVE_PILLAR,

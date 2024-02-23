@@ -48,8 +48,8 @@ object BiomeCreator {
         c.register(DuskBiomes.SNOWY_RED_BEACH, c.createBeach(true, false))
         c.register(DuskBiomes.SNOWY_STONY_SHORE, c.createBeach(true, true))
         c.register(DuskBiomes.RED_DESERT, c.createDesert(true, false))
-        c.register(DuskBiomes.MUSHROOM_GROVE, c.createMushroomIsland(true))
-        c.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, c.createMushroomIsland(true))
+        c.register(DuskBiomes.MUSHROOM_GROVE, c.createMushroomIsland(true, false))
+        c.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, c.createMushroomIsland(true, true))
         c.register(DuskBiomes.MUSHROOM_CAVES, c.createMushroomCave())
         c.register(DuskBiomes.FROZEN_CAVERNS, c.createFrozenCaves())
         c.register(DuskBiomes.SAND_CAVES, c.createDesert(false, true))
@@ -93,7 +93,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addCommonBerries(generation)
         return OverworldBiomeCreator.create(
             true,
-            if (spruce) -0.45f else 0.5f,
+            if (spruce) -0.45f else -0.5f,
             0.8f,
             spawns, generation,
             MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_OLD_GROWTH_TAIGA)
@@ -414,12 +414,6 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDesertDeadBushes(generation)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, cave)
-        if (cave) {
-            generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.WARM_OCEAN_VEGETATION)
-            generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_WARM)
-            generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEA_PICKLE)
-        }
-
         return OverworldBiomeCreator.create(
             false,
             2.0f,
@@ -489,7 +483,7 @@ object BiomeCreator {
         return OverworldBiomeCreator.createBeach(features, carver, snowy, stony)
     }
 
-    fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean): Biome {
+    fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
         val features = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
 
@@ -504,6 +498,7 @@ object BiomeCreator {
         if (grove) BiomeFeatures.addMushroomGroveFeatures(generation)
         else DefaultBiomeFeatures.addMushroomFieldsFeatures(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation)
+        if (eroded) BiomeFeatures.addMushroomErodedFeatures(generation)
 
         return OverworldBiomeCreator.create(
             true,
@@ -516,18 +511,14 @@ object BiomeCreator {
     fun BootstrapContext<Biome>.createMushroomCave(): Biome {
         val features = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
-
         DefaultBiomeFeatures.addMushroomMobs(spawns)
-
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
-        BiomeFeatures.addMushroomGroveFeatures(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation)
-
+        BiomeFeatures.addMushroomCaveFeatures(generation)
         return OverworldBiomeCreator.create(
             true,
             0.9f,

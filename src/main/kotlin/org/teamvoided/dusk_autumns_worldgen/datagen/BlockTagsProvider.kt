@@ -29,6 +29,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
 //Dusk Tags
+        getOrCreateTagBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
+            .forceAddTag(BlockTags.AZALEA_GROWS_ON)
+            .add(Blocks.GRAVEL)
         getOrCreateTagBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .add(Blocks.POWDER_SNOW)

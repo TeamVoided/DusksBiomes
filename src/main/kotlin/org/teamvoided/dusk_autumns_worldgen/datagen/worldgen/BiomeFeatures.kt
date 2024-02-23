@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 import net.minecraft.world.biome.GenerationSettings
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
-import net.minecraft.world.gen.feature.UndergroundPlacedFeatures
+import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
@@ -51,8 +51,10 @@ object BiomeFeatures {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_VINES)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CACTUS)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_DEAD_BUSH)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_CORAL)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_SEAGRASS)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_PICKLE)
             if (red) {
                 generationSettings.feature(
                     GenerationStep.Feature.LOCAL_MODIFICATIONS,
@@ -106,8 +108,39 @@ object BiomeFeatures {
         )
     }
 
+    fun addMushroomErodedFeatures(generationSettings: GenerationSettings.Builder) {
+
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_NORMAL)
+        DefaultBiomeFeatures.addSeagrassOnStone(generationSettings)
+        DefaultBiomeFeatures.addKelp(generationSettings)
+    }
+
+    fun addMushroomCaveFeatures(generationSettings: GenerationSettings.Builder) {
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.CAVE_DEAD_BUSH
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.MUSHROOM_CAVE_MUSHROOMS
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.MUSHROOM_CAVE_VEGETATION
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.MUSHROOM_CAVE_SURFACE
+        )
+    }
+
     fun addFrozenCavernsFeatures(generationSettings: GenerationSettings.Builder) {
         addFrozenDungeons(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_CAVE_PILLAR)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_ICE)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)

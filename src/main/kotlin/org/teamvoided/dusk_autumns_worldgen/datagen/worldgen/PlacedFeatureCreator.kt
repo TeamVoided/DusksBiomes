@@ -1,7 +1,6 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
@@ -13,9 +12,9 @@ import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.BootstrapContext
-import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
+import net.minecraft.world.gen.blockpredicate.MatchingBlockTagBlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
@@ -218,11 +217,64 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_DEAD_BUSH,
             configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_DEAD_BUSH),
-            CountPlacementModifier.create(128),
+            CountPlacementModifier.create(UniformIntProvider.create(94, 177)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             BiomePlacementModifier.getInstance()
         )
+        c.register(
+            DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+            CountPlacementModifier.create(UniformIntProvider.create(94, 177)),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.MUSHROOM_CAVE_VEGETATION,
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.MUSHROOM_ISLAND_VEGETATION),
+            CountPlacementModifier.create(125),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.DOWN,
+                BlockPredicate.solid(),
+                BlockPredicate.IS_AIR,
+                12
+            ),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
+            BiomePlacementModifier.getInstance()
+        )
+
+        c.register(
+            DuskPlacedFeatures.MUSHROOM_CAVE_MUSHROOMS,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS),
+            CountPlacementModifier.create(33),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.DOWN,
+                BlockPredicate.solid(),
+                BlockPredicate.IS_AIR,
+                12
+            ),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
+            BiomePlacementModifier.getInstance()
+        )
+
+        c.register(
+            DuskPlacedFeatures.MUSHROOM_CAVE_SURFACE,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS),
+            CountPlacementModifier.create(UniformIntProvider.create(1, 2)),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR_OR_WATER, 12
+            ),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+            BiomePlacementModifier.getInstance()
+        )
+
 
         c.register(
             DuskPlacedFeatures.ICE_CAVE_PILLAR,
@@ -391,7 +443,20 @@ object PlacedFeatureCreator {
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.SAND_CAVE_PICKLE,
+            configuredFeatureProvider.getHolderOrThrow(OceanConfiguredFeatures.SEA_PICKLE),
+            CountPlacementModifier.create(128),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.DOWN,
+                BlockPredicate.hasSturdyFace(Direction.UP),
+                BlockPredicate.matchingBlocks(Blocks.WATER),
+                12
+            ),
             BiomePlacementModifier.getInstance()
         )
 

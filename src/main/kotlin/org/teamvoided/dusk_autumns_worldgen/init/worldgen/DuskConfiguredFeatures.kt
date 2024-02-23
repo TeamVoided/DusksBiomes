@@ -18,6 +18,10 @@ object DuskConfiguredFeatures {
     val CHERRY_SNOW_BEES = create("tree/cherry_snow_bees")
     val TREES_SNOWY_CHERRY = create("tree/trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
+    val CAVE_GLOW_LICHEN_EXTRA = create("cave/glow_lichen_extra")
+    val MUSHROOM_CAVE_SURFACE = create("cave/mushroom/surface")
+    val MUSHROOM_CAVE_MUSHROOMS = create("cave/mushroom/mushrooms")
+    val MUSHROOM_CAVE_ROOTS = create("cave/mushroom/roots")
     val ICE_CAVE_PILLAR = create("cave/frozen/ice_cave_pillar")
     val ICE_SPIKE_FLOOR = create("cave/frozen/ice_spike_floor")
     val ICE_SPIKE_CEILING = create("cave/frozen/ice_spike_ceiling")
@@ -35,6 +39,7 @@ object DuskConfiguredFeatures {
     val RED_SAND_SPIKES = create("cave/sand/red_spikes")
     val RED_SAND_SPIKES_ROOF = create("cave/sand/red_spikes_roof")
     val SAND_CAVE_SEAGRASS = create("cave/sand/cave_seagrass")
+    val SAND_CAVE_PICKLES = create("cave/sand/cave_pickles")
 
     val DEEP_MONSTER_ROOM = create("monster_room/deep_monster_room")
     val FROZEN_MONSTER_ROOM = create("monster_room/frozen_monster_room")
