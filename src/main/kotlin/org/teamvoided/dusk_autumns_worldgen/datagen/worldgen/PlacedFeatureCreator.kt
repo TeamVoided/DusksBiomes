@@ -428,12 +428,11 @@ object PlacedFeatureCreator {
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_SEAGRASS,
-            configuredFeatureProvider.getHolderOrThrow(OceanConfiguredFeatures.SEAGRASS_TALL),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_SEAGRASS),
             CountPlacementModifier.create(128),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,

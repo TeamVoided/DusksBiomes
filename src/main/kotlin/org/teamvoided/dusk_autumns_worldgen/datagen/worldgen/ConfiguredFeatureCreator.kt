@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
+import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.loot.LootTables
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKey
@@ -10,6 +12,7 @@ import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.util.collection.DataPool
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
 import net.minecraft.util.math.int_provider.*
@@ -556,6 +559,33 @@ object ConfiguredFeatureCreator {
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
+                    )
+                )
+            )
+        )
+
+        c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+            DuskConfiguredFeatures.SAND_CAVE_SEAGRASS, Feature.RANDOM_PATCH, RandomPatchFeatureConfig(
+                64, 7, 3, PlacedFeatureUtil.filtered<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.TALL_SEAGRASS)),
+                    BlockPredicate.allOf(
+                        *arrayOf<BlockPredicate>(
+                            BlockPredicate.replaceable(),
+                            BlockPredicate.matchingFluids(
+                                BlockPos(0, 0, 0),
+                                *arrayOf<Fluid>(Fluids.WATER, Fluids.FLOWING_WATER)
+                            ),
+                            BlockPredicate.matchingBlocks(
+                                Direction.DOWN.vector,
+                                *arrayOf<Block>(
+                                    (Blocks.SAND),
+                                    (Blocks.SANDSTONE),
+                                    (Blocks.RED_SAND),
+                                    (Blocks.RED_SANDSTONE)
+                                )
+                            )
+                        )
                     )
                 )
             )

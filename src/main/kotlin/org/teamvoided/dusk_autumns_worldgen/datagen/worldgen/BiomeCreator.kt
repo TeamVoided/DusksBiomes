@@ -358,7 +358,6 @@ object BiomeCreator {
     fun BootstrapContext<Biome>.createSwamp(oldGrowth: Boolean): Biome {
         val features = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
 
@@ -401,10 +400,11 @@ object BiomeCreator {
     fun BootstrapContext<Biome>.createDesert(red: Boolean, cave: Boolean): Biome {
         val features = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
+
         DefaultBiomeFeatures.addDesertMobs(spawns)
+        if (cave) spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 95, 4, 4))
         DefaultBiomeFeatures.addFossils(generation)
         BiomeFeatures.addBasicFeaturesNoDungeon(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -430,10 +430,8 @@ object BiomeCreator {
     fun BootstrapContext<Biome>.createWarmRiver(red: Boolean): Biome {
         val feature = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(feature, carver)
-
 
         spawns.spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.PUFFERFISH, 15, 1, 3))
         DefaultBiomeFeatures.addWarmOceanMobs(spawns, 10, 4)

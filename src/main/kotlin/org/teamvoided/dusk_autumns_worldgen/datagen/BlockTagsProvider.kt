@@ -20,6 +20,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.ICE)
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
             .add(Blocks.PODZOL)
+        getOrCreateTagBuilder(BlockTags.DEAD_BUSH_PLACEABLE_ON)
+            .add(Blocks.SANDSTONE)
+            .add(Blocks.RED_SANDSTONE)
 //Void Tags
         getOrCreateTagBuilder(DuskBlockTags.CANE_HYDRATION)
             .add(Blocks.ICE)
