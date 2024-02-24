@@ -213,9 +213,21 @@ object DuskBiomes {
             Range(0.55, 1.0),         // Erosion
             Range(0.933, 1),         // Weirdness
         )
-        BiomePlacement.addSubOverworld(
-            FROZEN_MANGROVE_SWAMP, FROZEN_WINDSWEPT_MANGROVE_SWAMP,
-            windsweptVariant
+        addOverworld(
+            FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+            Range(-1, -0.45),        // Temperature
+            Range(-1, 0),            // Humidity
+            Range(-0.11, 1),          // Continentalness
+            Range(0.55, 1.0),         // Erosion
+            Range(-0.4, 0),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+            Range(-1, -0.45),        // Temperature
+            Range(-1, 0),            // Humidity
+            Range(-0.11, 1),          // Continentalness
+            Range(0.55, 1.0),         // Erosion
+            Range(-1, -0.933),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
             Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
