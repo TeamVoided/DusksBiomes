@@ -8,6 +8,7 @@ import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
 import net.minecraft.sound.SoundEvents
 import net.minecraft.world.biome.*
+import net.minecraft.world.biome.Biome.TemperatureModifier
 import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.BootstrapContext
@@ -474,11 +475,48 @@ object BiomeCreator {
         return OverworldBiomeCreator.createLukewarmOcean(features, carver, deep)
     }
 
-    fun BootstrapContext<Biome>.createBeach(snowy: Boolean, stony: Boolean): Biome {
+    fun BootstrapContext<Biome>.createBeach(
+        snowy: Boolean, stony: Boolean
+    ): Biome {
         val features = this.lookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
-        return OverworldBiomeCreator.createBeach(features, carver, snowy, stony)
+        val spawns = SpawnSettings.Builder()
+        if (!stony && !snowy) {
+            spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.TURTLE, 5, 2, 5))
+        }
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        val generation = GenerationSettings.Builder(features, carver)
+        OverworldBiomeCreator.addBasicFeatures(generation)
+        DefaultBiomeFeatures.addDefaultOres(generation)
+        DefaultBiomeFeatures.addDefaultDisks(generation)
+        DefaultBiomeFeatures.addDefaultFlowers(generation)
+        DefaultBiomeFeatures.addDefaultGrass(generation)
+        DefaultBiomeFeatures.addDefaultMushrooms(generation)
+        DefaultBiomeFeatures.addDefaultVegetation(generation)
+        val temperature = if (snowy) {
+            0.05f
+        } else if (stony) {
+            0.2f
+        } else {
+            0.8f
+        }
+        val tempMod = if (snowy && stony) {
+            TemperatureModifier.FROZEN
+        } else {
+            TemperatureModifier.NONE
+        }
+        return Biome.Builder()
+            .hasPrecipitation(true)
+            .temperature(temperature)
+            .temperatureModifier(tempMod)
+            .downfall(if (!stony && !snowy) 0.4f else 0.3f)
+            .effects(BiomeEffects.Builder()
+                    .waterColor(if (snowy) 4020182 else 4159204)
+                    .waterFogColor(329011)
+                    .fogColor(12638463)
+                    .skyColor(OverworldBiomeCreator.getSkyColor(temperature))
+                    .moodSound(BiomeMoodSound.CAVE).build()
+            ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
     fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
@@ -556,6 +594,39 @@ object BiomeCreator {
         )
     }
 
+    /*BIOME TEMPLATE
+    fun BootstrapContext<Biome>.createExample(): Biome {
+        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+
+        val spawns = SpawnSettings.Builder()
+        val generation = GenerationSettings.Builder(features, carver)
+
+        /* Add Spawns */
+
+        /* Add Features */
+
+        return OverworldBiomeCreator.create(
+            true,
+            0f,
+            0f,
+            spawns, generation, DEFAULT_MUSIC
+        )
+    }
+    */
+    /*    Generation Steps Reference:
+          RAW_GENERATION
+          LAKES
+          LOCAL_MODIFICATIONS
+          UNDERGROUND_STRUCTURES
+          SURFACE_STRUCTURES
+          STRONGHOLDS
+          UNDERGROUND_ORES
+          UNDERGROUND_DECORATION
+          FLUID_SPRINGS
+          VEGETAL_DECORATION
+          TOP_LAYER_MODIFICATION
+     */
 
     /*    fun BootstrapContext<Biome>.createDevilsRoar(): Biome {
             val features = this.lookup(RegistryKeys.PLACED_FEATURE)
@@ -590,40 +661,4 @@ object BiomeCreator {
                 .build()
         }
      */
-
-    /*BIOME TEMPLATE
-    fun BootstrapContext<Biome>.createExample(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
-
-        val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
-
-        /* Add Spawns */
-
-        /* Add Features */
-
-        return OverworldBiomeCreator.create(
-            true,
-            0f,
-            0f,
-            spawns, generation, DEFAULT_MUSIC
-        )
-    }
-    */
-
-    /*    Generation Steps Reference:
-          RAW_GENERATION
-          LAKES
-          LOCAL_MODIFICATIONS
-          UNDERGROUND_STRUCTURES
-          SURFACE_STRUCTURES
-          STRONGHOLDS
-          UNDERGROUND_ORES
-          UNDERGROUND_DECORATION
-          FLUID_SPRINGS
-          VEGETAL_DECORATION
-          TOP_LAYER_MODIFICATION
-     */
-
 }
