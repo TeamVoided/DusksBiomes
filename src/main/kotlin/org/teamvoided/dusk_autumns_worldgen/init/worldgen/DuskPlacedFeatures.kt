@@ -40,6 +40,8 @@ object DuskPlacedFeatures {
     val ORE_BLUE_ICE = create("cave/frozen_cavern/ore_blue_ice")
     val SAND_CAVE_PILLAR = create("cave/sand/sand_cave_pillar")
     val SAND_CACTUS = create("cave/sand/cactus")
+    val ORE_SAND = create("cave/sand/ore_sand")
+    val ORE_RED_SAND = create("cave/sand/ore_red_sand")
     val SAND_SPIKES = create("cave/sand/sandstone_spikes")
     val SAND_SPIKES_ROOF = create("cave/sand/sandstone_roof_spikes")
     val RED_SAND_CAVE_PILLAR = create("cave/sand/red_sand_cave_pillar")

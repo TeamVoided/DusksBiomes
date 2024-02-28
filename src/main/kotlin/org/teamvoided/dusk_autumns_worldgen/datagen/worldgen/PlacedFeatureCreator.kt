@@ -14,7 +14,6 @@ import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
-import net.minecraft.world.gen.blockpredicate.MatchingBlockTagBlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
@@ -217,7 +216,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_DEAD_BUSH,
             configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_DEAD_BUSH),
-            CountPlacementModifier.create(UniformIntProvider.create(94, 177)),
+            CountPlacementModifier.create(UniformIntProvider.create(124, 177)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             BiomePlacementModifier.getInstance()
@@ -330,8 +329,24 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
+            DuskPlacedFeatures.ORE_SAND,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_SAND),
+            CountPlacementModifier.create(14),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.ORE_RED_SAND,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_RED_SAND),
+            CountPlacementModifier.create(14),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
             DuskPlacedFeatures.SAND_CACTUS,
-            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_CACTUS),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_CACTUS),
             CountPlacementModifier.create(66),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,

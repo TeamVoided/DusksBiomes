@@ -57,6 +57,10 @@ object BiomeFeatures {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_PICKLE)
             if (red) {
                 generationSettings.feature(
+                    GenerationStep.Feature.UNDERGROUND_ORES,
+                    DuskPlacedFeatures.ORE_RED_SAND
+                )
+                generationSettings.feature(
                     GenerationStep.Feature.LOCAL_MODIFICATIONS,
                     DuskPlacedFeatures.RED_SAND_CAVE_PILLAR
                 )
@@ -73,6 +77,10 @@ object BiomeFeatures {
                     DuskPlacedFeatures.RED_SAND_SPIKES_ROOF
                 )
             } else {
+                generationSettings.feature(
+                    GenerationStep.Feature.UNDERGROUND_ORES,
+                    DuskPlacedFeatures.ORE_SAND
+                )
                 generationSettings.feature(
                     GenerationStep.Feature.LOCAL_MODIFICATIONS,
                     DuskPlacedFeatures.SAND_CAVE_PILLAR
