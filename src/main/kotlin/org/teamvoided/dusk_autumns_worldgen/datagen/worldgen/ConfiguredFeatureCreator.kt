@@ -435,18 +435,9 @@ object ConfiguredFeatureCreator {
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
                     Feature.BLOCK_COLUMN,
-                    BlockColumnFeatureConfig(
-                        listOf(
-                            BlockColumnFeatureConfig.createLayer(
-                                BiasedToBottomIntProvider.create(1, 7),
-                                BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
-                            ),
-                            BlockColumnFeatureConfig.createLayer(
-                                BiasedToBottomIntProvider.create(0, 1),
-                                BlockStateProvider.of(Blocks.MELON.defaultState)
-                            )
-                        ),
-                        Direction.UP, BlockPredicate.IS_AIR, false
+                    BlockColumnFeatureConfig.create(
+                        BiasedToBottomIntProvider.create(1, 7),
+                        BlockStateProvider.of(Blocks.CACTUS)
                     ),
                     *arrayOf<PlacementModifier>(
                         BlockPredicateFilterPlacementModifier.create(
@@ -459,15 +450,11 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_SAND,
             Feature.ORE,
             OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE), Blocks.SAND.defaultState, 64)
-        )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.RED_SAND_CAVE_SAND,
-            Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE), Blocks.RED_SAND.defaultState, 64)
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_CAVE_PILLAR,
@@ -535,6 +522,11 @@ object ConfiguredFeatureCreator {
                     )
                 )
             )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.ORE_RED_SAND,
+            Feature.ORE,
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE), Blocks.RED_SAND.defaultState, 64)
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR,

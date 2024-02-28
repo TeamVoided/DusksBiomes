@@ -23,5 +23,4 @@ object DuskLootTables {
         if (LOOT_TABLES.add(id)) return id
         throw IllegalArgumentException("$id is already a registered built-in loot table")
     }
-
 }
