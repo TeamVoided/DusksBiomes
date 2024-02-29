@@ -19,7 +19,7 @@ object DuskConfiguredFeatures {
     val TREES_SNOWY_CHERRY = create("tree/trees_snowy_chery")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val CAVE_GLOW_LICHEN_EXTRA = create("cave/glow_lichen_extra")
-    val MUSHROOM_CAVE_SURFACE = create("cave/mushroom/surface")
+    val ORE_COARSE_DIRT = create("cave/ore_coarse_dirt")
     val MUSHROOM_CAVE_MUSHROOMS = create("cave/mushroom/mushrooms")
     val MUSHROOM_CAVE_ROOTS = create("cave/mushroom/roots")
     val ICE_CAVE_PILLAR = create("cave/frozen/ice_cave_pillar")

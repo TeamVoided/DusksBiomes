@@ -42,9 +42,10 @@ class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
         DuskBiomes.RED_DESERT,
         DuskBiomes.MUSHROOM_GROVE,
         DuskBiomes.ERODED_MUSHROOM_ISLAND,
-
         DuskBiomes.MUSHROOM_CAVES,
         DuskBiomes.FROZEN_CAVERNS,
+        DuskBiomes.SAND_CAVES,
+        DuskBiomes.RED_SAND_CAVES
     )
     private val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
     override fun generateAdvancement(c: Consumer<AdvancementHolder>) {
@@ -52,8 +53,8 @@ class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
         AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), biomes)
             .method_697(
                 Items.IRON_BOOTS,
-                Text.translatable("advancements.adventure.adventuring_time.title"),
-                Text.translatable("advancements.adventure.adventuring_time.description"),
+                Text.of("Strange Lands"),
+                Text.of("Visit all the biomes added by Dusk Autumns Worldgen!"),
                 null,
                 AdvancementComponent.CHALLENGE,
                 true,

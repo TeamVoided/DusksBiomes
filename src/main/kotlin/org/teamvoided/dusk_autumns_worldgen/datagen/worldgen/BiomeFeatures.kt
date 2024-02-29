@@ -51,7 +51,11 @@ object BiomeFeatures {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_VINES)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CACTUS)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_DEAD_BUSH)
-            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA)
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.ORE_COARSE_DIRT)
+            generationSettings.feature(
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA
+            )
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_CORAL)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_SEAGRASS)
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.SAND_CAVE_PICKLE)
@@ -128,6 +132,7 @@ object BiomeFeatures {
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeatures.CAVE_DEAD_BUSH
         )
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.ORE_COARSE_DIRT)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA

@@ -224,9 +224,17 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-            CountPlacementModifier.create(UniformIntProvider.create(94, 177)),
+            CountPlacementModifier.create(UniformIntProvider.create(24, 74)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.ORE_COARSE_DIRT,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_COARSE_DIRT),
+            CountPlacementModifier.create(3),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
@@ -347,7 +355,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_CACTUS,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_CACTUS),
-            CountPlacementModifier.create(66),
+            CountPlacementModifier.create(88),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
@@ -384,7 +392,7 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR_OR_WATER, 12
+                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR, 12
             ),
             BiomePlacementModifier.getInstance()
         )
@@ -395,7 +403,7 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR_OR_WATER, 12
+                Direction.UP, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR, 12
             ),
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()
@@ -403,10 +411,12 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.RED_SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
-            CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
-            BiomePlacementModifier.getInstance()
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                BiomePlacementModifier.getInstance()
+            )
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES,
@@ -415,7 +425,7 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR_OR_WATER, 12
+                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR, 12
             ),
             BiomePlacementModifier.getInstance()
         )
@@ -426,7 +436,7 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR_OR_WATER, 12
+                Direction.UP, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR, 12
             ),
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()
@@ -461,7 +471,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PICKLE,
-            configuredFeatureProvider.getHolderOrThrow(OceanConfiguredFeatures.SEA_PICKLE),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PICKLES),
             CountPlacementModifier.create(128),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,

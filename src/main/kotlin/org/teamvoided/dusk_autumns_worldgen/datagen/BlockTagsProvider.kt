@@ -51,6 +51,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.ICE)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
+            .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.CAVE_VINES)
             .forceAddTag(BlockTags.SAND)
             .forceAddTag(BlockTags.SNOW)

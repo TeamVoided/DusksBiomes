@@ -30,6 +30,7 @@ object DuskPlacedFeatures {
     val MUSHROOM_GROVE_VEGETATION = create("mushroom_grove_vegetation")
     val CAVE_DEAD_BUSH = create("cave/dead_bush")
     val CAVE_GLOW_LICHEN_EXTRA = create("cave/glow_lichen_extra")
+    val ORE_COARSE_DIRT = create("cave/ore_coarse_dirt")
     val MUSHROOM_CAVE_VEGETATION = create("cave/mushroom/vegetation")
     val MUSHROOM_CAVE_MUSHROOMS = create("cave/mushroom/mushrooms")
     val MUSHROOM_CAVE_SURFACE = create("cave/mushroom/surface")

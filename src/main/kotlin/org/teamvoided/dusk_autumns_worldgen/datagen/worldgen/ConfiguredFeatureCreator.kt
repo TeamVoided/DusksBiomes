@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
-import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.loot.LootTables
 import net.minecraft.registry.HolderSet
@@ -16,6 +15,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
 import net.minecraft.util.math.int_provider.*
+import net.minecraft.util.math.noise.DoublePerlinNoiseSampler.NoiseParameters
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
@@ -31,6 +31,7 @@ import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
+import net.minecraft.world.gen.stateprovider.NoiseCutoffBlockStateProvider
 import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
@@ -49,6 +50,10 @@ import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.M
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import java.util.*
+import java.util.List
+import kotlin.collections.forEach
+import kotlin.collections.listOf
+import kotlin.collections.plus
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -247,47 +252,47 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-        c.registerConfiguredFeature<GlowLichenFeatureConfig, Feature<GlowLichenFeatureConfig>>(
-            DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA,
-            Feature.MULTIFACE_GROWTH,
-            GlowLichenFeatureConfig(
-                (Blocks.GLOW_LICHEN as AbstractLichenBlock), 20, true, true, true, 0.75f, HolderSet.createDirect(
-                    { obj: Block -> obj.builtInRegistryHolder },
-                    *arrayOf<Block>(
-                        Blocks.STONE,
-                        Blocks.ANDESITE,
-                        Blocks.DIORITE,
-                        Blocks.GRANITE,
-                        Blocks.DRIPSTONE_BLOCK,
-                        Blocks.CALCITE,
-                        Blocks.TUFF,
-                        Blocks.DEEPSLATE,
-                        Blocks.GRAVEL,
-                        Blocks.MYCELIUM,
-                        Blocks.PODZOL,
-                        Blocks.COARSE_DIRT,
-                        Blocks.RED_MUSHROOM_BLOCK,
-                        Blocks.BROWN_MUSHROOM_BLOCK,
-                        Blocks.MUSHROOM_STEM,
-                        Blocks.PACKED_ICE,
-                        Blocks.BLUE_ICE,
-                        Blocks.SANDSTONE,
-                        Blocks.RED_SANDSTONE
-                    )
-                )
-            )
-        )
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
-            DuskConfiguredFeatures.MUSHROOM_CAVE_SURFACE,
+            DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 20, PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+                    Feature.MULTIFACE_GROWTH,
+                    GlowLichenFeatureConfig(
+                        (Blocks.GLOW_LICHEN as AbstractLichenBlock), 20, true, true, true, 0.75f, HolderSet.createDirect(
+                            { obj: Block -> obj.builtInRegistryHolder },
+                            *arrayOf<Block>(
+                                Blocks.STONE,
+                                Blocks.ANDESITE,
+                                Blocks.DIORITE,
+                                Blocks.GRANITE,
+                                Blocks.DRIPSTONE_BLOCK,
+                                Blocks.CALCITE,
+                                Blocks.TUFF,
+                                Blocks.DEEPSLATE,
+                                Blocks.GRAVEL,
+                                Blocks.MYCELIUM,
+                                Blocks.PODZOL,
+                                Blocks.COARSE_DIRT,
+                                Blocks.RED_MUSHROOM_BLOCK,
+                                Blocks.BROWN_MUSHROOM_BLOCK,
+                                Blocks.MUSHROOM_STEM,
+                                Blocks.PACKED_ICE,
+                                Blocks.BLUE_ICE,
+                                Blocks.SANDSTONE,
+                                Blocks.RED_SANDSTONE
+                            )
+                        )
+                    ),
                     *arrayOfNulls<PlacementModifier>(0)
                 )
             )
         )
-
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.ORE_COARSE_DIRT,
+            Feature.ORE,
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_REPLACEABLE), Blocks.COARSE_DIRT.defaultState, 64)
+        )
         c.registerConfiguredFeature<RandomBooleanFeatureConfig, Feature<RandomBooleanFeatureConfig>>(
             DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS,
             Feature.RANDOM_BOOLEAN_SELECTOR,
@@ -310,7 +315,7 @@ object ConfiguredFeatureCreator {
             Feature.ROOT_SYSTEM,
             RootSystemFeatureConfig(
                 PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_SURFACE),
+                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
                 2,
@@ -450,7 +455,6 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_SAND,
             Feature.ORE,
@@ -515,7 +519,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.IS_AIR_OR_WATER, true
+                        Direction.DOWN, BlockPredicate.IS_AIR, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
@@ -526,7 +530,11 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_RED_SAND,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE), Blocks.RED_SAND.defaultState, 64)
+            OreFeatureConfig(
+                TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
+                Blocks.RED_SAND.defaultState,
+                64
+            )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR,
@@ -545,6 +553,7 @@ object ConfiguredFeatureCreator {
                 blockTags.getTagOrThrow(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
             )
         )
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_SPIKES,
             Feature.RANDOM_PATCH,
@@ -587,7 +596,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.IS_AIR_OR_WATER, true
+                        Direction.DOWN, BlockPredicate.IS_AIR, true
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
@@ -595,33 +604,58 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.SAND_CAVE_SEAGRASS, Feature.RANDOM_PATCH, RandomPatchFeatureConfig(
                 64, 7, 3, PlacedFeatureUtil.filtered<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
                     Feature.SIMPLE_BLOCK,
-                    SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.TALL_SEAGRASS)),
+                    SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.SEAGRASS)),
                     BlockPredicate.allOf(
                         *arrayOf<BlockPredicate>(
-                            BlockPredicate.replaceable(),
-                            BlockPredicate.matchingFluids(
-                                BlockPos(0, 0, 0),
-                                *arrayOf<Fluid>(Fluids.WATER, Fluids.FLOWING_WATER)
-                            ),
-                            BlockPredicate.matchingBlocks(
-                                Direction.DOWN.vector,
-                                *arrayOf<Block>(
-                                    (Blocks.SAND),
-                                    (Blocks.SANDSTONE),
-                                    (Blocks.RED_SAND),
-                                    (Blocks.RED_SANDSTONE)
-                                )
-                            )
+                            BlockPredicate.matchingFluids(Fluids.WATER),
+                            BlockPredicate.wouldSurvive(Blocks.SEAGRASS.defaultState, BlockPos.ORIGIN)
                         )
                     )
                 )
             )
         )
+        c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+            DuskConfiguredFeatures.SAND_CAVE_PICKLES, Feature.RANDOM_PATCH, RandomPatchFeatureConfig(
+                64, 7, 3, PlacedFeatureUtil.filtered<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockFeatureConfig(
+                        NoiseCutoffBlockStateProvider(
+                            6789L,
+                            NoiseParameters(0, 1.0, *DoubleArray(0)),
+                            0.005f,
+                            -0.8f,
+                            0.33333334f,
+                            Blocks.SEAGRASS.defaultState,
+                            listOf(
+                                Blocks.SEA_PICKLE.defaultState,
+                                Blocks.SEA_PICKLE.defaultState.with(SeaPickleBlock.PICKLES, 2)
+                            ),
+                            listOf(
+                                Blocks.SEA_PICKLE.defaultState,
+                                Blocks.SEA_PICKLE.defaultState.with(SeaPickleBlock.PICKLES, 2),
+                                Blocks.SEA_PICKLE.defaultState.with(SeaPickleBlock.PICKLES, 3),
+                                Blocks.SEA_PICKLE.defaultState.with(SeaPickleBlock.PICKLES, 4)
+                            )
+                        )
+                    ),
+                    BlockPredicate.allOf(
+                        *arrayOf<BlockPredicate>(
+                            BlockPredicate.matchingFluids(Fluids.WATER),
+                            BlockPredicate.wouldSurvive(Blocks.SEAGRASS.defaultState, BlockPos.ORIGIN)
+                        )
+                    )
+                )
+            )
+        )
+
+
+
+
+
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TEST_CAVE_PILLAR,
