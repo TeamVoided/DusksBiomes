@@ -43,10 +43,9 @@ public abstract class SurfaceBuilderMixin {
 
 
     @Redirect(method = "buildSurface", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/Holder;isRegistryKey(Lnet/minecraft/registry/RegistryKey;)Z"))
-    private <T> boolean buildSurface(Holder<Biome> instance, RegistryKey<Biome> tRegistryKey) {
+    private boolean unHardCodedErodedBadlands(Holder<Biome> instance, RegistryKey<Biome> tRegistryKey) {
         if (tRegistryKey == Biomes.ERODED_BADLANDS) return instance.isIn(DuskBiomeTags.HAS_ERODED_PILLAR);
         else return instance.isRegistryKey(tRegistryKey);
-
     }
 
     @Inject(method = "buildErodedBadlandsSpecificSurface", at = @At("HEAD"), cancellable = true)

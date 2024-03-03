@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings({"deprecation", "rawtypes", "SameParameterValue"})
 @Mixin(StructurePool.Projection.class)
 public class StructurePoolProjectionMixin {
 
@@ -28,7 +29,7 @@ public class StructurePoolProjectionMixin {
     @Shadow
     @Final
 
-    private static StringIdentifiable.EnumCodec<StructurePool.Projection> CODEC;
+    public static StringIdentifiable.EnumCodec<StructurePool.Projection> CODEC;
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void clInit(CallbackInfo ci) {
@@ -41,12 +42,11 @@ public class StructurePoolProjectionMixin {
     }
 
     @Unique
-    private static StructurePool.Projection register(String name, String id, ImmutableList processors) {
+    private static void register(String name, String id, ImmutableList processors) {
         ArrayList<StructurePool.Projection> values = new ArrayList<>(Arrays.asList(field_16683));
         StructurePool.Projection type = invokeInit(name, values.get(values.size() - 1).ordinal() + 1, id, processors);
         values.add(type);
         field_16683 = values.toArray(new StructurePool.Projection[]{});
         CODEC = StringIdentifiable.createCodec(()->field_16683);
-        return type;
     }
 }
