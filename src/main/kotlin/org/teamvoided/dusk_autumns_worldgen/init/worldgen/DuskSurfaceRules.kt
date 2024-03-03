@@ -152,15 +152,52 @@ object DuskSurfaceRules {
                 condition(surfaceNoiseThreshold(-0.95), block(Blocks.PODZOL))
             )
         )
-        val lessPodzolAndCoarseDirt = condition(
+        val mushroomIslandSurface = condition(
             biome(
                 Biomes.MUSHROOM_FIELDS,
                 DuskBiomes.ERODED_MUSHROOM_ISLAND,
                 DuskBiomes.MUSHROOM_GROVE
-            ),
-            sequence(
-                condition(surfaceNoiseThreshold(1.0), block(Blocks.COARSE_DIRT)),
-                condition(surfaceNoiseThreshold(-1.0), block(Blocks.PODZOL))
+            ),sequence(
+                condition(
+                    DEEP_UNDER_FLOOR, sequence(
+                        condition(
+                            surfaceNoiseThreshold(1.0),
+                            block(Blocks.COARSE_DIRT)
+                        )
+                    )
+                ),
+                condition(
+                    stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                        condition(
+                            surfaceSecondaryNoiseThreshold(0.0),
+                            podzol
+                        )
+                    )
+                ),
+                condition(
+                    UNDER_FLOOR, sequence(
+                        condition(
+                            surfaceNoiseThreshold(-0.5),
+                            mycelium
+                        )
+                    )
+                ),
+                condition(
+                    UNDER_CEILING, sequence(
+                        condition(
+                            surfaceNoiseThreshold(0.0),
+                            block(Blocks.COARSE_DIRT)
+                        )
+                    )
+                ),
+                condition(
+                    stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                        condition(
+                            surfaceSecondaryNoiseThreshold(0.5),
+                            block(Blocks.COARSE_DIRT)
+                        )
+                    )
+                )
             )
         )
         val mud = condition(
@@ -254,17 +291,9 @@ object DuskSurfaceRules {
                 biome(DuskBiomes.MUSHROOM_CAVES),
                 sequence(
                     condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(0.5),
-                                mycelium
-                            )
-                        )
-                    ),
-                    condition(
                         DEEP_UNDER_FLOOR, sequence(
                             condition(
-                                surfaceNoiseThreshold(-1.0),
+                                surfaceNoiseThreshold(1.0),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
@@ -278,10 +307,18 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(-0.5),
+                                mycelium
+                            )
+                        )
+                    ),
+                    condition(
                         UNDER_CEILING, sequence(
                             condition(
                                 surfaceNoiseThreshold(0.0),
-                                block(Blocks.DIRT)
+                                block(Blocks.COARSE_DIRT)
                             )
                         )
                     ),
@@ -308,17 +345,9 @@ object DuskSurfaceRules {
                 biome(DuskBiomes.SAND_CAVES),
                 sequence(
                     condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(0.5),
-                                sand
-                            )
-                        )
-                    ),
-                    condition(
                         DEEP_UNDER_FLOOR, sequence(
                             condition(
-                                surfaceNoiseThreshold(-1.0),
+                                surfaceNoiseThreshold(1.0),
                                 block(Blocks.SANDSTONE)
                             )
                         )
@@ -328,6 +357,14 @@ object DuskSurfaceRules {
                             condition(
                                 surfaceSecondaryNoiseThreshold(0.0),
                                 block(Blocks.SANDSTONE)
+                            )
+                        )
+                    ),
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(-0.5),
+                                sand
                             )
                         )
                     ),
@@ -360,17 +397,9 @@ object DuskSurfaceRules {
                 biome(DuskBiomes.RED_SAND_CAVES),
                 sequence(
                     condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(0.5),
-                                sandRed
-                            )
-                        )
-                    ),
-                    condition(
                         DEEP_UNDER_FLOOR, sequence(
                             condition(
-                                surfaceNoiseThreshold(0.0),
+                                surfaceNoiseThreshold(1.0),
                                 block(Blocks.RED_SANDSTONE)
                             )
                         )
@@ -378,8 +407,16 @@ object DuskSurfaceRules {
                     condition(
                         ON_FLOOR, sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(0.5),
+                                surfaceSecondaryNoiseThreshold(0.0),
                                 block(Blocks.RED_SANDSTONE)
+                            )
+                        )
+                    ),
+                    condition(
+                        UNDER_FLOOR, sequence(
+                            condition(
+                                surfaceNoiseThreshold(-0.5),
+                                sandRed
                             )
                         )
                     ),
@@ -387,7 +424,7 @@ object DuskSurfaceRules {
                         UNDER_CEILING, sequence(
                             condition(
                                 surfaceNoiseThreshold(0.0),
-                                sandRed
+                                block(Blocks.RED_SANDSTONE)
                             )
                         )
                     ),
@@ -485,7 +522,6 @@ object DuskSurfaceRules {
             )
         )
 
-
         //Begin the Layout
         //
         //
@@ -497,7 +533,7 @@ object DuskSurfaceRules {
                     windsweptBirchSurface,
                     windsweptGravelSurface,
                     podzolAndCoarseDirt,
-                    lessPodzolAndCoarseDirt,
+                    mushroomIslandSurface,
                     mud,
                     myceliumSurface
                 )

@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumns_worldgen.datagen
+package org.teamvoided.dusk_autumns_worldgen.datagen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -68,7 +68,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.PACKED_ICE)
             .add(Blocks.BLUE_ICE)
 
-//SUSPICIOUS
+// ඞ
         getOrCreateTagBuilder(BlockTags.SAND)
             .add(DuskBlocks.SUSPICIOUS_RED_SAND)
     }

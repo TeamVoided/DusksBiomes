@@ -64,7 +64,6 @@ class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
             .rewards(AdvancementRewards.Builder.experience(500))
             .parent(adventuringTime)
             .build(c, id("adventure/strange_lands").toString())
-
     }
 
 }

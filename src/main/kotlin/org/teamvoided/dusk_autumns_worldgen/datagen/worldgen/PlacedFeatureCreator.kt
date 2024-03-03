@@ -224,7 +224,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-            CountPlacementModifier.create(UniformIntProvider.create(24, 74)),
+            CountPlacementModifier.create(UniformIntProvider.create(24, 54)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             BiomePlacementModifier.getInstance()
@@ -463,7 +463,7 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.DOWN,
-                BlockPredicate.matchingBlockTags(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
+                BlockPredicate.hasSturdyFace(Direction.UP),
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
@@ -477,74 +477,11 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.DOWN,
-                BlockPredicate.matchingBlockTags(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
+                BlockPredicate.hasSturdyFace(Direction.UP),
                 BlockPredicate.matchingBlocks(Blocks.WATER),
                 12
             ),
             BiomePlacementModifier.getInstance()
-        )
-
-
-//Monster Room features
-        val upperMonsterRoom =
-            listOf(
-                CountPlacementModifier.create(10),
-                InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.getTop()),
-                BiomePlacementModifier.getInstance()
-            )
-        val lowerMonsterRoom =
-            listOf(
-                CountPlacementModifier.create(4),
-                InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
-                BiomePlacementModifier.getInstance()
-            )
-
-        c.register(
-            DuskPlacedFeatures.DEEP_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_MONSTER_ROOM),
-            lowerMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.LUSH_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.LUSH_MONSTER_ROOM),
-            upperMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.DEEP_LUSH_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM),
-            lowerMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.FROZEN_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.FROZEN_MONSTER_ROOM),
-            upperMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.DEEP_FROZEN_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM),
-            lowerMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
-            upperMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
-            lowerMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.RED_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
-            upperMonsterRoom
-        )
-        c.register(
-            DuskPlacedFeatures.DEEP_RED_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
-            lowerMonsterRoom
         )
 
 //Structure Piece Features
@@ -597,6 +534,65 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
 
+//Monster Room features
+        val upperMonsterRoom = listOf(
+                CountPlacementModifier.create(10),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.getTop()),
+                BiomePlacementModifier.getInstance()
+            )
+        val lowerMonsterRoom = listOf(
+                CountPlacementModifier.create(4),
+                InSquarePlacementModifier.getInstance(),
+                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
+                BiomePlacementModifier.getInstance()
+            )
+
+        c.register(
+            DuskPlacedFeatures.DEEP_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_MONSTER_ROOM),
+            lowerMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.LUSH_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.LUSH_MONSTER_ROOM),
+            upperMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.DEEP_LUSH_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM),
+            lowerMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.FROZEN_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.FROZEN_MONSTER_ROOM),
+            upperMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.DEEP_FROZEN_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM),
+            lowerMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            upperMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            lowerMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.RED_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            upperMonsterRoom
+        )
+        c.register(
+            DuskPlacedFeatures.DEEP_RED_SAND_MONSTER_ROOM,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            lowerMonsterRoom
+        )
 
 //        c.register(
 //            UndergroundPlacedFeatures.SPORE_BLOSSOM, holder14,

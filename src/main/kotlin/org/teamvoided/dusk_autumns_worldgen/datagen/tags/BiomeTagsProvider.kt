@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumns_worldgen.datagen
+package org.teamvoided.dusk_autumns_worldgen.datagen.tags
 
 import com.theendercore.biome_tag_villagers.BiomeTagVillagers
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput

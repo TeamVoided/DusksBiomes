@@ -291,7 +291,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_COARSE_DIRT,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_REPLACEABLE), Blocks.COARSE_DIRT.defaultState, 64)
+            OreFeatureConfig(TagMatchRuleTest(BlockTags.OVERWORLD_CARVER_REPLACEABLES), Blocks.COARSE_DIRT.defaultState, 64)
         )
         c.registerConfiguredFeature<RandomBooleanFeatureConfig, Feature<RandomBooleanFeatureConfig>>(
             DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS,
@@ -309,7 +309,6 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
         c.registerConfiguredFeature<RootSystemFeatureConfig, Feature<RootSystemFeatureConfig>>(
             DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS,
             Feature.ROOT_SYSTEM,
@@ -490,8 +489,12 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(2, 5),
+                                UniformIntProvider.create(1, 4),
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                ConstantIntProvider.create(1),
+                                BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState.with(WallBlock.UP, false))
                             )
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, true
@@ -567,8 +570,12 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(2, 5),
+                                UniformIntProvider.create(1, 4),
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                ConstantIntProvider.create(1),
+                                BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState.with(WallBlock.UP, false))
                             )
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, true
@@ -675,6 +682,28 @@ object ConfiguredFeatureCreator {
             )
         )
 
+//Structure Piece features
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.DESERT_WELL,
+            VoidFeatures.STRUCTURE_PIECE,
+            StructurePieceFeatureConfig(
+                id("feature/desert_well"),
+                procEmpty,
+                8,
+                Heightmap.Type.OCEAN_FLOOR_WG
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.RED_DESERT_WELL,
+            VoidFeatures.STRUCTURE_PIECE,
+            StructurePieceFeatureConfig(
+                id("feature/red_desert_well"),
+                procEmpty,
+                8,
+                Heightmap.Type.OCEAN_FLOOR_WG,
+            )
+        )
+
 //Monster Room features
         val defaultMonstersRoom = listOf(EntityType.SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE, EntityType.SPIDER)
         val lushMonstersRoom = defaultMonstersRoom + listOf(/*put stuff here*/)
@@ -749,27 +778,6 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.RED_SAND),
                 sandMonstersRoom,
                 LootTables.SIMPLE_DUNGEON_CHEST
-            )
-        )
-//Structure Piece features
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.DESERT_WELL,
-            VoidFeatures.STRUCTURE_PIECE,
-            StructurePieceFeatureConfig(
-                id("feature/desert_well"),
-                procEmpty,
-                8,
-                Heightmap.Type.OCEAN_FLOOR_WG
-            )
-        )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.RED_DESERT_WELL,
-            VoidFeatures.STRUCTURE_PIECE,
-            StructurePieceFeatureConfig(
-                id("feature/red_desert_well"),
-                procEmpty,
-                8,
-                Heightmap.Type.OCEAN_FLOOR_WG,
             )
         )
     }

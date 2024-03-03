@@ -65,8 +65,8 @@ object DuskPlacedFeatures {
 
     val DESERT_WELL = create("structure/desert_well")
     val RED_DESERT_WELL = create("structure/red_desert_well")
-    val CAVE_DESERT_WELL = create("cave/sand/desert_well")
-    val CAVE_RED_DESERT_WELL = create("cave/sand/red_desert_well")
+    val CAVE_DESERT_WELL = create("structure/cave_desert_well")
+    val CAVE_RED_DESERT_WELL = create("structure/cave_red_desert_well")
 
     fun init() {}
     fun create(id: String): RegistryKey<PlacedFeature> = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumnsWorldgen.id(id))
