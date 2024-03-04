@@ -15,27 +15,18 @@ object StructureSetCreator {
     // StructureSets
     fun bootstrap(c: BootstrapContext<StructureSet>) {
         val structures = c.lookup(RegistryKeys.STRUCTURE_FEATURE)
-        val biomes = c.lookup(RegistryKeys.BIOME)
 
         c.register(
             DuskStructureSets.DESERT_RUINS,
             StructureSet(
                 listOf(
-                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS), 1),
-                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.RED_DESERT_RUINS), 1)
+                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.DESERT_RUINS), 5),
+                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.RED_DESERT_RUINS), 5),
+                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.LARGE_DESERT_RUINS), 1),
+                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.LARGE_RED_DESERT_RUINS), 1)
                 ),
-                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 1897563)
+                RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 97015)
             )
         )
-        c.register(
-            DuskStructureSets.SAND_CAVE_FOSSILS,
-            StructureSet(
-                listOf(
-                    StructureSet.entry(structures.getHolderOrThrow(DuskStructureFeatures.SAND_CAVE_FOSSILS))
-                ),
-                RandomSpreadStructurePlacement(2, 1, RandomSpreadType.LINEAR, 14357921)
-            )
-        )
-
     }
 }

@@ -9,8 +9,10 @@ object DuskStructureFeatures {
 
     val SWAMP_VILLAGE = create("village_swamp")
     val MANGROVE_SWAMP_VILLAGE = create("village_mangrove_swamp")
-    val DESERT_RUINS = create("desert_ruins")
-    val RED_DESERT_RUINS = create("red_desert_ruins")
+    val DESERT_RUINS = create("desert_ruins/desert_ruins")
+    val RED_DESERT_RUINS = create("desert_ruins/red_desert_ruins")
+    val LARGE_DESERT_RUINS = create("desert_ruins/large_desert_ruins")
+    val LARGE_RED_DESERT_RUINS = create("desert_ruins/large_red_desert_ruins")
     val SAND_CAVE_FOSSILS = create("sand_cave_fossils")
     fun init() {}
 

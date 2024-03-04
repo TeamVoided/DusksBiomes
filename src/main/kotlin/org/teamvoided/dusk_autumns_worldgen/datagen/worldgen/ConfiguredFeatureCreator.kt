@@ -50,7 +50,6 @@ import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.M
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
 import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
 import java.util.*
-import java.util.List
 import kotlin.collections.forEach
 import kotlin.collections.listOf
 import kotlin.collections.plus
@@ -291,7 +290,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_COARSE_DIRT,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(BlockTags.OVERWORLD_CARVER_REPLACEABLES), Blocks.COARSE_DIRT.defaultState, 64)
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE), Blocks.COARSE_DIRT.defaultState, 64)
         )
         c.registerConfiguredFeature<RandomBooleanFeatureConfig, Feature<RandomBooleanFeatureConfig>>(
             DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS,
@@ -358,7 +357,7 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.ICE_CAVE_PILLAR_PLACEABLE)
+                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
@@ -457,7 +456,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_SAND,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE), Blocks.SAND.defaultState, 64)
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE), Blocks.SAND.defaultState, 64)
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_CAVE_PILLAR,
@@ -473,7 +472,7 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.SANDSTONE),
-                blockTags.getTagOrThrow(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
+                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
@@ -489,12 +488,8 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(1, 4),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
-                            ),
-                            BlockColumnFeatureConfig.createLayer(
-                                ConstantIntProvider.create(1),
-                                BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState.with(WallBlock.UP, false))
                             )
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, true
@@ -534,7 +529,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.ORE_RED_SAND,
             Feature.ORE,
             OreFeatureConfig(
-                TagMatchRuleTest(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE),
+                TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
                 Blocks.RED_SAND.defaultState,
                 64
             )
@@ -553,7 +548,7 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.RED_SANDSTONE),
-                blockTags.getTagOrThrow(DuskBlockTags.SAND_CAVE_PILLAR_PLACEABLE)
+                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
 
@@ -570,12 +565,8 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE.defaultState)
                             ),
                             BlockColumnFeatureConfig.createLayer(
-                                UniformIntProvider.create(1, 4),
+                                UniformIntProvider.create(2, 5),
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
-                            ),
-                            BlockColumnFeatureConfig.createLayer(
-                                ConstantIntProvider.create(1),
-                                BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState.with(WallBlock.UP, false))
                             )
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, true

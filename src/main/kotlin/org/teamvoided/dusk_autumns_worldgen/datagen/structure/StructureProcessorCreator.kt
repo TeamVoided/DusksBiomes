@@ -1,6 +1,11 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
+import com.google.common.collect.ImmutableList
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.block.LanternBlock
+import net.minecraft.block.PaneBlock
 import net.minecraft.loot.LootTables
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -125,6 +130,146 @@ object StructureProcessorCreator {
                 )
             )
         )
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_SWAMP_ZOMBIE,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.COBBLESTONE, 0.8f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.MOSSY_COBBLESTONE.defaultState
+                ),
+                StructureProcessorRule(
+                    TagMatchRuleTest(BlockTags.DOORS),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockStateMatchRuleTest(Blocks.LANTERN.defaultState.with(LanternBlock.HANGING, true), 0.05f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.CHAIN.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.LANTERN),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.TORCH),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.WALL_TORCH),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.COBBLESTONE, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSSY_COBBLESTONE, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.TERRACOTTA, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DARK_OAK_LOG, 0.05f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DARK_OAK_PLANKS, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DARK_OAK_STAIRS, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.STRIPPED_DARK_OAK_LOG, 0.02f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.GLASS_PANE, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSS_CARPET, 0.25f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.VINE, 0.25f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DIRT_PATH, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.GRASS_BLOCK.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BLUE_ORCHID.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_RED_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BROWN_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OXEYE_DAISY.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_DARK_OAK_SAPLING.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OAK_SAPLING.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.CARROTS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTATOES.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.BEETROOTS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.025f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.BLUE_ORCHID.defaultState
+                )
+            )
+        )
     }
 
     fun mangroveSwampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
@@ -200,6 +345,146 @@ object StructureProcessorCreator {
                     BlockMatchRuleTest(Blocks.PACKED_MUD),
                     BlockMatchRuleTest(Blocks.DIRT),
                     Blocks.DIRT_PATH.defaultState
+                )
+            )
+        )
+        c.register(
+            DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_ZOMBIE,
+            RuleStructureProcessor(
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.COBBLESTONE, 0.8f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.MOSSY_COBBLESTONE.defaultState
+                ),
+                StructureProcessorRule(
+                    TagMatchRuleTest(BlockTags.DOORS),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockStateMatchRuleTest(Blocks.LANTERN.defaultState.with(LanternBlock.HANGING, true), 0.05f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.CHAIN.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.LANTERN),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.TORCH),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    BlockMatchRuleTest(Blocks.WALL_TORCH),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.COBBLESTONE, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSSY_COBBLESTONE, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.TERRACOTTA, 0.07f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MANGROVE_LOG, 0.05f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MANGROVE_PLANKS, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MANGROVE_STAIRS, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.STRIPPED_MANGROVE_LOG, 0.02f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.GLASS_PANE, 0.5f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.COBWEB.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.MOSS_CARPET, 0.25f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.VINE, 0.25f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.AIR.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.DIRT_PATH, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.GRASS_BLOCK.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BLUE_ORCHID.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_RED_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_BROWN_MUSHROOM.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OXEYE_DAISY.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_MANGROVE_PROPAGULE.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTTED_OAK_SAPLING.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.CARROTS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.3f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.POTATOES.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.1f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.BEETROOTS.defaultState
+                ),
+                StructureProcessorRule(
+                    RandomBlockMatchRuleTest(Blocks.WHEAT, 0.025f),
+                    AlwaysTrueRuleTest.INSTANCE,
+                    Blocks.BLUE_ORCHID.defaultState
                 )
             )
         )

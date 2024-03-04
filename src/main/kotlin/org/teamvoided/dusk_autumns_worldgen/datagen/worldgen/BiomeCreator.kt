@@ -1,8 +1,12 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
+import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
+import net.minecraft.particle.BlockStateParticleEffect
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
@@ -332,7 +336,7 @@ object BiomeCreator {
                 .hasPrecipitation(true)
                 .temperature(-0.5f)
                 .downfall(0.9f)
-                .temperatureModifier(Biome.TemperatureModifier.FROZEN)
+                .temperatureModifier(TemperatureModifier.FROZEN)
                 .effects(biomeEffects.build())
                 .spawnSettings(spawns.build())
                 .generationSettings(generation.build())
@@ -415,17 +419,38 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDesertDeadBushes(generation)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, cave)
-        return OverworldBiomeCreator.create(
-            false,
-            2.0f,
-            0.0f,
-            4445678,
-            270131,
-            null,
-            null,
-            spawns, generation,
-            MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DESERT)
-        )
+
+        val biomeEffects = if (cave) {
+            BiomeEffects.Builder().particleConfig(
+                BiomeParticleConfig(
+                    BlockStateParticleEffect(
+                        ParticleTypes.FALLING_DUST,
+                        if (red) {
+                            Blocks.RED_SAND.defaultState
+                        } else {
+                            Blocks.SAND.defaultState
+                        }
+                    ), 0.00025F
+                )
+            )
+        } else { BiomeEffects.Builder() }
+
+        return Biome.Builder()
+            .hasPrecipitation(false)
+            .temperature(2.0f)
+            .downfall(0.0f)
+            .effects(
+                biomeEffects
+                    .waterColor(4445678)
+                    .waterFogColor(270131)
+                    .fogColor(12638463)
+                    .skyColor(OverworldBiomeCreator.getSkyColor(0.8f))
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DESERT)).build()
+            )
+            .spawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .build()
     }
 
     fun BootstrapContext<Biome>.createWarmRiver(red: Boolean): Biome {
@@ -510,7 +535,8 @@ object BiomeCreator {
             .temperature(temperature)
             .temperatureModifier(tempMod)
             .downfall(if (!stony && !snowy) 0.4f else 0.3f)
-            .effects(BiomeEffects.Builder()
+            .effects(
+                BiomeEffects.Builder()
                     .waterColor(if (snowy) 4020182 else 4159204)
                     .waterFogColor(329011)
                     .fogColor(12638463)

@@ -15,8 +15,7 @@ object DuskBlockTags {
     val ICE_SPIKE_PLACEABLE_BLOCKS = create("ice_spike_placeable_blocks")
     val ICE_SPIKE_IGNORE_BLOCKS = create("ice_spike_ignore_blocks")
     val CAVE_PILLAR_REPLACEABLE = create("cave_pillar_replaceable")
-    val SAND_CAVE_PILLAR_PLACEABLE = create("sand_cave_pillar_placeable")
-    val ICE_CAVE_PILLAR_PLACEABLE = create("ice_cave_pillar_placeable")
+    val CAVE_PILLAR_PLACEABLE = create("cave_pillar_placeable")
 
 
     fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))

@@ -62,9 +62,9 @@ object StructureFeatureCreator {
                     GenerationStep.Feature.UNDERGROUND_STRUCTURES,
                     TerrainAdjustment.BURY
                 ),
-                structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
+                structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_LARGE_RUINS),
                 6,
-                ConstantHeightProvider.create(YOffset.fixed(-12)),
+                ConstantHeightProvider.create(YOffset.fixed(-8)),
                 false,
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
@@ -77,7 +77,22 @@ object StructureFeatureCreator {
                     GenerationStep.Feature.UNDERGROUND_STRUCTURES,
                     TerrainAdjustment.BURY
                 ),
-                structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_OBELISK),
+                structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_LARGE_RUINS),
+                6,
+                ConstantHeightProvider.create(YOffset.fixed(-8)),
+                false,
+                Heightmap.Type.OCEAN_FLOOR_WG
+            )
+        )
+        c.register(
+            DuskStructureFeatures.LARGE_DESERT_RUINS,
+            JigsawFeature(
+                structureSettings(
+                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_DESERT_RUIN),
+                    GenerationStep.Feature.UNDERGROUND_STRUCTURES,
+                    TerrainAdjustment.BURY
+                ),
+                structurePools.getHolderOrThrow(DuskStructurePools.DESERT_RUINS_OBELISK),
                 6,
                 ConstantHeightProvider.create(YOffset.fixed(-12)),
                 false,
@@ -85,14 +100,18 @@ object StructureFeatureCreator {
             )
         )
         c.register(
-            DuskStructureFeatures.SAND_CAVE_FOSSILS,
-            NetherFossilFeature(
+            DuskStructureFeatures.LARGE_RED_DESERT_RUINS,
+            JigsawFeature(
                 structureSettings(
-                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_SAND_CAVE_FOSSIL_STRUCTURE),
-                    GenerationStep.Feature.UNDERGROUND_DECORATION,
-                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_RED_DESERT_RUIN),
+                    GenerationStep.Feature.UNDERGROUND_STRUCTURES,
+                    TerrainAdjustment.BURY
                 ),
-                UniformHeightProvider.create(YOffset.fixed(-54), YOffset.fixed(80))
+                structurePools.getHolderOrThrow(DuskStructurePools.RED_DESERT_RUINS_OBELISK),
+                6,
+                ConstantHeightProvider.create(YOffset.fixed(-12)),
+                false,
+                Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
     }

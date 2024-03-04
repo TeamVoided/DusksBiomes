@@ -24,8 +24,10 @@ object DuskStructurePools {
     val SWAMP_ZOMBIE_VILLAGE_VILLAGERS = create("village/swamp/zombie/villagers")
     val SWAMP_ZOMBIE_VILLAGE_CENTER = create("village/swamp/zombie/town_centers")
     val SWAMP_ZOMBIE_VILLAGE_HOUSES = create("village/swamp/zombie/houses")
-    val MANGROVE_ZOMBIE_SWAMP_VILLAGE_CENTER = create("village/mangrove_swamp/zombie/town_centers")
-    val MANGROVE_ZOMBIE_SWAMP_VILLAGE_HOUSES = create("village/mangrove_swamp/zombie/houses")
+    val SWAMP_ZOMBIE_VILLAGE_DECOR = create("village/swamp/zombie/decor")
+    val MANGROVE_SWAMP_ZOMBIE_VILLAGE_CENTER = create("village/mangrove_swamp/zombie/town_centers")
+    val MANGROVE_SWAMP_ZOMBIE_VILLAGE_HOUSES = create("village/mangrove_swamp/zombie/houses")
+    val MANGROVE_SWAMP_ZOMBIE_VILLAGE_DECOR = create("village/mangrove_swamp/zombie/decor")
 
 
     val DESERT_RUINS_OBELISK = create("desert_ruins/obelisk")

@@ -157,19 +157,19 @@ object DuskSurfaceRules {
                 Biomes.MUSHROOM_FIELDS,
                 DuskBiomes.ERODED_MUSHROOM_ISLAND,
                 DuskBiomes.MUSHROOM_GROVE
-            ),sequence(
+            ), sequence(
                 condition(
                     DEEP_UNDER_FLOOR, sequence(
                         condition(
                             surfaceNoiseThreshold(1.0),
-                            block(Blocks.COARSE_DIRT)
+                            mycelium
                         )
                     )
                 ),
                 condition(
                     stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(0.0),
+                            surfaceSecondaryNoiseThreshold(-0.5, 0.5),
                             podzol
                         )
                     )
@@ -177,8 +177,8 @@ object DuskSurfaceRules {
                 condition(
                     UNDER_FLOOR, sequence(
                         condition(
-                            surfaceNoiseThreshold(-0.5),
-                            mycelium
+                            surfaceSecondaryNoiseThreshold(-0.25, 0.25),
+                            block(Blocks.COARSE_DIRT)
                         )
                     )
                 ),
@@ -197,6 +197,9 @@ object DuskSurfaceRules {
                             block(Blocks.COARSE_DIRT)
                         )
                     )
+                ),
+                condition(
+                    UNDER_FLOOR, mycelium
                 )
             )
         )
@@ -294,14 +297,14 @@ object DuskSurfaceRules {
                         DEEP_UNDER_FLOOR, sequence(
                             condition(
                                 surfaceNoiseThreshold(1.0),
-                                block(Blocks.COARSE_DIRT)
+                                mycelium
                             )
                         )
                     ),
                     condition(
                         stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(0.0),
+                                surfaceSecondaryNoiseThreshold(-0.5, 0.5),
                                 podzol
                             )
                         )
@@ -309,8 +312,8 @@ object DuskSurfaceRules {
                     condition(
                         UNDER_FLOOR, sequence(
                             condition(
-                                surfaceNoiseThreshold(-0.5),
-                                mycelium
+                                surfaceSecondaryNoiseThreshold(-0.25, 0.25),
+                                block(Blocks.COARSE_DIRT)
                             )
                         )
                     ),
@@ -579,9 +582,15 @@ object DuskSurfaceRules {
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
+    fun surfaceNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, max / 8.25)
+    }
 
     fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+    }
+    fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, max / 8.25)
     }
 
     fun swampThreshold(min: Double): MaterialCondition {

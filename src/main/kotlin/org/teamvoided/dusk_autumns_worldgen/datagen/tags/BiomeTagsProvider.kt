@@ -16,6 +16,12 @@ import java.util.concurrent.CompletableFuture
 class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
     override fun configure(arg: HolderLookup.Provider?) {
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_ERODED_PILLAR)
+            .add(Biomes.ERODED_BADLANDS)
+            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_ICEBERG)
+            .add(Biomes.FROZEN_OCEAN)
+            .add(Biomes.DEEP_FROZEN_OCEAN)
         getOrCreateTagBuilder(DuskBiomeTags.DUSK_BIOMES)
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.COLD_PLAINS)
@@ -47,12 +53,6 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
             .add(DuskBiomes.MUSHROOM_CAVES)
             .add(DuskBiomes.FROZEN_CAVERNS)
-        getOrCreateTagBuilder(DuskBiomeTags.HAS_ERODED_PILLAR)
-            .add(Biomes.ERODED_BADLANDS)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        getOrCreateTagBuilder(DuskBiomeTags.HAS_ICEBERG)
-            .add(Biomes.FROZEN_OCEAN)
-            .add(Biomes.DEEP_FROZEN_OCEAN)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_FROZEN_VARIANTS)
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.COLD_PLAINS)

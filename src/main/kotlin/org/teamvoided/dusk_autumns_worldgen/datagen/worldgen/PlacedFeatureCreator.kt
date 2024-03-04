@@ -224,7 +224,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-            CountPlacementModifier.create(UniformIntProvider.create(24, 54)),
+            CountPlacementModifier.create(UniformIntProvider.create(14, 44)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             BiomePlacementModifier.getInstance()
@@ -472,7 +472,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PICKLE,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PICKLES),
-            CountPlacementModifier.create(128),
+            CountPlacementModifier.create(256),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
