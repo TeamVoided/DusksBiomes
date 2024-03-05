@@ -31,6 +31,7 @@ object DuskConfiguredFeatures {
     val INVERTED_BLUE_ICE_SPIKE = create("cave/frozen/inverted_blue_ice_spike")
     val ORE_ICE = create("cave/frozen/ore_ice")
     val ORE_BLUE_ICE = create("cave/frozen/ore_blue_ice")
+    val ICE_CAVE_FOSSIL = create("cave/frozen/frozen_fossil")
     val SAND_CAVE_CACTUS = create("cave/sand/sand_cave_cactus")
     val ORE_SAND = create("cave/sand/ore_sand")
     val ORE_RED_SAND = create("cave/sand/ore_red_sand")

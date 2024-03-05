@@ -167,25 +167,25 @@ object DuskSurfaceRules {
                     )
                 ),
                 condition(
-                    stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                    UNDER_FLOOR, sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(-0.5, 0.5),
-                            podzol
+                            surfaceSecondaryNoiseThreshold(-0.75, 0.75),
+                            block(Blocks.COARSE_DIRT)
                         )
                     )
                 ),
                 condition(
-                    UNDER_FLOOR, sequence(
+                    stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(-0.25, 0.25),
-                            block(Blocks.COARSE_DIRT)
+                            surfaceSecondaryNoiseThreshold(-1.0, 1.0),
+                            podzol
                         )
                     )
                 ),
                 condition(
                     UNDER_CEILING, sequence(
                         condition(
-                            surfaceNoiseThreshold(0.0),
+                            surfaceNoiseThreshold(0.75),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
@@ -193,7 +193,7 @@ object DuskSurfaceRules {
                 condition(
                     stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(0.5),
+                            surfaceSecondaryNoiseThreshold(1.0),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
@@ -304,7 +304,7 @@ object DuskSurfaceRules {
                     condition(
                         stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(-0.5, 0.5),
+                                surfaceSecondaryNoiseThreshold(-1.0, 1.0),
                                 podzol
                             )
                         )
@@ -312,7 +312,7 @@ object DuskSurfaceRules {
                     condition(
                         UNDER_FLOOR, sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(-0.25, 0.25),
+                                surfaceSecondaryNoiseThreshold(-0.75, 0.75),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
@@ -320,7 +320,7 @@ object DuskSurfaceRules {
                     condition(
                         UNDER_CEILING, sequence(
                             condition(
-                                surfaceNoiseThreshold(0.0),
+                                surfaceNoiseThreshold(0.75),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
@@ -328,7 +328,7 @@ object DuskSurfaceRules {
                     condition(
                         stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(0.5),
+                                surfaceSecondaryNoiseThreshold(1.0),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
@@ -536,7 +536,6 @@ object DuskSurfaceRules {
                     windsweptBirchSurface,
                     windsweptGravelSurface,
                     podzolAndCoarseDirt,
-                    mushroomIslandSurface,
                     mud,
                     myceliumSurface
                 )
@@ -549,6 +548,7 @@ object DuskSurfaceRules {
                     sandSurface,
                     deepWindsweptBirchSurface,
                     deepWindsweptGravelSurface,
+                    mushroomIslandSurface,
                     deepMud
                 )
             )

@@ -45,10 +45,7 @@ import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.VoidFeatures
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.LargeCavePillarFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.MonsterRoomFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.SpikeFeatureConfig
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.StructurePieceFeatureConfig
+import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.*
 import java.util.*
 import kotlin.collections.forEach
 import kotlin.collections.listOf
@@ -258,7 +255,13 @@ object ConfiguredFeatureCreator {
                 20, PlacedFeatureUtil.placedInline(
                     Feature.MULTIFACE_GROWTH,
                     GlowLichenFeatureConfig(
-                        (Blocks.GLOW_LICHEN as AbstractLichenBlock), 20, true, true, true, 0.75f, HolderSet.createDirect(
+                        (Blocks.GLOW_LICHEN as AbstractLichenBlock),
+                        20,
+                        true,
+                        true,
+                        true,
+                        0.75f,
+                        HolderSet.createDirect(
                             { obj: Block -> obj.builtInRegistryHolder },
                             *arrayOf<Block>(
                                 Blocks.STONE,
@@ -431,6 +434,16 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.ORE_BLUE_ICE,
             Feature.ORE,
             OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.ICE_ORE_REPLACEABLE), Blocks.BLUE_ICE.defaultState, 64)
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.ICE_CAVE_FOSSIL,
+            VoidFeatures.FEATURE_LIST,
+            ListFeatureConfig(
+                10, listOf(
+                    PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.ORE_ICE)),
+                    PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.FOSSIL_DIAMONDS))
+                )
+            )
         )
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.SAND_CAVE_CACTUS,

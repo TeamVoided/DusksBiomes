@@ -224,7 +224,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-            CountPlacementModifier.create(UniformIntProvider.create(14, 44)),
+            CountPlacementModifier.create(UniformIntProvider.create(3, 33)),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             BiomePlacementModifier.getInstance()
@@ -324,6 +324,14 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.ORE_ICE,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_ICE),
+            CountPlacementModifier.create(3),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.ICE_CAVE_FOSSIL,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ICE_CAVE_FOSSIL),
             CountPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),

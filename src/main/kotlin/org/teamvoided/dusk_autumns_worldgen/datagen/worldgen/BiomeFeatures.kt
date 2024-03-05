@@ -8,9 +8,6 @@ import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
 object BiomeFeatures {
-    fun BiomeFeatures() {
-        //Why is this here?
-    }
 
     fun addBasicFeaturesNoDungeon(generationSettings: GenerationSettings.Builder?) {
         DefaultBiomeFeatures.addLandCarvers(generationSettings)
@@ -121,7 +118,6 @@ object BiomeFeatures {
     }
 
     fun addMushroomErodedFeatures(generationSettings: GenerationSettings.Builder) {
-
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_NORMAL)
         DefaultBiomeFeatures.addSeagrassOnStone(generationSettings)
         DefaultBiomeFeatures.addKelp(generationSettings)
@@ -159,6 +155,7 @@ object BiomeFeatures {
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_CAVE_FOSSIL)
     }
 
     fun addLushDungeons(builder: GenerationSettings.Builder) {
