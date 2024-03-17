@@ -30,7 +30,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DuskBlockTags.CANE_SUPPORT)
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.SAND)
-            .forceAddTag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
+            .add(Blocks.SOUL_SOIL)
+            .add(Blocks.SOUL_SAND)
 //Dusk Tags
         getOrCreateTagBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
             .forceAddTag(BlockTags.AZALEA_GROWS_ON)
@@ -66,7 +67,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.RED_SANDSTONE)
             .forceAddTag(BlockTags.SAND)
 
-// ඞ
+//ඞ
         getOrCreateTagBuilder(BlockTags.SAND)
             .add(DuskBlocks.SUSPICIOUS_RED_SAND)
     }

@@ -185,7 +185,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0F, 1f, false
+                    -1F, 0f, true
                 )
             )
         )
@@ -249,7 +249,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.05f, false
+                    -1F, 0.0f, false
                 )
             )
         )
@@ -261,7 +261,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.05f, true
+                    -1F, 0.0f, true
                 )
             )
         )
@@ -296,17 +296,37 @@ object DuskBiomes {
             Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, of(
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.33f, 1f, false
+                    0.3f, 1f, false
+                )
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.1f, 1f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0f, 1f, false
                 )
             )
         )
         addOverworld(
             ERODED_MUSHROOM_ISLAND,
             Range(-1, 1),        // Temperature
-            Range(-1, -0.1),      // Humidity
-            Range(-1.2, -1.075),          // Continentalness
+            Range(-1, -0.3),      // Humidity
+            Range(-1.2, -0.95),          // Continentalness
             Range(-1, 1),         // Erosion
             Range(-1, 1),         // Weirdness
+        )
+        addOverworld(
+            ERODED_MUSHROOM_ISLAND,
+            Range(-1, 1),        // Temperature
+            Range(-1, 0.1),      // Humidity
+            Range(-1.2, -0.95),          // Continentalness
+            Range(-1, 1),         // Erosion
+            Range(0, 1),         // Weirdness
         )
         BiomePlacement.addOverworld(
             MUSHROOM_CAVES,
@@ -415,6 +435,60 @@ object DuskBiomes {
                 erosion,         // Erosion
                 Range(1),         // Depth
                 weirdness,         // Weirdness
+                0L                  // Offset
+            )
+        )
+    }
+
+    fun addOverworld(
+        biome: RegistryKey<Biome>, temperature: Range, humidity: Range,
+        continentalness: Range, erosion: Range
+    ) {
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(0.0),         // Depth
+                Range(0.05, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(0.0),         // Depth
+                Range(-1, -0.05),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(1),         // Depth
+                Range(0.05, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            biome,
+            createNoise(
+                temperature,        // Temperature
+                humidity,            // Humidity
+                continentalness,          // Continentalness
+                erosion,         // Erosion
+                Range(1),         // Depth
+                Range(-1, -0.05),         // Weirdness
                 0L                  // Offset
             )
         )

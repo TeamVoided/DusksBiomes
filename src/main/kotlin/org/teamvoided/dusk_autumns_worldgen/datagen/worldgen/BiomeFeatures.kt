@@ -1,9 +1,14 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.SpawnGroup
 import net.minecraft.world.biome.GenerationSettings
+import net.minecraft.world.biome.SpawnSettings
+import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
+import net.minecraft.world.gen.feature.OrePlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
@@ -155,7 +160,7 @@ object BiomeFeatures {
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ORE_BLUE_ICE)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_FLOOR)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_SPIKE_CEILING)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_CAVE_FOSSIL)
+//        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_CAVE_FOSSIL)
     }
 
     fun addLushDungeons(builder: GenerationSettings.Builder) {
@@ -169,15 +174,15 @@ object BiomeFeatures {
     }
 
     fun addSandDungeons(builder: GenerationSettings.Builder, red: Boolean) {
-        if (!red) {
-            builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.SAND_MONSTER_ROOM)
-            builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM)
-        } else {
+        if (red) {
             builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.RED_SAND_MONSTER_ROOM)
             builder.feature(
                 GenerationStep.Feature.UNDERGROUND_STRUCTURES,
                 DuskPlacedFeatures.DEEP_RED_SAND_MONSTER_ROOM
             )
+        } else {
+            builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.SAND_MONSTER_ROOM)
+            builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM)
         }
     }
 }
@@ -193,4 +198,30 @@ object BiomeFeatures {
       FLUID_SPRINGS
       VEGETAL_DECORATION
       TOP_LAYER_MODIFICATION
+ */
+/*
+    fun addWindsweptValleyFeatures(generationSettings: GenerationSettings.Builder, variant: String) {
+        if (variant == "topaz") {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, OrePlacedFeatures.ORE_EMERALD)
+        } else if (variant == "sapphire") {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, OrePlacedFeatures.ORE_EMERALD)
+        } else if (variant == "ruby") {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, OrePlacedFeatures.ORE_EMERALD)
+        } else {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, OrePlacedFeatures.ORE_EMERALD)
+        }
+    }
+    fun addWindsweptValleyMobs(spawns: SpawnSettings.Builder, variant: String) {
+        if (variant == "ruby") {
+            DefaultBiomeFeatures.addCaveMobs(spawns)
+            DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
+            spawns.spawn(SpawnGroup.MONSTER, SpawnSettings.SpawnEntry(EntityType.STRAY, 80, 4, 4))
+        } else if (variant == "topaz") {
+            DefaultBiomeFeatures.addCaveMobs(spawns)
+            DefaultBiomeFeatures.addMonsters(spawns, 19, 1, 100, false)
+            spawns.spawn(SpawnGroup.MONSTER, SpawnSettings.SpawnEntry(EntityType.HUSK, 80, 4, 4))
+        } else {
+            DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        }
+    }
  */

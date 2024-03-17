@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
@@ -25,6 +24,9 @@ import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 
 @Suppress("MemberVisibilityCanBePrivate")
 object BiomeCreator {
+    private val DEFAULT_WATER_COLOR: Int = 4159204
+    private val DEFAULT_WATER_FOG_COLOR: Int = 329011
+    private val DEFAULT_FOG_COLOR = 12638463
     private val DEFAULT_MUSIC: MusicSound? = null
 
     @Suppress("BooleanLiteralArgument")
@@ -325,7 +327,7 @@ object BiomeCreator {
             .waterColor(8692872)
             .waterFogColor(3815975)
             .skyColor(OverworldBiomeCreator.getSkyColor(-0.5f))
-            .fogColor(12638463)
+            .fogColor(DEFAULT_FOG_COLOR)
             .grassColorModifier(GrassColorModifier.SWAMP)
             .moodSound(BiomeMoodSound.CAVE)
             .music(musicSound)
@@ -389,7 +391,7 @@ object BiomeCreator {
                 BiomeEffects.Builder()
                     .waterColor(6388580)
                     .waterFogColor(2302743)
-                    .fogColor(12638463)
+                    .fogColor(DEFAULT_FOG_COLOR)
                     .skyColor(OverworldBiomeCreator.getSkyColor(0.8f))
                     .foliageColor(6975545)
                     .grassColorModifier(GrassColorModifier.SWAMP)
@@ -433,7 +435,9 @@ object BiomeCreator {
                     ), 0.00025F
                 )
             )
-        } else { BiomeEffects.Builder() }
+        } else {
+            BiomeEffects.Builder()
+        }
 
         return Biome.Builder()
             .hasPrecipitation(false)
@@ -443,7 +447,7 @@ object BiomeCreator {
                 biomeEffects
                     .waterColor(4445678)
                     .waterFogColor(270131)
-                    .fogColor(12638463)
+                    .fogColor(DEFAULT_FOG_COLOR)
                     .skyColor(OverworldBiomeCreator.getSkyColor(0.8f))
                     .moodSound(BiomeMoodSound.CAVE)
                     .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DESERT)).build()
@@ -537,9 +541,9 @@ object BiomeCreator {
             .downfall(if (!stony && !snowy) 0.4f else 0.3f)
             .effects(
                 BiomeEffects.Builder()
-                    .waterColor(if (snowy) 4020182 else 4159204)
-                    .waterFogColor(329011)
-                    .fogColor(12638463)
+                    .waterColor(if (snowy) 4020182 else DEFAULT_WATER_COLOR)
+                    .waterFogColor(DEFAULT_WATER_FOG_COLOR)
+                    .fogColor(DEFAULT_FOG_COLOR)
                     .skyColor(OverworldBiomeCreator.getSkyColor(temperature))
                     .moodSound(BiomeMoodSound.CAVE).build()
             ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
@@ -686,5 +690,64 @@ object BiomeCreator {
                 .generationSettings(generation.build())
                 .build()
         }
+     */
+    /*
+    fun BootstrapContext<Biome>.createWindsweptValley(variant: String): Biome {
+        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val spawns = SpawnSettings.Builder()
+        val generation = GenerationSettings.Builder(features, carver)
+
+        spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.GOAT, 5, 1, 3))
+        spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.LLAMA, 5, 4, 6))
+        BiomeFeatures.addWindsweptValleyMobs(spawns, variant)
+        OverworldBiomeCreator.addBasicFeatures(generation)
+        DefaultBiomeFeatures.addLargeFerns(generation)
+        DefaultBiomeFeatures.addDefaultOres(generation)
+        DefaultBiomeFeatures.addDefaultDisks(generation)
+        DefaultBiomeFeatures.addDefaultFlowers(generation)
+        DefaultBiomeFeatures.addGiantTaigaGrass(generation)
+        DefaultBiomeFeatures.addDefaultMushrooms(generation)
+        DefaultBiomeFeatures.addDefaultVegetation(generation)
+        BiomeFeatures.addWindsweptValleyFeatures(generation, variant)
+
+        var temperature = 1.4f
+        var downfall = 0.3f
+        var biomeEffects = BiomeEffects.Builder()
+        var waterColor = DEFAULT_WATER_COLOR
+        if (variant == "topaz") {
+            temperature = 1.5f
+            downfall = 0f
+            biomeEffects = BiomeEffects.Builder().foliageColor(16771402)
+            waterColor = 1853568
+        } else if (variant == "sapphire") {
+            temperature = 0.175f
+            downfall = 0.7f
+            biomeEffects = BiomeEffects.Builder().foliageColor(2910144).grassColorModifier(GrassColorModifier.DARK_FOREST)
+        } else if (variant == "ruby") {
+            temperature = -0.5f
+            downfall = 0.5f
+            biomeEffects = BiomeEffects.Builder().foliageColor(12332875).grassColorModifier(GrassColorModifier.DARK_FOREST)
+            waterColor = 1853568
+        }
+
+        return Biome.Builder()
+            .hasPrecipitation(true)
+            .temperature(temperature)
+            .downfall(downfall)
+            .effects(
+                biomeEffects
+                    .waterColor(waterColor)
+                    .waterFogColor(DEFAULT_WATER_FOG_COLOR)
+                    .fogColor(DEFAULT_FOG_COLOR)
+                    .skyColor(OverworldBiomeCreator.getSkyColor(temperature))
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_BAMBOO_JUNGLE))
+                    .build()
+            )
+            .spawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .build()
+    }
      */
 }

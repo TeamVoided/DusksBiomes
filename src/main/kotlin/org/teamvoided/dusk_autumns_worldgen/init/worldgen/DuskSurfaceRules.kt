@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumns_worldgen.init.worldgen
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.SnowBlock
 import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.YOffset
@@ -175,9 +176,9 @@ object DuskSurfaceRules {
                     )
                 ),
                 condition(
-                    stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                    stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(-1.0, 1.0),
+                            surfaceSecondaryNoiseThreshold(-2.0, 2.0),
                             podzol
                         )
                     )
@@ -288,6 +289,38 @@ object DuskSurfaceRules {
                 sandRed
             )
         )
+//Non-Vanilla adjacent biomes
+        /* val isWindsweptValley = biome(
+            DuskBiomes.EMERALD_VALLEY,
+            DuskBiomes.TOPAZ_VALLEY,
+            DuskBiomes.SAPPHIRE_VALLEY,
+            DuskBiomes.RUBY_VALLEY
+        )
+        val emeraldValleySurface = condition(
+            isWindsweptValley,
+            condition(
+                stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
+                    condition(
+                        surfaceSecondaryNoiseThreshold(1.0, 2.0), podzol
+                    ),
+                    condition(
+                      biome(DuskBiomes.RUBY_VALLEY),
+                        condition(
+                            surfaceNoiseThreshold(-2.0),
+                            block(Blocks.SNOW_BLOCK)
+                        )
+                    ),
+                    condition(
+                        surfaceNoiseThreshold(-2.0), grass
+                    )
+                )
+            )
+        )
+        val dripstoneBlockAPS = condition(
+            isWindsweptValley,
+            block(Blocks.DRIPSTONE_BLOCK)
+        )
+        */
 //Cave Surface
         val mushroomCaves = sequence(
             condition(
@@ -302,9 +335,9 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
                             condition(
-                                surfaceSecondaryNoiseThreshold(-1.0, 1.0),
+                                surfaceSecondaryNoiseThreshold(-2.0, 2.0),
                                 podzol
                             )
                         )
@@ -334,7 +367,7 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
                             sequence(
                                 mycelium
                             )
@@ -388,7 +421,7 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
                             sequence(
                                 sand
                             )
@@ -440,7 +473,7 @@ object DuskSurfaceRules {
                         )
                     ),
                     condition(
-                        stoneDepth(0, true, 2, VerticalSurfaceType.FLOOR), sequence(
+                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
                             sequence(
                                 sandRed
                             )
@@ -562,6 +595,7 @@ object DuskSurfaceRules {
                 deepSand,
                 sandstoneDesert,
                 sandOcean
+//                dripstoneBlockAPS
             )
         )
         val cave = sequence(
@@ -582,6 +616,7 @@ object DuskSurfaceRules {
     fun surfaceNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
+
     fun surfaceNoiseThreshold(min: Double, max: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, max / 8.25)
     }
@@ -589,6 +624,7 @@ object DuskSurfaceRules {
     fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
     }
+
     fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, max / 8.25)
     }
