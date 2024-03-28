@@ -30,5 +30,4 @@ data class SpikeFeatureConfig(
                 ).apply(instance, ::SpikeFeatureConfig)
             }
     }
-
 }
