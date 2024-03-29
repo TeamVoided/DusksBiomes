@@ -11,17 +11,14 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
+import org.teamvoided.reef.data.ReefTags
 import java.util.concurrent.CompletableFuture
 
 class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
     override fun configure(arg: HolderLookup.Provider?) {
-        getOrCreateTagBuilder(DuskBiomeTags.HAS_ERODED_PILLAR)
-            .add(Biomes.ERODED_BADLANDS)
+        getOrCreateTagBuilder(ReefTags.HAS_ERODED_PILLAR)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        getOrCreateTagBuilder(DuskBiomeTags.HAS_ICEBERG)
-            .add(Biomes.FROZEN_OCEAN)
-            .add(Biomes.DEEP_FROZEN_OCEAN)
         getOrCreateTagBuilder(DuskBiomeTags.DUSK_BIOMES)
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.COLD_PLAINS)

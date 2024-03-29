@@ -24,6 +24,7 @@ repositories {
         forRepository { maven("https://api.modrinth.com/maven") }
         filter { includeGroup("maven.modrinth") }
     }
+    maven("https://teamvoided.org/releases")
     maven("https://maven.nucleoid.xyz")
 }
 
@@ -48,6 +49,8 @@ dependencies {
         exclude("com.github.glitchfiend")
     }
 
+    modImplementation(include("org.teamvoided:reef:0.1.0")!!)
+
     modImplementation(include("eu.pb4", "polymer-core", polymer))
     modImplementation(include("eu.pb4", "polymer-blocks", polymer))
     modImplementation(include("eu.pb4", "polymer-resource-pack", polymer))
@@ -56,7 +59,6 @@ dependencies {
     modImplementation(include("eu.pb4", "factorytools", factorytools))
     modImplementation(include("maven.modrinth", "biome-tag-villagers", "1.0.0"))
     modImplementation(include("maven.modrinth", "lithostitched", lithostitched))
-
 
 
 }

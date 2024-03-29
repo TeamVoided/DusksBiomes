@@ -16,11 +16,5 @@ object DuskBiomeTags {
     val HAS_OCEAN_RUIN_RED_WARM = create("has_structure/has_ocean_ruin_red_warm")
     val HAS_SAND_CAVE_FOSSIL_STRUCTURE = create("has_structure/has_sand_cave_fossil_structure")
 
-
-    @JvmField
-    val HAS_ERODED_PILLAR = create("has_eroded_pillar")
-    @JvmField
-    val HAS_ICEBERG = create("has_iceberg")
-
     fun create(id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(id))
 }

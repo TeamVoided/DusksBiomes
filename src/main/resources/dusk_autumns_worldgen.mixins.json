@@ -4,9 +4,7 @@
   "package": "org.teamvoided.dusk_autumns_worldgen.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "StructurePoolProjectionMixin",
-    "SugarCaneBlockMixin",
-    "SurfaceBuilderMixin"
+    "SugarCaneBlockMixin"
   ],
   "client": [
     "GameRendererMixin"

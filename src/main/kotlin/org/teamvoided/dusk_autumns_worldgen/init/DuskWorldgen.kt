@@ -10,6 +10,5 @@ object DuskWorldgen {
         DuskStructures.init()
         DuskDensityFunction.init()
 
-        VoidFeatures.init()
     }
 }

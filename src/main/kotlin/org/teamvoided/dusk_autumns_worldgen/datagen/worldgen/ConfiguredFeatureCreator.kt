@@ -44,12 +44,12 @@ import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
-import org.teamvoided.dusk_autumns_worldgen.init.worldgen.VoidFeatures
-import org.teamvoided.dusk_autumns_worldgen.worldgen.configured_feature.config.*
+import org.teamvoided.reef.init.ReefFeatures
 import java.util.*
 import kotlin.collections.forEach
 import kotlin.collections.listOf
 import kotlin.collections.plus
+import org.teamvoided.reef.world.gen.configured_feature.config.*
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -345,10 +345,9 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ICE_CAVE_PILLAR,
-            VoidFeatures.LARGE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
             LargeCavePillarFeatureConfig(
                 40,
                 UniformIntProvider.create(3, 19),
@@ -365,7 +364,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ICE_SPIKE,
-            VoidFeatures.SPIKE,
+            ReefFeatures.SPIKE,
             SpikeFeatureConfig(
                 60, 10, 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -374,7 +373,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.INVERTED_ICE_SPIKE,
-            VoidFeatures.INVERTED_SPIKE,
+            ReefFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
                 60, 10, 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -383,7 +382,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.BLUE_ICE_SPIKE,
-            VoidFeatures.SPIKE,
+            ReefFeatures.SPIKE,
             SpikeFeatureConfig(
                 5, 10, 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -392,7 +391,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE,
-            VoidFeatures.INVERTED_SPIKE,
+            ReefFeatures.INVERTED_SPIKE,
             SpikeFeatureConfig(
                 5, 10, 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -437,7 +436,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ICE_CAVE_FOSSIL,
-            VoidFeatures.FEATURE_LIST,
+            ReefFeatures.FEATURE_LIST,
             ListFeatureConfig(
                 10, listOf(
                     PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.ORE_ICE)),
@@ -473,7 +472,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_CAVE_PILLAR,
-            VoidFeatures.LARGE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
             LargeCavePillarFeatureConfig(
                 30,
                 UniformIntProvider.create(3, 19),
@@ -549,7 +548,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR,
-            VoidFeatures.LARGE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
             LargeCavePillarFeatureConfig(
                 30,
                 UniformIntProvider.create(3, 19),
@@ -670,7 +669,7 @@ object ConfiguredFeatureCreator {
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TEST_CAVE_PILLAR,
-            VoidFeatures.LARGE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
             LargeCavePillarFeatureConfig(
                 30,
                 UniformIntProvider.create(3, 19),
@@ -689,7 +688,7 @@ object ConfiguredFeatureCreator {
 //Structure Piece features
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DESERT_WELL,
-            VoidFeatures.STRUCTURE_PIECE,
+            ReefFeatures.STRUCTURE_PIECE,
             StructurePieceFeatureConfig(
                 id("feature/desert_well"),
                 procEmpty,
@@ -699,7 +698,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_DESERT_WELL,
-            VoidFeatures.STRUCTURE_PIECE,
+            ReefFeatures.STRUCTURE_PIECE,
             StructurePieceFeatureConfig(
                 id("feature/red_desert_well"),
                 procEmpty,
@@ -716,7 +715,7 @@ object ConfiguredFeatureCreator {
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.TUFF),
@@ -726,7 +725,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.LUSH_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.MOSSY_COBBLESTONE),
                 BlockStateProvider.of(Blocks.MUD),
@@ -736,7 +735,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.MUD),
@@ -746,7 +745,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FROZEN_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLESTONE),
                 BlockStateProvider.of(Blocks.PACKED_ICE),
@@ -756,7 +755,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.BLUE_ICE),
@@ -766,7 +765,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.SANDSTONE),
                 BlockStateProvider.of(Blocks.SAND),
@@ -776,7 +775,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM,
-            VoidFeatures.MONSTER_ROOM,
+            ReefFeatures.MONSTER_ROOM,
             MonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.RED_SANDSTONE),
                 BlockStateProvider.of(Blocks.RED_SAND),
@@ -831,6 +830,7 @@ object ConfiguredFeatureCreator {
         featureConfig: FC
     ): Any = this.register(registryKey, ConfiguredFeature(feature, featureConfig))
 
+    @Suppress("unused")
     private fun BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(
         registryKey: RegistryKey<ConfiguredFeature<*, *>>, feature: Feature<DefaultFeatureConfig>
     ) = this.registerConfiguredFeature(registryKey, feature, FeatureConfig.DEFAULT)
