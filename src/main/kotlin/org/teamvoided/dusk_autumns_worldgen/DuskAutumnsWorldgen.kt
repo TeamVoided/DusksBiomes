@@ -4,7 +4,6 @@ import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumns_worldgen.init.DuskWorldgen
-import org.teamvoided.dusk_autumns_worldgen.util.DebugInfo
 
 
 @Suppress("unused")
@@ -22,7 +21,6 @@ object DuskAutumnsWorldgen {
 
     fun clientInit() {
         log.info("Hello from Client")
-        DebugInfo.init()
     }
 
     fun id(path: String) = Identifier(MODID, path)
