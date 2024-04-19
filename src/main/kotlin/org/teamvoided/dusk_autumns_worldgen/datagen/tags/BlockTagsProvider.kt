@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBlockTags
-import org.teamvoided.dusk_autumns_worldgen.init.DuskBlocks
 import java.util.concurrent.CompletableFuture
 
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -59,8 +58,5 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.RED_SANDSTONE)
             .forceAddTag(BlockTags.SAND)
 
-//ඞ
-        getOrCreateTagBuilder(BlockTags.SAND)
-            .add(DuskBlocks.SUSPICIOUS_RED_SAND)
     }
 }
