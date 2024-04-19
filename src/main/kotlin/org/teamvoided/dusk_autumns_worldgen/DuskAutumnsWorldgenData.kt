@@ -12,7 +12,6 @@ import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureProcessor
 import org.teamvoided.dusk_autumns_worldgen.datagen.structure.StructureSetCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.tags.BiomeTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.tags.BlockTagsProvider
-import org.teamvoided.dusk_autumns_worldgen.datagen.tags.FluidTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.tags.StructureTagsProvider
 import org.teamvoided.dusk_autumns_worldgen.datagen.worldgen.BiomeCreator
 import org.teamvoided.dusk_autumns_worldgen.datagen.worldgen.ConfiguredFeatureCreator
@@ -30,7 +29,6 @@ class DuskAutumnsWorldgenData : DataGeneratorEntrypoint {
 
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
-        pack.addProvider(::FluidTagsProvider)
         pack.addProvider(::StructureTagsProvider)
 
         pack.addProvider(::ChestLootTablesProvider)

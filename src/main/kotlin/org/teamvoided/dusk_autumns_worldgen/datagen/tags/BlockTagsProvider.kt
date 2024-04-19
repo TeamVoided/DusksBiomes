@@ -23,15 +23,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.DEAD_BUSH_PLACEABLE_ON)
             .add(Blocks.SANDSTONE)
             .add(Blocks.RED_SANDSTONE)
-//Void Tags
-        getOrCreateTagBuilder(DuskBlockTags.CANE_HYDRATION)
-            .add(Blocks.ICE)
-            .add(Blocks.FROSTED_ICE)
-        getOrCreateTagBuilder(DuskBlockTags.CANE_SUPPORT)
-            .forceAddTag(BlockTags.DIRT)
-            .forceAddTag(BlockTags.SAND)
-            .add(Blocks.SOUL_SOIL)
-            .add(Blocks.SOUL_SAND)
+
 //Dusk Tags
         getOrCreateTagBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
             .forceAddTag(BlockTags.AZALEA_GROWS_ON)
