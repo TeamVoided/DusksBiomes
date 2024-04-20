@@ -4,6 +4,7 @@ import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.loot.LootTables
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -17,7 +18,6 @@ import net.minecraft.util.math.float_provider.UniformFloatProvider
 import net.minecraft.util.math.int_provider.*
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler.NoiseParameters
 import net.minecraft.world.Heightmap
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.BlockPredicateFilterPlacementModifier
 import net.minecraft.world.gen.feature.*
@@ -54,10 +54,10 @@ import org.teamvoided.reef.world.gen.configured_feature.config.*
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
-        val blockTags = c.lookup(RegistryKeys.BLOCK)
-        val configuredFeatures = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
-        val placedFeatures = c.lookup(RegistryKeys.PLACED_FEATURE)
-        val procLists = c.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+        val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
+        val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
         val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
 
@@ -243,7 +243,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                        WeightedBlockStateProvider(getPetalStates().method_34975(Blocks.SNOW.defaultState, 8))
+                        WeightedBlockStateProvider(getPetalStates().addWeighted(Blocks.SNOW.defaultState, 8))
                     )
                 )
             )
@@ -720,7 +720,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.TUFF),
                 defaultMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -730,7 +730,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.MOSSY_COBBLESTONE),
                 BlockStateProvider.of(Blocks.MUD),
                 lushMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -740,7 +740,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.MUD),
                 lushMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -750,7 +750,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.COBBLESTONE),
                 BlockStateProvider.of(Blocks.PACKED_ICE),
                 frozenMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -760,7 +760,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.BLUE_ICE),
                 frozenMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -770,7 +770,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.SANDSTONE),
                 BlockStateProvider.of(Blocks.SAND),
                 sandMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
         c.registerConfiguredFeature(
@@ -780,7 +780,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.RED_SANDSTONE),
                 BlockStateProvider.of(Blocks.RED_SAND),
                 sandMonstersRoom,
-                LootTables.SIMPLE_DUNGEON_CHEST
+                LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
     }
@@ -791,9 +791,9 @@ object ConfiguredFeatureCreator {
             CherryTrunkPlacer(
                 7, 1, 0,
                 WeightedListIntProvider(
-                    DataPool.builder<IntProvider>().method_34975(ConstantIntProvider.create(1), 1)
-                        .method_34975(ConstantIntProvider.create(2), 1)
-                        .method_34975(ConstantIntProvider.create(3), 1).build()
+                    DataPool.builder<IntProvider>().addWeighted(ConstantIntProvider.create(1), 1)
+                        .addWeighted(ConstantIntProvider.create(2), 1)
+                        .addWeighted(ConstantIntProvider.create(3), 1).build()
                 ),
                 UniformIntProvider.create(2, 4),
                 UniformIntProvider.create(-4, -3),
@@ -815,7 +815,7 @@ object ConfiguredFeatureCreator {
         val randomPetal = DataPool.builder<BlockState>()
         for (i in 1..4) {
             Direction.Type.HORIZONTAL.forEach {
-                randomPetal.method_34975(
+                randomPetal.addWeighted(
                     Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i).with(PinkPetalsBlock.FACING, it),
                     1
                 )

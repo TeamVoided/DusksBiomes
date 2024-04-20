@@ -1,27 +1,25 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.world.Heightmap
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider
-import net.minecraft.world.gen.heightprovider.UniformHeightProvider
 import net.minecraft.world.gen.structure.TerrainAdjustment
 import org.teamvoided.dusk_autumns_worldgen.data.DuskBiomeTags
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructurePools
-import java.util.Map
 
 object StructureFeatureCreator {
     fun bootstrap(c: BootstrapContext<StructureFeature>) {
-        val biomeTags: HolderProvider<Biome> = c.lookup(RegistryKeys.BIOME)
-        val structurePools: HolderProvider<StructurePool> = c.lookup(RegistryKeys.STRUCTURE_POOL)
+        val biomeTags: HolderProvider<Biome> = c.getRegistryLookup(RegistryKeys.BIOME)
+        val structurePools: HolderProvider<StructurePool> = c.getRegistryLookup(RegistryKeys.STRUCTURE_POOL)
 
 
         c.register(

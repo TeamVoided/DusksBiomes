@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
@@ -14,7 +15,6 @@ import net.minecraft.world.biome.*
 import net.minecraft.world.biome.Biome.TemperatureModifier
 import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
@@ -66,8 +66,8 @@ object BiomeCreator {
 
 
     fun BootstrapContext<Biome>.createSnowyOldGrowthTaiga(spruce: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -108,8 +108,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createPlains(cold: Boolean, warm: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -141,8 +141,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createForest(cold: Boolean, warm: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = GenerationSettings.Builder(features, carver)
         val generation = SpawnSettings.Builder()
@@ -179,8 +179,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createWindsweptBirchForest(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -206,8 +206,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createSnowyCherryGrove(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -242,8 +242,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createWindsweptHills(forest: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -274,8 +274,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createMangroveSwamp(windswept: Boolean, frozen: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -363,8 +363,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createSwamp(oldGrowth: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
 
@@ -405,8 +405,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createDesert(red: Boolean, cave: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
 
@@ -458,8 +458,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createWarmRiver(red: Boolean): Biome {
-        val feature = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val feature = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(feature, carver)
 
@@ -491,15 +491,15 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createWarmOcean(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         return OverworldBiomeCreator.createWarmOcean(features, carver)
     }
 
     fun BootstrapContext<Biome>.createLukewarmOcean(deep: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         return OverworldBiomeCreator.createLukewarmOcean(features, carver, deep)
     }
@@ -507,8 +507,8 @@ object BiomeCreator {
     fun BootstrapContext<Biome>.createBeach(
         snowy: Boolean, stony: Boolean
     ): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         if (!stony && !snowy) {
             spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.TURTLE, 5, 2, 5))
@@ -550,8 +550,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -575,8 +575,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createMushroomCave(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
         DefaultBiomeFeatures.addMushroomMobs(spawns)
@@ -594,8 +594,8 @@ object BiomeCreator {
     }
 
     fun BootstrapContext<Biome>.createFrozenCaves(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -626,8 +626,8 @@ object BiomeCreator {
 
     /*BIOME TEMPLATE
     fun BootstrapContext<Biome>.createExample(): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
@@ -659,8 +659,8 @@ object BiomeCreator {
      */
 
     /*    fun BootstrapContext<Biome>.createDevilsRoar(): Biome {
-            val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-            val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+            val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+            val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
             val spawns = SpawnSettings.Builder()
             val generation = GenerationSettings.Builder(features, carver)
@@ -693,8 +693,8 @@ object BiomeCreator {
      */
     /*
     fun BootstrapContext<Biome>.createWindsweptValley(variant: String): Biome {
-        val features = this.lookup(RegistryKeys.PLACED_FEATURE)
-        val carver = this.lookup(RegistryKeys.CONFIGURED_CARVER)
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         val generation = GenerationSettings.Builder(features, carver)
 

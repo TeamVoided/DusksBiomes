@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumns_worldgen.datagen.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -11,7 +12,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
@@ -24,7 +24,7 @@ import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskPlacedFeatures
 object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
 
-        val configuredFeatureProvider = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
+        val configuredFeatureProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
 
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,

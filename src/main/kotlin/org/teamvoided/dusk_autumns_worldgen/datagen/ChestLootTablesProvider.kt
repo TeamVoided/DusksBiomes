@@ -6,17 +6,22 @@ import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
+import net.minecraft.loot.LootTables
 import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumns_worldgen.data.DuskLootTables
 import org.teamvoided.dusk_autumns_worldgen.util.Utils.setCount
 import org.teamvoided.dusk_autumns_worldgen.util.Utils.uniformNum
+import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
-class ChestLootTablesProvider(o: FabricDataOutput) : SimpleFabricLootTableProvider(o, LootContextTypes.CHEST) {
-    override fun generate(gen: BiConsumer<Identifier, LootTable.Builder>) {
-
+class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
+    override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         gen.accept(
             DuskLootTables.VILLAGE_SWAMP_HOUSE_CHEST,

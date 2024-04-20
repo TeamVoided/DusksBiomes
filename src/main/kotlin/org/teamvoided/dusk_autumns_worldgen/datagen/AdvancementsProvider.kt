@@ -5,16 +5,19 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementHolder
 import net.minecraft.advancement.AdvancementRewards
+import net.minecraft.advancement.AdvancementType
 import net.minecraft.data.server.advancement.AdventureAdvancementTabGenerator
 import net.minecraft.item.Items
+import net.minecraft.registry.HolderLookup
 import net.minecraft.text.Text
-import net.minecraft.text.component.AdvancementComponent
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
 import org.teamvoided.dusk_autumns_worldgen.init.worldgen.DuskBiomes
+import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
+class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricAdvancementProvider(o, r) {
     val biomes = listOf(
         DuskBiomes.COLD_FOREST,
         DuskBiomes.COLD_PLAINS,
@@ -48,15 +51,14 @@ class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
         DuskBiomes.RED_SAND_CAVES
     )
     private val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
-    override fun generateAdvancement(c: Consumer<AdvancementHolder>) {
-
-        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), biomes)
-            .method_697(
+    override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
+        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
+            .display(
                 Items.IRON_BOOTS,
                 Text.of("Strange Lands"),
                 Text.of("Visit all the biomes added by Dusk Autumns Worldgen!"),
                 null,
-                AdvancementComponent.CHALLENGE,
+                AdvancementType.CHALLENGE,
                 true,
                 true,
                 false
@@ -65,5 +67,4 @@ class AdvancementsProvider(o: FabricDataOutput) : FabricAdvancementProvider(o) {
             .parent(adventuringTime)
             .build(c, id("adventure/strange_lands").toString())
     }
-
 }

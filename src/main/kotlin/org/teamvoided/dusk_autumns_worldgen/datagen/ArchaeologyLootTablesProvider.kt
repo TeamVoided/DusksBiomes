@@ -11,15 +11,19 @@ import net.minecraft.loot.context.LootContextTypes.ARCHAEOLOGY
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.function.SetStewEffectLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
+import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumns_worldgen.data.DuskLootTables
 import org.teamvoided.dusk_autumns_worldgen.util.Utils.uniformNum
+import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
-class ArchaeologyLootTablesProvider(o: FabricDataOutput) : SimpleFabricLootTableProvider(o, ARCHAEOLOGY) {
+class ArchaeologyLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    SimpleFabricLootTableProvider(o, r, ARCHAEOLOGY) {
 
     //ArchaeologyLootTableGenerator <- Vanilla
-    override fun generate(gen: BiConsumer<Identifier, LootTable.Builder>) {
+    override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         //desert_well_archaeology
         gen.accept(

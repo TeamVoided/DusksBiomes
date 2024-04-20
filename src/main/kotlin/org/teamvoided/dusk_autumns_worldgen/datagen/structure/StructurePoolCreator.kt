@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
 import com.mojang.datafixers.util.Pair
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKeys
@@ -9,7 +10,6 @@ import net.minecraft.structure.pool.StructurePoolElement
 import net.minecraft.structure.pool.StructurePools
 import net.minecraft.structure.processor.StructureProcessorList
 import net.minecraft.structure.processor.StructureProcessorLists
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VillagePlacedFeatures
 import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.MODID
@@ -24,9 +24,9 @@ object StructurePoolCreator {
 //    const val zombieChance = (1 / 50) * 100
 
     fun bootstrap(c: BootstrapContext<StructurePool>) {
-        val structurePools = c.lookup(RegistryKeys.STRUCTURE_POOL)
-        val placedFeatures = c.lookup(RegistryKeys.PLACED_FEATURE)
-        val procLists = c.lookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+        val structurePools = c.getRegistryLookup(RegistryKeys.STRUCTURE_POOL)
+        val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
         val poolEmpty = structurePools.getHolderOrThrow(StructurePools.EMPTY)
         val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)

@@ -1,12 +1,9 @@
 package org.teamvoided.dusk_autumns_worldgen.datagen.structure
 
-import com.google.common.collect.ImmutableList
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.LanternBlock
-import net.minecraft.block.PaneBlock
 import net.minecraft.loot.LootTables
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
@@ -14,7 +11,6 @@ import net.minecraft.structure.processor.*
 import net.minecraft.structure.rule.*
 import net.minecraft.structure.rule.block.entity.AppendLootRuleBlockEntityModifier
 import net.minecraft.util.math.int_provider.ConstantIntProvider
-import net.minecraft.world.gen.BootstrapContext
 import org.teamvoided.dusk_autumns_worldgen.init.structure.DuskStructureProcessorLists
 
 object StructureProcessorCreator {
@@ -22,7 +18,7 @@ object StructureProcessorCreator {
 
     // StructureProcessorLists
     fun bootstrap(c: BootstrapContext<StructureProcessorList>) {
-        val blockTags = c.lookup(RegistryKeys.BLOCK)
+        val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
 
         swampVillageProcessorLists(c)
         mangroveSwampVillageProcessorLists(c)
