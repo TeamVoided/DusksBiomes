@@ -1,21 +1,26 @@
+@file:Suppress("PropertyName", "VariableNaming")
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("fabric-loom") version "1.5.6"
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.serialization") version "1.9.22"
-    id("org.teamvoided.iridium") version "3.1.9"
-
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.iridium)
+    alias(libs.plugins.iridium.publish)
+    alias(libs.plugins.iridium.upload)
 }
 
-group = project.properties["maven_group"]!!
-version = project.properties["mod_version"]!!
-base.archivesName.set(project.properties["archives_base_name"] as String)
-description = "Worldgen Whatever"
+group = property("maven_group")!!
+version = property("mod_version")!!
+base.archivesName.set(property("archives_base_name") as String)
+description = property("description") as String
+
 val modid: String by project
+val mod_name: String by project
+val modrinth_id: String? by project
+val curse_id: String? by project
 
 repositories {
-    mavenCentral()
     exclusiveContent {
         forRepository { maven("https://maven.terraformersmc.com/") }
         filter { includeGroup("com.terraformersmc") }
@@ -25,35 +30,31 @@ repositories {
         filter { includeGroup("maven.modrinth") }
     }
     maven("https://teamvoided.org/releases")
+    mavenCentral()
 }
 
 modSettings {
     modId(modid)
-    modName("Dusk Autumns Worldgen")
+    modName(mod_name)
 
     entrypoint("main", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen::commonInit")
     entrypoint("client", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgenData")
-    mixinFile("dusk_autumns_worldgen.mixins.json")
-    accessWidener("dusk_autumns_worldgen.accesswidener")
+    mixinFile("$modid.mixins.json")
+    accessWidener("$modid.accesswidener")
 }
 
-val biolith: String by project
-val polymer: String by project
-val factorytools: String by project
-val lithostitched: String by project
 dependencies {
-
-    modImplementation(include("com.terraformersmc", "biolith-fabric", biolith)) {
-        exclude("com.github.glitchfiend")
-    }
-
-    modImplementation(include("org.teamvoided:reef:0.1.0")!!)
-
-    modImplementation(include("maven.modrinth", "biome-tag-villagers", "1.0.0"))
-    modImplementation(include("maven.modrinth", "lithostitched", lithostitched))
+    modImplementation(fileTree("libs"))
+    modImplementation(libs.farrow)
 
 
+    modImplementation(libs.biolith)
+    include(libs.reef)
+    modImplementation(libs.reef)
+
+    modImplementation(libs.biome.tag.villagers)
+//    modImplementation(libs.lithostitched)
 }
 
 loom {
@@ -93,4 +94,23 @@ tasks {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
     }
+}
+
+publishScript {
+    releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
+    publication(modSettings.modId(), false)
+    publishSources(true)
+}
+
+uploadConfig {
+//    debugMode = true
+    modrinthId = modrinth_id
+    curseId = curse_id
+
+    // FabricApi
+    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
+    curseDependency("fabric-api", uploadConfig.REQUIRED)
+    // Fabric Language Kotlin
+    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
+    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
 }
