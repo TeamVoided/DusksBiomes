@@ -16,8 +16,8 @@ class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLook
 
     override fun configure(arg: HolderLookup.Provider) {
 
-        getOrCreateTagBuilder(StructureTags.EYE_OF_ENDER_LOCATED)
-            .add(BuiltInStructures.END_CITY)
+//        getOrCreateTagBuilder(StructureTags.EYE_OF_ENDER_LOCATED)
+//            .add(BuiltInStructures.END_CITY)
         getOrCreateTagBuilder(StructureTags.ON_SWAMP_EXPLORER_MAPS)
             .add(DuskStructureFeatures.SWAMP_VILLAGE)
             .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)

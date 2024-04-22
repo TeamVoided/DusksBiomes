@@ -504,84 +504,84 @@ object StructureProcessorCreator {
                 Blocks.EXPOSED_COPPER.defaultState
             )
         )
-        c.register(
-            DuskStructureProcessorLists.DESERT_RUINS_OBELISK_TOP_ARCHAEOLOGY,
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(2)
-            ), genericDesertRuinProcessors
-        )
-        c.register(
-            DuskStructureProcessorLists.DESERT_RUINS_ROADS_ARCHAEOLOGY,
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(2)
-            ), genericDesertRuinProcessors
-        )
-        c.register(
-            DuskStructureProcessorLists.DESERT_RUINS_LARGE_RUINS_ARCHAEOLOGY,
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(12)
-            ),
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(6)
-            ), genericDesertRuinProcessors
-        )
-        c.register(
-            DuskStructureProcessorLists.DESERT_RUINS_SMALL_RUINS_ARCHAEOLOGY,
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(6)
-            ),
-            CappedStructureProcessor(
-                RuleStructureProcessor(
-                    StructureProcessorRule(
-                        BlockMatchRuleTest(Blocks.SAND),
-                        AlwaysTrueRuleTest.INSTANCE,
-                        AlwaysTruePosRuleTest.INSTANCE,
-                        Blocks.SUSPICIOUS_SAND.defaultState,
-                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)
-                    )
-                ), ConstantIntProvider.create(3)
-            ), genericDesertRuinProcessors
-        )
+//        c.register(
+//            DuskStructureProcessorLists.DESERT_RUINS_OBELISK_TOP_ARCHAEOLOGY,
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(2)
+//            ), genericDesertRuinProcessors
+//        )
+//        c.register(
+//            DuskStructureProcessorLists.DESERT_RUINS_ROADS_ARCHAEOLOGY,
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(2)
+//            ), genericDesertRuinProcessors
+//        )
+//        c.register(
+//            DuskStructureProcessorLists.DESERT_RUINS_LARGE_RUINS_ARCHAEOLOGY,
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(12)
+//            ),
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(6)
+//            ), genericDesertRuinProcessors
+//        )
+//        c.register(
+//            DuskStructureProcessorLists.DESERT_RUINS_SMALL_RUINS_ARCHAEOLOGY,
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(6)
+//            ),
+//            CappedStructureProcessor(
+//                RuleStructureProcessor(
+//                    StructureProcessorRule(
+//                        BlockMatchRuleTest(Blocks.SAND),
+//                        AlwaysTrueRuleTest.INSTANCE,
+//                        AlwaysTruePosRuleTest.INSTANCE,
+//                        Blocks.SUSPICIOUS_SAND.defaultState,
+//                        AppendLootRuleBlockEntityModifier(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)
+//                    )
+//                ), ConstantIntProvider.create(3)
+//            ), genericDesertRuinProcessors
+//        )
     }
 
     fun redDesertRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {

@@ -33,8 +33,8 @@ object StructurePoolCreator {
 
         generateSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
         generateMangroveSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
-        generateDesertRuins(c, poolEmpty, procLists, procEmpty)
-        generateRedDesertRuin(c, poolEmpty, procLists, procEmpty)
+//        generateDesertRuins(c, poolEmpty, procLists, procEmpty)
+//        generateRedDesertRuin(c, poolEmpty, procLists, procEmpty)
     }
 
     fun generateSwampVillage(
@@ -488,155 +488,155 @@ object StructurePoolCreator {
         )
     }
 
-    fun generateDesertRuins(
-        c: BootstrapContext<StructurePool>,
-        poolEmpty: Holder<StructurePool>,
-        procLists: HolderProvider<StructureProcessorList>,
-        procEmpty: Holder.Reference<StructureProcessorList>
-    ) {
-        c.register(
-            DuskStructurePools.DESERT_RUINS_OBELISK,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("desert_ruins/obelisk", procEmpty, 20),
-                    pairedLegacySingle("desert_ruins/black_obelisk", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.DESERT_RUINS_OBELISK_TOP,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("desert_ruins/obelisk_top", procEmpty),
-                    pairedLegacySingle("desert_ruins/black_obelisk_top", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.DESERT_RUINS_ROADS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("desert_ruins/roads/long_road_end", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_end_1", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_section_1", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_section_2", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_section_3", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_section_4", procEmpty),
-                    pairedLegacySingle("desert_ruins/roads/road_spacer_1", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.DESERT_RUINS_LARGE_RUINS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    Pair.of(StructurePoolElement.ofEmpty(), 1),
-                    pairedLegacySingle("desert_ruins/desert_ruin_1", procEmpty, 2),
-                    pairedLegacySingle("desert_ruins/desert_ruin_2", procEmpty, 2)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.DESERT_RUINS_RUINS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("desert_ruins/ruins/ruin_1", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_2", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_3", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_4", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_5", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_6", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_7", procEmpty),
-                    pairedLegacySingle("desert_ruins/ruins/ruin_8", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-    }
-
-    fun generateRedDesertRuin(
-        c: BootstrapContext<StructurePool>,
-        poolEmpty: Holder<StructurePool>,
-        procLists: HolderProvider<StructureProcessorList>,
-        procEmpty: Holder.Reference<StructureProcessorList>
-    ) {
-        c.register(
-            DuskStructurePools.RED_DESERT_RUINS_OBELISK,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("red_desert_ruins/obelisk", procEmpty, 20),
-                    pairedLegacySingle("red_desert_ruins/black_obelisk", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.RED_DESERT_RUINS_OBELISK_TOP,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("red_desert_ruins/obelisk_top", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/black_obelisk_top", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.RED_DESERT_RUINS_ROADS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("red_desert_ruins/roads/long_road_end", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_end_1", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_section_1", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_section_2", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_section_3", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_section_4", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/roads/road_spacer_1", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.RED_DESERT_RUINS_LARGE_RUINS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    Pair.of(StructurePoolElement.ofEmpty(), 1),
-                    pairedLegacySingle("red_desert_ruins/desert_ruin_1", procEmpty, 2),
-                    pairedLegacySingle("red_desert_ruins/desert_ruin_2", procEmpty, 2)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-        c.register(
-            DuskStructurePools.RED_DESERT_RUINS_RUINS,
-            StructurePool(
-                poolEmpty,
-                listOf(
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_1", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_2", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_3", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_4", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_5", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_6", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_7", procEmpty),
-                    pairedLegacySingle("red_desert_ruins/ruins/ruin_8", procEmpty)
-                ),
-                StructurePool.Projection.RIGID
-            )
-        )
-    }
+//    fun generateDesertRuins(
+//        c: BootstrapContext<StructurePool>,
+//        poolEmpty: Holder<StructurePool>,
+//        procLists: HolderProvider<StructureProcessorList>,
+//        procEmpty: Holder.Reference<StructureProcessorList>
+//    ) {
+//        c.register(
+//            DuskStructurePools.DESERT_RUINS_OBELISK,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("desert_ruins/obelisk", procEmpty, 20),
+//                    pairedLegacySingle("desert_ruins/black_obelisk", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.DESERT_RUINS_OBELISK_TOP,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("desert_ruins/obelisk_top", procEmpty),
+//                    pairedLegacySingle("desert_ruins/black_obelisk_top", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.DESERT_RUINS_ROADS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("desert_ruins/roads/long_road_end", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_end_1", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_section_1", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_section_2", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_section_3", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_section_4", procEmpty),
+//                    pairedLegacySingle("desert_ruins/roads/road_spacer_1", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.DESERT_RUINS_LARGE_RUINS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    Pair.of(StructurePoolElement.ofEmpty(), 1),
+//                    pairedLegacySingle("desert_ruins/desert_ruin_1", procEmpty, 2),
+//                    pairedLegacySingle("desert_ruins/desert_ruin_2", procEmpty, 2)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.DESERT_RUINS_RUINS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_1", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_2", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_3", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_4", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_5", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_6", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_7", procEmpty),
+//                    pairedLegacySingle("desert_ruins/ruins/ruin_8", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//    }
+//
+//    fun generateRedDesertRuin(
+//        c: BootstrapContext<StructurePool>,
+//        poolEmpty: Holder<StructurePool>,
+//        procLists: HolderProvider<StructureProcessorList>,
+//        procEmpty: Holder.Reference<StructureProcessorList>
+//    ) {
+//        c.register(
+//            DuskStructurePools.RED_DESERT_RUINS_OBELISK,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("red_desert_ruins/obelisk", procEmpty, 20),
+//                    pairedLegacySingle("red_desert_ruins/black_obelisk", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.RED_DESERT_RUINS_OBELISK_TOP,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("red_desert_ruins/obelisk_top", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/black_obelisk_top", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.RED_DESERT_RUINS_ROADS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("red_desert_ruins/roads/long_road_end", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_end_1", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_section_1", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_section_2", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_section_3", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_section_4", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/roads/road_spacer_1", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.RED_DESERT_RUINS_LARGE_RUINS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    Pair.of(StructurePoolElement.ofEmpty(), 1),
+//                    pairedLegacySingle("red_desert_ruins/desert_ruin_1", procEmpty, 2),
+//                    pairedLegacySingle("red_desert_ruins/desert_ruin_2", procEmpty, 2)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//        c.register(
+//            DuskStructurePools.RED_DESERT_RUINS_RUINS,
+//            StructurePool(
+//                poolEmpty,
+//                listOf(
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_1", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_2", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_3", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_4", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_5", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_6", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_7", procEmpty),
+//                    pairedLegacySingle("red_desert_ruins/ruins/ruin_8", procEmpty)
+//                ),
+//                StructurePool.Projection.RIGID
+//            )
+//        )
+//    }
 
 
     fun id(str: String) = "$MODID:$str"
