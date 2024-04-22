@@ -45,11 +45,12 @@ import org.teamvoided.dusk_autumns_worldgen.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumns_worldgen.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusk_autumns_worldgen.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.reef.init.ReefFeatures
+import org.teamvoided.reef.world.gen.configured_feature.config.*
 import java.util.*
+import java.util.List
 import kotlin.collections.forEach
 import kotlin.collections.listOf
 import kotlin.collections.plus
-import org.teamvoided.reef.world.gen.configured_feature.config.*
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -60,6 +61,17 @@ object ConfiguredFeatureCreator {
         val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
         val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+
+        val weightedBlockStateProvider: WeightedBlockStateProvider = WeightedBlockStateProvider(
+            DataPool.builder<BlockState>().addWeighted(Blocks.CAVE_VINES_PLANT.defaultState, 4)
+                .addWeighted(Blocks.CAVE_VINES_PLANT.defaultState.with(CaveVines.BERRIES, true), 1)
+        )
+        val randomizedIntBlockStateProvider = RandomizedIntBlockStateProvider(
+            WeightedBlockStateProvider(
+                DataPool.builder<BlockState>().addWeighted(Blocks.CAVE_VINES.defaultState, 4)
+                    .addWeighted(Blocks.CAVE_VINES.defaultState.with(CaveVines.BERRIES, true), 1)
+            ), CaveVinesStemBlock.AGE, UniformIntProvider.create(23, 25)
+        )
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -465,6 +477,53 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+            DuskConfiguredFeatures.SAND_CAVE_VINES,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf<BlockColumnFeatureConfig.Layer>(
+                            BlockColumnFeatureConfig.createLayer(
+                                ConstantIntProvider.create(1),
+                                BlockStateProvider.of(Blocks.MOSS_BLOCK)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                WeightedListIntProvider(
+                                    DataPool.builder<IntProvider>()
+                                        .addWeighted(UniformIntProvider.create(0, 19), 2)
+                                        .addWeighted(UniformIntProvider.create(0, 2), 3)
+                                        .addWeighted(UniformIntProvider.create(0, 6), 10).build()
+                                ),
+                                weightedBlockStateProvider
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                ConstantIntProvider.create(1),
+                                randomizedIntBlockStateProvider
+                            )
+                        ),
+                        Direction.DOWN, BlockPredicate.IS_AIR, true
+                    )
+                )
+            )
+        )
+        c.registerConfiguredFeature<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            UndergroundConfiguredFeatures.CAVE_VINE_IN_MOSS, Feature.BLOCK_COLUMN, BlockColumnFeatureConfig(
+                listOf(
+                    BlockColumnFeatureConfig.createLayer(
+                        WeightedListIntProvider(
+                            DataPool.builder<IntProvider>().addWeighted(UniformIntProvider.create(0, 3), 5)
+                                .addWeighted(UniformIntProvider.create(1, 7), 1).build()
+                        ), weightedBlockStateProvider
+                    ),
+                    BlockColumnFeatureConfig.createLayer(ConstantIntProvider.create(1), randomizedIntBlockStateProvider)
+                ),
+                Direction.DOWN, BlockPredicate.IS_AIR, true
+            )
+        )
+
+
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_SAND,
             Feature.ORE,

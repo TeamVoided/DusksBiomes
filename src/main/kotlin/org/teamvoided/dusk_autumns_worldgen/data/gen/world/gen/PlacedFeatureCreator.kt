@@ -374,13 +374,12 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_CAVE_VINES,
             configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.CAVE_VINE),
-            CountPlacementModifier.create(94),
+            CountPlacementModifier.create(47),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), BlockPredicate.IS_AIR, 12
             ),
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
@@ -452,7 +451,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_CAVE_CORAL,
             configuredFeatureProvider.getHolderOrThrow(OceanConfiguredFeatures.WARM_OCEAN_VEGETATION),
-            CountPlacementModifier.create(128),
+            CountPlacementModifier.create(256),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
