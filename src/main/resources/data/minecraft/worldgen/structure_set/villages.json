@@ -27,11 +27,11 @@
       "weight": 1
     },
     {
-      "structure": "dusk_autumns_worldgen:village_swamp",
+      "structure": "dusks_biomes:village_swamp",
       "weight": 1
     },
     {
-      "structure": "dusk_autumns_worldgen:village_mangrove_swamp",
+      "structure": "dusks_biomes:village_mangrove_swamp",
       "weight": 1
     }
   ]

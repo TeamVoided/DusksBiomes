@@ -1,4 +1,4 @@
-rootProject.name = "DuskAutumnsWorldgen"
+rootProject.name = "Dusk's Biomes"
 
 pluginManagement {
     repositories {
