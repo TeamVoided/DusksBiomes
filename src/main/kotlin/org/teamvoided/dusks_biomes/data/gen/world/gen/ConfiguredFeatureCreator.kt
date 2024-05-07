@@ -40,10 +40,10 @@ import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
-import org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen.id
-import org.teamvoided.dusk_autumns_worldgen.data.tags.DuskBlockTags
-import org.teamvoided.dusk_autumns_worldgen.data.world.gen.DuskConfiguredFeatures
-import org.teamvoided.dusk_autumns_worldgen.data.world.gen.DuskPlacedFeatures
+import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
+import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
+import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.reef.init.ReefFeatures
 import java.util.*
 import kotlin.collections.forEach
