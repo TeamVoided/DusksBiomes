@@ -1,12 +1,12 @@
-projectTitle = "DuskAutumnsWorldgen"
-modId = "dusk_autumns_worldgen"
+projectTitle = "Dusk's Biomes"
+modId = "dusks_biomes"
 githubRepo = "Teamvoided/DuskAutumnsWorldgen"
 discordServerInviteId = "KZ5Q364hEg"
-authors = [ "Me" ]
+authors = [ "DuskAutumnStorm", "TheEnderCore" ]
 majorMinecraftVersion = "1.20"
-minecraftVersion = "1.20.5-rc2"
-fabricLoaderVersion = "0.15.10"
-fabricApiVersion = "0.97.3+1.20.5"
+minecraftVersion = "1.20.6"
+fabricLoaderVersion = "0.15.11"
+fabricApiVersion = "0.97.8+1.20.6"
 fabricLangKotlinVersion = "1.10.19+kotlin.1.9.23"
 license = "MIT"
 modules = [ ]
@@ -21,4 +21,4 @@ modules = [ ]
     # MOJYARN: Yarn layered on top of the official Mojang mappings
     # CUSTOM: Custom mapping jar. Uses mappings version as file location
     type = "QUILT"
-    version = "1.20.5-rc2+build.3"
+    version = "1.20.6+build.3"

@@ -1,5 +1,5 @@
 {
-  "feature": "dusk_autumns_worldgen:monster_room/deep_monster_room",
+  "feature": "dusks_biomes:monster_room/deep_monster_room",
   "placement": [
     {
       "type": "minecraft:count",

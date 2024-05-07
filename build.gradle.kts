@@ -1,4 +1,5 @@
 @file:Suppress("PropertyName", "VariableNaming")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -38,9 +39,8 @@ modSettings {
     modId(modid)
     modName(mod_name)
 
-    entrypoint("main", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen::commonInit")
-    entrypoint("client", "org.teamvoided.dusk_autumns_worldgen.DuskAutumnsWorldgen::clientInit")
-    entrypoint("fabric-datagen", "org.teamvoided.dusk_autumns_worldgen.data.gen.DuskAutumnsWorldgenData")
+    entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomesMod::commonInit")
+    entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
     mixinFile("$modid.mixins.json")
     accessWidener("$modid.accesswidener")
 }
@@ -67,6 +67,8 @@ loom {
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
             vmArg("-Dfabric-api.datagen.modid=${modid}")
             runDir("build/datagen")
+
+
         }
 
         create("TestWorld") {
@@ -95,6 +97,9 @@ tasks {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
     }
+//    jar {
+//        exclude("org/teamvoided/dusks_biomes/data/gen/*")
+//    }
 }
 
 publishScript {
