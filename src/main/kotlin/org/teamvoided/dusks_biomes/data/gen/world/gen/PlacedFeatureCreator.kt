@@ -233,7 +233,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.ORE_COARSE_DIRT,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_COARSE_DIRT),
-            CountPlacementModifier.create(3),
+            RarityFilterPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
             BiomePlacementModifier.getInstance()

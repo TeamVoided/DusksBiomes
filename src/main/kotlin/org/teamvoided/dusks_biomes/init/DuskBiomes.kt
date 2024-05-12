@@ -356,7 +356,7 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             FROZEN_CAVERNS,
             createNoise(
-                Range(-1, -0.3),        // Temperature
+                Range(-1, -0.9),        // Temperature
                 Range(-1, -0.7),      // Humidity
                 Range(-1, 0.8),          // Continentalness
                 Range(-1, 1),         // Erosion
