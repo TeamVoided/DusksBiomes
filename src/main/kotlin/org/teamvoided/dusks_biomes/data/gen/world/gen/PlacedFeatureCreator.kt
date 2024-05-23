@@ -161,49 +161,22 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
-
-        val blockPredicate =
-            BlockPredicate.matchingBlocks(Direction.DOWN.vector, *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW))
-
-        val list = listOf(
-            EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.not(
-                    BlockPredicate.matchingBlocks(Blocks.POWDER_SNOW)
-                ), 8
-            ), BlockPredicateFilterPlacementModifier.create(blockPredicate)
-        )
-
-        c.register(
-            DuskPlacedFeatures.CHERRY_ON_SNOW,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CHERRY_SNOW_BEES),
-            list
-        )
-        c.register(
-            DuskPlacedFeatures.CHERRY_ON_SNOW_BEES,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.CHERRY_SNOW_BEES),
-            list
-        )
-
         c.register(
             DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_SNOWY_CHERRY),
-            treePlacementModifiersBase(
-                PlacedFeatureUtil.createCountExtraModifier(
-                    10,
-                    0.1f,
-                    1
+            EnvironmentScanPlacementModifier.create(
+                Direction.UP, BlockPredicate.not(
+                    BlockPredicate.matchingBlocks(*arrayOf(Blocks.POWDER_SNOW))
+                ), 8
+            ),
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(
+                    Direction.DOWN.vector,
+                    *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
                 )
-            ).add(
-                BlockPredicateFilterPlacementModifier.create(
-                    BlockPredicate.matchingBlocks(
-                        Vec3i(0, -1, 0), Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW
-                    )
-                ),
-                EnvironmentScanPlacementModifier.create(
-                    Direction.UP,
-                    BlockPredicate.matchingBlocks(Blocks.POWDER_SNOW), 8,
-                )
-            ).build()
+
+            ),
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION,
@@ -491,6 +464,47 @@ object PlacedFeatureCreator {
             ),
             BiomePlacementModifier.getInstance()
         )
+        c.register(
+            DuskPlacedFeatures.ORE_COBBLESTONE,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.ORE_COBBLESTONE),
+            CountPlacementModifier.create(14),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(160)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLESTONE_CAVE_PILLAR,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR),
+            *arrayOf<PlacementModifier>(
+                CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+                BiomePlacementModifier.getInstance()
+            )
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLESTONE_SPIKES,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES),
+            CountPlacementModifier.create(100),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.COBBLESTONE), BlockPredicate.IS_AIR, 12
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLESTONE_SPIKES_ROOF,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES_ROOF),
+            CountPlacementModifier.create(100),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.UP, BlockPredicate.matchingBlocks(Blocks.COBBLESTONE), BlockPredicate.IS_AIR, 12
+            ),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+            BiomePlacementModifier.getInstance()
+        )
 
 //Structure Piece Features
         c.register(
@@ -544,17 +558,17 @@ object PlacedFeatureCreator {
 
 //Monster Room features
         val upperMonsterRoom = listOf(
-                CountPlacementModifier.create(10),
-                InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.getTop()),
-                BiomePlacementModifier.getInstance()
-            )
+            CountPlacementModifier.create(10),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.getTop()),
+            BiomePlacementModifier.getInstance()
+        )
         val lowerMonsterRoom = listOf(
-                CountPlacementModifier.create(4),
-                InSquarePlacementModifier.getInstance(),
-                HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
-                BiomePlacementModifier.getInstance()
-            )
+            CountPlacementModifier.create(4),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
+            BiomePlacementModifier.getInstance()
+        )
 
         c.register(
             DuskPlacedFeatures.DEEP_MONSTER_ROOM,

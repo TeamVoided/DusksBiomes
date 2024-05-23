@@ -61,7 +61,7 @@ object BiomeCreator {
         c.register(DuskBiomes.FROZEN_CAVERNS, c.createFrozenCaves())
         c.register(DuskBiomes.SAND_CAVES, c.createDesert(false, true))
         c.register(DuskBiomes.RED_SAND_CAVES, c.createDesert(true, true))
-
+        c.register(DuskBiomes.GRAVEL_CAVES, c.createGravelCave())
     }
 
 
@@ -226,6 +226,7 @@ object BiomeCreator {
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_BADLANDS)
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.FLOWER_SNOWY_CHERRY)
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE)
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.TREES_CHERRY)
         DefaultBiomeFeatures.addEmeraldOre(generation)
         DefaultBiomeFeatures.addInfestedStone(generation)
         return OverworldBiomeCreator.create(
@@ -622,6 +623,46 @@ object BiomeCreator {
             spawns, generation,
             MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FROZEN_PEAKS)
         )
+    }
+
+    fun BootstrapContext<Biome>.createGravelCave(): Biome {
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+        val spawns = SpawnSettings.Builder()
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        val generation = GenerationSettings.Builder(features, carver)
+        OverworldBiomeCreator.addBasicFeatures(generation)
+        DefaultBiomeFeatures.addDefaultOres(generation)
+        DefaultBiomeFeatures.addDefaultDisks(generation)
+        DefaultBiomeFeatures.addDefaultFlowers(generation)
+        DefaultBiomeFeatures.addDefaultGrass(generation)
+        DefaultBiomeFeatures.addDefaultMushrooms(generation)
+        DefaultBiomeFeatures.addDefaultVegetation(generation)
+        BiomeFeatures.addGravelCaveFeatures(generation)
+        val temp = 0.2f
+        return Biome.Builder()
+            .hasPrecipitation(true)
+            .temperature(temp)
+            .downfall(0.3f)
+            .effects(
+                BiomeEffects.Builder().particleConfig(
+                    BiomeParticleConfig(
+                        BlockStateParticleEffect(
+                            ParticleTypes.FALLING_DUST,
+                            Blocks.GRAVEL.defaultState
+                        ), 0.00025F
+                    )
+                )
+                    .waterColor(DEFAULT_WATER_COLOR)
+                    .waterFogColor(DEFAULT_WATER_FOG_COLOR)
+                    .fogColor(DEFAULT_FOG_COLOR)
+                    .skyColor(OverworldBiomeCreator.getSkyColor(temp))
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_STONY_PEAKS)).build()
+            )
+            .spawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .build()
     }
 
     /*BIOME TEMPLATE

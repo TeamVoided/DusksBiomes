@@ -291,37 +291,31 @@ object DuskSurfaceRules {
             )
         )
 //Non-Vanilla adjacent biomes
-        /* val isWindsweptValley = biome(
-            DuskBiomes.EMERALD_VALLEY,
-            DuskBiomes.TOPAZ_VALLEY,
-            DuskBiomes.SAPPHIRE_VALLEY,
-            DuskBiomes.RUBY_VALLEY
-        )
-        val emeraldValleySurface = condition(
-            isWindsweptValley,
+        val snowyCherryGrove = condition(
+            biome(DuskBiomes.SNOWY_CHERRY_GROVE),
             condition(
-                stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                    condition(
-                        surfaceSecondaryNoiseThreshold(1.0, 2.0), podzol
-                    ),
-                    condition(
-                      biome(DuskBiomes.RUBY_VALLEY),
+                stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(
+                    water(0, 0),
+                    sequence(
                         condition(
-                            surfaceNoiseThreshold(-2.0),
+                            stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR),
+                            condition(
+                                powderSnowNoiseThreshold(0.35, 0.6),
+                                block(Blocks.POWDER_SNOW)
+                            )
+                        ),
+                        condition(
+                            powderSnowNoiseThreshold(0.45, 0.58),
+                            block(Blocks.POWDER_SNOW)
+                        ),
+                        condition(
+                            surfaceNoiseThreshold(-1.0),
                             block(Blocks.SNOW_BLOCK)
                         )
-                    ),
-                    condition(
-                        surfaceNoiseThreshold(-2.0), grass
                     )
                 )
             )
         )
-        val dripstoneBlockAPS = condition(
-            isWindsweptValley,
-            block(Blocks.DRIPSTONE_BLOCK)
-        )
-        */
 //Cave Surface
         val mushroomCaves = sequence(
             condition(
@@ -377,108 +371,30 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val sandCaves = sequence(
+        val cobbledDeepslateDepth = verticalGradient(
+            "minecraft:deepslate",
+            YOffset.fixed(0),
+            YOffset.fixed(8)
+        )
+        val fallingBlockCaves = sequence(
             condition(
                 biome(DuskBiomes.SAND_CAVES),
-                sequence(
-                    condition(
-                        DEEP_UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(1.0),
-                                block(Blocks.SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        ON_FLOOR, sequence(
-                            condition(
-                                surfaceSecondaryNoiseThreshold(0.0),
-                                block(Blocks.SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(-0.5),
-                                sand
-                            )
-                        )
-                    ),
-                    condition(
-                        UNDER_CEILING, sequence(
-                            condition(
-                                surfaceNoiseThreshold(0.0),
-                                block(Blocks.SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                            condition(
-                                surfaceSecondaryNoiseThreshold(0.5),
-                                block(Blocks.SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                            sequence(
-                                sand
-                            )
-                        )
-                    )
-                )
+                fallingBlockCaveSurface(sand, block(Blocks.SANDSTONE))
             ),
             condition(
                 biome(DuskBiomes.RED_SAND_CAVES),
+                fallingBlockCaveSurface(sandRed, block(Blocks.RED_SANDSTONE))
+            ),
+            condition(
+                biome(DuskBiomes.GRAVEL_CAVES),
                 sequence(
                     condition(
-                        DEEP_UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(1.0),
-                                block(Blocks.RED_SANDSTONE)
-                            )
-                        )
+                        cobbledDeepslateDepth,
+                        fallingBlockCaveSurface(gravel, block(Blocks.COBBLED_DEEPSLATE))
                     ),
                     condition(
-                        ON_FLOOR, sequence(
-                            condition(
-                                surfaceSecondaryNoiseThreshold(0.0),
-                                block(Blocks.RED_SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        UNDER_FLOOR, sequence(
-                            condition(
-                                surfaceNoiseThreshold(-0.5),
-                                sandRed
-                            )
-                        )
-                    ),
-                    condition(
-                        UNDER_CEILING, sequence(
-                            condition(
-                                surfaceNoiseThreshold(0.0),
-                                block(Blocks.RED_SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                            condition(
-                                surfaceSecondaryNoiseThreshold(0.5),
-                                block(Blocks.RED_SANDSTONE)
-                            )
-                        )
-                    ),
-                    condition(
-                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                            sequence(
-                                sandRed
-                            )
-                        )
+                        not(cobbledDeepslateDepth),
+                        fallingBlockCaveSurface(gravel, block(Blocks.COBBLESTONE))
                     )
                 )
             )
@@ -593,15 +509,15 @@ object DuskSurfaceRules {
                 swampWater,
                 onFloorAndWater,
                 onFloorInDeepWater,
+                snowyCherryGrove,
                 deepSand,
                 sandstoneDesert,
                 sandOcean
-//                dripstoneBlockAPS
             )
         )
         val cave = sequence(
             mushroomCaves,
-            sandCaves,
+            fallingBlockCaves,
             frozenCaverns
         )
         // Return a surface-only sequence of surface rules
@@ -609,6 +525,58 @@ object DuskSurfaceRules {
             condition(
                 aboveY(YOffset.fixed(-55), 0), sequence(
                     surface, cave
+                )
+            )
+        )
+    }
+
+    fun fallingBlockCaveSurface(fallingBlock: MaterialRule, solidBlock: MaterialRule): MaterialRule {
+        return sequence(
+            condition(
+                DEEP_UNDER_FLOOR, sequence(
+                    condition(
+                        surfaceNoiseThreshold(1.0),
+                        solidBlock
+                    )
+                )
+            ),
+            condition(
+                ON_FLOOR, sequence(
+                    condition(
+                        surfaceSecondaryNoiseThreshold(0.0),
+                        solidBlock
+                    )
+                )
+            ),
+            condition(
+                UNDER_FLOOR, sequence(
+                    condition(
+                        surfaceNoiseThreshold(-0.5),
+                        fallingBlock
+                    )
+                )
+            ),
+            condition(
+                UNDER_CEILING, sequence(
+                    condition(
+                        surfaceNoiseThreshold(0.0),
+                        solidBlock
+                    )
+                )
+            ),
+            condition(
+                stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
+                    condition(
+                        surfaceSecondaryNoiseThreshold(0.5),
+                        solidBlock
+                    )
+                )
+            ),
+            condition(
+                stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
+                    sequence(
+                        fallingBlock
+                    )
                 )
             )
         )

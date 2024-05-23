@@ -15,6 +15,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
 //VANILLA
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(Blocks.COBBLESTONE)
             .add(Blocks.SNOW_BLOCK)
             .add(Blocks.ICE)
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
@@ -49,6 +50,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.SNOW)
             .add(Blocks.POWDER_SNOW)
             .add(Blocks.ICE)
+            .add(Blocks.GRAVEL)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .add(Blocks.PACKED_ICE)
@@ -56,7 +58,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .addOptionalTag(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
             .add(Blocks.SANDSTONE)
             .add(Blocks.RED_SANDSTONE)
+            .add(Blocks.COBBLESTONE)
             .forceAddTag(BlockTags.SAND)
-
     }
 }

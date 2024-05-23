@@ -219,25 +219,32 @@ object ConfiguredFeatureCreator {
         )
 
         c.registerConfiguredFeature(
-            DuskConfiguredFeatures.CHERRY_SNOW,
-            Feature.TREE,
-            cherry().build()
-        )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.CHERRY_SNOW_BEES,
-            Feature.TREE,
-            cherry()
-                .decorators(listOf(BeehiveTreeDecorator(0.02f)))
-                .build()
-        )
-        c.registerConfiguredFeature(
             DuskConfiguredFeatures.TREES_SNOWY_CHERRY,
-            Feature.RANDOM_SELECTOR,
-            RandomFeatureConfig(
-                listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.CHERRY_ON_SNOW_BEES), 0.4f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeatures.CHERRY_ON_SNOW)
-            )
+            Feature.TREE,
+            TreeFeatureConfig.Builder(
+                BlockStateProvider.of(Blocks.CHERRY_LOG),
+                CherryTrunkPlacer(
+                    7, 1, 0,
+                    WeightedListIntProvider(
+                        DataPool.builder<IntProvider>().addWeighted(ConstantIntProvider.create(1), 1)
+                            .addWeighted(ConstantIntProvider.create(2), 1)
+                            .addWeighted(ConstantIntProvider.create(3), 1).build()
+                    ),
+                    UniformIntProvider.create(2, 4),
+                    UniformIntProvider.create(-4, -3),
+                    UniformIntProvider.create(-1, 0)
+                ),
+                BlockStateProvider.of(Blocks.CHERRY_LEAVES),
+                CherryFoliagePlacer(
+                    ConstantIntProvider.create(4),
+                    ConstantIntProvider.create(0),
+                    ConstantIntProvider.create(5),
+                    0.25f, 0.5f,
+                    0.16666667f, 0.33333334f
+                ),
+                TwoLayersFeatureSize(1, 0, 2)
+            ).dirtProvider(BlockStateProvider.of(Blocks.SNOW_BLOCK)).ignoreVines()
+                .decorators(listOf(BeehiveTreeDecorator(0.05f))).build()
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
@@ -661,6 +668,83 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.ORE_COBBLESTONE,
+            Feature.ORE,
+            OreFeatureConfig(
+                TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
+                Blocks.COBBLESTONE.defaultState,
+                64
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.COBBLESTONE),
+                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+            )
+        )
+
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLESTONE_SPIKES,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.COBBLESTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(2, 5),
+                                BlockStateProvider.of(Blocks.COBBLESTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.UP, BlockPredicate.IS_AIR, true
+                    ),
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.UP)
+                    )
+                )
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLESTONE_SPIKES_ROOF,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.COBBLESTONE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(2, 5),
+                                BlockStateProvider.of(Blocks.COBBLESTONE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.DOWN, BlockPredicate.IS_AIR, true
+                    ),
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.DOWN)
+                    )
+                )
+            )
+        )
 
 
 
@@ -783,32 +867,6 @@ object ConfiguredFeatureCreator {
                 LootTables.SIMPLE_DUNGEON_CHEST.value
             )
         )
-    }
-
-    private fun cherry(): TreeFeatureConfig.Builder {
-        return TreeFeatureConfig.Builder(
-            BlockStateProvider.of(Blocks.CHERRY_LOG),
-            CherryTrunkPlacer(
-                7, 1, 0,
-                WeightedListIntProvider(
-                    DataPool.builder<IntProvider>().addWeighted(ConstantIntProvider.create(1), 1)
-                        .addWeighted(ConstantIntProvider.create(2), 1)
-                        .addWeighted(ConstantIntProvider.create(3), 1).build()
-                ),
-                UniformIntProvider.create(2, 4),
-                UniformIntProvider.create(-4, -3),
-                UniformIntProvider.create(-1, 0)
-            ),
-            BlockStateProvider.of(Blocks.CHERRY_LEAVES),
-            CherryFoliagePlacer(
-                ConstantIntProvider.create(4),
-                ConstantIntProvider.create(0),
-                ConstantIntProvider.create(5),
-                0.25f, 0.5f,
-                0.16666667f, 0.33333334f
-            ),
-            TwoLayersFeatureSize(1, 0, 2)
-        ).dirtProvider(BlockStateProvider.of(Blocks.SNOW_BLOCK)).ignoreVines()
     }
 
     private fun getPetalStates(): DataPool.Builder<BlockState> {

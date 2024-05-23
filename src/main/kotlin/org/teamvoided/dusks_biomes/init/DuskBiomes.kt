@@ -48,6 +48,8 @@ object DuskBiomes {
     val FROZEN_CAVERNS = create("frozen_caverns")
     val SAND_CAVES = create("sand_caverns")
     val RED_SAND_CAVES = create("red_sand_caverns")
+//da future
+    val GRAVEL_CAVES = create("gravel_caves")
 
 
     fun init() {

@@ -102,6 +102,31 @@ object BiomeFeatures {
         }
     }
 
+    fun addGravelCaveFeatures(generationSettings: GenerationSettings.Builder) {
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_DEAD_BUSH)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.ORE_COARSE_DIRT)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            DuskPlacedFeatures.ORE_COBBLESTONE
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.LOCAL_MODIFICATIONS,
+            DuskPlacedFeatures.COBBLESTONE_CAVE_PILLAR
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.UNDERGROUND_DECORATION,
+            DuskPlacedFeatures.COBBLESTONE_SPIKES
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.UNDERGROUND_DECORATION,
+            DuskPlacedFeatures.COBBLESTONE_SPIKES_ROOF
+        )
+    }
+
     fun addMushroomGroveFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
