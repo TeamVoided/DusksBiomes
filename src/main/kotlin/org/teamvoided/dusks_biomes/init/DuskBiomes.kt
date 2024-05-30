@@ -28,6 +28,7 @@ object DuskBiomes {
     val SNOWY_WINDSWEPT_FOREST = create("snowy_windswept_forest")
     val SNOWY_OLD_GROWTH_PINE_TAIGA = create("snowy_old_growth_pine_taiga")
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
+    val SNOWY_DARK_GROVE = create("snowy_dark_grove")
     val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
     val FROZEN_WINDSWEPT_MANGROVE_SWAMP = create("frozen_windswept_mangrove_swamp")
@@ -48,7 +49,6 @@ object DuskBiomes {
     val FROZEN_CAVERNS = create("frozen_caverns")
     val SAND_CAVES = create("sand_caverns")
     val RED_SAND_CAVES = create("red_sand_caverns")
-//da future
     val GRAVEL_CAVES = create("gravel_caves")
 
 
@@ -71,7 +71,6 @@ object DuskBiomes {
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
                 0F, 1f, false
-
             )
         )
         val snowyVariant = SubBiomeMatcher.Criterion.ofRange(
@@ -81,6 +80,10 @@ object DuskBiomes {
         val coldRegion = SubBiomeMatcher.Criterion.ofRange(
             CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
             -1F, -0.3f, false
+        )
+        val warmRegion = SubBiomeMatcher.Criterion.ofRange(
+            CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+            0.375F, 1f, false
         )
         val redSandVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
@@ -107,18 +110,12 @@ object DuskBiomes {
         )
         BiomePlacement.addSubOverworld(
             Biomes.FOREST, WARM_FOREST, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.375F, 1f, false
-                )
+                warmRegion
             )
         )
         BiomePlacement.addSubOverworld(
             Biomes.PLAINS, WARM_PLAINS, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.375F, 1f, false
-                )
+                warmRegion
             )
         )
         addOverworld(
@@ -128,30 +125,6 @@ object DuskBiomes {
             Range(-0.19, 0.03),          // Continentalness
             Range(0.45, 0.55),         // Erosion
             Range(0.05, 1),         // Weirdness
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, 0.2f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.45f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, -0.35f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0f, false
-                )
-            )
         )
         BiomePlacement.addSubOverworld(
             Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, of(
@@ -188,7 +161,31 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0f, true
+                    0F, 1f, false
+                )
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.GROVE, SNOWY_DARK_GROVE, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.3F, 1f, false
+                )
+            )
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, -0.45f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, -0.35f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, 0f, false
                 )
             )
         )
@@ -264,7 +261,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.0f, true
+                    0F, 1f, false
                 )
             )
         )
@@ -347,8 +344,8 @@ object DuskBiomes {
             MUSHROOM_CAVES,
             createNoise(
                 Range(-1, 1),        // Temperature
-                Range(-0.1, 0.1),      // Humidity
-                Range(-1.2, -0.75),          // Continentalness
+                Range(-1, 1),      // Humidity
+                Range(-1.2, -0.95),          // Continentalness
                 Range(-1, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
@@ -370,8 +367,8 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             SAND_CAVES,
             createNoise(
-                Range(0.575, 1),        // Temperature
-                Range(-1, -0.675),      // Humidity
+                Range(2 / 3, 1),        // Temperature
+                Range(-1, -0.65),      // Humidity
                 Range(-1, 0.8),          // Continentalness
                 Range(0.05, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
@@ -382,10 +379,22 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             RED_SAND_CAVES,
             createNoise(
-                Range(0.575, 1),        // Temperature
-                Range(-1, -0.675),      // Humidity
+                Range(2 / 3, 1),        // Temperature
+                Range(-1, -0.65),      // Humidity
                 Range(-1, 0.8),          // Continentalness
                 Range(-1, 0.05),         // Erosion
+                Range(0.2, 0.9),         // Depth
+                Range(-1, 1),         // Weirdness
+                0L                  // Offset
+            )
+        )
+        BiomePlacement.addOverworld(
+            GRAVEL_CAVES,
+            createNoise(
+                Range(-0.9, 1),        // Temperature
+                Range(-1, -0.8),      // Humidity
+                Range(-0.95, 0.8),          // Continentalness
+                Range(-1, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
                 0L                  // Offset

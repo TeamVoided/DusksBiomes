@@ -16,6 +16,8 @@ object DuskPlacedFeatures {
     val TREES_COLD_PLAINS = create("tree/trees_cold_plains")
     val TREES_WARM_FOREST = create("tree/trees_warm_forest")
     val TREES_WARM_PLAINS = create("tree/trees_warm_plains")
+    val TREES_SNOWY_DARK_GROVE = create("tree/trees_snowy_dark_grove")
+    val TREES_SNOWY_DARK_GROVE_ON_SNOW = create("tree/trees_snowy_dark_grove_on_snow")
     val TREES_WINDSWEPT_BIRCH = create("tree/trees_windswept_birch")
     val MANGROVE_FROZEN_CHECKED = create("tree/mangrove_frozen_checked")
     val TALL_MANGROVE_FROZEN_CHECKED = create("tree/tall_mangrove_frozen_checked")
@@ -55,6 +57,9 @@ object DuskPlacedFeatures {
     val COBBLESTONE_CAVE_PILLAR = create("cave/gravel/cobblestone_cave_pillar")
     val COBBLESTONE_SPIKES = create("cave/gravel/cobblestone_spikes")
     val COBBLESTONE_SPIKES_ROOF = create("cave/gravel/cobblestone_spikes_roof")
+    val COBBLED_DEEPSLATE_CAVE_PILLAR = create("cave/gravel/cobbled_deepslate_cave_pillar")
+    val COBBLED_DEEPSLATE_SPIKES = create("cave/gravel/cobbled_deepslate_spikes")
+    val COBBLED_DEEPSLATE_SPIKES_ROOF = create("cave/gravel/cobbled_deepslate_spikes_roof")
 
     val DEEP_MONSTER_ROOM = create("monster_room/deep_monster_room")
     val FROZEN_MONSTER_ROOM = create("monster_room/frozen_monster_room")

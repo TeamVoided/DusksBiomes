@@ -2,6 +2,7 @@ package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
+import net.minecraft.fluid.Fluids
 import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
@@ -14,6 +15,7 @@ import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
+import net.minecraft.world.gen.blockpredicate.BlockPredicate.not
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
@@ -153,19 +155,22 @@ object PlacedFeatureCreator {
             )
         )
         c.register(
-            DuskPlacedFeatures.FLOWER_SNOWY_CHERRY,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY),
-            NoiseThresholdCountPlacementModifier.create(-0.8, 5, 10),
-            RarityFilterPlacementModifier.create(5),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE),
+            VegetationPlacedFeatures.treePlacementModifiers(
+                CountPlacementModifier.create(16)
+            )
         )
         c.register(
-            DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_SNOWY_CHERRY),
+            DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE_ON_SNOW,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE_ON_SNOW),
+            CountPlacementModifier.create(16),
+            InSquarePlacementModifier.getInstance(),
+            SurfaceWaterDepthFilterPlacementModifier.create(0),
+            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
+            BiomePlacementModifier.getInstance(),
             EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.not(
+                Direction.UP, not(
                     BlockPredicate.matchingBlocks(*arrayOf(Blocks.POWDER_SNOW))
                 ), 8
             ),
@@ -175,7 +180,36 @@ object PlacedFeatureCreator {
                     *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
                 )
 
+            )
+        )
+        c.register(
+            DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE,
+            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.CHERRY_BEES_005),
+            PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
+            InSquarePlacementModifier.getInstance(),
+            SurfaceWaterDepthFilterPlacementModifier.create(0),
+            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
+            BiomePlacementModifier.getInstance(),
+            EnvironmentScanPlacementModifier.create(
+                Direction.UP, not(
+                    BlockPredicate.matchingBlocks(*arrayOf(Blocks.POWDER_SNOW))
+                ), 8
             ),
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(
+                    Direction.DOWN.vector,
+                    *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
+                )
+
+            )
+        )
+        c.register(
+            DuskPlacedFeatures.FLOWER_SNOWY_CHERRY,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY),
+            NoiseThresholdCountPlacementModifier.create(-0.8, 5, 10),
+            RarityFilterPlacementModifier.create(5),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
         c.register(
@@ -347,24 +381,24 @@ object PlacedFeatureCreator {
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_VINES,
-            configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.CAVE_VINE),
-            CountPlacementModifier.create(47),
+            configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),
+            CountPlacementModifier.create(125),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), BlockPredicate.IS_AIR, 12
+                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
             ),
+            BlockPredicateFilterPlacementModifier.create(BlockPredicate.matchingFluids(Vec3i(0, 4, 0), Fluids.WATER)),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),
-            *arrayOf<PlacementModifier>(
                 CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
                 BiomePlacementModifier.getInstance()
-            )
         )
         c.register(
             DuskPlacedFeatures.SAND_SPIKES,
@@ -392,12 +426,10 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.RED_SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
-            *arrayOf<PlacementModifier>(
                 CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
                 BiomePlacementModifier.getInstance()
-            )
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES,
@@ -475,12 +507,10 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.COBBLESTONE_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR),
-            *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
-                BiomePlacementModifier.getInstance()
-            )
+            CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.fixed(256)),
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.COBBLESTONE_SPIKES,
@@ -501,6 +531,37 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
                 Direction.UP, BlockPredicate.matchingBlocks(Blocks.COBBLESTONE), BlockPredicate.IS_AIR, 12
+            ),
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR),
+            CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+            InSquarePlacementModifier.getInstance(),
+            HeightRangePlacementModifier.createUniform(YOffset.BOTTOM, YOffset.fixed(0)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES),
+            CountPlacementModifier.create(100),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.IS_AIR, 12
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF,
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF),
+            CountPlacementModifier.create(100),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            EnvironmentScanPlacementModifier.create(
+                Direction.UP, BlockPredicate.matchingBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.IS_AIR, 12
             ),
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BiomePlacementModifier.getInstance()

@@ -2,7 +2,7 @@ package org.teamvoided.dusks_biomes.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
@@ -16,6 +16,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 //VANILLA
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
             .add(Blocks.COBBLESTONE)
+            .add(Blocks.COBBLED_DEEPSLATE)
             .add(Blocks.SNOW_BLOCK)
             .add(Blocks.ICE)
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
@@ -53,12 +54,15 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.GRAVEL)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+            .addOptionalTag(ConventionalBlockTags.STONES)
+            .addOptionalTag(ConventionalBlockTags.COBBLESTONES)
+            .add(Blocks.COBBLESTONE)
+            .add(Blocks.COBBLED_DEEPSLATE)
             .add(Blocks.PACKED_ICE)
             .add(Blocks.BLUE_ICE)
-            .addOptionalTag(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
+            .addOptionalTag(ConventionalBlockTags.SANDSTONE_BLOCKS)
             .add(Blocks.SANDSTONE)
             .add(Blocks.RED_SANDSTONE)
-            .add(Blocks.COBBLESTONE)
             .forceAddTag(BlockTags.SAND)
     }
 }

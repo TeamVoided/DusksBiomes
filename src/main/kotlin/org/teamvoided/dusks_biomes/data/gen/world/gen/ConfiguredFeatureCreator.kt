@@ -217,34 +217,46 @@ object ConfiguredFeatureCreator {
                 ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_BEES_0002)
             )
         )
-
         c.registerConfiguredFeature(
-            DuskConfiguredFeatures.TREES_SNOWY_CHERRY,
-            Feature.TREE,
-            TreeFeatureConfig.Builder(
-                BlockStateProvider.of(Blocks.CHERRY_LOG),
-                CherryTrunkPlacer(
-                    7, 1, 0,
-                    WeightedListIntProvider(
-                        DataPool.builder<IntProvider>().addWeighted(ConstantIntProvider.create(1), 1)
-                            .addWeighted(ConstantIntProvider.create(2), 1)
-                            .addWeighted(ConstantIntProvider.create(3), 1).build()
+            DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.DARK_OAK_CHECKED), 2 / 3f),
+                    WeightedPlacedFeature(
+                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.SPRUCE_CHECKED),
+                        0.3f
                     ),
-                    UniformIntProvider.create(2, 4),
-                    UniformIntProvider.create(-4, -3),
-                    UniformIntProvider.create(-1, 0)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.FANCY_OAK_CHECKED), 0.125f)
+                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_CHECKED)
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE_ON_SNOW,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(
+                                TreeConfiguredFeatures.DARK_OAK
+                            )
+                        ), 2 / 3f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.SPRUCE)),
+                        0.3f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(
+                                TreeConfiguredFeatures.FANCY_OAK
+                            )
+                        ), 0.125f
+                    )
                 ),
-                BlockStateProvider.of(Blocks.CHERRY_LEAVES),
-                CherryFoliagePlacer(
-                    ConstantIntProvider.create(4),
-                    ConstantIntProvider.create(0),
-                    ConstantIntProvider.create(5),
-                    0.25f, 0.5f,
-                    0.16666667f, 0.33333334f
-                ),
-                TwoLayersFeatureSize(1, 0, 2)
-            ).dirtProvider(BlockStateProvider.of(Blocks.SNOW_BLOCK)).ignoreVines()
-                .decorators(listOf(BeehiveTreeDecorator(0.05f))).build()
+                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.OAK))
+            )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
@@ -511,7 +523,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.IS_AIR, true
+                        Direction.UP, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.UP)
@@ -536,7 +548,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.IS_AIR, true
+                        Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
@@ -588,7 +600,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.IS_AIR, true
+                        Direction.UP, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.UP)
@@ -613,7 +625,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.RED_SANDSTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.IS_AIR, true
+                        Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
@@ -670,11 +682,26 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.ORE_COBBLESTONE,
-            Feature.ORE,
-            OreFeatureConfig(
-                TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
-                Blocks.COBBLESTONE.defaultState,
-                64
+            Feature.RANDOM_BOOLEAN_SELECTOR,
+            RandomBooleanFeatureConfig(
+                PlacedFeatureUtil.placedInline(
+                    Feature.ORE,
+                    OreFeatureConfig(
+                        TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
+                        Blocks.COBBLESTONE.defaultState,
+                        64
+                    ),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                PlacedFeatureUtil.placedInline(
+                    Feature.ORE,
+                    OreFeatureConfig(
+                        TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
+                        Blocks.COBBLED_DEEPSLATE.defaultState,
+                        64
+                    ),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
             )
         )
         c.registerConfiguredFeature(
@@ -712,7 +739,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.COBBLESTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.UP, BlockPredicate.IS_AIR, true
+                        Direction.UP, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.UP)
@@ -737,7 +764,7 @@ object ConfiguredFeatureCreator {
                                 BlockStateProvider.of(Blocks.COBBLESTONE_WALL.defaultState)
                             )
                         ),
-                        Direction.DOWN, BlockPredicate.IS_AIR, true
+                        Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
                     BlockPredicateFilterPlacementModifier.create(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
@@ -745,8 +772,73 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
-
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR,
+            ReefFeatures.LARGE_CAVE_PILLAR,
+            LargeCavePillarFeatureConfig(
+                30,
+                UniformIntProvider.create(3, 19),
+                UniformFloatProvider.create(0.4f, 2.0f),
+                0.33f,
+                UniformFloatProvider.create(0.3f, 0.9f),
+                UniformFloatProvider.create(0.4f, 1.0f),
+                UniformFloatProvider.create(0.0f, 0.3f),
+                4,
+                0.6f,
+                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
+                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(2, 5),
+                                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.UP, BlockPredicate.IS_AIR, false
+                    ),
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.UP)
+                    )
+                )
+            )
+        )
+        c.registerConfiguredFeature(
+            DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                10, PlacedFeatureUtil.placedInline(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnFeatureConfig(
+                        listOf(
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(1, 7),
+                                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE.defaultState)
+                            ),
+                            BlockColumnFeatureConfig.createLayer(
+                                UniformIntProvider.create(2, 5),
+                                BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE_WALL.defaultState)
+                            )
+                        ),
+                        Direction.DOWN, BlockPredicate.IS_AIR, false
+                    ),
+                    BlockPredicateFilterPlacementModifier.create(
+                        BlockPredicate.hasSturdyFace(Direction.DOWN)
+                    )
+                )
+            )
+        )
 
 
 

@@ -125,6 +125,18 @@ object BiomeFeatures {
             GenerationStep.Feature.UNDERGROUND_DECORATION,
             DuskPlacedFeatures.COBBLESTONE_SPIKES_ROOF
         )
+        generationSettings.feature(
+            GenerationStep.Feature.LOCAL_MODIFICATIONS,
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.UNDERGROUND_DECORATION,
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.UNDERGROUND_DECORATION,
+            DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF
+        )
     }
 
     fun addMushroomGroveFeatures(generationSettings: GenerationSettings.Builder) {

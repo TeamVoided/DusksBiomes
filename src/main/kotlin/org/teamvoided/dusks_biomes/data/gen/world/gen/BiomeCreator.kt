@@ -42,6 +42,7 @@ object BiomeCreator {
         c.register(DuskBiomes.SNOWY_WINDSWEPT_FOREST, c.createWindsweptHills(true))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, c.createSnowyOldGrowthTaiga(false))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, c.createSnowyOldGrowthTaiga(true))
+        c.register(DuskBiomes.SNOWY_DARK_GROVE, c.createSnowyDarkGrove())
         c.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, c.createMangroveSwamp(false, true))
         c.register(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP, c.createMangroveSwamp(true, true))
         c.register(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, c.createMangroveSwamp(true, false))
@@ -272,6 +273,48 @@ object BiomeCreator {
             0.15f,
             spawns, generation, DEFAULT_MUSIC
         )
+    }
+
+    fun BootstrapContext<Biome>.createSnowyDarkGrove(): Biome {
+        val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
+        val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+
+        val spawns = SpawnSettings.Builder()
+        val generation = GenerationSettings.Builder(features, carver)
+
+        spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 1, 1, 1))
+            .spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 8, 2, 3))
+            .spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 4, 2, 4))
+        DefaultBiomeFeatures.addCaveMobs(spawns)
+        DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
+        spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
+
+        BiomeFeatures.addBasicFeaturesNoDungeon(generation)
+        BiomeFeatures.addFrozenDungeons(generation)
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE)
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE_ON_SNOW)
+        DefaultBiomeFeatures.addForestFlowers(generation)
+        DefaultBiomeFeatures.addDefaultOres(generation)
+        DefaultBiomeFeatures.addDefaultDisks(generation)
+        DefaultBiomeFeatures.addDefaultFlowers(generation)
+        DefaultBiomeFeatures.addDefaultGrass(generation)
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
+        generation.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            VegetationPlacedFeatures.BROWN_MUSHROOM_OLD_GROWTH
+        )
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_OLD_GROWTH)
+        DefaultBiomeFeatures.addDefaultMushrooms(generation)
+        DefaultBiomeFeatures.addDefaultVegetation(generation)
+        DefaultBiomeFeatures.addEmeraldOre(generation)
+        DefaultBiomeFeatures.addInfestedStone(generation)
+        val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_GROVE)
+        return Biome.Builder().hasPrecipitation(true).temperature(-0.2f).downfall(0.8f).effects(
+            BiomeEffects.Builder().waterColor(DEFAULT_WATER_COLOR).waterFogColor(DEFAULT_WATER_FOG_COLOR)
+                .fogColor(DEFAULT_FOG_COLOR)
+                .skyColor(OverworldBiomeCreator.getSkyColor(-0.2f)).grassColorModifier(GrassColorModifier.DARK_FOREST)
+                .moodSound(BiomeMoodSound.CAVE).music(musicSound).build()
+        ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
     fun BootstrapContext<Biome>.createMangroveSwamp(windswept: Boolean, frozen: Boolean): Biome {

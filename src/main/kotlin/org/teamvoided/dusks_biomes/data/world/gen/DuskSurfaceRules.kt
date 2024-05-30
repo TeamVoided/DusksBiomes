@@ -292,13 +292,16 @@ object DuskSurfaceRules {
         )
 //Non-Vanilla adjacent biomes
         val snowyCherryGrove = condition(
-            biome(DuskBiomes.SNOWY_CHERRY_GROVE),
+            biome(
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.SNOWY_DARK_GROVE
+            ),
             condition(
                 stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(
-                    water(0, 0),
+                    water(-6, 0),
                     sequence(
                         condition(
-                            stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR),
+                            stoneDepth(0, false, 0, VerticalSurfaceType.FLOOR),
                             condition(
                                 powderSnowNoiseThreshold(0.35, 0.6),
                                 block(Blocks.POWDER_SNOW)
@@ -312,6 +315,23 @@ object DuskSurfaceRules {
                             surfaceNoiseThreshold(-1.0),
                             block(Blocks.SNOW_BLOCK)
                         )
+                    )
+                )
+            )
+        )
+        val stonyShore = condition(
+            biome(
+                DuskBiomes.SNOWY_STONY_SHORE
+            ),
+            condition(
+                stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(
+                    water(-6, 0),
+                    sequence(
+                        condition(
+                            gravelNoiseThreshold(-0.05,0.05),
+                            gravel
+                        ),
+                        block(Blocks.STONE)
                     )
                 )
             )
@@ -510,6 +530,7 @@ object DuskSurfaceRules {
                 onFloorAndWater,
                 onFloorInDeepWater,
                 snowyCherryGrove,
+                stonyShore,
                 deepSand,
                 sandstoneDesert,
                 sandOcean
@@ -612,6 +633,9 @@ object DuskSurfaceRules {
 
     fun powderSnowNoiseThreshold(min: Double, max: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.POWDER_SNOW, min, max)
+    }
+    fun gravelNoiseThreshold(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.GRAVEL, min, max)
     }
 }
 
