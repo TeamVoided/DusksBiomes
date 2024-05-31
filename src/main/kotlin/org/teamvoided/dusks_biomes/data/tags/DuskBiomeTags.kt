@@ -7,6 +7,10 @@ import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 object DuskBiomeTags {
 
     val DUSKS_BIOMES = create("dusks_biomes")
+
+    val IS_FROZEN_BADLANDS = create("is_frozen_badlands")
+    val IS_SNOWY_HILL = create("is_snowy_hill")
+
     val HAS_FROZEN_VARIANTS = create("has_snow_variants")
     val HAS_HOT_VARIANTS = create("has_hot_variants")
     val HAS_VILLAGE_SWAMP_STRUCTURE = create("has_structure/has_village_swamp")

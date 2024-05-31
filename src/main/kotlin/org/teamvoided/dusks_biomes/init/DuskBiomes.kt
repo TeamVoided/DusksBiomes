@@ -15,9 +15,9 @@ import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.util.data.Range
 
+
 @Suppress("MagicNumber")
 object DuskBiomes {
-
     val COLD_FOREST = create("cold_forest")
     val COLD_PLAINS = create("cold_plains")
     val WARM_FOREST = create("warm_forest")
@@ -30,6 +30,9 @@ object DuskBiomes {
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
     val SNOWY_DARK_GROVE = create("snowy_dark_grove")
     val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
+    val FROZEN_BADLANDS = create("frozen_badlands")
+    val FROZEN_WOODED_BADLANDS = create("frozen_wooded_badlands")
+    val FROZEN_ERODED_BADLANDS = create("frozen_eroded_badlands")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
     val FROZEN_WINDSWEPT_MANGROVE_SWAMP = create("frozen_windswept_mangrove_swamp")
     val WINDSWEPT_MANGROVE_SWAMP = create("windswept_mangrove_swamp")
@@ -56,7 +59,7 @@ object DuskBiomes {
         val windsweptVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, 0f, false
+                -1F, 0.1f, false
             ),
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
@@ -66,7 +69,7 @@ object DuskBiomes {
         val oldGrowthVariant = of(
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                0F, 1f, false
+                0.1F, 1f, false
             ),
             SubBiomeMatcher.Criterion.ofRange(
                 CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
@@ -125,6 +128,14 @@ object DuskBiomes {
             Range(-0.19, 0.03),          // Continentalness
             Range(0.45, 0.55),         // Erosion
             Range(0.05, 1),         // Weirdness
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, 0.2f, false
+                )
+            )
         )
         BiomePlacement.addSubOverworld(
             Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, of(
@@ -195,7 +206,19 @@ object DuskBiomes {
             Range(-1, 1),            // Humidity
             Range(-0.11, 1),          // Continentalness
             Range(0.55, 1.0),         // Erosion
-            Range(-0.4, 0.4),         // Weirdness
+            Range(0, 0.4),         // Weirdness
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.BADLANDS, Biomes.ERODED_BADLANDS, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1F, -0.35f, false
+                )
+            )
+        )
+        addFrozenBadlands(
+            Range(-0.11, 1),
+            Range(-1, 0.05)
         )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
@@ -203,7 +226,7 @@ object DuskBiomes {
             Range(-1, 1),            // Humidity
             Range(-0.11, 1),          // Continentalness
             Range(0.55, 1.0),         // Erosion
-            Range(-1, -0.933),         // Weirdness
+            Range(0, 0.4),         // Weirdness
         )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
@@ -216,7 +239,7 @@ object DuskBiomes {
         addOverworld(
             FROZEN_WINDSWEPT_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature
-            Range(-1, 0),            // Humidity
+            Range(-1, 0.1),            // Humidity
             Range(-0.11, 1),          // Continentalness
             Range(0.55, 1.0),         // Erosion
             Range(-0.4, 0),         // Weirdness
@@ -224,10 +247,22 @@ object DuskBiomes {
         addOverworld(
             FROZEN_WINDSWEPT_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature
-            Range(-1, 0),            // Humidity
+            Range(-1, 0.1),            // Humidity
             Range(-0.11, 1),          // Continentalness
             Range(0.55, 1.0),         // Erosion
             Range(-1, -0.933),         // Weirdness
+        )
+        BiomePlacement.addSubOverworld(
+            Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, -0.45f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0.55F, 1f, false
+                )
+            )
         )
         BiomePlacement.addSubOverworld(
             Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
@@ -421,6 +456,59 @@ object DuskBiomes {
         weirdness.toParameterRange(),
         offset
     )
+
+    fun addFrozenBadlands(
+        continentalness: Range, erosion: Range
+    ) {
+        addOverworld(
+            FROZEN_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(-0.1, 0.1),      // Humidity
+            continentalness,
+            erosion,
+            Range(-1, -0.05),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(-0.35, 0.1),      // Humidity
+            continentalness,
+            erosion,
+            Range(0.05, 1),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_WOODED_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(0.1, 1),      // Humidity
+            continentalness,
+            erosion,
+            Range(0.05, 1),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_WOODED_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(0.1, 1),      // Humidity
+            continentalness,
+            erosion,
+            Range(-1, -0.05),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_ERODED_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(-1, -0.35),      // Humidity
+            continentalness,
+            erosion,
+            Range(0.05, 1),         // Weirdness
+        )
+        addOverworld(
+            FROZEN_ERODED_BADLANDS,
+            Range(-1, -0.45),        // Temperature
+            Range(-1, -0.1),      // Humidity
+            continentalness,
+            erosion,
+            Range(-1, -0.05),         // Weirdness
+        )
+    }
 
     fun addOverworld(
         biome: RegistryKey<Biome>, temperature: Range, humidity: Range,

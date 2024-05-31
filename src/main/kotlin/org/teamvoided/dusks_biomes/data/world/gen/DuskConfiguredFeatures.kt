@@ -15,7 +15,7 @@ object DuskConfiguredFeatures {
     val MANGROVE_FROZEN_CHECKED = create("tree/mangrove_frozen_checked")
     val TALL_MANGROVE_FROZEN_CHECKED = create("tree/tall_mangrove_frozen_checked")
     val MANGROVE_FROZEN_VEGETATION = create("tree/mangrove_frozen_vegetation")
-    val SWAMP_OAK = create("tree/swamp_oak")
+    val OLD_GROWTH_SWAMP_VEGETATION = create("tree/swamp_oak")
     val FLOWER_SNOWY_CHERRY = create("flower_snowy_cherry")
     val CAVE_GLOW_LICHEN_EXTRA = create("cave/glow_lichen_extra")
     val ORE_COARSE_DIRT = create("cave/ore_coarse_dirt")

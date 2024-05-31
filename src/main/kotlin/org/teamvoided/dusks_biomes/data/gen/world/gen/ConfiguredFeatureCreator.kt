@@ -21,11 +21,11 @@ import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.BlockPredicateFilterPlacementModifier
 import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import net.minecraft.world.gen.foliage.BlobFoliagePlacer
-import net.minecraft.world.gen.foliage.CherryFoliagePlacer
+import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
 import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacement
@@ -37,19 +37,15 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
-import net.minecraft.world.gen.trunk.CherryTrunkPlacer
-import net.minecraft.world.gen.trunk.StraightTrunkPlacer
+import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.reef.init.ReefFeatures
-import java.util.*
-import kotlin.collections.forEach
-import kotlin.collections.listOf
-import kotlin.collections.plus
 import org.teamvoided.reef.world.gen.configured_feature.config.*
+import java.util.*
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
@@ -176,19 +172,37 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            DuskConfiguredFeatures.SWAMP_OAK,
-            Feature.TREE,
-            TreeFeatureConfig.Builder(
-                BlockStateProvider.of(Blocks.OAK_LOG),
-                StraightTrunkPlacer(5, 3, 0),
-                BlockStateProvider.of(Blocks.OAK_LEAVES),
-                BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 3),
-                TwoLayersFeatureSize(1, 0, 1)
-            ).decorators(
-                listOf(LeavesVineTreeDecorator(0.25f))
-            ).build()
+            DuskConfiguredFeatures.OLD_GROWTH_SWAMP_VEGETATION,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
+                        0.05f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
+                        0.025f
+                    )
+//DARK OAK TRUNK DOESN'T REPLACE WATER AAAAAAAAAAAAAAA
+//                    WeightedPlacedFeature(
+//                        PlacedFeatureUtil.placedInline(
+//                            Feature.TREE,
+//                            TreeFeatureConfig.Builder(
+//                                BlockStateProvider.of(Blocks.DARK_OAK_LOG),
+//                                DarkOakTrunkPlacer(6, 2, 1),
+//                                BlockStateProvider.of(Blocks.DARK_OAK_LEAVES),
+//                                DarkOakFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0)),
+//                                ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
+//                            ).ignoreVines().decorators(
+//                                listOf(LeavesVineTreeDecorator(0.25f))
+//                            ).build()
+//                        ), 0.5f
+//                    )
+                ),
+                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK))
+            )
         )
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE,
             Feature.RANDOM_SELECTOR,

@@ -63,7 +63,14 @@ object PlacedFeatureCreator {
                 PlacedFeatureUtil.createCountExtraModifier(2, 0.1f, 1)
             )
         )
-
+        c.register(
+            DuskPlacedFeatures.TREES_FROZEN_BADLANDS,
+            configuredFeatureProvider.getHolderOrThrow(TreeConfiguredFeatures.SPRUCE),
+            VegetationPlacedFeatures.treePlacementModifiers(
+                PlacedFeatureUtil.createCountExtraModifier(5, 0.1f, 1),
+                Blocks.SPRUCE_SAPLING
+            )
+        )
         c.register(
             DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_CHECKED),
@@ -116,7 +123,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SWAMP_OAK),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.OLD_GROWTH_SWAMP_VEGETATION),
             PlacedFeatureUtil.createCountExtraModifier(12, 0.1f, 1),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(2),

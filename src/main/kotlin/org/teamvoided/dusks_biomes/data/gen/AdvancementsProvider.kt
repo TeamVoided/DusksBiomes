@@ -29,12 +29,18 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DuskBiomes.SNOWY_WINDSWEPT_FOREST,
         DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
         DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+        DuskBiomes.SNOWY_DARK_GROVE,
         DuskBiomes.SNOWY_CHERRY_GROVE,
+//Keep these off because they might not stay
+//        DuskBiomes.FROZEN_BADLANDS,
+//        DuskBiomes.FROZEN_WOODED_BADLANDS,
+//        DuskBiomes.FROZEN_ERODED_BADLANDS,
         DuskBiomes.FROZEN_MANGROVE_SWAMP,
         DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
         DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
         DuskBiomes.OLD_GROWTH_SWAMP,
         DuskBiomes.WARM_RIVER,
+        DuskBiomes.RED_DESERT,
         DuskBiomes.RED_WARM_RIVER,
         DuskBiomes.RED_WARM_OCEAN,
         DuskBiomes.RED_LUKEWARM_OCEAN,
@@ -42,13 +48,13 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DuskBiomes.RED_BEACH,
         DuskBiomes.SNOWY_RED_BEACH,
         DuskBiomes.SNOWY_STONY_SHORE,
-        DuskBiomes.RED_DESERT,
         DuskBiomes.MUSHROOM_GROVE,
         DuskBiomes.ERODED_MUSHROOM_ISLAND,
         DuskBiomes.MUSHROOM_CAVES,
         DuskBiomes.FROZEN_CAVERNS,
         DuskBiomes.SAND_CAVES,
-        DuskBiomes.RED_SAND_CAVES
+        DuskBiomes.RED_SAND_CAVES,
+        DuskBiomes.GRAVEL_CAVES
     )
     private val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {

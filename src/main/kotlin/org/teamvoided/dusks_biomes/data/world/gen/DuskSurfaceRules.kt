@@ -6,6 +6,7 @@ import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.noise.NoiseParametersKeys
+import net.minecraft.world.gen.surfacebuilder.SurfaceRules
 import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
@@ -72,6 +73,31 @@ object DuskSurfaceRules {
     fun overworld(): MaterialRule {
         //Sorted like the vanilla surface rule locations https://minecraft.wiki/w/World_generation#Surface
         //Surface rule sequence 1: Floor
+        val woodedBadlands = condition(
+            biome(
+                DuskBiomes.FROZEN_WOODED_BADLANDS
+            ), condition(
+                ON_FLOOR,
+                condition(
+                    aboveY(YOffset.fixed(97), 0),
+                    sequence(
+                        condition(
+                            surfaceNoiseThresholdNoDivision(-0.909, -0.5454),
+                            block(Blocks.COARSE_DIRT)
+                        ),
+                        condition(
+                            surfaceNoiseThresholdNoDivision(-0.1818, 0.1818),
+                            block(Blocks.COARSE_DIRT)
+                        ),
+                        condition(
+                            surfaceNoiseThresholdNoDivision(0.5454, 0.909),
+                            block(Blocks.COARSE_DIRT)
+                        ),
+                        grass
+                    )
+                )
+            )
+        )
         val swampWater = condition(
             biome(
                 DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
@@ -328,10 +354,102 @@ object DuskSurfaceRules {
                     water(-6, 0),
                     sequence(
                         condition(
-                            gravelNoiseThreshold(-0.05,0.05),
+                            gravelNoiseThreshold(-0.05, 0.05),
                             gravel
                         ),
                         block(Blocks.STONE)
+                    )
+                )
+            )
+        )
+        val badlands = condition(
+            biome(
+                DuskBiomes.FROZEN_BADLANDS,
+                DuskBiomes.FROZEN_WOODED_BADLANDS,
+                DuskBiomes.FROZEN_ERODED_BADLANDS
+            ),
+            sequence(
+                condition(
+                    UNDER_FLOOR,
+                    condition(
+                        powderSnowNoiseThreshold(0.45, 0.58),
+                        block(Blocks.POWDER_SNOW)
+
+                    )
+                ),
+                condition(
+                    ON_FLOOR,
+                    sequence(
+                        condition(
+                            water(-6, 0),
+                            sequence(
+                                condition(
+                                    powderSnowNoiseThreshold(0.35, 0.6),
+                                    block(Blocks.POWDER_SNOW)
+                                ),
+                                condition(
+                                    surfaceNoiseThreshold(0.0),
+                                    block(Blocks.SNOW_BLOCK)
+                                )
+                            )
+                        ),
+                        condition(
+                            aboveY(YOffset.fixed(256), 0),
+                            block(Blocks.ORANGE_TERRACOTTA)
+                        ),
+                        condition(
+                            aboveYWithStoneDepth(YOffset.fixed(74), 0),
+                            sequence(
+                                condition(
+                                    surfaceNoiseThresholdNoDivision(-0.909, -0.5454),
+                                    block(Blocks.TERRACOTTA)
+                                ),
+                                condition(
+                                    surfaceNoiseThresholdNoDivision(-0.1818, 0.1818),
+                                    block(Blocks.TERRACOTTA)
+                                ),
+                                condition(
+                                    surfaceNoiseThresholdNoDivision(0.5454, 0.909),
+                                    block(Blocks.TERRACOTTA)
+                                ),
+                                badlands()
+                            )
+                        ),
+                        condition(
+                            water(-1, 0),
+                            sandRed
+                        ),
+                        condition(
+                            not(hole()),
+                            block(Blocks.ORANGE_TERRACOTTA)
+                        ),
+                        condition(
+                            waterWithStoneDepth(-6, -1),
+                            block(Blocks.WHITE_TERRACOTTA)
+                        ),
+                        gravel
+                    )
+                ),
+                condition(
+                    aboveYWithStoneDepth(YOffset.fixed(63), -1),
+                    sequence(
+                        condition(
+                            aboveY(YOffset.fixed(63), 0),
+                            condition(
+                                not(
+                                    aboveYWithStoneDepth(YOffset.fixed(74), 1)
+                                ),
+                                block(Blocks.ORANGE_TERRACOTTA)
+                            )
+                        ),
+                        badlands()
+                    )
+                ),
+                condition(
+                    UNDER_FLOOR,
+                    condition(
+                        waterWithStoneDepth(-6, -1),
+                        block(Blocks.WHITE_TERRACOTTA)
                     )
                 )
             )
@@ -527,6 +645,8 @@ object DuskSurfaceRules {
             abovePreliminarySurface(),
             sequence(
                 swampWater,
+                woodedBadlands,
+                badlands,
                 onFloorAndWater,
                 onFloorInDeepWater,
                 snowyCherryGrove,
@@ -536,16 +656,15 @@ object DuskSurfaceRules {
                 sandOcean
             )
         )
-        val cave = sequence(
-            mushroomCaves,
-            fallingBlockCaves,
-            frozenCaverns
-        )
         // Return a surface-only sequence of surface rules
         return sequence(
             condition(
                 aboveY(YOffset.fixed(-55), 0), sequence(
-                    surface, cave
+                    surface, sequence(
+                        mushroomCaves,
+                        fallingBlockCaves,
+                        frozenCaverns
+                    )
                 )
             )
         )
@@ -611,6 +730,10 @@ object DuskSurfaceRules {
         return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, max / 8.25)
     }
 
+    fun surfaceNoiseThresholdNoDivision(min: Double, max: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE, min, max)
+    }
+
     fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
     }
@@ -634,6 +757,7 @@ object DuskSurfaceRules {
     fun powderSnowNoiseThreshold(min: Double, max: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.POWDER_SNOW, min, max)
     }
+
     fun gravelNoiseThreshold(min: Double, max: Double): MaterialCondition {
         return noiseThreshold(NoiseParametersKeys.GRAVEL, min, max)
     }
