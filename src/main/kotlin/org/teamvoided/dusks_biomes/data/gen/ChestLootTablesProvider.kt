@@ -21,21 +21,23 @@ class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
     SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
     override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
+        val villageSwampHouseChest = LootPool.builder().rolls(uniformNum(3, 8))
+            .with(item(Items.GOLD_NUGGET).apply(setCount(1, 3)))
+            .with(item(Items.SUGAR_CANE).weight(3).apply(setCount(1, 3)))
+            .with(item(Items.BLUE_ORCHID).weight(2).apply(setCount(1, 3)))
+            .with(item(Items.LIGHT_BLUE_DYE).weight(3).apply(setCount(2, 5)))
+            .with(item(Items.CLAY_BALL).weight(4).apply(setCount(2, 4)))
+            .with(item(Items.CLAY))
+            .with(item(Items.BREAD).weight(10).apply(setCount(1, 4)))
+            .with(item(Items.LILY_PAD).weight(6).apply(setCount(1, 2)))
+            .with(item(Items.MOSS_BLOCK))
+            .with(item(Items.BOOK))
+            .with(item(Items.EMERALD).weight(2).apply(setCount(1, 4)))
+
         gen.accept(
             DuskLootTables.VILLAGE_SWAMP_HOUSE_CHEST,
             LootTable.builder().pool(
-                LootPool.builder().rolls(uniformNum(3, 8))
-                    .with(item(Items.GOLD_NUGGET).apply(setCount(1, 3)))
-                    .with(item(Items.SUGAR_CANE).weight(3).apply(setCount(1, 3)))
-                    .with(item(Items.BLUE_ORCHID).weight(2).apply(setCount(1, 3)))
-                    .with(item(Items.LIGHT_BLUE_DYE).weight(3).apply(setCount(2, 5)))
-                    .with(item(Items.CLAY_BALL).weight(4).apply(setCount(2, 4)))
-                    .with(item(Items.CLAY))
-                    .with(item(Items.BREAD).weight(10).apply(setCount(1, 4)))
-                    .with(item(Items.LILY_PAD).weight(6).apply(setCount(1, 2)))
-                    .with(item(Items.MOSS_BLOCK))
-                    .with(item(Items.BOOK))
-                    .with(item(Items.EMERALD).weight(2).apply(setCount(1, 4)))
+                villageSwampHouseChest
                     .with(item(Items.OAK_CHEST_BOAT))
                     .with(item(Items.OAK_SAPLING).weight(4).apply(setCount(1, 2)))
                     .with(item(Items.DARK_OAK_SAPLING).weight(1).apply(setCount(1, 4)))
@@ -44,18 +46,7 @@ class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
         gen.accept(
             DuskLootTables.VILLAGE_MANGROVE_SWAMP_HOUSE_CHEST,
             LootTable.builder().pool(
-                LootPool.builder().rolls(uniformNum(3, 8))
-                    .with(item(Items.GOLD_NUGGET).apply(setCount(1, 3)))
-                    .with(item(Items.SUGAR_CANE).weight(3).apply(setCount(1, 3)))
-                    .with(item(Items.BLUE_ORCHID).weight(2).apply(setCount(1, 3)))
-                    .with(item(Items.LIGHT_BLUE_DYE).weight(3).apply(setCount(2, 5)))
-                    .with(item(Items.CLAY_BALL).weight(4).apply(setCount(2, 4)))
-                    .with(item(Items.CLAY))
-                    .with(item(Items.BREAD).weight(10).apply(setCount(1, 4)))
-                    .with(item(Items.LILY_PAD).weight(6).apply(setCount(1, 2)))
-                    .with(item(Items.MOSS_BLOCK))
-                    .with(item(Items.BOOK))
-                    .with(item(Items.EMERALD).weight(2).apply(setCount(1, 4)))
+                villageSwampHouseChest
                     .with(item(Items.MANGROVE_CHEST_BOAT))
                     .with(item(Items.MANGROVE_PROPAGULE).weight(5).apply(setCount(1, 2)))
             )

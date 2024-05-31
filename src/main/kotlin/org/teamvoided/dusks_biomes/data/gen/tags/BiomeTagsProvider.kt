@@ -75,6 +75,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
+            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
             .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
             .add(DuskBiomes.SNOWY_RED_BEACH)

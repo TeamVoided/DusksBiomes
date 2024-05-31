@@ -31,7 +31,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
         DuskBiomes.SNOWY_DARK_GROVE,
         DuskBiomes.SNOWY_CHERRY_GROVE,
-//Keep these off because they might not stay
+//Keep these off because they might not stay, but keep them in because they look cool :) also it took forever to get their surface rules right and I don't want to remove that
 //        DuskBiomes.FROZEN_BADLANDS,
 //        DuskBiomes.FROZEN_WOODED_BADLANDS,
 //        DuskBiomes.FROZEN_ERODED_BADLANDS,

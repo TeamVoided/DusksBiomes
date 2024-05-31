@@ -216,10 +216,10 @@ object DuskBiomes {
                 )
             )
         )
-        addFrozenBadlands(
-            Range(-0.11, 1),
-            Range(-1, 0.05)
-        )
+//        addFrozenBadlands(
+//            Range(-0.11, 1),
+//            Range(-1, 0.05)
+//        )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature
