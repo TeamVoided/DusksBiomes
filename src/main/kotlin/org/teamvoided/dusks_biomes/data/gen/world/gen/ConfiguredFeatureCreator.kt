@@ -236,6 +236,14 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
+                        0.05f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
+                        0.025f
+                    ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.DARK_OAK_CHECKED), 2 / 3f),
                     WeightedPlacedFeature(
                         placedFeatures.getHolderOrThrow(TreePlacedFeatures.SPRUCE_CHECKED),

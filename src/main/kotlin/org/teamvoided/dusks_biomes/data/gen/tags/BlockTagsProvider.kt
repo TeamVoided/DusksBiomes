@@ -15,54 +15,55 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
 //VANILLA
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-            .add(Blocks.COBBLESTONE)
-            .add(Blocks.COBBLED_DEEPSLATE)
-            .add(Blocks.SNOW_BLOCK)
-            .add(Blocks.ICE)
+            .add(
+                Blocks.COBBLESTONE,
+                Blocks.COBBLED_DEEPSLATE,
+                Blocks.SNOW_BLOCK,
+                Blocks.ICE
+            )
         getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
             .add(Blocks.PODZOL)
         getOrCreateTagBuilder(BlockTags.DEAD_BUSH_PLACEABLE_ON)
-            .add(Blocks.SANDSTONE)
-            .add(Blocks.RED_SANDSTONE)
+            .add(Blocks.SANDSTONE, Blocks.RED_SANDSTONE)
 
 //Dusk Tags
         getOrCreateTagBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
-            .forceAddTag(BlockTags.AZALEA_GROWS_ON)
+            .addOptionalTag(BlockTags.AZALEA_GROWS_ON)
             .add(Blocks.GRAVEL)
         getOrCreateTagBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
-            .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
-            .add(Blocks.POWDER_SNOW)
-            .add(Blocks.SNOW_BLOCK)
-            .add(Blocks.PACKED_ICE)
-            .add(Blocks.ICE)
+            .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
+            .add(
+                Blocks.POWDER_SNOW,
+                Blocks.SNOW_BLOCK,
+                Blocks.PACKED_ICE,
+                Blocks.ICE
+            )
         getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
-            .forceAddTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
-            .add(Blocks.SNOW_BLOCK)
-            .add(Blocks.PACKED_ICE)
+            .addOptionalTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
+            .add(Blocks.SNOW_BLOCK, Blocks.PACKED_ICE)
         getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
-            .forceAddTag(BlockTags.REPLACEABLE)
-            .add(Blocks.POWDER_SNOW)
-            .add(Blocks.ICE)
+            .addOptionalTag(BlockTags.REPLACEABLE)
+            .add(Blocks.POWDER_SNOW, Blocks.ICE)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
-            .forceAddTag(BlockTags.REPLACEABLE)
-            .forceAddTag(BlockTags.DIRT)
-            .forceAddTag(BlockTags.CAVE_VINES)
-            .forceAddTag(BlockTags.SAND)
-            .forceAddTag(BlockTags.SNOW)
-            .add(Blocks.POWDER_SNOW)
-            .add(Blocks.ICE)
-            .add(Blocks.GRAVEL)
+            .addOptionalTag(BlockTags.REPLACEABLE)
+            .addOptionalTag(BlockTags.DIRT)
+            .addOptionalTag(BlockTags.CAVE_VINES)
+            .addOptionalTag(BlockTags.SAND)
+            .addOptionalTag(BlockTags.SNOW)
+            .add(Blocks.POWDER_SNOW, Blocks.ICE, Blocks.GRAVEL)
         getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
-            .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+            .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
             .addOptionalTag(ConventionalBlockTags.STONES)
             .addOptionalTag(ConventionalBlockTags.COBBLESTONES)
-            .add(Blocks.COBBLESTONE)
-            .add(Blocks.COBBLED_DEEPSLATE)
-            .add(Blocks.PACKED_ICE)
-            .add(Blocks.BLUE_ICE)
             .addOptionalTag(ConventionalBlockTags.SANDSTONE_BLOCKS)
-            .add(Blocks.SANDSTONE)
-            .add(Blocks.RED_SANDSTONE)
-            .forceAddTag(BlockTags.SAND)
+            .addOptionalTag(BlockTags.SAND)
+            .add(
+                Blocks.COBBLESTONE,
+                Blocks.COBBLED_DEEPSLATE,
+                Blocks.PACKED_ICE,
+                Blocks.BLUE_ICE,
+                Blocks.SANDSTONE,
+                Blocks.RED_SANDSTONE
+            )
     }
 }

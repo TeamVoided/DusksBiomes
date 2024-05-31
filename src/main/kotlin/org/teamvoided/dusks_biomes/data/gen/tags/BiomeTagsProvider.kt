@@ -16,90 +16,109 @@ import java.util.concurrent.CompletableFuture
 
 class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
-    override fun configure(arg: HolderLookup.Provider?) {
-        getOrCreateTagBuilder(ReefTags.HAS_ERODED_PILLAR)
-            .add(DuskBiomes.FROZEN_ERODED_BADLANDS)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        getOrCreateTagBuilder(DuskBiomeTags.DUSKS_BIOMES)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WARM_PLAINS)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_HILLS)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_FOREST)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .add(DuskBiomes.FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_WOODED_BADLANDS)
-            .add(DuskBiomes.FROZEN_ERODED_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
-            .add(DuskBiomes.WARM_RIVER)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.RED_WARM_RIVER)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-            .add(DuskBiomes.RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.RED_BEACH)
-            .add(DuskBiomes.SNOWY_RED_BEACH)
-            .add(DuskBiomes.SNOWY_STONY_SHORE)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
-            .add(DuskBiomes.GRAVEL_CAVES)
-        getOrCreateTagBuilder(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_WOODED_BADLANDS)
-            .add(DuskBiomes.FROZEN_ERODED_BADLANDS)
-        getOrCreateTagBuilder(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_HILLS)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS)
+    override fun configure(arg: HolderLookup.Provider) {
+        duskTags()
+        duskTagsHasStructure()
+        vanillaTags()
+        vanillaTagIsBiome()
+        vanillaTagsHasStructure()
+        conventionalTagsDimension()
+        conventionalTagsCategory()
+        conventionalTagsOtherBiomeTypes()
+        conventionalTagsClimateAndVegetation()
+        conventionalTagsTerrainDescriptor()
+        villagerBiomeTags()
+        reefTags()
+    }
 
+    fun duskTags() {
+        getOrCreateTagBuilder(DuskBiomeTags.DUSKS_BIOMES)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.WARM_FOREST,
+                DuskBiomes.WARM_PLAINS,
+                DuskBiomes.WINDSWEPT_BIRCH_FOREST,
+                DuskBiomes.SNOWY_WINDSWEPT_HILLS,
+                DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS,
+                DuskBiomes.SNOWY_WINDSWEPT_FOREST,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.FROZEN_BADLANDS,
+                DuskBiomes.FROZEN_WOODED_BADLANDS,
+                DuskBiomes.FROZEN_ERODED_BADLANDS,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP,
+                DuskBiomes.WARM_RIVER,
+                DuskBiomes.RED_DESERT,
+                DuskBiomes.RED_WARM_RIVER,
+                DuskBiomes.RED_WARM_OCEAN,
+                DuskBiomes.RED_LUKEWARM_OCEAN,
+                DuskBiomes.DEEP_RED_LUKEWARM_OCEAN,
+                DuskBiomes.RED_BEACH,
+                DuskBiomes.SNOWY_RED_BEACH,
+                DuskBiomes.SNOWY_STONY_SHORE,
+                DuskBiomes.MUSHROOM_GROVE,
+                DuskBiomes.ERODED_MUSHROOM_ISLAND,
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES,
+                DuskBiomes.GRAVEL_CAVES
+            )
+        getOrCreateTagBuilder(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(DuskBiomes.FROZEN_BADLANDS, DuskBiomes.FROZEN_WOODED_BADLANDS, DuskBiomes.FROZEN_ERODED_BADLANDS)
+        getOrCreateTagBuilder(DuskBiomeTags.IS_SNOWY_HILL)
+            .add(
+                DuskBiomes.WINDSWEPT_BIRCH_FOREST,
+                DuskBiomes.SNOWY_WINDSWEPT_HILLS,
+                DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS
+            )
         getOrCreateTagBuilder(DuskBiomeTags.HAS_FROZEN_VARIANTS)
-            .add(Biomes.DEEP_DARK)
-            .add(Biomes.DEEP_FROZEN_OCEAN)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.SNOWY_RED_BEACH)
-            .add(DuskBiomes.SNOWY_STONY_SHORE)
-            .add(DuskBiomes.FROZEN_CAVERNS)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(Biomes.DEEP_DARK, Biomes.DEEP_FROZEN_OCEAN)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.SNOWY_RED_BEACH,
+                DuskBiomes.SNOWY_STONY_SHORE,
+                DuskBiomes.FROZEN_CAVERNS
+            )
         getOrCreateTagBuilder(DuskBiomeTags.HAS_HOT_VARIANTS)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WARM_PLAINS)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WARM_RIVER)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.RED_WARM_RIVER)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
-//Dusk Structure Tags
+            .add(
+                DuskBiomes.WARM_FOREST,
+                DuskBiomes.WARM_PLAINS,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WARM_RIVER,
+                DuskBiomes.RED_DESERT,
+                DuskBiomes.RED_WARM_RIVER,
+                DuskBiomes.RED_WARM_OCEAN,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES
+            )
+    }
+
+    fun duskTagsHasStructure() {
         getOrCreateTagBuilder(DuskBiomeTags.HAS_VILLAGE_SWAMP_STRUCTURE)
-            .add(Biomes.SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(Biomes.SWAMP, DuskBiomes.OLD_GROWTH_SWAMP)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(Biomes.MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                Biomes.MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP
+            )
 //        getOrCreateTagBuilder(DuskBiomeTags.HAS_DESERT_RUIN)
 //            .add(Biomes.DESERT)
 //            .add(DuskBiomes.WARM_RIVER)
@@ -107,349 +126,369 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
 //            .add(DuskBiomes.RED_DESERT)
 //            .add(DuskBiomes.RED_WARM_RIVER)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_OCEAN_RUIN_RED_WARM)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-            .add(DuskBiomes.RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
+            .add(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
+    }
 
-//Vanilla Tags
+    fun vanillaTags() {
         getOrCreateTagBuilder(BiomeTags.HAS_CLOSER_WATER_FOG)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(BiomeTags.ALLOWS_SURFACE_SLIME_SPAWNS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(BiomeTags.ALLOWS_TROPICAL_FISH_SPAWNS_AT_ANY_HEIGHT)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.INCREASED_FIRE_BURNOUT)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP,
+                DuskBiomes.MUSHROOM_GROVE,
+                DuskBiomes.ERODED_MUSHROOM_ISLAND,
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS
+            )
         getOrCreateTagBuilder(BiomeTags.MORE_FREQUENT_DROWNED_SPAWNS)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.PLAYS_UNDERWATER_MUSIC)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.PRODUCES_CORAL_FROM_BONE_MEAL)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.REQUIRED_OCEAN_MONUMENT_SURROUNDING)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.SNOW_GOLEM_MELTS)
-            .forceAddTag(DuskBiomeTags.HAS_HOT_VARIANTS)
+            .addOptionalTag(DuskBiomeTags.HAS_HOT_VARIANTS)
         getOrCreateTagBuilder(BiomeTags.SPAWNS_COLD_TYPED_FROGS)
-            .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
+            .addOptionalTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         getOrCreateTagBuilder(BiomeTags.SPAWNS_SNOW_FOXES)
-            .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
+            .addOptionalTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         getOrCreateTagBuilder(BiomeTags.SPAWNS_WHITE_RABBITS)
-            .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
+            .addOptionalTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         getOrCreateTagBuilder(BiomeTags.SPAWNS_WARM_TYPED_FROGS)
-            .forceAddTag(DuskBiomeTags.HAS_HOT_VARIANTS)
+            .addOptionalTag(DuskBiomeTags.HAS_HOT_VARIANTS)
         getOrCreateTagBuilder(BiomeTags.WATER_ON_MAP_OUTLINES)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP,
+                DuskBiomes.ERODED_MUSHROOM_ISLAND
+            )
         getOrCreateTagBuilder(BiomeTags.NO_PATROL_SPAWNS)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
+            .add(DuskBiomes.MUSHROOM_GROVE, DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_CAVES)
         getOrCreateTagBuilder(BiomeTags.NO_ZOMBIE_SIEGES)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-//Vanilla Structure Tags
-        getOrCreateTagBuilder(BiomeTags.HAS_IGLOO_STRUCTURE)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_CAVERNS)
-        getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_STRUCTURE)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WARM_PLAINS)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_WINDSWEPT_FOREST)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
-            .add(DuskBiomes.WARM_RIVER)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.RED_WARM_RIVER)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-            .add(DuskBiomes.RED_LUKEWARM_OCEAN)
+            .add(DuskBiomes.MUSHROOM_GROVE, DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_CAVES)
+    }
+
+    fun vanillaTagIsBiome() {
+        getOrCreateTagBuilder(BiomeTags.BEACH)
+            .add(DuskBiomes.RED_BEACH, DuskBiomes.SNOWY_RED_BEACH)
+        getOrCreateTagBuilder(BiomeTags.DEEP_OCEAN)
             .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.RED_BEACH)
-            .add(DuskBiomes.SNOWY_RED_BEACH)
-            .add(DuskBiomes.SNOWY_STONY_SHORE)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
-            .add(DuskBiomes.GRAVEL_CAVES)
+        getOrCreateTagBuilder(BiomeTags.FOREST)
+            .add(Biomes.CHERRY_GROVE)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.WARM_FOREST,
+                DuskBiomes.WINDSWEPT_BIRCH_FOREST,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE
+            )
+        getOrCreateTagBuilder(BiomeTags.HILL)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+        getOrCreateTagBuilder(BiomeTags.MOUNTAIN)
+            .add(Biomes.GROVE)
+            .add(DuskBiomes.SNOWY_DARK_GROVE, DuskBiomes.SNOWY_CHERRY_GROVE)
+        getOrCreateTagBuilder(BiomeTags.OCEAN)
+            .add(DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.RED_WARM_OCEAN)
+        getOrCreateTagBuilder(BiomeTags.RIVER)
+            .add(DuskBiomes.WARM_RIVER, DuskBiomes.RED_WARM_RIVER)
+        getOrCreateTagBuilder(BiomeTags.TAIGA)
+            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
+        getOrCreateTagBuilder(BiomeTags.OVERWORLD)
+            .addOptionalTag(DuskBiomeTags.DUSKS_BIOMES)
+    }
+
+    fun vanillaTagsHasStructure() {
+        getOrCreateTagBuilder(BiomeTags.HAS_IGLOO_STRUCTURE)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_CAVERNS
+            )
+        getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_STRUCTURE)
+            .add(DuskBiomes.COLD_FOREST, DuskBiomes.COLD_PLAINS, DuskBiomes.WARM_FOREST, DuskBiomes.WARM_PLAINS)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .add(
+                DuskBiomes.SNOWY_WINDSWEPT_FOREST,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP,
+                DuskBiomes.WARM_RIVER,
+                DuskBiomes.RED_DESERT,
+                DuskBiomes.RED_WARM_RIVER,
+                DuskBiomes.RED_WARM_OCEAN,
+                DuskBiomes.RED_LUKEWARM_OCEAN,
+                DuskBiomes.DEEP_RED_LUKEWARM_OCEAN,
+                DuskBiomes.RED_BEACH,
+                DuskBiomes.SNOWY_RED_BEACH,
+                DuskBiomes.SNOWY_STONY_SHORE,
+                DuskBiomes.MUSHROOM_GROVE,
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES,
+                DuskBiomes.GRAVEL_CAVES
+            )
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_MESA_STRUCTURE)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)
-            .add(Biomes.SUNFLOWER_PLAINS)
-            .add(Biomes.SAVANNA_PLATEAU)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_PLAINS)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.RED_DESERT)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(Biomes.SUNFLOWER_PLAINS, Biomes.SAVANNA_PLATEAU)
+            .add(DuskBiomes.COLD_PLAINS, DuskBiomes.WARM_PLAINS, DuskBiomes.RED_DESERT)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_STANDARD_STRUCTURE)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_PLAINS)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
+            .add(
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.WARM_PLAINS,
+                DuskBiomes.MUSHROOM_GROVE,
+                DuskBiomes.ERODED_MUSHROOM_ISLAND,
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS
+            )
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_DESERT_STRUCTURE)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.RED_DESERT, DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_MOUNTAIN_STRUCTURE)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(DuskBiomes.SNOWY_STONY_SHORE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST, DuskBiomes.SNOWY_STONY_SHORE, DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_OCEAN_STRUCTURE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_SWAMP_STRUCTURE)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(BiomeTags.TRAIL_RUINS_HAS_STRUCTURE)
-            .add(Biomes.DARK_FOREST)
-            .add(Biomes.BIRCH_FOREST)
-            .add(Biomes.BAMBOO_JUNGLE)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
+            .add(Biomes.DARK_FOREST, Biomes.BIRCH_FOREST, Biomes.BAMBOO_JUNGLE)
+            .add(
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_DARK_GROVE
+            )
         getOrCreateTagBuilder(BiomeTags.HAS_SWAMP_HUT_STRUCTURE)
             .add(DuskBiomes.OLD_GROWTH_SWAMP)
         getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_PLAINS_STRUCTURE)
             .add(Biomes.SUNFLOWER_PLAINS)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_PLAINS)
+            .add(DuskBiomes.COLD_PLAINS, DuskBiomes.WARM_PLAINS)
         getOrCreateTagBuilder(BiomeTags.STRONGHOLD_BIASED_TO)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WARM_PLAINS)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
-            .add(DuskBiomes.GRAVEL_CAVES)
-//Vanilla Is Biome Tags
-        getOrCreateTagBuilder(BiomeTags.BEACH)
-            .add(DuskBiomes.RED_BEACH)
-            .add(DuskBiomes.SNOWY_RED_BEACH)
-        getOrCreateTagBuilder(BiomeTags.DEEP_OCEAN)
-            .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
-        getOrCreateTagBuilder(BiomeTags.FOREST)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(Biomes.CHERRY_GROVE)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-        getOrCreateTagBuilder(BiomeTags.HILL)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-        getOrCreateTagBuilder(BiomeTags.MOUNTAIN)
-            .add(Biomes.GROVE)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-        getOrCreateTagBuilder(BiomeTags.OCEAN)
-            .add(DuskBiomes.RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.RED_WARM_OCEAN)
-        getOrCreateTagBuilder(BiomeTags.RIVER)
-            .add(DuskBiomes.WARM_RIVER)
-            .add(DuskBiomes.RED_WARM_RIVER)
-        getOrCreateTagBuilder(BiomeTags.TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-        getOrCreateTagBuilder(BiomeTags.OVERWORLD)
-            .forceAddTag(DuskBiomeTags.DUSKS_BIOMES)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.WARM_FOREST,
+                DuskBiomes.WARM_PLAINS,
+                DuskBiomes.WINDSWEPT_BIRCH_FOREST,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.RED_DESERT,
+                DuskBiomes.MUSHROOM_GROVE,
+                DuskBiomes.ERODED_MUSHROOM_ISLAND,
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES,
+                DuskBiomes.GRAVEL_CAVES
+            )
+    }
 
-//Fabric Tags
-//  Category
+    fun conventionalTagsDimension() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_OVERWORLD)
-            .forceAddTag(DuskBiomeTags.DUSKS_BIOMES)
+            .addOptionalTag(DuskBiomeTags.DUSKS_BIOMES)
+    }
+
+    fun conventionalTagsCategory() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_WINDSWEPT)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
             .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_PLAINS)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.WARM_PLAINS)
+            .add(DuskBiomes.COLD_PLAINS, DuskBiomes.WARM_PLAINS)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_ICY)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_CAVERNS)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_CAVERNS
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_SNOWY)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .add(
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_BIRCH_FOREST)
             .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_DESERT)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.RED_DESERT, DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_SWAMP)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_MUSHROOM)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
+            .add(DuskBiomes.MUSHROOM_GROVE, DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_CAVES)
+    }
 
-//  Other Types
+    fun conventionalTagsOtherBiomeTypes() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_BADLANDS)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_CAVE)
-            .add(DuskBiomes.MUSHROOM_CAVES)
-            .add(DuskBiomes.FROZEN_CAVERNS)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(
+                DuskBiomes.MUSHROOM_CAVES,
+                DuskBiomes.FROZEN_CAVERNS,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES,
+                DuskBiomes.GRAVEL_CAVES
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_SHALLOW_OCEAN)
-            .add(DuskBiomes.RED_LUKEWARM_OCEAN)
-            .add(DuskBiomes.RED_WARM_OCEAN)
+            .add(DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.RED_WARM_OCEAN)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_DEEP_OCEAN)
             .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
         getOrCreateTagBuilder(ConventionalBiomeTags.NO_DEFAULT_MONSTERS)
-            .add(DuskBiomes.MUSHROOM_GROVE)
-            .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-            .add(DuskBiomes.MUSHROOM_CAVES)
+            .add(DuskBiomes.MUSHROOM_GROVE, DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_CAVES)
+    }
 
-//  Climate and Vegetation
+    fun conventionalTagsClimateAndVegetation() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_TEMPERATE_OVERWORLD)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_HOT_OVERWORLD)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WARM_PLAINS)
+            .add(DuskBiomes.WARM_FOREST, DuskBiomes.WARM_PLAINS)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_WET_OVERWORLD)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_DRY_OVERWORLD)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(DuskBiomes.RED_DESERT, DuskBiomes.SAND_CAVES, DuskBiomes.RED_SAND_CAVES)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_DENSE_OVERWORLD)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.MUSHROOM_GROVE)
+            .add(DuskBiomes.SNOWY_DARK_GROVE, DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, DuskBiomes.MUSHROOM_GROVE)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_SPARSE_OVERWORLD)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
             .add(DuskBiomes.FROZEN_WOODED_BADLANDS)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_CONIFEROUS_TREE)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.FROZEN_WOODED_BADLANDS)
+            .add(DuskBiomes.COLD_FOREST, DuskBiomes.SNOWY_DARK_GROVE, DuskBiomes.FROZEN_WOODED_BADLANDS)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_DECIDUOUS_TREE)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.WARM_FOREST)
-            .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.WARM_FOREST,
+                DuskBiomes.WINDSWEPT_BIRCH_FOREST,
+                DuskBiomes.SNOWY_DARK_GROVE
+            )
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_JUNGLE_TREE)
             .add(DuskBiomes.WARM_FOREST)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_FLORAL)
             .add(DuskBiomes.SNOWY_CHERRY_GROVE)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_OLD_GROWTH)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
+            .add(
+                DuskBiomes.OLD_GROWTH_SWAMP,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA
+            )
+    }
 
-//  Terrain Descriptor
+    fun conventionalTagsTerrainDescriptor() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_MOUNTAIN_SLOPE)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
+            .add(DuskBiomes.SNOWY_DARK_GROVE, DuskBiomes.SNOWY_CHERRY_GROVE)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_STONY_SHORES)
             .add(DuskBiomes.SNOWY_STONY_SHORE)
+    }
 
-//Villager Biome Tags
+    fun reefTags() {
+        getOrCreateTagBuilder(ReefTags.HAS_ERODED_PILLAR)
+            .add(DuskBiomes.FROZEN_ERODED_BADLANDS, DuskBiomes.ERODED_MUSHROOM_ISLAND)
+    }
+
+    fun villagerBiomeTags() {
         getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_TAIGA)
-            .add(DuskBiomes.COLD_FOREST)
-            .add(DuskBiomes.COLD_PLAINS)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
+            .add(
+                DuskBiomes.COLD_FOREST,
+                DuskBiomes.COLD_PLAINS,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA
+            )
         getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_SNOWY)
-            .add(DuskBiomes.SNOWY_DARK_GROVE)
-            .add(DuskBiomes.SNOWY_CHERRY_GROVE)
-            .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
-            .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
-            .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.SNOWY_RED_BEACH)
-            .add(DuskBiomes.SNOWY_STONY_SHORE)
-            .add(DuskBiomes.FROZEN_CAVERNS)
+            .addOptionalTag(DuskBiomeTags.IS_SNOWY_HILL)
+            .addOptionalTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
+            .add(
+                DuskBiomes.SNOWY_DARK_GROVE,
+                DuskBiomes.SNOWY_CHERRY_GROVE,
+                DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+                DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.SNOWY_RED_BEACH,
+                DuskBiomes.SNOWY_STONY_SHORE,
+                DuskBiomes.FROZEN_CAVERNS
+            )
         getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_SWAMP)
-            .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP)
-            .add(DuskBiomes.OLD_GROWTH_SWAMP)
+            .add(
+                DuskBiomes.FROZEN_MANGROVE_SWAMP,
+                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
+                DuskBiomes.OLD_GROWTH_SWAMP
+            )
         getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_DESERT)
-            .add(DuskBiomes.WARM_RIVER)
-            .add(DuskBiomes.RED_WARM_RIVER)
-            .add(DuskBiomes.RED_DESERT)
-            .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(
+                DuskBiomes.WARM_RIVER,
+                DuskBiomes.RED_WARM_RIVER,
+                DuskBiomes.RED_DESERT,
+                DuskBiomes.SAND_CAVES,
+                DuskBiomes.RED_SAND_CAVES
+            )
     }
 }
