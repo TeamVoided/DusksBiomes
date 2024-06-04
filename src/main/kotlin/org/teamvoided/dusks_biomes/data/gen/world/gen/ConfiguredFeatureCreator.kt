@@ -55,8 +55,6 @@ object ConfiguredFeatureCreator {
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
 
-        val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
-
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
             SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
@@ -884,12 +882,13 @@ object ConfiguredFeatureCreator {
         )
 
 //Structure Piece features
+        val procDesertWell = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DESERT_WELL,
             ReefFeatures.STRUCTURE_PIECE,
             StructurePieceFeatureConfig(
                 id("feature/desert_well"),
-                procEmpty,
+                procDesertWell,
                 8,
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
@@ -899,7 +898,7 @@ object ConfiguredFeatureCreator {
             ReefFeatures.STRUCTURE_PIECE,
             StructurePieceFeatureConfig(
                 id("feature/red_desert_well"),
-                procEmpty,
+                procDesertWell,
                 8,
                 Heightmap.Type.OCEAN_FLOOR_WG,
             )

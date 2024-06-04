@@ -596,7 +596,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_DESERT_WELL,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.DESERT_WELL),
-            RarityFilterPlacementModifier.create(50),
+            RarityFilterPlacementModifier.create(10),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(
@@ -611,7 +611,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.CAVE_RED_DESERT_WELL,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
-            RarityFilterPlacementModifier.create(50),
+            RarityFilterPlacementModifier.create(10),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
             EnvironmentScanPlacementModifier.create(

@@ -460,8 +460,8 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_weaponsmith_1", procHouse, 2),
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_temple_1", procHouse, 2),
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_temple_2", procHouse),
-                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_farm_1",procHouse,9),
-                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_farm_2",procHouse,7),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_farm_1", procHouse, 9),
+                    pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_farm_2", procHouse, 7),
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_animal_pen_1", procHouse, 2),
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_animal_pen_2", procHouse, 2),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
