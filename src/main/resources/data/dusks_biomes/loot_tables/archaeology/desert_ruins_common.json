@@ -79,5 +79,5 @@
 			]
 		}
 	],
-	"random_sequence": "minecraft:archaeology/desert_ruins_common"
+	"random_sequence": "dusks_biomes:archaeology/desert_ruins_common"
 }
