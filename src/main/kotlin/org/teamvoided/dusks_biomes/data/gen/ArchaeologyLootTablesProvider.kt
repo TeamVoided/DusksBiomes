@@ -23,7 +23,7 @@ class ArchaeologyLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<Ho
     SimpleFabricLootTableProvider(o, r, ARCHAEOLOGY) {
 
     //ArchaeologyLootTableGenerator <- Vanilla
-    override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
+    override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         //desert_well_archaeology
         gen.accept(

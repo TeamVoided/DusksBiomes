@@ -77,7 +77,7 @@ object BiomeCreator {
         val generation = SpawnSettings.Builder()
 
         DefaultBiomeFeatures.addFarmAnimals(generation)
-        DefaultBiomeFeatures.addBatsAndMonsters(generation)
+        DefaultBiomeFeatures.method_30581(generation)
         if (cold) {
             generation.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 2, 2, 3))
             generation.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 6, 2, 4))
@@ -157,7 +157,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation)
         DefaultBiomeFeatures.addFarmAnimals(spawns)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
         return OverworldBiomeCreator.create(
             true,
             0.6f,
@@ -176,7 +176,7 @@ object BiomeCreator {
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.LLAMA, 5, 4, 6))
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
 
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -211,7 +211,7 @@ object BiomeCreator {
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 4, 2, 3))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 8, 2, 4))
         if (spruce) {
-            DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+            DefaultBiomeFeatures.method_30581(spawns)
         } else {
             DefaultBiomeFeatures.addCaveMobs(spawns)
             DefaultBiomeFeatures.addMonsters(spawns, 100, 25, 100, false)
@@ -373,7 +373,7 @@ object BiomeCreator {
             DefaultBiomeFeatures.addCaveMobs(spawns)
             DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
             spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
-        } else DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        } else DefaultBiomeFeatures.method_30581(spawns)
 
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
@@ -458,7 +458,7 @@ object BiomeCreator {
         val generation = GenerationSettings.Builder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
         DefaultBiomeFeatures.addFossils(generation)
@@ -554,7 +554,7 @@ object BiomeCreator {
 
         spawns.spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.PUFFERFISH, 15, 1, 3))
         DefaultBiomeFeatures.addWarmOceanMobs(spawns, 10, 4)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
 
         OverworldBiomeCreator.addBasicFeatures(generation)
@@ -600,7 +600,7 @@ object BiomeCreator {
         if (!stony && !snowy) {
             spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.TURTLE, 5, 2, 5))
         }
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
         val generation = GenerationSettings.Builder(features, carver)
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -715,7 +715,7 @@ object BiomeCreator {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
+        DefaultBiomeFeatures.method_30581(spawns)
         val generation = GenerationSettings.Builder(features, carver)
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)

@@ -1,6 +1,6 @@
 package org.teamvoided.dusks_biomes.data.gen.tags
 
-import com.theendercore.biome_tag_villagers.BiomeTagVillagers
+//import com.theendercore.biome_tag_villagers.BiomeTagVillagers
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -454,7 +454,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     }
 
     fun villagerBiomeTags() {
-        getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_TAIGA)
+      /*  getOrCreateTagBuilder(BiomeTagVillagers.VILLAGER_TAIGA)
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.COLD_PLAINS)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
@@ -481,6 +481,6 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.RED_WARM_RIVER)
             .add(DuskBiomes.RED_DESERT)
             .add(DuskBiomes.SAND_CAVES)
-            .add(DuskBiomes.RED_SAND_CAVES)
+            .add(DuskBiomes.RED_SAND_CAVES)*/
     }
 }

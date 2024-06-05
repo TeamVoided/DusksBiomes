@@ -19,5 +19,7 @@ object DusksBiomesMod {
         DuskBiomes.init()
     }
 
-    fun id(path: String) = Identifier(MODID, path)
+    fun id(path: String) = Identifier.method_60655(MODID, path)
+    fun id(namespace: String, path: String) = Identifier.method_60655(namespace, path)
+    fun mc(path: String) = Identifier.method_60656(path)
 }

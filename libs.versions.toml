@@ -1,13 +1,13 @@
 [versions]
-kotlin = "1.9.23"
-fabric-loom = "1.6.3"
+kotlin = "2.0.0"
+fabric-loom = "1.6-SNAPSHOT"
 iridium = "3.2.0"
 
-farrow = "1.0.0+arrow.1.2.3"
-reef = "0.1.1"
+farrow = "1.0.0+arrow.1.2.4"
+reef = "0.1.2"
 
-biolith = "2.1.0-alpha.4"
-biome-tag-villagers = "1.0.0"
+biolith = "2.2.0-alpha.1"
+biome-tag-villagers = "1.1.0"
 #lithostitched = oq7IWIMY
 
 [libraries]

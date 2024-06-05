@@ -7,11 +7,11 @@ import com.terraformersmc.biolith.api.biome.SubBiomeMatcher.of
 import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.biome.source.util.MultiNoiseUtil.NoiseHypercube
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
 import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.util.data.Range
 
@@ -439,7 +439,7 @@ object DuskBiomes {
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
 //      namespace should be the identical to the namespace of all biomes to which the rules apply.
-        SurfaceGeneration.addOverworldSurfaceRules(Identifier("rules/overworld"), DuskSurfaceRules.overworld())
+        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
     }
 
     fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))

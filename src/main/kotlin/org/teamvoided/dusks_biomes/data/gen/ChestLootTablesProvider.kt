@@ -19,7 +19,7 @@ import java.util.function.BiConsumer
 @Suppress("MagicNumber")
 class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
-    override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
+    override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         val villageSwampHouseChest = LootPool.builder().rolls(uniformNum(3, 8))
             .with(item(Items.GOLD_NUGGET).apply(setCount(1, 3)))

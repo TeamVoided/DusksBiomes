@@ -10,8 +10,8 @@ import net.minecraft.data.server.advancement.AdventureAdvancementTabGenerator
 import net.minecraft.item.Items
 import net.minecraft.registry.HolderLookup
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -56,7 +56,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DuskBiomes.RED_SAND_CAVES,
         DuskBiomes.GRAVEL_CAVES
     )
-    private val adventuringTime = AdvancementHolder(Identifier("adventure/adventuring_time"), null)
+    private val adventuringTime = AdvancementHolder(mc("adventure/adventuring_time"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
         AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
             .display(
