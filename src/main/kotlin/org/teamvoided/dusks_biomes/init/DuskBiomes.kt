@@ -265,7 +265,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.05F, 1f, false
+                    -1F, 0.05f, false
                 )
             )
         )
@@ -277,7 +277,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.05f, false
+                    -0.05f, 1f, false
                 )
             )
         )

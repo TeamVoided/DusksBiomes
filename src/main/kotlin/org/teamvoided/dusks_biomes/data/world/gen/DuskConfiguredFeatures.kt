@@ -9,7 +9,7 @@ import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 object DuskConfiguredFeatures {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val TREES_OAK_BIRCH_SPRUCE = create("tree/trees_oak_birch_spruce")
-    val TREES_OAK_BIRCH_JUNGLE = create("tree/trees_oak_birch_jungle")
+    val TREES_OAK_BIRCH_ACACIA = create("tree/trees_oak_birch_acacia")
     val TREES_OAK_DARK_SPRUCE = create("tree/trees_oak_dark_spruce")
     val TREES_OAK_DARK_SPRUCE_ON_SNOW = create("tree/trees_oak_dark_spruce_on_snow")
     val MANGROVE_FROZEN_CHECKED = create("tree/mangrove_frozen_checked")

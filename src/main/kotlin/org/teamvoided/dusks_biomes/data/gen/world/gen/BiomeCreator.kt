@@ -538,9 +538,11 @@ object BiomeCreator {
         val generation = GenerationSettings.Builder(feature, carver)
 
         spawns.spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.PUFFERFISH, 15, 1, 3))
-        DefaultBiomeFeatures.addWarmOceanMobs(spawns, 10, 4)
-        DefaultBiomeFeatures.method_30581(spawns)
+        spawns.spawn(SpawnGroup.WATER_CREATURE, SpawnEntry(EntityType.SQUID, 10, 4, 4))
+        spawns.spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.TROPICAL_FISH, 25, 8, 8))
+        spawns.spawn(SpawnGroup.WATER_CREATURE, SpawnEntry(EntityType.DOLPHIN, 1, 1, 2))
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
+        DefaultBiomeFeatures.method_30581(spawns)
 
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)

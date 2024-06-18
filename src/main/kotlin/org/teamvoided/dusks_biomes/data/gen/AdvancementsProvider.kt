@@ -59,7 +59,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
             .display(
                 Items.IRON_BOOTS,
                 Text.of("Strange Lands"),
-                Text.of("Visit all the biomes added by Dusk Autumns Worldgen!"),
+                Text.of("Visit all the biomes added by Dusks Biomes!"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,

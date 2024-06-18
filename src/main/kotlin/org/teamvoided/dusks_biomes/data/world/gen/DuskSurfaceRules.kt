@@ -233,10 +233,6 @@ object DuskSurfaceRules {
             ),
             block(Blocks.MUD)
         )
-        val myceliumSurface = condition(
-            biome(DuskBiomes.ERODED_MUSHROOM_ISLAND, DuskBiomes.MUSHROOM_GROVE),
-            block(Blocks.MYCELIUM)
-        )
 
         //Deep under floor with water above (or not)
         val deepWindsweptHillSurface = condition(
@@ -616,15 +612,14 @@ object DuskSurfaceRules {
                     windsweptBirchSurface,
                     windsweptGravelSurface,
                     podzolAndCoarseDirt,
-                    mud,
-                    myceliumSurface
+                    mud
                 )
             )
         )
         val onFloorInDeepWater = condition(
             DEEP_UNDER_FLOOR, condition(
                 water(-6, 0), sequence(
-                    deepWindsweptGravelSurface,
+                    deepWindsweptHillSurface,
                     sandSurface,
                     deepWindsweptBirchSurface,
                     deepWindsweptGravelSurface,

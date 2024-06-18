@@ -21,11 +21,9 @@ import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.BlockPredicateFilterPlacementModifier
 import net.minecraft.world.gen.feature.*
-import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
 import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacement
@@ -37,7 +35,6 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
-import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
@@ -171,7 +168,7 @@ object ConfiguredFeatureCreator {
         )
 //DARK OAK TRUNK DOESN'T REPLACE WATER AAAAAAAAAAAAAAA
         c.registerConfiguredFeature(
-            DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE,
+            DuskConfiguredFeatures.TREES_OAK_BIRCH_ACACIA,
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
@@ -180,7 +177,7 @@ object ConfiguredFeatureCreator {
                         placedFeatures.getHolderOrThrow(TreePlacedFeatures.FANCY_OAK_BEES_0002),
                         0.2f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.JUNGLE_TREE), 0.15f)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.ACACIA_CHECKED), 0.15f)
                 ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_BEES_0002)
             )
         )

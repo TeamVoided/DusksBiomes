@@ -106,21 +106,21 @@ object PlacedFeatureCreator {
         )
         c.register(
             DuskPlacedFeatures.TREES_COLD_PLAINS,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_SPRUCE),
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.TREES_WINDSWEPT_HILLS),
             VegetationPlacedFeatures.treePlacementModifiers(
                 PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_WARM_FOREST,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE),
+            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_ACACIA),
             VegetationPlacedFeatures.treePlacementModifiers(
                 PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_WARM_PLAINS,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE),
+            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.TREES_SAVANNA),
             VegetationPlacedFeatures.treePlacementModifiers(
                 PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1)
             )
