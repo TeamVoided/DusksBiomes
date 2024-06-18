@@ -41,15 +41,12 @@ object BiomeCreator {
         c.register(DuskBiomes.SNOWY_WINDSWEPT_FOREST, c.createSnowyWindsweptHills(true))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, c.createSnowyOldGrowthTaiga(false))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, c.createSnowyOldGrowthTaiga(true))
-        c.register(DuskBiomes.SNOWY_DARK_GROVE, c.createSnowyDarkGrove())
+        c.register(DuskBiomes.DARK_GROVE, c.createDarkGrove())
         c.register(DuskBiomes.SNOWY_CHERRY_GROVE, c.createSnowyCherryGrove())
         c.register(DuskBiomes.FROZEN_BADLANDS, c.createFrozenBadlands(false))
         c.register(DuskBiomes.FROZEN_WOODED_BADLANDS, c.createFrozenBadlands(true))
         c.register(DuskBiomes.FROZEN_ERODED_BADLANDS, c.createFrozenBadlands(false))
-        c.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, c.createMangroveSwamp(false, true))
-        c.register(DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP, c.createMangroveSwamp(true, true))
-        c.register(DuskBiomes.WINDSWEPT_MANGROVE_SWAMP, c.createMangroveSwamp(true, false))
-        c.register(DuskBiomes.OLD_GROWTH_SWAMP, c.createSwamp(true))
+        c.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, c.createMangroveSwamp(true))
         c.register(DuskBiomes.WARM_RIVER, c.createWarmRiver(false))
         c.register(DuskBiomes.RED_DESERT, c.createDesert(true, false))
         c.register(DuskBiomes.RED_WARM_RIVER, c.createWarmRiver(true))
@@ -241,7 +238,7 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createSnowyDarkGrove(): Biome {
+    fun BootstrapContext<Biome>.createDarkGrove(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
@@ -362,7 +359,7 @@ object BiomeCreator {
         ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
-    fun BootstrapContext<Biome>.createMangroveSwamp(windswept: Boolean, frozen: Boolean): Biome {
+    fun BootstrapContext<Biome>.createMangroveSwamp(frozen: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
@@ -383,28 +380,16 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addGrassAndClayDisks(generation)
         if (frozen) {
-            if (windswept) {
-                generation.feature(
-                    GenerationStep.Feature.VEGETAL_DECORATION,
-                    DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE_FROZEN
-                )
-            } else {
                 generation.feature(
                     GenerationStep.Feature.VEGETAL_DECORATION,
                     DuskPlacedFeatures.TREES_MANGROVE_FROZEN
                 )
-            }
             generation.feature(
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 VegetationPlacedFeatures.FLOWER_SWAMP
             )
         } else {
-            if (windswept) generation.feature(
-                GenerationStep.Feature.VEGETAL_DECORATION,
-                DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE
-            )
-            else DefaultBiomeFeatures.addMangroveSwampFeatures(generation)
-
+            DefaultBiomeFeatures.addMangroveSwampFeatures(generation)
         }
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)

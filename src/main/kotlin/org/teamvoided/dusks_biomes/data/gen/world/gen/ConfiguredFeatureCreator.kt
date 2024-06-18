@@ -169,38 +169,7 @@ object ConfiguredFeatureCreator {
                 placedFeatures.getHolderOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
             )
         )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.OLD_GROWTH_SWAMP_VEGETATION,
-            Feature.RANDOM_SELECTOR,
-            RandomFeatureConfig(
-                listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
-                        0.05f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
-                        0.025f
-                    )
 //DARK OAK TRUNK DOESN'T REPLACE WATER AAAAAAAAAAAAAAA
-//                    WeightedPlacedFeature(
-//                        PlacedFeatureUtil.placedInline(
-//                            Feature.TREE,
-//                            TreeFeatureConfig.Builder(
-//                                BlockStateProvider.of(Blocks.DARK_OAK_LOG),
-//                                DarkOakTrunkPlacer(6, 2, 1),
-//                                BlockStateProvider.of(Blocks.DARK_OAK_LEAVES),
-//                                DarkOakFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0)),
-//                                ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
-//                            ).ignoreVines().decorators(
-//                                listOf(LeavesVineTreeDecorator(0.25f))
-//                            ).build()
-//                        ), 0.5f
-//                    )
-                ),
-                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.SWAMP_OAK))
-            )
-        )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.TREES_OAK_BIRCH_JUNGLE,
             Feature.RANDOM_SELECTOR,

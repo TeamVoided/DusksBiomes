@@ -18,7 +18,7 @@ object BiomeFeatures {
     }
 
     fun addOldGrowthSwampFeatures(generationSettings: GenerationSettings.Builder) {
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP)
+//        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,

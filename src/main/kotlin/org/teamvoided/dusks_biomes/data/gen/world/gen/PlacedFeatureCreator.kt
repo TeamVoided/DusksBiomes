@@ -98,42 +98,6 @@ object PlacedFeatureCreator {
             )
         )
         c.register(
-            DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE_FROZEN,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_VEGETATION),
-            CountPlacementModifier.create(3),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(5),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance(),
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultState, BlockPos.ORIGIN)
-            )
-        )
-        c.register(
-            DuskPlacedFeatures.TREES_WINDSWEPT_MANGROVE,
-            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.MANGROVE_VEGETATION),
-            CountPlacementModifier.create(5),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(5),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance(),
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultState, BlockPos.ORIGIN)
-            )
-        )
-        c.register(
-            DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP,
-            configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.OLD_GROWTH_SWAMP_VEGETATION),
-            PlacedFeatureUtil.createCountExtraModifier(12, 0.1f, 1),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(2),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance(),
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultState, BlockPos.ORIGIN)
-            )
-        )
-        c.register(
             DuskPlacedFeatures.TREES_COLD_FOREST,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_SPRUCE),
             VegetationPlacedFeatures.treePlacementModifiers(

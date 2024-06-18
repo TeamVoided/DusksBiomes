@@ -6,7 +6,6 @@ import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.noise.NoiseParametersKeys
-import net.minecraft.world.gen.surfacebuilder.SurfaceRules
 import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
@@ -100,10 +99,7 @@ object DuskSurfaceRules {
         )
         val swampWater = condition(
             biome(
-                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP,
-                DuskBiomes.OLD_GROWTH_SWAMP
+                DuskBiomes.FROZEN_MANGROVE_SWAMP
             ), condition(
                 ON_FLOOR, sequence(
                     condition(
@@ -233,9 +229,7 @@ object DuskSurfaceRules {
         )
         val mud = condition(
             biome(
-                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+                DuskBiomes.FROZEN_MANGROVE_SWAMP
             ),
             block(Blocks.MUD)
         )
@@ -295,9 +289,7 @@ object DuskSurfaceRules {
         )
         val deepMud = condition(
             biome(
-                DuskBiomes.WINDSWEPT_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_MANGROVE_SWAMP,
-                DuskBiomes.FROZEN_WINDSWEPT_MANGROVE_SWAMP
+                DuskBiomes.FROZEN_MANGROVE_SWAMP
             ),
             block(Blocks.MUD)
         )
@@ -320,7 +312,7 @@ object DuskSurfaceRules {
         val snowyCherryGrove = condition(
             biome(
                 DuskBiomes.SNOWY_CHERRY_GROVE,
-                DuskBiomes.SNOWY_DARK_GROVE
+                DuskBiomes.DARK_GROVE
             ),
             condition(
                 stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(

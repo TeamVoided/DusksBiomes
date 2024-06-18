@@ -28,15 +28,12 @@ object DuskBiomes {
     val SNOWY_WINDSWEPT_FOREST = create("snowy_windswept_forest")
     val SNOWY_OLD_GROWTH_PINE_TAIGA = create("snowy_old_growth_pine_taiga")
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
-    val SNOWY_DARK_GROVE = create("snowy_dark_grove")
+    val DARK_GROVE = create("dark_grove")
     val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
     val FROZEN_BADLANDS = create("frozen_badlands")
     val FROZEN_WOODED_BADLANDS = create("frozen_wooded_badlands")
     val FROZEN_ERODED_BADLANDS = create("frozen_eroded_badlands")
     val FROZEN_MANGROVE_SWAMP = create("frozen_mangrove_swamp")
-    val FROZEN_WINDSWEPT_MANGROVE_SWAMP = create("frozen_windswept_mangrove_swamp")
-    val WINDSWEPT_MANGROVE_SWAMP = create("windswept_mangrove_swamp")
-    val OLD_GROWTH_SWAMP = create("old_growth_swamp")
     val WARM_RIVER = create("warm_river")
     val RED_DESERT = create("red_desert")
     val RED_WARM_RIVER = create("red_warm_river")
@@ -177,7 +174,7 @@ object DuskBiomes {
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.GROVE, SNOWY_DARK_GROVE, of(
+            Biomes.GROVE, DARK_GROVE, of(
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
                     0.3F, 1f, false
@@ -226,7 +223,7 @@ object DuskBiomes {
             Range(-1, 1),            // Humidity
             Range(-0.11, 1),          // Continentalness
             Range(0.55, 1.0),         // Erosion
-            Range(0, 0.4),         // Weirdness
+            Range(-0.4, 0.4),         // Weirdness
         )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
@@ -237,15 +234,7 @@ object DuskBiomes {
             Range(0.933, 1),         // Weirdness
         )
         addOverworld(
-            FROZEN_WINDSWEPT_MANGROVE_SWAMP,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, 0.1),            // Humidity
-            Range(-0.11, 1),          // Continentalness
-            Range(0.55, 1.0),         // Erosion
-            Range(-0.4, 0),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_WINDSWEPT_MANGROVE_SWAMP,
+            FROZEN_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature
             Range(-1, 0.1),            // Humidity
             Range(-0.11, 1),          // Continentalness
@@ -265,14 +254,6 @@ object DuskBiomes {
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.MANGROVE_SWAMP, WINDSWEPT_MANGROVE_SWAMP,
-            windsweptVariant
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.SWAMP, OLD_GROWTH_SWAMP,
-            oldGrowthVariant
-        )
-        BiomePlacement.addSubOverworld(
             Biomes.DESERT, RED_DESERT,
             redSandInlandVariant
         )
@@ -284,7 +265,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.0f, false
+                    0.05F, 1f, false
                 )
             )
         )
@@ -296,7 +277,7 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0F, 1f, false
+                    -1F, 0.05f, false
                 )
             )
         )
@@ -402,7 +383,7 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             SAND_CAVES,
             createNoise(
-                Range(2 / 3, 1),        // Temperature
+                Range(0.8, 1),        // Temperature
                 Range(-1, -0.65),      // Humidity
                 Range(-1, 0.8),          // Continentalness
                 Range(0.05, 1),         // Erosion
@@ -414,7 +395,7 @@ object DuskBiomes {
         BiomePlacement.addOverworld(
             RED_SAND_CAVES,
             createNoise(
-                Range(2 / 3, 1),        // Temperature
+                Range(0.8, 1),        // Temperature
                 Range(-1, -0.65),      // Humidity
                 Range(-1, 0.8),          // Continentalness
                 Range(-1, 0.05),         // Erosion
