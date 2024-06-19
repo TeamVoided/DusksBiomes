@@ -324,25 +324,29 @@ object DuskBiomes {
                 ),
                 SubBiomeMatcher.Criterion.ofRange(
                     CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0f, 1f, false
+                    -1f, 0f, false
                 )
             )
         )
-        addOverworld(
-            ERODED_MUSHROOM_ISLAND,
-            Range(-1, 1),        // Temperature
-            Range(-1, -0.3),      // Humidity
-            Range(-1.2, -0.95),          // Continentalness
-            Range(-1, 1),         // Erosion
-            Range(-1, 1),         // Weirdness
+        BiomePlacement.addSubOverworld(
+            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, -0.35f, false
+                )
+            )
         )
-        addOverworld(
-            ERODED_MUSHROOM_ISLAND,
-            Range(-1, 1),        // Temperature
-            Range(-1, 0.1),      // Humidity
-            Range(-1.2, -0.95),          // Continentalness
-            Range(-1, 1),         // Erosion
-            Range(0, 1),         // Weirdness
+        BiomePlacement.addSubOverworld(
+            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, of(
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
+                    -1f, -0.1f, false
+                ),
+                SubBiomeMatcher.Criterion.ofRange(
+                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
+                    0f, 1f, false
+                )
+            )
         )
         BiomePlacement.addOverworld(
             MUSHROOM_CAVES,
@@ -350,18 +354,6 @@ object DuskBiomes {
                 Range(-1, 1),        // Temperature
                 Range(-1, 0.7),      // Humidity
                 Range(-1.2, -1.05),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            MUSHROOM_CAVES,
-            createNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, 1),      // Humidity
-                Range(-1.2, -0.95),          // Continentalness
                 Range(-1, 1),         // Erosion
                 Range(0.2, 0.9),         // Depth
                 Range(-1, 1),         // Weirdness
