@@ -38,7 +38,7 @@ modSettings {
     entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomesMod::commonInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
     mixinFile("${modId()}.mixins.json")
-    accessWidener("${modId()}.accesswidener")
+//    accessWidener("${modId()}.accesswidener")
 }
 
 dependencies {
@@ -55,6 +55,7 @@ dependencies {
 }
 
 loom {
+    accessWidenerPath.set(file("src/main/resources/${modSettings.modId()}.accesswidener"))
     runs {
         create("DataGen") {
             client()
@@ -112,7 +113,7 @@ publishScript {
 uploadConfig {
 //    debugMode = true
     modrinthId = modrinth_id
-    curseId = curse_id
+//    curseId = curse_id
 
     // FabricApi
     modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
