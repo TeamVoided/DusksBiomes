@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.dusks_biomes.DusksBiomesMod.log
-import org.teamvoided.dusks_biomes.data.gen.*
 import org.teamvoided.dusks_biomes.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.data.gen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.data.gen.structure.StructureProcessorCreator
@@ -14,6 +13,7 @@ import org.teamvoided.dusks_biomes.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_biomes.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_biomes.data.gen.tags.StructureTagsProvider
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeCreator
+import org.teamvoided.dusks_biomes.data.gen.world.gen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.DensityFunctionCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.PlacedFeatureCreator
 
