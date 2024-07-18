@@ -1,9 +1,8 @@
 package org.teamvoided.dusks_biomes.init
 
 import com.terraformersmc.biolith.api.biome.BiomePlacement
-import com.terraformersmc.biolith.api.biome.SubBiomeMatcher
-import com.terraformersmc.biolith.api.biome.SubBiomeMatcher.CriterionTargets
-import com.terraformersmc.biolith.api.biome.SubBiomeMatcher.of
+import com.terraformersmc.biolith.api.biome.sub.BiomeParameterTargets
+import com.terraformersmc.biolith.api.biome.sub.CriterionBuilder
 import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -53,71 +52,31 @@ object DuskBiomes {
 
 
     fun init() {
-        val windsweptVariant = of(
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, 0.1f, false
-            ),
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, 0f, false
-            )
-        )
-        val oldGrowthVariant = of(
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                0.1F, 1f, false
-            ),
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                0F, 1f, false
-            )
-        )
-        val snowyVariant = SubBiomeMatcher.Criterion.ofRange(
-            CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-            -1F, -0.45f, false
-        )
-        val coldRegion = SubBiomeMatcher.Criterion.ofRange(
-            CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-            -1F, -0.3f, false
-        )
-        val warmRegion = SubBiomeMatcher.Criterion.ofRange(
-            CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-            0.375F, 1f, false
-        )
-        val redSandVariant = of(
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, -0.223f, false
-            )
-        )
-        val redSandInlandVariant = of(
-            SubBiomeMatcher.Criterion.ofRange(
-                CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                -1F, 0.05f, false
-            )
+        val windsweptVariant = CriterionBuilder.allOf(
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, 0.1f),
+            CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f)
         )
 
-        BiomePlacement.addSubOverworld(
-            Biomes.FOREST, COLD_FOREST, of(
-                coldRegion
-            )
+        val oldGrowthVariant = CriterionBuilder.allOf(
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.1F, 1f),
+            CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f)
         )
-        BiomePlacement.addSubOverworld(
-            Biomes.PLAINS, COLD_PLAINS, of(
-                coldRegion
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.FOREST, WARM_FOREST, of(
-                warmRegion
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.PLAINS, WARM_PLAINS, of(
-                warmRegion
-            )
-        )
+        val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
+
+        val coldRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.3f)
+
+        val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
+
+        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.223f)
+
+        val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
+
+
+        BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion)
+        BiomePlacement.addSubOverworld(Biomes.PLAINS, COLD_PLAINS, coldRegion)
+        BiomePlacement.addSubOverworld(Biomes.FOREST, WARM_FOREST, warmRegion)
+        BiomePlacement.addSubOverworld(Biomes.PLAINS, WARM_PLAINS, warmRegion)
+
         addOverworld(
             WINDSWEPT_BIRCH_FOREST,
             Range(-0.45, 0.2),        // Temperature
@@ -127,74 +86,34 @@ object DuskBiomes {
             Range(0.05, 1),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, 0.2f, false
-                )
+            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST,
+            CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, 0.2f)
+        )
+        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, snowyVariant)
+        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_GRAVELLY_HILLS, SNOWY_WINDSWEPT_GRAVELLY_HILLS, snowyVariant)
+        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
+        BiomePlacement.addSubOverworld(
+            Biomes.TAIGA, SNOWY_OLD_GROWTH_SPRUCE_TAIGA, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f),
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, of(
-                snowyVariant
+            Biomes.TAIGA, SNOWY_OLD_GROWTH_PINE_TAIGA, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f),
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_GRAVELLY_HILLS, SNOWY_WINDSWEPT_GRAVELLY_HILLS, of(
-                snowyVariant
-            )
+            Biomes.GROVE, DARK_GROVE,
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
         )
+
         BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, of(
-                snowyVariant
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.TAIGA, SNOWY_OLD_GROWTH_SPRUCE_TAIGA, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.45f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.TAIGA, SNOWY_OLD_GROWTH_PINE_TAIGA, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.45f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0F, 1f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.GROVE, DARK_GROVE, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.3F, 1f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.45f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, -0.35f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0f, false
-                )
+            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, -0.35f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f),
             )
         )
         addOverworld(
@@ -206,12 +125,8 @@ object DuskBiomes {
             Range(0, 0.4),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
-            Biomes.BADLANDS, Biomes.ERODED_BADLANDS, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, -0.35f, false
-                )
-            )
+            Biomes.BADLANDS, Biomes.ERODED_BADLANDS,
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, -0.35f),
         )
 //        addFrozenBadlands(
 //            Range(-0.11, 1),
@@ -242,110 +157,48 @@ object DuskBiomes {
             Range(-1, -0.933),         // Weirdness
         )
         BiomePlacement.addSubOverworld(
-            Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.45f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.55F, 1f, false
-                )
+            Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
+                CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.55F, 1f),
+            )
+        )
+        BiomePlacement.addSubOverworld(Biomes.DESERT, RED_DESERT, redSandInlandVariant)
+        BiomePlacement.addSubOverworld(
+            Biomes.RIVER, RED_WARM_RIVER, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.55f, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f),
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.DESERT, RED_DESERT,
-            redSandInlandVariant
+            Biomes.RIVER, WARM_RIVER, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.55f, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.EROSION, -0.05f, 1f),
+            )
+        )
+        BiomePlacement.addSubOverworld(Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)
+        BiomePlacement.addSubOverworld(Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN, redSandVariant)
+        BiomePlacement.addSubOverworld(Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN, redSandVariant)
+        BiomePlacement.addSubOverworld(Biomes.BEACH, RED_BEACH, redSandInlandVariant)
+        BiomePlacement.addSubOverworld(Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
+        BiomePlacement.addSubOverworld(Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
+        BiomePlacement.addSubOverworld(
+            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE,
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3f, 1f),
         )
         BiomePlacement.addSubOverworld(
-            Biomes.RIVER, RED_WARM_RIVER, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.55f, 1f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1F, 0.05f, false
-                )
+            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.1f, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1f, 0f),
             )
         )
         BiomePlacement.addSubOverworld(
-            Biomes.RIVER, WARM_RIVER, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.TEMPERATURE, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.55f, 1f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.EROSION, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -0.05f, 1f, false
-                )
-            )
+            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND,
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY,  -1f, -0.35f),
         )
         BiomePlacement.addSubOverworld(
-            Biomes.WARM_OCEAN, RED_WARM_OCEAN,
-            redSandVariant
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN,
-            redSandVariant
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN,
-            redSandVariant
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.BEACH, RED_BEACH,
-            redSandInlandVariant
-
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.SNOWY_BEACH, SNOWY_RED_BEACH,
-            redSandInlandVariant
-
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.STONY_SHORE, SNOWY_STONY_SHORE, of(
-                snowyVariant
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.3f, 1f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0.1f, 1f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, 0f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.35f, false
-                )
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, of(
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.HUMIDITY, SubBiomeMatcher.CriterionTypes.VALUE,
-                    -1f, -0.1f, false
-                ),
-                SubBiomeMatcher.Criterion.ofRange(
-                    CriterionTargets.WEIRDNESS, SubBiomeMatcher.CriterionTypes.VALUE,
-                    0f, 1f, false
-                )
+            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY,  -1f, -0.1f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS,  0f, 1f),
             )
         )
         BiomePlacement.addOverworld(
