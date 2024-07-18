@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumns_worldgen.data.gen.world.gen
+package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
