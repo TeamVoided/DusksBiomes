@@ -1,0 +1,14 @@
+{
+  "type": "lithostitched:add_structure_set_entries",
+  "structure_set": "minecraft:village",
+  "entries": [
+    {
+      "structure": "dusks_biomes:village_swamp",
+      "weight": 1
+    },
+    {
+      "structure": "dusks_biomes:village_mangrove_swamp",
+      "weight": 1
+    }
+  ]
+}
