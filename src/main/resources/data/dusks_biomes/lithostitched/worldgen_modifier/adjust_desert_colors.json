@@ -1,0 +1,13 @@
+{
+  "type": "lithostitched:replace_effects",
+  "biomes": [
+    "minecraft:desert",
+    "minecraft:badlands",
+    "minecraft:eroded_badlands",
+    "minecraft:wooded_badlands"
+  ],
+  "effects": {
+    "water_color": 4445678,
+    "water_fog_color": 270131
+  }
+}
