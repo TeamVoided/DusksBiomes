@@ -1,6 +1,6 @@
 {
   "type": "lithostitched:add_structure_set_entries",
-  "structure_set": "minecraft:village",
+  "structure_set": "minecraft:villages",
   "entries": [
     {
       "structure": "dusks_biomes:village_swamp",
