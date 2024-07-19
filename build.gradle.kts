@@ -50,8 +50,8 @@ dependencies {
     include(libs.reef)
     modImplementation(libs.reef)
 
+    modImplementation(libs.lithostitched)
 //    modImplementation(libs.biome.tag.villagers)
-//    modImplementation(libs.lithostitched)
 }
 
 loom {

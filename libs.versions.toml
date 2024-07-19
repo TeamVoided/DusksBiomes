@@ -8,7 +8,7 @@ reef = "0.1.3"
 
 biolith = "3.0.0-beta.1"
 biome-tag-villagers = "1.1.0"
-#lithostitched = oq7IWIMY
+lithostitched = "wg3B3m4l"
 
 [libraries]
 farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
@@ -17,7 +17,7 @@ reef = { module = "org.teamvoided:reef", version.ref = "reef" }
 biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
 biome-tag-villagers = { module = "maven.modrinth:biome-tag-villagers", version.ref = "biome-tag-villagers" }
 
-#lithostitched = { module = "maven.modrinth:lithostitched", version.ref = "lithostitched" }
+lithostitched = { module = "maven.modrinth:lithostitched", version.ref = "lithostitched" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
