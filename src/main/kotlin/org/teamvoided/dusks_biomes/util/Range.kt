@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.util.data
+package org.teamvoided.dusks_biomes.util
 
 import net.minecraft.world.biome.source.util.MultiNoiseUtil
 

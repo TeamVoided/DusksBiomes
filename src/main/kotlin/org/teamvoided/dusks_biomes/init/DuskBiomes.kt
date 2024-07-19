@@ -12,7 +12,7 @@ import net.minecraft.world.biome.source.util.MultiNoiseUtil.NoiseHypercube
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
 import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
-import org.teamvoided.dusks_biomes.util.data.Range
+import org.teamvoided.dusks_biomes.util.Range
 
 
 @Suppress("MagicNumber")
