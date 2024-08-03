@@ -350,19 +350,19 @@ object PlacedFeatureCreator {
             ),
             BiomePlacementModifier.getInstance()
         )
-        c.register(
-            DuskPlacedFeatures.SAND_CAVE_VINES,
-            configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),
-            CountPlacementModifier.create(125),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
-            EnvironmentScanPlacementModifier.create(
-                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
-            ),
-            BlockPredicateFilterPlacementModifier.create(BlockPredicate.matchingFluids(Vec3i(0, 4, 0), Fluids.WATER)),
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.getInstance()
-        )
+//        c.register(
+//            DuskPlacedFeatures.SAND_CAVE_VINES,
+//            configuredFeatureProvider.getHolderOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),
+//            CountPlacementModifier.create(125),
+//            InSquarePlacementModifier.getInstance(),
+//            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+//            EnvironmentScanPlacementModifier.create(
+//                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+//            ),
+//            BlockPredicateFilterPlacementModifier.create(BlockPredicate.matchingFluids(Vec3i(0, 4, 0), Fluids.WATER)),
+//            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+//            BiomePlacementModifier.getInstance()
+//        )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),

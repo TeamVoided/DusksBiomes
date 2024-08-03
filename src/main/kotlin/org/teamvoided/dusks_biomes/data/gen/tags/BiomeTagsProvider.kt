@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
+import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.reef.data.ReefTags
@@ -263,6 +264,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_SWAMP_STRUCTURE)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
+        getOrCreateTagBuilder(BiomeTags.TRIAL_CHAMBERS_HAS_STRUCTURE)
+            .forceAddTag(DuskBiomeTags.DUSKS_BIOMES)
         getOrCreateTagBuilder(BiomeTags.TRAIL_RUINS_HAS_STRUCTURE)
             .add(Biomes.DARK_FOREST)
             .add(Biomes.BIRCH_FOREST)
