@@ -4,6 +4,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+
 object DuskBiomeTags {
 
     val DUSKS_BIOMES = create("dusks_biomes")
@@ -18,7 +19,12 @@ object DuskBiomeTags {
 //    val HAS_DESERT_RUIN = create("has_structure/has_desert_ruin")
 //    val HAS_RED_DESERT_RUIN = create("has_structure/has_red_desert_ruin")
 
-    val HAS_OCEAN_RUIN_RED_WARM = TagKey.of(RegistryKeys.BIOME, id("voided_variance","has_structure/ocean_ruin_red_warm"))
+    val HAS_OCEAN_RUIN_RED_WARM = create("voided_variance", "has_structure/ocean_ruin_red_warm")
+    val VILLAGER_TAIGA = create("biome_tag_villagers", "villager_taiga")
+    val VILLAGER_SNOWY = create("biome_tag_villagers", "villager_snowy")
+    val VILLAGER_SWAMP = create("biome_tag_villagers", "villager_swamp")
+    val VILLAGER_DESERT = create("biome_tag_villagers", "villager_desert")
 
     fun create(id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(id))
+    fun create(namespace: String, id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(namespace, id))
 }

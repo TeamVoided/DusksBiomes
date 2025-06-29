@@ -51,7 +51,6 @@ dependencies {
     modImplementation(libs.reef)
 
     modImplementation(libs.lithostitched)
-//    modImplementation(libs.biome.tag.villagers)
 }
 
 loom {
@@ -64,8 +63,6 @@ loom {
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
             vmArg("-Dfabric-api.datagen.modid=${modSettings.modId()}")
             runDir("build/datagen")
-
-
         }
 
         create("TestWorld") {

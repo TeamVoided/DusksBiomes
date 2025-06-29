@@ -36,16 +36,16 @@ object BiomeCreator {
         c.register(DuskBiomes.WARM_FOREST, c.createTemperatureForest(false, true))
         c.register(DuskBiomes.WARM_PLAINS, c.createTemperaturePlains(false, true))
         c.register(DuskBiomes.WINDSWEPT_BIRCH_FOREST, c.createWindsweptBirchForest())
-        c.register(DuskBiomes.SNOWY_WINDSWEPT_HILLS, c.createSnowyWindsweptHills(false))
-        c.register(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS, c.createSnowyWindsweptHills(false))
+        c.register(DuskBiomes.SNOWY_WINDSWEPT_HILLS, c.createSnowyWindsweptHills())
+        c.register(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS, c.createSnowyWindsweptHills())
         c.register(DuskBiomes.SNOWY_WINDSWEPT_FOREST, c.createSnowyWindsweptHills(true))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA, c.createSnowyOldGrowthTaiga(false))
         c.register(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, c.createSnowyOldGrowthTaiga(true))
         c.register(DuskBiomes.DARK_GROVE, c.createDarkGrove())
         c.register(DuskBiomes.SNOWY_CHERRY_GROVE, c.createSnowyCherryGrove())
-        c.register(DuskBiomes.FROZEN_BADLANDS, c.createFrozenBadlands(false))
+        c.register(DuskBiomes.FROZEN_BADLANDS, c.createFrozenBadlands())
         c.register(DuskBiomes.FROZEN_WOODED_BADLANDS, c.createFrozenBadlands(true))
-        c.register(DuskBiomes.FROZEN_ERODED_BADLANDS, c.createFrozenBadlands(false))
+        c.register(DuskBiomes.FROZEN_ERODED_BADLANDS, c.createFrozenBadlands())
         c.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, c.createMangroveSwamp(true))
         c.register(DuskBiomes.WARM_RIVER, c.createWarmRiver(false))
         c.register(DuskBiomes.RED_DESERT, c.createDesert(true, false))
@@ -74,7 +74,7 @@ object BiomeCreator {
         val generation = SpawnSettings.Builder()
 
         DefaultBiomeFeatures.addFarmAnimals(generation)
-        DefaultBiomeFeatures.method_30581(generation)
+        DefaultBiomeFeatures.addBatsAndMonsters(generation)
         if (cold) {
             generation.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 2, 2, 3))
             generation.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 6, 2, 4))
@@ -154,7 +154,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation)
         DefaultBiomeFeatures.addFarmAnimals(spawns)
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
         return OverworldBiomeCreator.create(
             true,
             0.6f,
@@ -164,7 +164,7 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createSnowyWindsweptHills(forest: Boolean): Biome {
+    fun BootstrapContext<Biome>.createSnowyWindsweptHills(forest: Boolean=false): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
@@ -173,7 +173,7 @@ object BiomeCreator {
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.LLAMA, 5, 4, 6))
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
 
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -208,7 +208,7 @@ object BiomeCreator {
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 4, 2, 3))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 8, 2, 4))
         if (spruce) {
-            DefaultBiomeFeatures.method_30581(spawns)
+            DefaultBiomeFeatures.addBatsAndMonsters(spawns)
         } else {
             DefaultBiomeFeatures.addCaveMobs(spawns)
             DefaultBiomeFeatures.addMonsters(spawns, 100, 25, 100, false)
@@ -317,7 +317,7 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createFrozenBadlands(plateau: Boolean): Biome {
+    fun BootstrapContext<Biome>.createFrozenBadlands(trees: Boolean = false): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
@@ -327,7 +327,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
         spawns.creatureSpawnProbability(0.03f)
-        if (plateau) {
+        if (trees) {
             spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 2, 4, 8))
             spawns.creatureSpawnProbability(0.04f)
         }
@@ -336,7 +336,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addExtraGoldOre(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
-        if (plateau) {
+        if (trees) {
             generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_FROZEN_BADLANDS)
         }
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_BADLANDS)
@@ -370,7 +370,7 @@ object BiomeCreator {
             DefaultBiomeFeatures.addCaveMobs(spawns)
             DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
             spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.STRAY, 80, 4, 4))
-        } else DefaultBiomeFeatures.method_30581(spawns)
+        } else DefaultBiomeFeatures.addBatsAndMonsters(spawns)
 
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
@@ -380,10 +380,10 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addGrassAndClayDisks(generation)
         if (frozen) {
-                generation.feature(
-                    GenerationStep.Feature.VEGETAL_DECORATION,
-                    DuskPlacedFeatures.TREES_MANGROVE_FROZEN
-                )
+            generation.feature(
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                DuskPlacedFeatures.TREES_MANGROVE_FROZEN
+            )
             generation.feature(
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 VegetationPlacedFeatures.FLOWER_SWAMP
@@ -443,7 +443,7 @@ object BiomeCreator {
         val generation = GenerationSettings.Builder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
         DefaultBiomeFeatures.addFossils(generation)
@@ -501,11 +501,8 @@ object BiomeCreator {
                 BiomeParticleConfig(
                     BlockStateParticleEffect(
                         ParticleTypes.FALLING_DUST,
-                        if (red) {
-                            Blocks.RED_SAND.defaultState
-                        } else {
-                            Blocks.SAND.defaultState
-                        }
+                        if (red) Blocks.RED_SAND.defaultState
+                        else Blocks.SAND.defaultState
                     ), 0.00025F
                 )
             )
@@ -515,14 +512,14 @@ object BiomeCreator {
 
         return Biome.Builder()
             .hasPrecipitation(false)
-            .temperature(2.0f)
-            .downfall(0.0f)
+            .temperature(2f)
+            .downfall(0f)
             .effects(
                 biomeEffects
                     .waterColor(4445678)
                     .waterFogColor(270131)
                     .fogColor(DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomeCreator.getSkyColor(0.8f))
+                    .skyColor(OverworldBiomeCreator.getSkyColor(2f))
                     .moodSound(BiomeMoodSound.CAVE)
                     .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DESERT)).build()
             )
@@ -542,7 +539,7 @@ object BiomeCreator {
         spawns.spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.TROPICAL_FISH, 25, 8, 8))
         spawns.spawn(SpawnGroup.WATER_CREATURE, SpawnEntry(EntityType.DOLPHIN, 1, 1, 2))
         spawns.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
 
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -587,7 +584,7 @@ object BiomeCreator {
         if (!stony && !snowy) {
             spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.TURTLE, 5, 2, 5))
         }
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
         val generation = GenerationSettings.Builder(features, carver)
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -702,7 +699,7 @@ object BiomeCreator {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        DefaultBiomeFeatures.method_30581(spawns)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawns)
         val generation = GenerationSettings.Builder(features, carver)
         OverworldBiomeCreator.addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)

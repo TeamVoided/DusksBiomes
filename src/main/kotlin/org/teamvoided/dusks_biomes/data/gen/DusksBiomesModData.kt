@@ -32,6 +32,8 @@ class DusksBiomesModData : DataGeneratorEntrypoint {
 
         pack.addProvider(::ChestLootTablesProvider)
         pack.addProvider(::ArchaeologyLootTablesProvider)
+
+        pack.addProvider(::EnglishTranslationProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {

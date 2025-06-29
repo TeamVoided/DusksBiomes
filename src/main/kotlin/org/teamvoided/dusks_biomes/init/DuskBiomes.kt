@@ -17,6 +17,8 @@ import org.teamvoided.dusks_biomes.util.Range
 
 @Suppress("MagicNumber")
 object DuskBiomes {
+    val DUSK_BIOMES = mutableListOf<RegistryKey<Biome>>()
+
     val COLD_FOREST = create("cold_forest")
     val COLD_PLAINS = create("cold_plains")
     val WARM_FOREST = create("warm_forest")
@@ -193,12 +195,12 @@ object DuskBiomes {
         )
         BiomePlacement.addSubOverworld(
             Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND,
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY,  -1f, -0.35f),
+            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.35f),
         )
         BiomePlacement.addSubOverworld(
             Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY,  -1f, -0.1f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS,  0f, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.1f),
+                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0f, 1f),
             )
         )
         BiomePlacement.addOverworld(
@@ -268,7 +270,11 @@ object DuskBiomes {
         SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
     }
 
-    fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))
+    fun create(id: String): RegistryKey<Biome> {
+        val retorn = RegistryKey.of(RegistryKeys.BIOME, id(id))
+        DUSK_BIOMES.add(retorn)
+        return retorn
+    }
 
     fun createNoise(
         temperature: Range, humidity: Range, continentalness: Range, erosion: Range,

@@ -28,7 +28,7 @@ object StructureFeatureCreator {
                 structureSettings(
                     biomeTags.getTagOrThrow(DuskBiomeTags.HAS_VILLAGE_SWAMP_STRUCTURE),
                     GenerationStep.Feature.SURFACE_STRUCTURES,
-                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                    TerrainAdjustment.BEARD_THIN
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_CENTER),
                 6,
@@ -43,7 +43,7 @@ object StructureFeatureCreator {
                 structureSettings(
                     biomeTags.getTagOrThrow(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE),
                     GenerationStep.Feature.SURFACE_STRUCTURES,
-                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                    TerrainAdjustment.BEARD_THIN
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER),
                 6,
