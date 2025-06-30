@@ -1,5 +1,0 @@
-accessWidener v2 named
-
-accessible method net/minecraft/data/server/advancement/AdventureAdvancementTabGenerator appendEnterAllBiomesCriterion (Lnet/minecraft/advancement/Advancement$Builder;Lnet/minecraft/registry/HolderLookup$Provider;Ljava/util/List;)Lnet/minecraft/advancement/Advancement$Builder;
-accessible method net/minecraft/world/biome/OverworldBiomeCreator getSkyColor (F)I
-accessible method net/minecraft/world/biome/OverworldBiomeCreator addBasicFeatures (Lnet/minecraft/world/biome/GenerationSettings$Builder;)V

@@ -13,6 +13,7 @@ import net.minecraft.text.Text
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
 import org.teamvoided.dusks_biomes.init.DuskBiomes
+import org.teamvoided.dusks_biomes.mixin.AdventureAdvancementTabGeneratorAccessor
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -55,7 +56,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
     )
     private val adventuringTime = AdvancementHolder(mc("adventure/adventuring_time"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
-        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
+        AdventureAdvancementTabGeneratorAccessor.db_invokeAppendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
             .display(
                 Items.IRON_BOOTS,
                 Text.of("Strange Lands"),

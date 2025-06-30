@@ -880,7 +880,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.TUFF),
                 defaultMonstersRoom,
@@ -890,7 +890,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.LUSH_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.MOSSY_COBBLESTONE),
                 BlockStateProvider.of(Blocks.MUD),
                 lushMonstersRoom,
@@ -900,7 +900,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.MUD),
                 lushMonstersRoom,
@@ -910,7 +910,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FROZEN_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLESTONE),
                 BlockStateProvider.of(Blocks.PACKED_ICE),
                 frozenMonstersRoom,
@@ -920,7 +920,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.of(Blocks.BLUE_ICE),
                 frozenMonstersRoom,
@@ -930,7 +930,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.SANDSTONE),
                 BlockStateProvider.of(Blocks.SAND),
                 sandMonstersRoom,
@@ -940,7 +940,7 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM,
             ReefFeatures.MONSTER_ROOM,
-            MonsterRoomFeatureConfig(
+            ReefMonsterRoomFeatureConfig(
                 BlockStateProvider.of(Blocks.RED_SANDSTONE),
                 BlockStateProvider.of(Blocks.RED_SAND),
                 sandMonstersRoom,

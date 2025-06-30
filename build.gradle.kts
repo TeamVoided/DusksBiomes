@@ -32,22 +32,20 @@ modSettings {
     entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomesMod::commonInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
     mixinFile("${modId()}.mixins.json")
-//    accessWidener("${modId()}.accesswidener")
-}
+ }
 
 dependencies {
     modImplementation(fileTree("libs"))
-    modImplementation(libs.modmenu)
+//    modImplementation(libs.modmenu)
 
     modImplementation(libs.biolith)
     include(libs.reef)
     modImplementation(libs.reef)
 
-    modImplementation(libs.lithostitched)
+//    modImplementation(libs.lithostitched)
 }
 
 loom {
-    accessWidenerPath.set(file("src/main/resources/${modSettings.modId()}.accesswidener"))
     runs {
         create("DataGen") {
             client()
