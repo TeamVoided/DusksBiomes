@@ -2,7 +2,6 @@ package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
-import net.minecraft.fluid.Fluids
 import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
@@ -10,7 +9,6 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3i
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.YOffset
@@ -147,7 +145,7 @@ object PlacedFeatureCreator {
             ),
             BlockPredicateFilterPlacementModifier.create(
                 BlockPredicate.matchingBlocks(
-                    Direction.DOWN.vector,
+                    Direction.DOWN.asVec3i(),
                     *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
                 )
 
@@ -168,7 +166,7 @@ object PlacedFeatureCreator {
             ),
             BlockPredicateFilterPlacementModifier.create(
                 BlockPredicate.matchingBlocks(
-                    Direction.DOWN.vector,
+                    Direction.DOWN.asVec3i(),
                     *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
                 )
 
@@ -366,10 +364,10 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),
-                CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
-                BiomePlacementModifier.getInstance()
+            CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.SAND_SPIKES,
@@ -397,10 +395,10 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.RED_SAND_CAVE_PILLAR,
             configuredFeatureProvider.getHolderOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
-                CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
-                BiomePlacementModifier.getInstance()
+            CountPlacementModifier.create(UniformIntProvider.create(20, 48)),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.BOTTOM_TO_MAX_TERRAIN_HEIGHT_RANGE,
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES,
@@ -674,12 +672,12 @@ object PlacedFeatureCreator {
 
     fun BootstrapContext<PlacedFeature>.register(
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
-        vararg placementModifiers: PlacementModifier
+        vararg placementModifiers: PlacementModifier,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers.toList()))
 
     fun BootstrapContext<PlacedFeature>.register(
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
-        placementModifiers: List<PlacementModifier>
+        placementModifiers: List<PlacementModifier>,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
 
 }

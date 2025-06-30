@@ -12,13 +12,7 @@ plugins {
     alias(libs.plugins.iridium.upload)
 }
 
-group = property("maven_group")!!
-version = property("mod_version")!!
 base.archivesName.set(modSettings.modId())
-
-val modrinth_id: String? by project
-val curse_id: String? by project
-
 
 repositories {
     exclusiveContent {
@@ -43,8 +37,7 @@ modSettings {
 
 dependencies {
     modImplementation(fileTree("libs"))
-    modImplementation(libs.farrow)
-
+    modImplementation(libs.modmenu)
 
     modImplementation(libs.biolith)
     include(libs.reef)
@@ -109,7 +102,7 @@ publishScript {
 
 uploadConfig {
 //    debugMode = true
-    modrinthId = modrinth_id
+    modrinthId = "Wy3e2UDp"
 //    curseId = curse_id
 
     // FabricApi

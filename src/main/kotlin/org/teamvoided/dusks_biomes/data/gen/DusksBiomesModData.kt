@@ -31,7 +31,7 @@ class DusksBiomesModData : DataGeneratorEntrypoint {
         pack.addProvider(::StructureTagsProvider)
 
         pack.addProvider(::ChestLootTablesProvider)
-        pack.addProvider(::ArchaeologyLootTablesProvider)
+//        pack.addProvider(::ArchaeologyLootTablesProvider)
 
         pack.addProvider(::EnglishTranslationProvider)
     }

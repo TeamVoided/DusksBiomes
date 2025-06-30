@@ -14,23 +14,23 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     override fun configure(arg: HolderLookup.Provider) {
 
 //VANILLA
-        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+        valueLookupBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
             .add(
                 Blocks.COBBLESTONE,
                 Blocks.COBBLED_DEEPSLATE,
                 Blocks.SNOW_BLOCK,
                 Blocks.ICE
             )
-        getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
+        valueLookupBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
             .add(Blocks.PODZOL)
-        getOrCreateTagBuilder(BlockTags.DEAD_BUSH_PLACEABLE_ON)
+        valueLookupBuilder(BlockTags.DRY_VEGETATION_MAY_PLACE_ON)
             .add(Blocks.SANDSTONE, Blocks.RED_SANDSTONE)
 
 //Dusk Tags
-        getOrCreateTagBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
+        valueLookupBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
             .addOptionalTag(BlockTags.AZALEA_GROWS_ON)
             .add(Blocks.GRAVEL)
-        getOrCreateTagBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
+        valueLookupBuilder(DuskBlockTags.ICE_ORE_REPLACEABLE)
             .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
             .add(
                 Blocks.POWDER_SNOW,
@@ -38,20 +38,20 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 Blocks.PACKED_ICE,
                 Blocks.ICE
             )
-        getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+        valueLookupBuilder(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             .addOptionalTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
             .add(Blocks.SNOW_BLOCK, Blocks.PACKED_ICE)
-        getOrCreateTagBuilder(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
+        valueLookupBuilder(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS)
             .addOptionalTag(BlockTags.REPLACEABLE)
             .add(Blocks.POWDER_SNOW, Blocks.ICE)
-        getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
+        valueLookupBuilder(DuskBlockTags.CAVE_PILLAR_REPLACEABLE)
             .addOptionalTag(BlockTags.REPLACEABLE)
             .addOptionalTag(BlockTags.DIRT)
             .addOptionalTag(BlockTags.CAVE_VINES)
             .addOptionalTag(BlockTags.SAND)
             .addOptionalTag(BlockTags.SNOW)
             .add(Blocks.POWDER_SNOW, Blocks.ICE, Blocks.GRAVEL)
-        getOrCreateTagBuilder(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+        valueLookupBuilder(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD)
             .addOptionalTag(ConventionalBlockTags.STONES)
             .addOptionalTag(ConventionalBlockTags.COBBLESTONES)

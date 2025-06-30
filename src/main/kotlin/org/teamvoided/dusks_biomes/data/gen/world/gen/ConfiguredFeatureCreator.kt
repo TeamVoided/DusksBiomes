@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_biomes.data.gen.world.gen
 
+import net.minecraft.SpreadingMultifaceBlock
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
@@ -11,7 +12,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.structure.rule.TagMatchRuleTest
-import net.minecraft.util.collection.DataPool
+import net.minecraft.util.collection.WeightedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.float_provider.UniformFloatProvider
@@ -174,11 +175,11 @@ object ConfiguredFeatureCreator {
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.FANCY_OAK_BEES_0002),
+                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36112),
                         0.2f
                     ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.ACACIA_CHECKED), 0.15f)
-                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_BEES_0002)
+                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36108)
             )
         )
         c.registerConfiguredFeature(
@@ -188,11 +189,11 @@ object ConfiguredFeatureCreator {
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.FANCY_OAK_BEES_0002),
+                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36112),
                         0.2f
                     ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.SPRUCE_CHECKED), 0.15f)
-                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_BEES_0002)
+                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36108)
             )
         )
         c.registerConfiguredFeature(
@@ -248,7 +249,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                        WeightedBlockStateProvider(getPetalStates().addWeighted(Blocks.SNOW.defaultState, 8))
+                        WeightedBlockStateProvider(getPetalStates().add(Blocks.SNOW.defaultState, 8))
                     )
                 )
             )
@@ -260,7 +261,7 @@ object ConfiguredFeatureCreator {
                 20, PlacedFeatureUtil.placedInline(
                     Feature.MULTIFACE_GROWTH,
                     GlowLichenFeatureConfig(
-                        (Blocks.GLOW_LICHEN as AbstractLichenBlock),
+                        (Blocks.GLOW_LICHEN as SpreadingMultifaceBlock),
                         20,
                         true,
                         true,
@@ -345,7 +346,7 @@ object ConfiguredFeatureCreator {
                             )
                         ), BlockPredicate.matchingBlockTags(BlockTags.REPLACEABLE_BY_TREES)
                     ), BlockPredicate.matchingBlockTags(
-                        Direction.DOWN.vector, DuskBlockTags.MUSHROOM_ROOT_PLACEABLE
+                        Direction.DOWN.asVec3i(), DuskBlockTags.MUSHROOM_ROOT_PLACEABLE
                     )
                 )
             )
@@ -948,12 +949,12 @@ object ConfiguredFeatureCreator {
         )
     }
 
-    private fun getPetalStates(): DataPool.Builder<BlockState> {
-        val randomPetal = DataPool.builder<BlockState>()
+    private fun getPetalStates(): WeightedList.Builder<BlockState> {
+        val randomPetal = WeightedList.builder<BlockState>()
         for (i in 1..4) {
             Direction.Type.HORIZONTAL.forEach {
-                randomPetal.addWeighted(
-                    Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i).with(PinkPetalsBlock.FACING, it),
+                randomPetal.add(
+                    Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.FLOWER_AMOUNT, i).with(PinkPetalsBlock.FACING, it),
                     1
                 )
             }

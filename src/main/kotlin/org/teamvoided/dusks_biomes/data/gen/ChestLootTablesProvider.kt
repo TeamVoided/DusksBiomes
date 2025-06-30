@@ -6,7 +6,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
-import net.minecraft.loot.context.LootContextTypes
+import net.minecraft.loot.context.LootContextParameterSets
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKey
@@ -18,7 +18,7 @@ import java.util.function.BiConsumer
 
 @Suppress("MagicNumber")
 class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
+    SimpleFabricLootTableProvider(o, r, LootContextParameterSets.CHEST) {
     override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         val villageSwampHouseChest = LootPool.builder().rolls(uniformNum(3, 8))

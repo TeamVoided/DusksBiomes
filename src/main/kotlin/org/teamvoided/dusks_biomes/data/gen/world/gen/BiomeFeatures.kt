@@ -153,7 +153,6 @@ object BiomeFeatures {
 
     fun addMushroomErodedFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_NORMAL)
-        DefaultBiomeFeatures.addSeagrassOnStone(generationSettings)
         DefaultBiomeFeatures.addKelp(generationSettings)
     }
 

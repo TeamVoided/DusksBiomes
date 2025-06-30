@@ -14,10 +14,10 @@ class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLook
 
 
     override fun configure(arg: HolderLookup.Provider) {
-        getOrCreateTagBuilder(StructureTags.ON_SWAMP_EXPLORER_MAPS)
+        builder(StructureTags.ON_SWAMP_EXPLORER_MAPS)
             .add(DuskStructureFeatures.SWAMP_VILLAGE)
             .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)
-        getOrCreateTagBuilder(StructureTags.VILLAGE)
+        builder(StructureTags.VILLAGE)
             .add(DuskStructureFeatures.SWAMP_VILLAGE)
             .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)
     }
