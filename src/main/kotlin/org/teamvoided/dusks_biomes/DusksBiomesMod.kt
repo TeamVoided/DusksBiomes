@@ -4,6 +4,7 @@ import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_biomes.init.DuskBiomes
+import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
 
 
 @Suppress("unused")
@@ -17,6 +18,7 @@ object DusksBiomesMod {
         log.info("Hello from Common")
 
         DuskBiomes.init()
+        DuskStructureProcessorTypes.init()
     }
 
     fun id(path: String) = Identifier.of(MODID, path)
