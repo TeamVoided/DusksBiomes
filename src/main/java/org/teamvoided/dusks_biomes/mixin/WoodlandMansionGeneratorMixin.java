@@ -13,7 +13,7 @@ import org.teamvoided.dusks_biomes.structure.PaleOakReplacementStructureProcesso
 public class WoodlandMansionGeneratorMixin {
     @ModifyReturnValue(method = "createPlacementData", at = @At("RETURN"))
     private static StructurePlacementData pale(StructurePlacementData original) {
-        original.addProcessor(PaleOakReplacementStructureProcessor.Companion.getINSTANCE());
+        original.addProcessor(PaleOakReplacementStructureProcessor.INSTANCE);
         return original;
     }
 }

@@ -10,22 +10,13 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.GenerationSettings.LookupBackedBuilder
-import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
-import net.minecraft.world.gen.GenerationStep.Feature.RAW_GENERATION as rg0
-import net.minecraft.world.gen.GenerationStep.Feature.LAKES as l1
 import net.minecraft.world.gen.GenerationStep.Feature.LOCAL_MODIFICATIONS as lm2
-import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_STRUCTURES as us3
-import net.minecraft.world.gen.GenerationStep.Feature.SURFACE_STRUCTURES as ss4
-import net.minecraft.world.gen.GenerationStep.Feature.STRONGHOLDS as s5
-import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_ORES as uo6
-import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_DECORATION as ud7
-import net.minecraft.world.gen.GenerationStep.Feature.FLUID_SPRINGS as fs8
 import net.minecraft.world.gen.GenerationStep.Feature.VEGETAL_DECORATION as vd9
 
 object SnowyVariants {
@@ -34,7 +25,7 @@ object SnowyVariants {
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
+        val generation = LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, 5, SpawnSettings.SpawnEntry(EntityType.LLAMA, 4, 6))
@@ -66,7 +57,7 @@ object SnowyVariants {
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
+        val generation = LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, 8, SpawnSettings.SpawnEntry(EntityType.WOLF, 4, 4))
@@ -154,6 +145,7 @@ object SnowyVariants {
                     .build()
             else
                 BiomeEffects.Builder()
+                    .waterColor(BiomeCreator.DEFAULT_WATER_COLOR)
                     .waterFogColor(BiomeCreator.DEFAULT_WATER_FOG_COLOR)
                     .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
                     .skyColor(OverworldBiomeCreator.getSkyColor(-0.2f))
@@ -168,7 +160,7 @@ object SnowyVariants {
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
+        val generation = LookupBackedBuilder(features, carver)
 
         spawns.spawn(SpawnGroup.CREATURE, 1, SpawnSettings.SpawnEntry(EntityType.PIG, 1, 2))
             .spawn(SpawnGroup.CREATURE, 2, SpawnSettings.SpawnEntry(EntityType.RABBIT, 2, 6))
@@ -204,7 +196,7 @@ object SnowyVariants {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
+        val generation = LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addCaveMobs(spawns)
         DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
@@ -247,7 +239,7 @@ object SnowyVariants {
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
+        val generation = LookupBackedBuilder(features, carver)
 
 
         DefaultBiomeFeatures.addCaveMobs(spawns)
@@ -274,7 +266,7 @@ object SnowyVariants {
             .waterFogColor(3815975)
             .skyColor(OverworldBiomeCreator.getSkyColor(-0.5f))
             .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
-            .grassColorModifier(BiomeEffects.GrassColorModifier.SWAMP)
+            .grassColorModifier(GrassColorModifier.SWAMP)
             .moodSound(BiomeMoodSound.CAVE)
             .music(musicSound)
 
