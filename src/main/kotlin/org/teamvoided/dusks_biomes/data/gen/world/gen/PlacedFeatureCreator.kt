@@ -17,6 +17,8 @@ import net.minecraft.world.gen.blockpredicate.BlockPredicate.not
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.placementmodifier.*
+import org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator.TreePlacedFeature.registerOnSnow
+import org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator.TreePlacedFeature.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
@@ -24,8 +26,8 @@ import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 @Suppress("MagicNumber")
 object PlacedFeatureCreator {
     fun bootstrap(c: Registerable<PlacedFeature>) {
-
         val configuredFeatureProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        c.trees()
 
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,
@@ -121,55 +123,6 @@ object PlacedFeatureCreator {
             configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.TREES_SAVANNA),
             VegetationPlacedFeatures.treeModifiers(
                 PlacedFeatures.createCountExtraModifier(0, 0.05f, 1)
-            )
-        )
-        c.register(
-            DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE),
-            VegetationPlacedFeatures.treeModifiers(
-                CountPlacementModifier.of(16)
-            )
-        )
-        c.register(
-            DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE_ON_SNOW,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE_ON_SNOW),
-            CountPlacementModifier.of(16),
-            SquarePlacementModifier.of(),
-            SurfaceWaterDepthFilterPlacementModifier.of(0),
-            PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.of(),
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, not(
-                    BlockPredicate.matchingBlocks(*arrayOf(Blocks.POWDER_SNOW))
-                ), 8
-            ),
-            BlockFilterPlacementModifier.of(
-                BlockPredicate.matchingBlocks(
-                    Direction.DOWN.vector,
-                    *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
-                )
-
-            )
-        )
-        c.register(
-            DuskPlacedFeatures.TREES_SNOWY_CHERRY_GROVE,
-            configuredFeatureProvider.getOrThrow(TreeConfiguredFeatures.CHERRY_BEES_005),
-            PlacedFeatures.createCountExtraModifier(10, 0.1f, 1),
-            SquarePlacementModifier.of(),
-            SurfaceWaterDepthFilterPlacementModifier.of(0),
-            PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.of(),
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, not(
-                    BlockPredicate.matchingBlocks(*arrayOf(Blocks.POWDER_SNOW))
-                ), 8
-            ),
-            BlockFilterPlacementModifier.of(
-                BlockPredicate.matchingBlocks(
-                    Direction.DOWN.vector,
-                    *arrayOf(Blocks.SNOW_BLOCK, Blocks.POWDER_SNOW)
-                )
-
             )
         )
         c.register(
@@ -679,5 +632,21 @@ object PlacedFeatureCreator {
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryEntry<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
+
+    fun Registerable<PlacedFeature>.register(
+        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryKey<ConfiguredFeature<*, *>>,
+        vararg placementModifiers: PlacementModifier,
+    ): Any {
+        val cf = this.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        return this.register(registryKey, PlacedFeature(cf.getOrThrow(configuredFeature), placementModifiers.toList()))
+    }
+
+    fun Registerable<PlacedFeature>.register(
+        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryKey<ConfiguredFeature<*, *>>,
+        placementModifiers: List<PlacementModifier>,
+    ): Any {
+        val cf = this.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        return this.register(registryKey, PlacedFeature(cf.getOrThrow(configuredFeature), placementModifiers))
+    }
 
 }

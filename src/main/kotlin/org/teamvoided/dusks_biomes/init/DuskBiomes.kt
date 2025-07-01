@@ -53,7 +53,6 @@ object DuskBiomes {
     val RED_SAND_CAVES = create("red_sand_caverns")
     val GRAVEL_CAVES = create("gravel_caves")
 
-
     fun init() {
         val windsweptVariant = CriterionBuilder.allOf(
             CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, 0.1f),
@@ -107,9 +106,29 @@ object DuskBiomes {
                 CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f),
             )
         )
+
         BiomePlacement.addSubOverworld(
             BiomeKeys.GROVE, DARK_GROVE,
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
+            CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f),
+                CriterionBuilder.value(BiomeParameterTargets.CONTINENTALNESS, -1f, 0.3f)
+            ),
+        )
+        BiomePlacement.addSubOverworld(
+            BiomeKeys.GROVE, PALE_GROVE,
+            CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -0.15F, 1f)
+            ),
+        )
+        BiomePlacement.addSubOverworld(
+            BiomeKeys.GROVE, PALE_GROVE,
+            CriterionBuilder.allOf(
+                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f),
+                CriterionBuilder.value(BiomeParameterTargets.CONTINENTALNESS, 0.3f, 1f)
+            ),
         )
 
         BiomePlacement.addSubOverworld(

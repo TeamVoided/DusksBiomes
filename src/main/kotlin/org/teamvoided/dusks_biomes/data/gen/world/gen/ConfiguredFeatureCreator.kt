@@ -40,6 +40,7 @@ import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.data.gen.world.gen.configured_feature_creator.TreeConfiguredCreator.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
@@ -54,6 +55,8 @@ object ConfiguredFeatureCreator {
         val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val procLists = c.getRegistryLookup(RegistryKeys.PROCESSOR_LIST)
+
+        c.trees()
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -196,55 +199,6 @@ object ConfiguredFeatureCreator {
                     ),
                     RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.SPRUCE_CHECKED), 0.15f)
                 ), placedFeatures.getOrThrow(TreePlacedFeatures.OAK_BEES_0002)
-            )
-        )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE,
-            Feature.RANDOM_SELECTOR,
-            RandomFeatureConfig(
-                listOf(
-                    RandomFeatureEntry(
-                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
-                        0.05f
-                    ),
-                    RandomFeatureEntry(
-                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
-                        0.025f
-                    ),
-                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.DARK_OAK_CHECKED), 2 / 3f),
-                    RandomFeatureEntry(
-                        placedFeatures.getOrThrow(TreePlacedFeatures.SPRUCE_CHECKED),
-                        0.3f
-                    ),
-                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.FANCY_OAK_CHECKED), 0.125f)
-                ), placedFeatures.getOrThrow(TreePlacedFeatures.OAK_CHECKED)
-            )
-        )
-        c.registerConfiguredFeature(
-            DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE_ON_SNOW,
-            Feature.RANDOM_SELECTOR,
-            RandomFeatureConfig(
-                listOf(
-                    RandomFeatureEntry(
-                        PlacedFeatures.createEntry(
-                            configuredFeatures.getOrThrow(
-                                TreeConfiguredFeatures.DARK_OAK
-                            )
-                        ), 2 / 3f
-                    ),
-                    RandomFeatureEntry(
-                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.SPRUCE)),
-                        0.3f
-                    ),
-                    RandomFeatureEntry(
-                        PlacedFeatures.createEntry(
-                            configuredFeatures.getOrThrow(
-                                TreeConfiguredFeatures.FANCY_OAK
-                            )
-                        ), 0.125f
-                    )
-                ),
-                PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.OAK))
             )
         )
         c.registerConfiguredFeature(
@@ -976,7 +930,7 @@ object ConfiguredFeatureCreator {
         return builder
     }
 
-    private fun <FC : FeatureConfig, F : Feature<FC>> Registerable<ConfiguredFeature<*, *>>.registerConfiguredFeature(
+    fun <FC : FeatureConfig, F : Feature<FC>> Registerable<ConfiguredFeature<*, *>>.registerConfiguredFeature(
         registryKey: RegistryKey<ConfiguredFeature<*, *>>,
         feature: F,
         featureConfig: FC

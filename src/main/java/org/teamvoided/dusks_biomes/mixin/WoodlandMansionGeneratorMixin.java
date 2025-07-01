@@ -5,7 +5,7 @@ import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.WoodlandMansionGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.dusks_biomes.structure.PaleOakReplacementStructureProcessor;
+import org.teamvoided.dusks_biomes.structure.BlockReplacementStructureProcessor;
 
 
 
@@ -13,7 +13,7 @@ import org.teamvoided.dusks_biomes.structure.PaleOakReplacementStructureProcesso
 public class WoodlandMansionGeneratorMixin {
     @ModifyReturnValue(method = "createPlacementData", at = @At("RETURN"))
     private static StructurePlacementData pale(StructurePlacementData original) {
-        original.addProcessor(PaleOakReplacementStructureProcessor.INSTANCE);
+        original.addProcessor(BlockReplacementStructureProcessor.getPALE_OAK_REPLACE());
         return original;
     }
 }

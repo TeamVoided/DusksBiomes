@@ -111,15 +111,15 @@ object SnowyVariants {
         val generation = LookupBackedBuilder(features, carver)
         BiomeFeatures.addBasicFeaturesNoDungeon(generation)
         BiomeFeatures.addFrozenDungeons(generation)
-        if (pale) generation.feature(vd9, VegetationPlacedFeatures.PALE_GARDEN_VEGETATION) else {
-            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE)
-            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE_ON_SNOW)
-        }
-        if (!pale) {
-            DefaultBiomeFeatures.addForestFlowers(generation)
-        } else {
+        if (pale) {
+            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_PALE_GROVE)
+            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_PALE_GROVE)
             generation.feature(vd9, VegetationPlacedFeatures.PALE_MOSS_PATCH)
             generation.feature(vd9, VegetationPlacedFeatures.PALE_GARDEN_FLOWERS)
+        } else {
+            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE)
+            generation.feature(vd9, DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE_ON_SNOW)
+            DefaultBiomeFeatures.addForestFlowers(generation)
         }
 
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -140,8 +140,15 @@ object SnowyVariants {
         return Biome.Builder().precipitation(true).temperature(-0.2f).downfall(0.8f).effects(
             if (pale)
                 BiomeEffects.Builder()
-                    .waterColor(7768221).waterFogColor(5597568).fogColor(8484720).skyColor(12171705).grassColor(7832178)
-                    .foliageColor(8883574).dryFoliageColor(10528412).moodSound(BiomeMoodSound.CAVE).noMusic()
+                    .waterColor(7768221)
+                    .waterFogColor(5597568)
+                    .fogColor(8484720)
+                    .skyColor(12171705)
+                    .grassColor(7832178)
+                    .foliageColor(8883574)
+                    .dryFoliageColor(10528412)
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .noMusic()
                     .build()
             else
                 BiomeEffects.Builder()
@@ -149,9 +156,11 @@ object SnowyVariants {
                     .waterFogColor(BiomeCreator.DEFAULT_WATER_FOG_COLOR)
                     .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
                     .skyColor(OverworldBiomeCreator.getSkyColor(-0.2f))
-                    .grassColorModifier(GrassColorModifier.DARK_FOREST).dryFoliageColor(8082228)
+                    .grassColorModifier(GrassColorModifier.DARK_FOREST)
+                    .dryFoliageColor(8082228)
                     .moodSound(BiomeMoodSound.CAVE)
-                    .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FOREST)).build()
+                    .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FOREST))
+                    .build()
         ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
