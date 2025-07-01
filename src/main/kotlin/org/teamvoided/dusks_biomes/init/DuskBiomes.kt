@@ -30,6 +30,7 @@ object DuskBiomes {
     val SNOWY_OLD_GROWTH_PINE_TAIGA = create("snowy_old_growth_pine_taiga")
     val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = create("snowy_old_growth_spruce_taiga")
     val DARK_GROVE = create("dark_grove")
+    val PALE_GROVE = create("pale_grove")
     val SNOWY_CHERRY_GROVE = create("snowy_cherry_grove")
     val FROZEN_BADLANDS = create("frozen_badlands")
     val FROZEN_WOODED_BADLANDS = create("frozen_wooded_badlands")

@@ -315,7 +315,8 @@ object DuskSurfaceRules {
         val snowyCherryGrove = condition(
             biome(
                 DuskBiomes.SNOWY_CHERRY_GROVE,
-                DuskBiomes.DARK_GROVE
+                DuskBiomes.DARK_GROVE,
+                DuskBiomes.PALE_GROVE
             ),
             condition(
                 stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(

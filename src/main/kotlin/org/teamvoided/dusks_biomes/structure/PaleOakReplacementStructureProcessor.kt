@@ -1,7 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 package org.teamvoided.dusks_biomes.structure
 
 import com.google.common.collect.Maps
@@ -18,10 +14,25 @@ import net.minecraft.world.WorldView
 
 class PaleOakReplacementStructureProcessor : StructureProcessor() {
     private val replacementMap: Map<Block, Block> = Util.make(Maps.newHashMap()) { hashMap ->
+        //hashMap[Blocks.BIRCH_LOG] = Blocks.PALE_OAK_LOG
+        //hashMap[Blocks.BIRCH_WOOD] = Blocks.PALE_OAK_WOOD
+        //hashMap[Blocks.STRIPPED_BIRCH_LOG] = Blocks.STRIPPED_PALE_OAK_LOG
+        //hashMap[Blocks.STRIPPED_BIRCH_WOOD] = Blocks.STRIPPED_PALE_OAK_WOOD
         hashMap[Blocks.BIRCH_PLANKS] = Blocks.PALE_OAK_PLANKS
         hashMap[Blocks.BIRCH_STAIRS] = Blocks.PALE_OAK_STAIRS
         hashMap[Blocks.BIRCH_SLAB] = Blocks.PALE_OAK_SLAB
         hashMap[Blocks.BIRCH_FENCE] = Blocks.PALE_OAK_FENCE
+        //hashMap[Blocks.BIRCH_FENCE_GATE] = Blocks.PALE_OAK_FENCE_GATE
+        //hashMap[Blocks.BIRCH_DOOR] = Blocks.PALE_OAK_DOOR
+        //hashMap[Blocks.BIRCH_TRAPDOOR] = Blocks.PALE_OAK_TRAPDOOR
+        //hashMap[Blocks.BIRCH_BUTTON] = Blocks.PALE_OAK_BUTTON
+        //hashMap[Blocks.BIRCH_PRESSURE_PLATE] = Blocks.PALE_OAK_PRESSURE_PLATE
+        //hashMap[Blocks.BIRCH_SIGN] = Blocks.PALE_OAK_SIGN
+        //hashMap[Blocks.BIRCH_WALL_SIGN] = Blocks.PALE_OAK_WALL_SIGN
+        //hashMap[Blocks.BIRCH_HANGING_SIGN] = Blocks.PALE_OAK_HANGING_SIGN
+        //hashMap[Blocks.BIRCH_WALL_HANGING_SIGN] = Blocks.PALE_OAK_WALL_HANGING_SIGN
+        //hashMap[Blocks.BIRCH_SAPLING] = Blocks.PALE_OAK_SAPLING
+        hashMap[Blocks.POTTED_BIRCH_SAPLING] = Blocks.POTTED_PALE_OAK_SAPLING
         hashMap[Blocks.WHITE_CARPET] = Blocks.YELLOW_CARPET
     }
 
