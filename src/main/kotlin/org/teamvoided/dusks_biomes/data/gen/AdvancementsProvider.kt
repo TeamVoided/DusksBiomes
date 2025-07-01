@@ -3,12 +3,11 @@ package org.teamvoided.dusks_biomes.data.gen
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancement.Advancement
-import net.minecraft.advancement.AdvancementHolder
+import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementRewards
-import net.minecraft.advancement.AdvancementType
-import net.minecraft.data.server.advancement.AdventureAdvancementTabGenerator
+import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.item.Items
-import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.Text
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
@@ -17,7 +16,7 @@ import org.teamvoided.dusks_biomes.mixin.AdventureAdvancementTabGeneratorAccesso
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrapper.WrapperLookup>) :
     FabricAdvancementProvider(o, r) {
     val biomes = listOf(
         DuskBiomes.COLD_FOREST,
@@ -54,15 +53,15 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DuskBiomes.RED_SAND_CAVES,
         DuskBiomes.GRAVEL_CAVES
     )
-    private val adventuringTime = AdvancementHolder(mc("adventure/adventuring_time"), null)
-    override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
+    private val adventuringTime = AdvancementEntry(mc("adventure/adventuring_time"), null)
+    override fun generateAdvancement(provider: RegistryWrapper.WrapperLookup, c: Consumer<AdvancementEntry>?) {
         AdventureAdvancementTabGeneratorAccessor.db_invokeAppendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
             .display(
                 Items.IRON_BOOTS,
                 Text.of("Strange Lands"),
                 Text.of("Visit all the biomes added by Dusks Biomes!"),
                 null,
-                AdvancementType.CHALLENGE,
+                AdvancementFrame.CHALLENGE,
                 true,
                 true,
                 false

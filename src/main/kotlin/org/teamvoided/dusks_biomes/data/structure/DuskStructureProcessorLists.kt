@@ -25,6 +25,6 @@ object DuskStructureProcessorLists {
 //    val RED_DESERT_RUINS_LARGE_RUINS_ARCHAEOLOGY = create("red_desert_ruins/large_ruins_archaeology")
 
     fun create(id: String): RegistryKey<StructureProcessorList> =
-        RegistryKey.of(RegistryKeys.STRUCTURE_PROCESSOR_LIST, DusksBiomesMod.id(id))
+        RegistryKey.of(RegistryKeys.PROCESSOR_LIST, DusksBiomesMod.id(id))
 
 }

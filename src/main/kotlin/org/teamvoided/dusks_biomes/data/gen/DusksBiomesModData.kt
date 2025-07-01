@@ -3,7 +3,7 @@ package org.teamvoided.dusks_biomes.data.gen
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistrySetBuilder
+import net.minecraft.registry.RegistryBuilder
 import org.teamvoided.dusks_biomes.DusksBiomesMod.log
 import org.teamvoided.dusks_biomes.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.data.gen.structure.StructurePoolCreator
@@ -14,7 +14,6 @@ import org.teamvoided.dusks_biomes.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_biomes.data.gen.tags.StructureTagsProvider
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.ConfiguredFeatureCreator
-import org.teamvoided.dusks_biomes.data.gen.world.gen.DensityFunctionCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.PlacedFeatureCreator
 
 class DusksBiomesModData : DataGeneratorEntrypoint {
@@ -36,15 +35,14 @@ class DusksBiomesModData : DataGeneratorEntrypoint {
         pack.addProvider(::EnglishTranslationProvider)
     }
 
-    override fun buildRegistry(gen: RegistrySetBuilder) {
-        gen.add(RegistryKeys.BIOME, BiomeCreator::boostrap)
-        gen.add(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
-        gen.add(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
-        gen.add(RegistryKeys.DENSITY_FUNCTION, DensityFunctionCreator::bootstrap)
+    override fun buildRegistry(gen: RegistryBuilder) {
+        gen.addRegistry(RegistryKeys.BIOME, BiomeCreator::boostrap)
+        gen.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
+        gen.addRegistry(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
 
-        gen.add(RegistryKeys.STRUCTURE_PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_POOL, StructurePoolCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_FEATURE, StructureFeatureCreator::bootstrap)
+        gen.addRegistry(RegistryKeys.PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
+        gen.addRegistry(RegistryKeys.TEMPLATE_POOL, StructurePoolCreator::bootstrap)
+        gen.addRegistry(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
+        gen.addRegistry(RegistryKeys.STRUCTURE, StructureFeatureCreator::bootstrap)
     }
 }

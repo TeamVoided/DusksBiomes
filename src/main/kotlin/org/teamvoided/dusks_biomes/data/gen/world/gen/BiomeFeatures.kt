@@ -9,15 +9,15 @@ import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 
 object BiomeFeatures {
 
-    fun addBasicFeaturesNoDungeon(generationSettings: GenerationSettings.Builder?) {
+    fun addBasicFeaturesNoDungeon(generationSettings: GenerationSettings.LookupBackedBuilder?) {
         DefaultBiomeFeatures.addLandCarvers(generationSettings)
         DefaultBiomeFeatures.addAmethystGeodes(generationSettings)
-        DefaultBiomeFeatures.addUndergroundVariety(generationSettings)
+         //DefaultBiomeFeatures.addUndergroundVariety(generationSettings)
         DefaultBiomeFeatures.addSprings(generationSettings)
         DefaultBiomeFeatures.addFrozenTopLayer(generationSettings)
     }
 
-    fun addOldGrowthSwampFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addOldGrowthSwampFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
 //        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.TREES_OLD_GROWTH_SWAMP)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
         generationSettings.feature(
@@ -36,7 +36,7 @@ object BiomeFeatures {
         )
     }
 
-    fun addDesertsFeatures(generationSettings: GenerationSettings.Builder, red: Boolean, cave: Boolean) {
+    fun addDesertsFeatures(generationSettings: GenerationSettings.LookupBackedBuilder, red: Boolean, cave: Boolean) {
         DefaultBiomeFeatures.addDesertVegetation(generationSettings)
         addSandDungeons(generationSettings, red)
         if (!cave) {
@@ -99,7 +99,7 @@ object BiomeFeatures {
         }
     }
 
-    fun addGravelCaveFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addGravelCaveFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_DEAD_BUSH)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.ORE_COARSE_DIRT)
         generationSettings.feature(
@@ -136,7 +136,7 @@ object BiomeFeatures {
         )
     }
 
-    fun addMushroomGroveFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addMushroomGroveFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION
@@ -151,12 +151,12 @@ object BiomeFeatures {
         )
     }
 
-    fun addMushroomErodedFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addMushroomErodedFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_NORMAL)
         DefaultBiomeFeatures.addKelp(generationSettings)
     }
 
-    fun addMushroomCaveFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addMushroomCaveFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeatures.CAVE_DEAD_BUSH
@@ -180,7 +180,7 @@ object BiomeFeatures {
         )
     }
 
-    fun addFrozenCavernsFeatures(generationSettings: GenerationSettings.Builder) {
+    fun addFrozenCavernsFeatures(generationSettings: GenerationSettings.LookupBackedBuilder) {
         addFrozenDungeons(generationSettings)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeatures.ICE_CAVE_PILLAR)
@@ -191,17 +191,17 @@ object BiomeFeatures {
 //        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.ICE_CAVE_FOSSIL)
     }
 
-    fun addLushDungeons(builder: GenerationSettings.Builder) {
+    fun addLushDungeons(builder: GenerationSettings.LookupBackedBuilder) {
         builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.LUSH_MONSTER_ROOM)
         builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.DEEP_LUSH_MONSTER_ROOM)
     }
 
-    fun addFrozenDungeons(builder: GenerationSettings.Builder) {
+    fun addFrozenDungeons(builder: GenerationSettings.LookupBackedBuilder) {
         builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.FROZEN_MONSTER_ROOM)
         builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.DEEP_FROZEN_MONSTER_ROOM)
     }
 
-    fun addSandDungeons(builder: GenerationSettings.Builder, red: Boolean) {
+    fun addSandDungeons(builder: GenerationSettings.LookupBackedBuilder, red: Boolean) {
         if (red) {
             builder.feature(GenerationStep.Feature.UNDERGROUND_STRUCTURES, DuskPlacedFeatures.RED_SAND_MONSTER_ROOM)
             builder.feature(
@@ -228,7 +228,7 @@ object BiomeFeatures {
       TOP_LAYER_MODIFICATION
  */
 /*
-    fun addWindsweptValleyFeatures(generationSettings: GenerationSettings.Builder, variant: String) {
+    fun addWindsweptValleyFeatures(generationSettings: GenerationSettings.LookupBackedBuilder, variant: String) {
         if (variant == "topaz") {
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, OrePlacedFeatures.ORE_EMERALD)
         } else if (variant == "sapphire") {

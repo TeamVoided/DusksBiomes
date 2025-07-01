@@ -1,36 +1,38 @@
 package org.teamvoided.dusks_biomes.data.gen.world.gen
 
-import net.minecraft.SpreadingMultifaceBlock
 import net.minecraft.block.*
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.loot.LootTables
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.HolderSet
+import net.minecraft.registry.Registerable
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.state.property.EnumProperty
+import net.minecraft.state.property.IntProperty
 import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.structure.rule.TagMatchRuleTest
-import net.minecraft.util.collection.WeightedList
+import net.minecraft.util.collection.Pool
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.util.math.float_provider.UniformFloatProvider
-import net.minecraft.util.math.int_provider.*
+import net.minecraft.util.math.floatprovider.UniformFloatProvider
+import net.minecraft.util.math.intprovider.BiasedToBottomIntProvider
+import net.minecraft.util.math.intprovider.ConstantIntProvider
+import net.minecraft.util.math.intprovider.UniformIntProvider
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler.NoiseParameters
 import net.minecraft.world.Heightmap
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
-import net.minecraft.world.gen.decorator.BlockPredicateFilterPlacementModifier
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
-import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
-import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
+import net.minecraft.world.gen.placementmodifier.BlockFilterPlacementModifier
+import net.minecraft.world.gen.placementmodifier.PlacementModifier
 import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacement
 import net.minecraft.world.gen.root.MangroveRootPlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import net.minecraft.world.gen.stateprovider.NoiseCutoffBlockStateProvider
+import net.minecraft.world.gen.stateprovider.NoiseThresholdBlockStateProvider
 import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
@@ -47,11 +49,11 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
-    fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
+    fun bootstrap(c: Registerable<ConfiguredFeature<*, *>>) {
         val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
         val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
-        val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+        val procLists = c.getRegistryLookup(RegistryKeys.PROCESSOR_LIST)
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -68,7 +70,7 @@ object ConfiguredFeatureCreator {
                     UniformIntProvider.create(1, 4),
                     0.5f,
                     UniformIntProvider.create(0, 1),
-                    blockTags.getTagOrThrow(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH)
+                    blockTags.getOrThrow(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH)
                 ),
                 BlockStateProvider.of(Blocks.MANGROVE_LEAVES),
                 RandomSpreadFoliagePlacer(
@@ -83,9 +85,9 @@ object ConfiguredFeatureCreator {
                         BlockStateProvider.of(Blocks.MANGROVE_ROOTS),
                         Optional.of(AboveRootPlacement(BlockStateProvider.of(Blocks.SNOW), 0.5f)),
                         MangroveRootPlacement(
-                            blockTags.getTagOrThrow(BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH),
-                            HolderSet.createDirect(
-                                { it.builtInRegistryHolder },
+                            blockTags.getOrThrow(BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH),
+                            RegistryEntryList.of(
+                                { it.registryEntry },
                                 *arrayOf(Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS)
                             ),
                             BlockStateProvider.of(Blocks.MUDDY_MANGROVE_ROOTS),
@@ -99,8 +101,8 @@ object ConfiguredFeatureCreator {
                     LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                         0.14f, 1, 0, RandomizedIntBlockStateProvider(
                             BlockStateProvider.of(
-                                Blocks.MANGROVE_PROPAGULE.defaultState.with(MangrovePropaguleBlock.HANGING, true)
-                            ), MangrovePropaguleBlock.AGE_4, UniformIntProvider.create(0, 4)
+                                Blocks.MANGROVE_PROPAGULE.defaultState.with(PropaguleBlock.HANGING, true)
+                            ), PropaguleBlock.AGE, UniformIntProvider.create(0, 4)
                         ), 2, listOf(Direction.DOWN)
                     ), BeehiveTreeDecorator(0.01F)
                 )
@@ -115,7 +117,7 @@ object ConfiguredFeatureCreator {
                     UniformIntProvider.create(1, 6),
                     0.5f,
                     UniformIntProvider.create(0, 1),
-                    blockTags.getTagOrThrow(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH)
+                    blockTags.getOrThrow(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH)
                 ),
                 BlockStateProvider.of(Blocks.MANGROVE_LEAVES),
                 RandomSpreadFoliagePlacer(
@@ -132,9 +134,9 @@ object ConfiguredFeatureCreator {
                             AboveRootPlacement(BlockStateProvider.of(Blocks.SNOW), 0.5f)
                         ),
                         MangroveRootPlacement(
-                            blockTags.getTagOrThrow(BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH),
-                            HolderSet.createDirect(
-                                { it.builtInRegistryHolder },
+                            blockTags.getOrThrow(BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH),
+                            RegistryEntryList.of(
+                                { it.registryEntry },
                                 *arrayOf(Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS)
                             ),
                             BlockStateProvider.of(Blocks.MUDDY_MANGROVE_ROOTS),
@@ -148,8 +150,8 @@ object ConfiguredFeatureCreator {
                     LeavesVineTreeDecorator(0.125f), AttachedToLeavesTreeDecorator(
                         0.14f, 1, 0, RandomizedIntBlockStateProvider(
                             BlockStateProvider.of(
-                                Blocks.MANGROVE_PROPAGULE.defaultState.with(MangrovePropaguleBlock.HANGING, true)
-                            ), MangrovePropaguleBlock.AGE_4, UniformIntProvider.create(0, 4)
+                                Blocks.MANGROVE_PROPAGULE.defaultState.with(PropaguleBlock.HANGING, true)
+                            ), PropaguleBlock.AGE, UniformIntProvider.create(0, 4)
                         ), 2, listOf(Direction.DOWN)
                     ), BeehiveTreeDecorator(0.01F)
                 )
@@ -160,11 +162,11 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DuskPlacedFeatures.TALL_MANGROVE_FROZEN_CHECKED), 0.85f
+                    RandomFeatureEntry(
+                        placedFeatures.getOrThrow(DuskPlacedFeatures.TALL_MANGROVE_FROZEN_CHECKED), 0.85f
                     )
                 ),
-                placedFeatures.getHolderOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
+                placedFeatures.getOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
             )
         )
 //DARK OAK TRUNK DOESN'T REPLACE WATER AAAAAAAAAAAAAAA
@@ -173,13 +175,13 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36112),
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
+                    RandomFeatureEntry(
+                        placedFeatures.getOrThrow(TreePlacedFeatures.FANCY_OAK_BEES_0002),
                         0.2f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.ACACIA_CHECKED), 0.15f)
-                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36108)
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.ACACIA_CHECKED), 0.15f)
+                ), placedFeatures.getOrThrow(TreePlacedFeatures.OAK_BEES_0002)
             )
         )
         c.registerConfiguredFeature(
@@ -187,13 +189,13 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36112),
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.BIRCH_BEES_0002), 0.4f),
+                    RandomFeatureEntry(
+                        placedFeatures.getOrThrow(TreePlacedFeatures.FANCY_OAK_BEES_0002),
                         0.2f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.SPRUCE_CHECKED), 0.15f)
-                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.field_36108)
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.SPRUCE_CHECKED), 0.15f)
+                ), placedFeatures.getOrThrow(TreePlacedFeatures.OAK_BEES_0002)
             )
         )
         c.registerConfiguredFeature(
@@ -201,21 +203,21 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM)),
                         0.05f
                     ),
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM)),
                         0.025f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.DARK_OAK_CHECKED), 2 / 3f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(TreePlacedFeatures.SPRUCE_CHECKED),
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.DARK_OAK_CHECKED), 2 / 3f),
+                    RandomFeatureEntry(
+                        placedFeatures.getOrThrow(TreePlacedFeatures.SPRUCE_CHECKED),
                         0.3f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(TreePlacedFeatures.FANCY_OAK_CHECKED), 0.125f)
-                ), placedFeatures.getHolderOrThrow(TreePlacedFeatures.OAK_CHECKED)
+                    RandomFeatureEntry(placedFeatures.getOrThrow(TreePlacedFeatures.FANCY_OAK_CHECKED), 0.125f)
+                ), placedFeatures.getOrThrow(TreePlacedFeatures.OAK_CHECKED)
             )
         )
         c.registerConfiguredFeature(
@@ -223,52 +225,53 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(
+                            configuredFeatures.getOrThrow(
                                 TreeConfiguredFeatures.DARK_OAK
                             )
                         ), 2 / 3f
                     ),
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.SPRUCE)),
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.SPRUCE)),
                         0.3f
                     ),
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(
+                            configuredFeatures.getOrThrow(
                                 TreeConfiguredFeatures.FANCY_OAK
                             )
                         ), 0.125f
                     )
                 ),
-                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.OAK))
+                PlacedFeatures.createEntry(configuredFeatures.getOrThrow(TreeConfiguredFeatures.OAK))
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY, Feature.FLOWER, RandomPatchFeatureConfig(
-                96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty(
+                96, 6, 2, PlacedFeatures.createEntry(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                        WeightedBlockStateProvider(getPetalStates().add(Blocks.SNOW.defaultState, 8))
+                        WeightedBlockStateProvider(flowerbed(Blocks.PINK_PETALS).add(Blocks.SNOW.defaultState, 8))
                     )
                 )
             )
         )
+
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                20, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                20, PlacedFeatures.createEntry(
                     Feature.MULTIFACE_GROWTH,
-                    GlowLichenFeatureConfig(
-                        (Blocks.GLOW_LICHEN as SpreadingMultifaceBlock),
+                    MultifaceGrowthFeatureConfig(
+                        Blocks.GLOW_LICHEN as MultifaceGrowthBlock,
                         20,
-                        true,
+                        false,
                         true,
                         true,
                         0.75f,
-                        HolderSet.createDirect(
-                            { obj: Block -> obj.builtInRegistryHolder },
+                        RegistryEntryList.of<Block, Block>(
+                            { it.registryEntry },
                             *arrayOf<Block>(
                                 Blocks.STONE,
                                 Blocks.ANDESITE,
@@ -277,18 +280,7 @@ object ConfiguredFeatureCreator {
                                 Blocks.DRIPSTONE_BLOCK,
                                 Blocks.CALCITE,
                                 Blocks.TUFF,
-                                Blocks.DEEPSLATE,
-                                Blocks.GRAVEL,
-                                Blocks.MYCELIUM,
-                                Blocks.PODZOL,
-                                Blocks.COARSE_DIRT,
-                                Blocks.RED_MUSHROOM_BLOCK,
-                                Blocks.BROWN_MUSHROOM_BLOCK,
-                                Blocks.MUSHROOM_STEM,
-                                Blocks.PACKED_ICE,
-                                Blocks.BLUE_ICE,
-                                Blocks.SANDSTONE,
-                                Blocks.RED_SANDSTONE
+                                Blocks.DEEPSLATE
                             )
                         )
                     ),
@@ -305,12 +297,12 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS,
             Feature.RANDOM_BOOLEAN_SELECTOR,
             RandomBooleanFeatureConfig(
-                PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_RED_MUSHROOM),
+                PlacedFeatures.createEntry(
+                    configuredFeatures.getOrThrow(VegetationConfiguredFeatures.PATCH_RED_MUSHROOM),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
-                PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(
+                PlacedFeatures.createEntry(
+                    configuredFeatures.getOrThrow(
                         VegetationConfiguredFeatures.PATCH_BROWN_MUSHROOM
                     ),
                     *arrayOfNulls<PlacementModifier>(0)
@@ -321,8 +313,8 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS,
             Feature.ROOT_SYSTEM,
             RootSystemFeatureConfig(
-                PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+                PlacedFeatures.createEntry(
+                    configuredFeatures.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
                 2,
@@ -344,9 +336,9 @@ object ConfiguredFeatureCreator {
                                 Blocks.CAVE_AIR,
                                 Blocks.VOID_AIR
                             )
-                        ), BlockPredicate.matchingBlockTags(BlockTags.REPLACEABLE_BY_TREES)
-                    ), BlockPredicate.matchingBlockTags(
-                        Direction.DOWN.asVec3i(), DuskBlockTags.MUSHROOM_ROOT_PLACEABLE
+                        ), BlockPredicate.matchingBlockTag(BlockTags.REPLACEABLE_BY_TREES)
+                    ), BlockPredicate.matchingBlockTag(
+                        Direction.DOWN.vector, DuskBlockTags.MUSHROOM_ROOT_PLACEABLE
                     )
                 )
             )
@@ -365,7 +357,7 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+                blockTags.getOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
@@ -374,7 +366,7 @@ object ConfiguredFeatureCreator {
             SpikeFeatureConfig(
                 60, 10, 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+                blockTags.getOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             )
         )
         c.registerConfiguredFeature(
@@ -383,7 +375,7 @@ object ConfiguredFeatureCreator {
             SpikeFeatureConfig(
                 60, 10, 30,
                 BlockStateProvider.of(Blocks.PACKED_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+                blockTags.getOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             )
         )
         c.registerConfiguredFeature(
@@ -392,7 +384,7 @@ object ConfiguredFeatureCreator {
             SpikeFeatureConfig(
                 5, 10, 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+                blockTags.getOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             )
         )
         c.registerConfiguredFeature(
@@ -401,7 +393,7 @@ object ConfiguredFeatureCreator {
             SpikeFeatureConfig(
                 5, 10, 30,
                 BlockStateProvider.of(Blocks.BLUE_ICE),
-                blockTags.getTagOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
+                blockTags.getOrThrow(DuskBlockTags.ICE_SPIKE_PLACEABLE_BLOCKS)
             )
         )
         c.registerConfiguredFeature(
@@ -409,12 +401,12 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE)),
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE)),
                         0.075f
                     )
                 ),
-                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.ICE_SPIKE))
+                PlacedFeatures.createEntry(configuredFeatures.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE))
             )
         )
         c.registerConfiguredFeature(
@@ -422,12 +414,12 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE)),
+                    RandomFeatureEntry(
+                        PlacedFeatures.createEntry(configuredFeatures.getOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE)),
                         0.075f
                     )
                 ),
-                PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE))
+                PlacedFeatures.createEntry(configuredFeatures.getOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE))
             )
         )
         c.registerConfiguredFeature(
@@ -445,23 +437,23 @@ object ConfiguredFeatureCreator {
             ReefFeatures.FEATURE_LIST,
             ListFeatureConfig(
                 10, listOf(
-                    PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(DuskConfiguredFeatures.ORE_ICE)),
-                    PlacedFeatureUtil.placedInline(configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.FOSSIL_DIAMONDS))
+                    PlacedFeatures.createEntry(configuredFeatures.getOrThrow(DuskConfiguredFeatures.ORE_ICE)),
+                    PlacedFeatures.createEntry(configuredFeatures.getOrThrow(UndergroundConfiguredFeatures.FOSSIL_DIAMONDS))
                 )
             )
         )
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.SAND_CAVE_CACTUS,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry<BlockColumnFeatureConfig, Feature<BlockColumnFeatureConfig>>(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig.create(
                         BiasedToBottomIntProvider.create(1, 7),
                         BlockStateProvider.of(Blocks.CACTUS)
                     ),
                     *arrayOf<PlacementModifier>(
-                        BlockPredicateFilterPlacementModifier.create(
+                        BlockFilterPlacementModifier.of(
                             BlockPredicate.bothOf(
                                 BlockPredicate.IS_AIR,
                                 BlockPredicate.wouldSurvive(Blocks.CACTUS.defaultState, BlockPos.ORIGIN)
@@ -490,14 +482,14 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.SANDSTONE),
-                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+                blockTags.getOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -512,7 +504,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.UP)
                     )
                 )
@@ -521,8 +513,8 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.SAND_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -537,7 +529,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
@@ -566,15 +558,15 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.RED_SANDSTONE),
-                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+                blockTags.getOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_SPIKES,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -589,7 +581,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.UP)
                     )
                 )
@@ -598,8 +590,8 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -614,7 +606,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
@@ -622,7 +614,7 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.SAND_CAVE_SEAGRASS, Feature.RANDOM_PATCH, RandomPatchFeatureConfig(
-                64, 7, 3, PlacedFeatureUtil.filtered<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
+                64, 7, 3, PlacedFeatures.createEntry<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
                     Feature.SIMPLE_BLOCK,
                     SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.SEAGRASS)),
                     BlockPredicate.allOf(
@@ -636,10 +628,10 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             DuskConfiguredFeatures.SAND_CAVE_PICKLES, Feature.RANDOM_PATCH, RandomPatchFeatureConfig(
-                64, 7, 3, PlacedFeatureUtil.filtered<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
+                64, 7, 3, PlacedFeatures.createEntry<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
                     Feature.SIMPLE_BLOCK,
                     SimpleBlockFeatureConfig(
-                        NoiseCutoffBlockStateProvider(
+                        NoiseThresholdBlockStateProvider(
                             6789L,
                             NoiseParameters(0, 1.0, *DoubleArray(0)),
                             0.005f,
@@ -671,7 +663,7 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.ORE_COBBLESTONE,
             Feature.RANDOM_BOOLEAN_SELECTOR,
             RandomBooleanFeatureConfig(
-                PlacedFeatureUtil.placedInline(
+                PlacedFeatures.createEntry(
                     Feature.ORE,
                     OreFeatureConfig(
                         TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
@@ -680,7 +672,7 @@ object ConfiguredFeatureCreator {
                     ),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
-                PlacedFeatureUtil.placedInline(
+                PlacedFeatures.createEntry(
                     Feature.ORE,
                     OreFeatureConfig(
                         TagMatchRuleTest(DuskBlockTags.CAVE_PILLAR_PLACEABLE),
@@ -705,15 +697,15 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.COBBLESTONE),
-                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+                blockTags.getOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_SPIKES,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -728,7 +720,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.UP)
                     )
                 )
@@ -737,8 +729,8 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -753,7 +745,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
@@ -773,14 +765,14 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.COBBLED_DEEPSLATE),
-                blockTags.getTagOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
+                blockTags.getOrThrow(DuskBlockTags.CAVE_PILLAR_PLACEABLE)
             )
         )
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -795,7 +787,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.UP, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.UP)
                     )
                 )
@@ -804,8 +796,8 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF,
             Feature.RANDOM_PATCH,
-            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                10, PlacedFeatureUtil.placedInline(
+            ConfiguredFeatures.createRandomPatchFeatureConfig(
+                10, PlacedFeatures.createEntry(
                     Feature.BLOCK_COLUMN,
                     BlockColumnFeatureConfig(
                         listOf(
@@ -820,7 +812,7 @@ object ConfiguredFeatureCreator {
                         ),
                         Direction.DOWN, BlockPredicate.IS_AIR, false
                     ),
-                    BlockPredicateFilterPlacementModifier.create(
+                    BlockFilterPlacementModifier.of(
                         BlockPredicate.hasSturdyFace(Direction.DOWN)
                     )
                 )
@@ -844,12 +836,12 @@ object ConfiguredFeatureCreator {
                 4,
                 0.6f,
                 BlockStateProvider.of(Blocks.DIAMOND_BLOCK),
-                blockTags.getTagOrThrow(BlockTags.BASE_STONE_OVERWORLD)
+                blockTags.getOrThrow(BlockTags.BASE_STONE_OVERWORLD)
             )
         )
 
 //Structure Piece features
-        val procDesertWell = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+        val procDesertWell = procLists.getOrThrow(StructureProcessorLists.EMPTY)
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DESERT_WELL,
             ReefFeatures.STRUCTURE_PIECE,
@@ -949,27 +941,49 @@ object ConfiguredFeatureCreator {
         )
     }
 
-    private fun getPetalStates(): WeightedList.Builder<BlockState> {
-        val randomPetal = WeightedList.builder<BlockState>()
-        for (i in 1..4) {
-            Direction.Type.HORIZONTAL.forEach {
-                randomPetal.add(
-                    Blocks.PINK_PETALS.defaultState.with(PinkPetalsBlock.FLOWER_AMOUNT, i).with(PinkPetalsBlock.FACING, it),
-                    1
+
+    private fun flowerbed(block: Block): Pool.Builder<BlockState> = segmentedBlock(
+        block,
+        1,
+        4,
+        FlowerbedBlock.FLOWER_AMOUNT,
+        FlowerbedBlock.HORIZONTAL_FACING
+    )
+
+    private fun segmentedBlock(
+        block: Block,
+        min: Int,
+        max: Int,
+        intProperty: IntProperty,
+        enumProperty: EnumProperty<Direction>
+    ): Pool.Builder<BlockState> {
+        val builder = Pool.builder<BlockState>()
+
+        for (k in min..max) {
+            val var7: Iterator<Direction> = Direction.Type.HORIZONTAL.iterator()
+
+            while (var7.hasNext()) {
+                val direction = var7.next()
+                builder.add(
+                    (block.defaultState.with(intProperty, k)).with(
+                        enumProperty,
+                        direction
+                    ), 1
                 )
             }
         }
-        return randomPetal
+
+        return builder
     }
 
-    private fun <FC : FeatureConfig, F : Feature<FC>> BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(
+    private fun <FC : FeatureConfig, F : Feature<FC>> Registerable<ConfiguredFeature<*, *>>.registerConfiguredFeature(
         registryKey: RegistryKey<ConfiguredFeature<*, *>>,
         feature: F,
         featureConfig: FC
     ): Any = this.register(registryKey, ConfiguredFeature(feature, featureConfig))
 
     @Suppress("unused")
-    private fun BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(
+    private fun Registerable<ConfiguredFeature<*, *>>.registerConfiguredFeature(
         registryKey: RegistryKey<ConfiguredFeature<*, *>>, feature: Feature<DefaultFeatureConfig>
     ) = this.registerConfiguredFeature(registryKey, feature, FeatureConfig.DEFAULT)
 

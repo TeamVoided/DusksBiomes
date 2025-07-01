@@ -12,5 +12,5 @@ object DuskStructureProcessorTypes {
         register("pale_oak_replace", PaleOakReplacementStructureProcessor.CODEC)
     fun init() {}
     private fun <P : StructureProcessor> register(id: String, codec: MapCodec<P>): StructureProcessorType<P> =
-        Registry.register(Registries.STRUCTURE_PROCESSOR_TYPE, id, StructureProcessorType { codec })
+        Registry.register(Registries.STRUCTURE_PROCESSOR, id, StructureProcessorType { codec })
 }

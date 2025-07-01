@@ -2,7 +2,7 @@ package org.teamvoided.dusks_biomes.data.gen.structure
 
 import net.minecraft.block.Blocks
 import net.minecraft.block.LanternBlock
-import net.minecraft.registry.BootstrapContext
+import net.minecraft.registry.Registerable
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
@@ -16,7 +16,7 @@ object StructureProcessorCreator {
 
 
     // StructureProcessorLists
-    fun bootstrap(c: BootstrapContext<StructureProcessorList>) {
+    fun bootstrap(c: Registerable<StructureProcessorList>) {
         val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
 
         swampVillageProcessorLists(c)
@@ -24,7 +24,7 @@ object StructureProcessorCreator {
         desertRuinsProcessorLists(c)
     }
 
-    fun swampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
+    fun swampVillageProcessorLists(c: Registerable<StructureProcessorList>) {
         c.register(
             DuskStructureProcessorLists.VILLAGE_SWAMP_FARM,
             RuleStructureProcessor(
@@ -267,7 +267,7 @@ object StructureProcessorCreator {
         )
     }
 
-    fun mangroveSwampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
+    fun mangroveSwampVillageProcessorLists(c: Registerable<StructureProcessorList>) {
         c.register(
             DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE,
             RuleStructureProcessor(
@@ -485,7 +485,7 @@ object StructureProcessorCreator {
         )
     }
 
-    fun desertRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {
+    fun desertRuinsProcessorLists(c: Registerable<StructureProcessorList>) {
         val genericDesertRuinProcessors = RuleStructureProcessor(
             StructureProcessorRule(
                 RandomBlockMatchRuleTest(Blocks.SMOOTH_SANDSTONE, 0.3f),
@@ -583,7 +583,7 @@ object StructureProcessorCreator {
 //        )
     }
 
-    fun redDesertRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {
+    fun redDesertRuinsProcessorLists(c: Registerable<StructureProcessorList>) {
         val genericRedDesertRuinProcessors = RuleStructureProcessor(
             StructureProcessorRule(
                 RandomBlockMatchRuleTest(Blocks.SMOOTH_RED_SANDSTONE, 0.3f),
@@ -601,7 +601,7 @@ object StructureProcessorCreator {
         )
     }
 
-    private fun BootstrapContext<StructureProcessorList>.register(
+    private fun Registerable<StructureProcessorList>.register(
         key: RegistryKey<StructureProcessorList>, vararg procList: StructureProcessor
     ) = this.register(key, StructureProcessorList(procList.toList()))
 

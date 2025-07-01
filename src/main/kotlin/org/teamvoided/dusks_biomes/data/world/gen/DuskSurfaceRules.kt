@@ -3,10 +3,10 @@ package org.teamvoided.dusks_biomes.data.world.gen
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.VerticalSurfaceType
-import net.minecraft.world.biome.Biomes
+import net.minecraft.world.biome.BiomeKeys
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.noise.NoiseParametersKeys
-import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
+import net.minecraft.world.gen.surfacebuilder.MaterialRules.*
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
 @Suppress("MagicNumber")
@@ -15,6 +15,13 @@ object DuskSurfaceRules {
     private fun block(block: Block): MaterialRule {
         return block(block.defaultState)
     }
+
+    private val ON_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR
+    private val ON_CEILING: MaterialCondition = STONE_DEPTH_CEILING
+    private val UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH
+    private val UNDER_CEILING: MaterialCondition = STONE_DEPTH_CEILING_WITH_SURFACE_DEPTH
+    private val DEEP_UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6
+    private val DEEPEST_LEVEL_UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30
 
     val grass = sequence(
         condition(
@@ -178,7 +185,7 @@ object DuskSurfaceRules {
         )
         val mushroomIslandSurface = condition(
             biome(
-                Biomes.MUSHROOM_FIELDS,
+                BiomeKeys.MUSHROOM_FIELDS,
                 DuskBiomes.ERODED_MUSHROOM_ISLAND,
                 DuskBiomes.MUSHROOM_GROVE
             ), sequence(
@@ -400,7 +407,7 @@ object DuskSurfaceRules {
                                     surfaceNoiseThresholdNoDivision(0.5454, 0.909),
                                     block(Blocks.TERRACOTTA)
                                 ),
-                                badlands()
+                                terracottaBands()
                             )
                         ),
                         condition(
@@ -430,7 +437,7 @@ object DuskSurfaceRules {
                                 block(Blocks.ORANGE_TERRACOTTA)
                             )
                         ),
-                        badlands()
+                        terracottaBands()
                     )
                 ),
                 condition(
@@ -629,7 +636,7 @@ object DuskSurfaceRules {
             )
         )
         val surface = condition(
-            abovePreliminarySurface(),
+            surface(),
             sequence(
                 swampWater,
                 woodedBadlands,

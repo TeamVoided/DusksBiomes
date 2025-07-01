@@ -1,15 +1,15 @@
 package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import net.minecraft.block.Blocks
-import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.BootstrapContext
+import net.minecraft.registry.Registerable
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.MusicSound
+import net.minecraft.sound.MusicType
 import net.minecraft.sound.SoundEvents
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.Biome.TemperatureModifier
@@ -31,7 +31,7 @@ object BiomeCreator {
     private val DEFAULT_MUSIC: MusicSound? = null
 
     @Suppress("BooleanLiteralArgument")
-    fun boostrap(c: BootstrapContext<Biome>) {
+    fun boostrap(c: Registerable<Biome>) {
         c.register(DuskBiomes.COLD_FOREST, c.createTemperatureForest(true, false))
         c.register(DuskBiomes.COLD_PLAINS, c.createTemperaturePlains(true, false))
         c.register(DuskBiomes.WARM_FOREST, c.createTemperatureForest(false, true))
@@ -67,11 +67,12 @@ object BiomeCreator {
     }
 
 
-    fun BootstrapContext<Biome>.createTemperatureForest(cold: Boolean, warm: Boolean): Biome {
+    fun Registerable<Biome>.createTemperatureForest(cold: Boolean, warm: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
-        val spawns = GenerationSettings.Builder(features, carver)
+        val spawns = GenerationSettings.LookupBackedBuilder(features, carver)
+
         val generation = SpawnSettings.Builder()
 
         DefaultBiomeFeatures.addFarmAnimals(generation)
@@ -105,12 +106,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createTemperaturePlains(cold: Boolean, warm: Boolean): Biome {
+    fun Registerable<Biome>.createTemperaturePlains(cold: Boolean, warm: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         addBasicFeatures(generation)
         DefaultBiomeFeatures.addPlainsMobs(spawns)
@@ -124,7 +125,7 @@ object BiomeCreator {
             if (cold) DuskPlacedFeatures.TREES_COLD_PLAINS
             else DuskPlacedFeatures.TREES_WARM_PLAINS
         )
-        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_PLAINS)
+        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_PLAIN)
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_PLAIN)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation, true)
@@ -138,12 +139,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createWindsweptBirchForest(): Biome {
+    fun Registerable<Biome>.createWindsweptBirchForest(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         addBasicFeatures(generation)
         DefaultBiomeFeatures.addForestFlowers(generation)
@@ -165,12 +166,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createSnowyWindsweptHills(forest: Boolean = false): Biome {
+    fun Registerable<Biome>.createSnowyWindsweptHills(forest: Boolean = false): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, 5, SpawnEntry(EntityType.LLAMA, 4, 6))
@@ -180,7 +181,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
         if (forest) DefaultBiomeFeatures.addWindsweptForestTrees(generation)
-        else DefaultBiomeFeatures.addMountainTrees(generation)
+        else DefaultBiomeFeatures.addWindsweptHillsTrees(generation)
 
         DefaultBiomeFeatures.addDefaultFlowers(generation)
         DefaultBiomeFeatures.addDefaultGrass(generation)
@@ -197,12 +198,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createSnowyOldGrowthTaiga(spruce: Boolean): Biome {
+    fun Registerable<Biome>.createSnowyOldGrowthTaiga(spruce: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         spawns.spawn(SpawnGroup.CREATURE, 8, SpawnEntry(EntityType.WOLF, 4, 4))
@@ -229,7 +230,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addGiantTaigaGrass(generation)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         DefaultBiomeFeatures.addDefaultVegetation(generation, false)
-        DefaultBiomeFeatures.addCommonBerries(generation)
+        DefaultBiomeFeatures.addSweetBerryBushesSnowy(generation)
         return createBiome(
             true,
             if (spruce) -0.45f else -0.5f,
@@ -239,12 +240,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createDarkGrove(): Biome {
+    fun Registerable<Biome>.createDarkGrove(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         spawns.spawn(SpawnGroup.CREATURE, 1, SpawnEntry(EntityType.WOLF, 1, 1))
             .spawn(SpawnGroup.CREATURE, 8, SpawnEntry(EntityType.RABBIT, 2, 3))
@@ -273,7 +274,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addEmeraldOre(generation)
         DefaultBiomeFeatures.addInfestedStone(generation)
         val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_GROVE)
-        return Biome.Builder().hasPrecipitation(true).temperature(-0.2f).downfall(0.8f).effects(
+        return Biome.Builder().precipitation(true).temperature(-0.2f).downfall(0.8f).effects(
             BiomeEffects.Builder().waterColor(DEFAULT_WATER_COLOR).waterFogColor(DEFAULT_WATER_FOG_COLOR)
                 .fogColor(DEFAULT_FOG_COLOR)
                 .skyColor(OverworldBiomeCreator.getSkyColor(-0.2f)).grassColorModifier(GrassColorModifier.DARK_FOREST)
@@ -281,12 +282,12 @@ object BiomeCreator {
         ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
-    fun BootstrapContext<Biome>.createSnowyCherryGrove(): Biome {
+    fun Registerable<Biome>.createSnowyCherryGrove(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         spawns.spawn(SpawnGroup.CREATURE, 1, SpawnEntry(EntityType.PIG, 1, 2))
             .spawn(SpawnGroup.CREATURE, 2, SpawnEntry(EntityType.RABBIT, 2, 6))
@@ -318,11 +319,11 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createFrozenBadlands(trees: Boolean = false): Biome {
+    fun Registerable<Biome>.createFrozenBadlands(trees: Boolean = false): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addCaveMobs(spawns)
         DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
@@ -344,9 +345,9 @@ object BiomeCreator {
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         DefaultBiomeFeatures.addBadlandsVegetation(generation)
-        DefaultBiomeFeatures.addCommonBerries(generation)
+        DefaultBiomeFeatures.addSweetBerryBushesSnowy(generation)
         val temperature = -0.6f
-        return Biome.Builder().hasPrecipitation(true).temperature(temperature).downfall(0.5f).effects(
+        return Biome.Builder().precipitation(true).temperature(temperature).downfall(0.5f).effects(
             BiomeEffects.Builder()
                 .waterColor(DEFAULT_WATER_COLOR)
                 .waterFogColor(DEFAULT_WATER_FOG_COLOR)
@@ -360,12 +361,12 @@ object BiomeCreator {
         ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
-    fun BootstrapContext<Biome>.createMangroveSwamp(frozen: Boolean): Biome {
+    fun Registerable<Biome>.createMangroveSwamp(frozen: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         if (frozen) {
             DefaultBiomeFeatures.addCaveMobs(spawns)
@@ -410,7 +411,7 @@ object BiomeCreator {
 
         return if (frozen) {
             Biome.Builder()
-                .hasPrecipitation(true)
+                .precipitation(true)
                 .temperature(-0.5f)
                 .downfall(0.9f)
                 .temperatureModifier(TemperatureModifier.FROZEN)
@@ -420,7 +421,7 @@ object BiomeCreator {
                 .build()
         } else {
             Biome.Builder()
-                .hasPrecipitation(true)
+                .precipitation(true)
                 .temperature(0.8f)
                 .downfall(0.9f)
                 .effects(
@@ -437,11 +438,11 @@ object BiomeCreator {
         }
     }
 
-    fun BootstrapContext<Biome>.createSwamp(oldGrowth: Boolean): Biome {
+    fun Registerable<Biome>.createSwamp(oldGrowth: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addFarmAnimals(spawns)
         DefaultBiomeFeatures.addBatsAndMonsters(spawns)
@@ -459,7 +460,7 @@ object BiomeCreator {
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
 
         return Biome.Builder()
-            .hasPrecipitation(true)
+            .precipitation(true)
             .temperature(0.8f)
             .downfall(0.9f)
             .effects(
@@ -479,11 +480,11 @@ object BiomeCreator {
             .build()
     }
 
-    fun BootstrapContext<Biome>.createDesert(red: Boolean, cave: Boolean): Biome {
+    fun Registerable<Biome>.createDesert(red: Boolean, cave: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addDesertMobs(spawns)
         if (cave) spawns.spawn(SpawnGroup.MONSTER, 95, SpawnEntry(EntityType.DROWNED, 4, 4))
@@ -493,7 +494,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultDisks(generation)
         DefaultBiomeFeatures.addDefaultFlowers(generation)
         DefaultBiomeFeatures.addDefaultGrass(generation)
-        DefaultBiomeFeatures.addDesertDeadBushes(generation)
+        DefaultBiomeFeatures.addDesertDryVegetation(generation)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, cave)
 
@@ -512,7 +513,7 @@ object BiomeCreator {
         }
 
         return Biome.Builder()
-            .hasPrecipitation(false)
+            .precipitation(false)
             .temperature(2f)
             .downfall(0f)
             .effects(
@@ -529,11 +530,11 @@ object BiomeCreator {
             .build()
     }
 
-    fun BootstrapContext<Biome>.createWarmRiver(red: Boolean): Biome {
+    fun Registerable<Biome>.createWarmRiver(red: Boolean): Biome {
         val feature = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(feature, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(feature, carver)
 
         spawns.spawn(SpawnGroup.WATER_AMBIENT, 15, SpawnEntry(EntityType.PUFFERFISH, 1, 3))
         spawns.spawn(SpawnGroup.WATER_CREATURE, 10, SpawnEntry(EntityType.SQUID, 4, 4))
@@ -547,7 +548,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultDisks(generation)
         DefaultBiomeFeatures.addDefaultFlowers(generation)
         DefaultBiomeFeatures.addDefaultGrass(generation)
-        DefaultBiomeFeatures.addDesertDeadBushes(generation)
+        DefaultBiomeFeatures.addDesertDryVegetation(generation)
         DefaultBiomeFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, false)
         generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_RIVER)
@@ -564,21 +565,21 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createWarmOcean(): Biome {
+    fun Registerable<Biome>.createWarmOcean(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         return OverworldBiomeCreator.createWarmOcean(features, carver)
     }
 
-    fun BootstrapContext<Biome>.createLukewarmOcean(deep: Boolean): Biome {
+    fun Registerable<Biome>.createLukewarmOcean(deep: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         return OverworldBiomeCreator.createLukewarmOcean(features, carver, deep)
     }
 
-    fun BootstrapContext<Biome>.createBeach(snowy: Boolean, stony: Boolean): Biome {
+    fun Registerable<Biome>.createBeach(snowy: Boolean, stony: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
@@ -586,7 +587,7 @@ object BiomeCreator {
             spawns.spawn(SpawnGroup.CREATURE, 5, SpawnEntry(EntityType.TURTLE, 2, 5))
         }
         DefaultBiomeFeatures.addBatsAndMonsters(spawns)
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
         addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
@@ -607,7 +608,7 @@ object BiomeCreator {
             TemperatureModifier.NONE
         }
         return Biome.Builder()
-            .hasPrecipitation(true)
+            .precipitation(true)
             .temperature(temperature)
             .temperatureModifier(tempMod)
             .downfall(if (!stony && !snowy) 0.4f else 0.3f)
@@ -621,12 +622,12 @@ object BiomeCreator {
             ).spawnSettings(spawns.build()).generationSettings(generation.build()).build()
     }
 
-    fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
+    fun Registerable<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addMushroomMobs(spawns)
 
@@ -646,11 +647,11 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createMushroomCave(): Biome {
+    fun Registerable<Biome>.createMushroomCave(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
         DefaultBiomeFeatures.addMushroomMobs(spawns)
         addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
@@ -665,12 +666,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createFrozenCaves(): Biome {
+    fun Registerable<Biome>.createFrozenCaves(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         DefaultBiomeFeatures.addCaveMobs(spawns)
         DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 20, false)
@@ -696,12 +697,12 @@ object BiomeCreator {
         )
     }
 
-    fun BootstrapContext<Biome>.createGravelCave(): Biome {
+    fun Registerable<Biome>.createGravelCave(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
         DefaultBiomeFeatures.addBatsAndMonsters(spawns)
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
         addBasicFeatures(generation)
         DefaultBiomeFeatures.addDefaultOres(generation)
         DefaultBiomeFeatures.addDefaultDisks(generation)
@@ -714,7 +715,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addInfestedStone(generation)
         val temp = 0.2f
         return Biome.Builder()
-            .hasPrecipitation(true)
+            .precipitation(true)
             .temperature(temp)
             .downfall(0.3f)
             .effects(
@@ -739,12 +740,12 @@ object BiomeCreator {
     }
 
     /*BIOME TEMPLATE
-    fun BootstrapContext<Biome>.createExample(): Biome {
+    fun Registerable<Biome>.createExample(): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         /* Add Spawns */
 
@@ -772,12 +773,12 @@ object BiomeCreator {
           TOP_LAYER_MODIFICATION
      */
 
-    /*    fun BootstrapContext<Biome>.createDevilsRoar(): Biome {
+    /*    fun Registerable<Biome>.createDevilsRoar(): Biome {
             val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
             val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
 
             val spawns = SpawnSettings.Builder()
-            val generation = GenerationSettings.Builder(features, carver)
+            val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
             DefaultBiomeFeatures.addCaveMobs(spawns)
             DefaultBiomeFeatures.addMonsters(spawns, 95, 5, 100, true)
@@ -787,7 +788,7 @@ object BiomeCreator {
             DefaultBiomeFeatures.addDefaultDisks(generation)
             val musicSound = MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES)
             return Biome.Builder()
-                .hasPrecipitation(true)
+                .precipitation(true)
                 .temperature(0.5f)
                 .downfall(0.5f)
                 .effects(
@@ -806,11 +807,11 @@ object BiomeCreator {
         }
      */
     /*
-    fun BootstrapContext<Biome>.createWindsweptValley(variant: String): Biome {
+    fun Registerable<Biome>.createWindsweptValley(variant: String): Biome {
         val features = this.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
         val carver = this.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
         val spawns = SpawnSettings.Builder()
-        val generation = GenerationSettings.Builder(features, carver)
+        val generation = GenerationSettings.LookupBackedBuilder(features, carver)
 
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.GOAT, 5, 1, 3))
         spawns.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.LLAMA, 5, 4, 6))
@@ -846,7 +847,7 @@ object BiomeCreator {
         }
 
         return Biome.Builder()
-            .hasPrecipitation(true)
+            .precipitation(true)
             .temperature(temperature)
             .downfall(downfall)
             .effects(
@@ -865,17 +866,29 @@ object BiomeCreator {
     }
      */
 
-    fun BiomeEffects.Builder.music(music: MusicSound?): BiomeEffects.Builder = this.method_27346(music)
     fun createBiome(
-        hasPrecipitation: Boolean,
+        precipitation: Boolean,
         temperate: Float,
         downfall: Float,
         spawnSettings: SpawnSettings.Builder?,
-        generationSettings: GenerationSettings.Builder?,
+        generationSettings: GenerationSettings.LookupBackedBuilder?,
         music: MusicSound?,
     ): Biome = OverworldBiomeCreatorAccessor.db_invokeCreate(
-        hasPrecipitation, temperate, downfall, spawnSettings, generationSettings, music
-    )
+        precipitation,
+        temperate,
+        downfall,
+        DEFAULT_WATER_COLOR,
+        DEFAULT_WATER_FOG_COLOR,
+        null,
+        null,
+        null,
+        spawnSettings,
+        generationSettings,
+        music
+    );
+    //OverworldBiomeCreatorAccessor.db_invokeCreate(
+    //    precipitation, temperate, downfall, spawnSettings, generationSettings, music
+    //)
 
     fun createBiome(
         bl: Boolean,
@@ -886,12 +899,12 @@ object BiomeCreator {
         integer: Int?,
         integer2: Int?,
         builder: SpawnSettings.Builder?,
-        builder2: GenerationSettings.Builder?,
+        builder2: GenerationSettings.LookupBackedBuilder?,
         value: MusicSound?,
     ): Biome = OverworldBiomeCreatorAccessor.db_invokeCreate(
         bl, temperature, f, i, j, integer, null, integer2, builder, builder2, value
     )
 
-    fun addBasicFeatures(generation: GenerationSettings.Builder) = OverworldBiomeCreatorAccessor.db_invokerAddBasicFeatures(generation)
+    fun addBasicFeatures(generation: GenerationSettings.LookupBackedBuilder) = OverworldBiomeCreatorAccessor.db_invokerAddBasicFeatures(generation)
 
 }

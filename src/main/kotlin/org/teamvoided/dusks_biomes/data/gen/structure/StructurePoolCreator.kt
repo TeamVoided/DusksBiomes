@@ -1,10 +1,10 @@
 package org.teamvoided.dusks_biomes.data.gen.structure
 
 import com.mojang.datafixers.util.Pair
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.Holder
-import net.minecraft.registry.HolderProvider
+import net.minecraft.registry.Registerable
+import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.structure.pool.StructurePool
 import net.minecraft.structure.pool.StructurePoolElement
 import net.minecraft.structure.pool.StructurePools
@@ -23,13 +23,13 @@ object StructurePoolCreator {
 
 //    const val zombieChance = (1 / 50) * 100
 
-    fun bootstrap(c: BootstrapContext<StructurePool>) {
-        val structurePools = c.getRegistryLookup(RegistryKeys.STRUCTURE_POOL)
+    fun bootstrap(c: Registerable<StructurePool>) {
+        val structurePools = c.getRegistryLookup(RegistryKeys.TEMPLATE_POOL)
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
-        val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+        val procLists = c.getRegistryLookup(RegistryKeys.PROCESSOR_LIST)
 
-        val poolEmpty = structurePools.getHolderOrThrow(StructurePools.EMPTY)
-        val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+        val poolEmpty = structurePools.getOrThrow(StructurePools.EMPTY)
+        val procEmpty = procLists.getOrThrow(StructureProcessorLists.EMPTY)
 
         generateSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
         generateMangroveSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
@@ -38,16 +38,16 @@ object StructurePoolCreator {
     }
 
     fun generateSwampVillage(
-        c: BootstrapContext<StructurePool>,
-        structurePools: HolderProvider<StructurePool>,
-        poolEmpty: Holder<StructurePool>,
-        procLists: HolderProvider<StructureProcessorList>,
-        procEmpty: Holder.Reference<StructureProcessorList>,
-        placedFeatures: HolderProvider<PlacedFeature>
+        c: Registerable<StructurePool>,
+        structurePools: RegistryEntryLookup<StructurePool>,
+        poolEmpty: RegistryEntry<StructurePool>,
+        procLists: RegistryEntryLookup<StructureProcessorList>,
+        procEmpty: RegistryEntry.Reference<StructureProcessorList>,
+        placedFeatures: RegistryEntryLookup<PlacedFeature>
 
     ) {
-        var procHouse = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE)
-        val procStreet = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_STREET)
+        var procHouse = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_HOUSE)
+        val procStreet = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_STREET)
         c.register(
             DuskStructurePools.SWAMP_VILLAGE_VILLAGERS,
             StructurePool(
@@ -77,14 +77,14 @@ object StructurePoolCreator {
             DuskStructurePools.SWAMP_VILLAGE_CENTER_TREE,
             StructurePool(
                 poolEmpty,
-                listOf(pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK))),
+                listOf(pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK))),
                 StructurePool.Projection.RIGID
             )
         )
         c.register(
             DuskStructurePools.SWAMP_VILLAGE_STREETS,
             StructurePool(
-                structurePools.getHolderOrThrow(DuskStructurePools.SWAMP_VILLAGE_TERMINATORS),
+                structurePools.getOrThrow(DuskStructurePools.SWAMP_VILLAGE_TERMINATORS),
                 listOf(
                     pairedLegacySingle("village/swamp/streets/corner_01", procStreet, 2),
                     pairedLegacySingle("village/swamp/streets/corner_02", procStreet, 2),
@@ -149,12 +149,12 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/swamp/houses/swamp_temple_2", procHouse),
                     pairedLegacySingle(
                         "village/swamp/houses/swamp_farm_1",
-                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         9
                     ),
                     pairedLegacySingle(
                         "village/swamp/houses/swamp_farm_2",
-                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         7
                     ),
                     pairedLegacySingle("village/swamp/houses/swamp_animal_pen_1", procHouse, 2),
@@ -172,16 +172,16 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/swamp/swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/swamp/swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/swamp/swamp_decoration_7", procHouse),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK), 5),
-                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK), 5),
+                    pairedFeature(placedFeatures.getOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        procHouse = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_ZOMBIE)
+        procHouse = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_ZOMBIE)
         c.register(
             DuskStructurePools.SWAMP_ZOMBIE_VILLAGE_CENTER,
             StructurePool(
@@ -240,10 +240,10 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/swamp/swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/swamp/swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/swamp/swamp_decoration_7", procHouse),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK), 5),
-                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_OAK), 5),
+                    pairedFeature(placedFeatures.getOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -252,15 +252,15 @@ object StructurePoolCreator {
     }
 
     fun generateMangroveSwampVillage(
-        c: BootstrapContext<StructurePool>,
-        structurePools: HolderProvider<StructurePool>,
-        poolEmpty: Holder<StructurePool>,
-        procLists: HolderProvider<StructureProcessorList>,
-        procEmpty: Holder.Reference<StructureProcessorList>,
-        placedFeatures: HolderProvider<PlacedFeature>
+        c: Registerable<StructurePool>,
+        structurePools: RegistryEntryLookup<StructurePool>,
+        poolEmpty: RegistryEntry<StructurePool>,
+        procLists: RegistryEntryLookup<StructureProcessorList>,
+        procEmpty: RegistryEntry.Reference<StructureProcessorList>,
+        placedFeatures: RegistryEntryLookup<PlacedFeature>
     ) {
-        var procHouse = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE)
-        val procStreet = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET)
+        var procHouse = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_HOUSE)
+        val procStreet = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_STREET)
         c.register(
             DuskStructurePools.MANGROVE_SWAMP_VILLAGE_CENTER,
             StructurePool(
@@ -288,7 +288,7 @@ object StructurePoolCreator {
             StructurePool(
                 poolEmpty,
                 listOf(
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE)),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE)),
                 ),
                 StructurePool.Projection.RIGID
             )
@@ -296,7 +296,7 @@ object StructurePoolCreator {
         c.register(
             DuskStructurePools.MANGROVE_SWAMP_VILLAGE_STREETS,
             StructurePool(
-                structurePools.getHolderOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_TERMINATORS),
+                structurePools.getOrThrow(DuskStructurePools.MANGROVE_SWAMP_VILLAGE_TERMINATORS),
                 listOf(
                     pairedLegacySingle("village/mangrove_swamp/streets/corner_01", procStreet, 2),
                     pairedLegacySingle("village/mangrove_swamp/streets/corner_02", procStreet, 2),
@@ -369,12 +369,12 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_temple_2", procHouse),
                     pairedLegacySingle(
                         "village/mangrove_swamp/houses/mangrove_swamp_farm_1",
-                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         9
                     ),
                     pairedLegacySingle(
                         "village/mangrove_swamp/houses/mangrove_swamp_farm_2",
-                        procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
+                        procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_SWAMP_FARM),
                         7
                     ),
                     pairedLegacySingle("village/mangrove_swamp/houses/mangrove_swamp_animal_pen_1", procHouse, 2),
@@ -392,16 +392,16 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_7", procHouse),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE), 5),
-                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE), 5),
+                    pairedFeature(placedFeatures.getOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
             )
         )
-        procHouse = procLists.getHolderOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_ZOMBIE)
+        procHouse = procLists.getOrThrow(DuskStructureProcessorLists.VILLAGE_MANGROVE_SWAMP_ZOMBIE)
         c.register(
             DuskStructurePools.MANGROVE_SWAMP_ZOMBIE_VILLAGE_CENTER,
             StructurePool(
@@ -477,10 +477,10 @@ object StructurePoolCreator {
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_5", procHouse),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_6", procHouse, 6),
                     pairedLegacySingle("village/mangrove_swamp/mangrove_swamp_decoration_7", procHouse),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
-                    pairedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE), 5),
-                    pairedFeature(placedFeatures.getHolderOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_ROCK), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS), 8),
+                    pairedFeature(placedFeatures.getOrThrow(DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE), 5),
+                    pairedFeature(placedFeatures.getOrThrow(VillagePlacedFeatures.PILE_HAY), 7),
                     Pair.of(StructurePoolElement.ofEmpty(), 8)
                 ),
                 StructurePool.Projection.RIGID
@@ -489,10 +489,10 @@ object StructurePoolCreator {
     }
 
 //    fun generateDesertRuins(
-//        c: BootstrapContext<StructurePool>,
-//        poolEmpty: Holder<StructurePool>,
-//        procLists: HolderProvider<StructureProcessorList>,
-//        procEmpty: Holder.Reference<StructureProcessorList>
+//        c: Registerable<StructurePool>,
+//        poolEmpty: RegistryEntry<StructurePool>,
+//        procLists: RegistryEntryLookup<StructureProcessorList>,
+//        procEmpty: RegistryEntry.Reference<StructureProcessorList>
 //    ) {
 //        c.register(
 //            DuskStructurePools.DESERT_RUINS_OBELISK,
@@ -564,10 +564,10 @@ object StructurePoolCreator {
 //    }
 //
 //    fun generateRedDesertRuin(
-//        c: BootstrapContext<StructurePool>,
-//        poolEmpty: Holder<StructurePool>,
-//        procLists: HolderProvider<StructureProcessorList>,
-//        procEmpty: Holder.Reference<StructureProcessorList>
+//        c: Registerable<StructurePool>,
+//        poolEmpty: RegistryEntry<StructurePool>,
+//        procLists: RegistryEntryLookup<StructureProcessorList>,
+//        procEmpty: RegistryEntry.Reference<StructureProcessorList>
 //    ) {
 //        c.register(
 //            DuskStructurePools.RED_DESERT_RUINS_OBELISK,
@@ -642,33 +642,33 @@ object StructurePoolCreator {
     fun id(str: String) = "$MODID:$str"
 
     fun pairedSingle(
-        str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
+        str: String, processors: RegistryEntry<StructureProcessorList>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedSingle(str, processors), weight)
 
     fun processedSingle(
-        str: String, processors: Holder<StructureProcessorList>
+        str: String, processors: RegistryEntry<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedSingle(id(str), processors)
 
 
     fun pairedLegacySingle(
-        str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
+        str: String, processors: RegistryEntry<StructureProcessorList>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedLegacySingle(str, processors), weight)
 
     fun processedLegacySingle(
-        str: String, processors: Holder<StructureProcessorList>
+        str: String, processors: RegistryEntry<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedLegacySingle(id(str), processors)
 
 
     fun pairedFeature(
-        placedFeatures: Holder<PlacedFeature>, weight: Int = 1
+        placedFeatures: RegistryEntry<PlacedFeature>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedFeature(placedFeatures), weight)
 
-    fun processedFeature(holder: Holder<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
+    fun processedFeature(holder: RegistryEntry<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofFeature(holder)
 
 }

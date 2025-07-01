@@ -11,7 +11,7 @@ package org.teamvoided.dusks_biomes.data.gen
 //import net.minecraft.loot.entry.ItemEntry
 //import net.minecraft.loot.function.SetStewEffectLootFunction
 //import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-//import net.minecraft.registry.HolderLookup
+//import net.minecraft.registry.RegistryWrapper
 //import net.minecraft.registry.RegistryKey
 //import org.teamvoided.dusks_biomes.data.DuskLootTables
 //import org.teamvoided.dusks_biomes.util.Utils.uniformNum
@@ -19,7 +19,7 @@ package org.teamvoided.dusks_biomes.data.gen
 //import java.util.function.BiConsumer
 //
 //@Suppress("MagicNumber")
-//class ArchaeologyLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+//class ArchaeologyLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrapper.WrapperLookup>) :
 //    SimpleFabricLootTableProvider(o, r, ARCHAEOLOGY) {
 //
 //    //ArchaeologyLootTableGenerator <- Vanilla

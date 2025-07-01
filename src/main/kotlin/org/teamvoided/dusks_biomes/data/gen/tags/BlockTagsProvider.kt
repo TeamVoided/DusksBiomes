@@ -4,14 +4,14 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.block.Blocks
-import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import java.util.concurrent.CompletableFuture
 
-class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
+class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
-    override fun configure(arg: HolderLookup.Provider) {
+    override fun configure(arg: RegistryWrapper.WrapperLookup) {
 
 //VANILLA
         valueLookupBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)

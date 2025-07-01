@@ -7,7 +7,8 @@ package org.teamvoided.dusks_biomes.structure
 import com.google.common.collect.Maps
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
-import net.minecraft.structure.Structure.StructureBlockInfo
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.structure.StructureTemplate.StructureBlockInfo
 import net.minecraft.structure.StructurePlacementData
 import net.minecraft.structure.processor.StructureProcessor
 import net.minecraft.structure.processor.StructureProcessorType
@@ -21,6 +22,7 @@ class PaleOakReplacementStructureProcessor : StructureProcessor() {
         hashMap[Blocks.BIRCH_STAIRS] = Blocks.PALE_OAK_STAIRS
         hashMap[Blocks.BIRCH_SLAB] = Blocks.PALE_OAK_SLAB
         hashMap[Blocks.BIRCH_FENCE] = Blocks.PALE_OAK_FENCE
+        hashMap[Blocks.WHITE_CARPET] = Blocks.YELLOW_CARPET
     }
 
     override fun process(
@@ -40,6 +42,10 @@ class PaleOakReplacementStructureProcessor : StructureProcessor() {
             return StructureBlockInfo(currentBlock.pos(), newState, currentBlock.nbt())
         }
     }
+
+    private fun StructureBlockInfo.pos(): BlockPos = this.comp_1341
+    private fun StructureBlockInfo.state(): BlockState = this.comp_1342
+    private fun StructureBlockInfo.nbt(): NbtCompound? = this.comp_1343
 
     override fun getType(): StructureProcessorType<*> {
         return StructureProcessorType.BLACKSTONE_REPLACE

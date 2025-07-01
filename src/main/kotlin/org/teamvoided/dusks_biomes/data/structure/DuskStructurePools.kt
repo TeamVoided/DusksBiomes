@@ -42,5 +42,5 @@ object DuskStructurePools {
 //    val RED_DESERT_RUINS_RUINS = create("red_desert_ruins/ruins")
 
     fun create(id: String): RegistryKey<StructurePool> =
-        RegistryKey.of(RegistryKeys.STRUCTURE_POOL, DusksBiomesMod.id(id))
+        RegistryKey.of(RegistryKeys.TEMPLATE_POOL, DusksBiomesMod.id(id))
 }

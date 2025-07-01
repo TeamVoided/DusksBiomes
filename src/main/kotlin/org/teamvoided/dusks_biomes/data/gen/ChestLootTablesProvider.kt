@@ -6,9 +6,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
-import net.minecraft.loot.context.LootContextParameterSets
+import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.RegistryKey
 import org.teamvoided.dusks_biomes.data.DuskLootTables
 import org.teamvoided.dusks_biomes.util.Utils.setCount
@@ -17,9 +17,9 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
 @Suppress("MagicNumber")
-class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    SimpleFabricLootTableProvider(o, r, LootContextParameterSets.CHEST) {
-    override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
+class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
+    override fun accept(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         val villageSwampHouseChest = LootPool.builder().rolls(uniformNum(3, 8))
             .with(item(Items.GOLD_NUGGET).apply(setCount(1, 3)))
