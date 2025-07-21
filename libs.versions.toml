@@ -3,7 +3,7 @@ kotlin = "2.1.20"
 fabric-loom = "1.10-SNAPSHOT"
 iridium = "3.5.0"
 
-reef = "0.2.0+1.21.7"
+reef = "0.3.0+1.21.7-alpha.1"
 biolith = "3.3.1"
 lithostitched = "YYlpIm9Y" # 1.4.10
 # Dev
