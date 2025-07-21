@@ -13,6 +13,8 @@ import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.VillagePlacedFeatures
 import org.teamvoided.dusks_biomes.DusksBiomesMod.MODID
+import org.teamvoided.dusks_biomes.data.gen.structure.StructurePool.PaleManorCreaor
+import org.teamvoided.dusks_biomes.data.gen.structure.StructurePool.PaleManorCreaor.generatePaleManor
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
@@ -30,6 +32,8 @@ object StructurePoolCreator {
 
         val poolEmpty = structurePools.getOrThrow(StructurePools.EMPTY)
         val procEmpty = procLists.getOrThrow(StructureProcessorLists.EMPTY)
+
+        c.generatePaleManor()
 
         generateSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
         generateMangroveSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
@@ -639,36 +643,36 @@ object StructurePoolCreator {
 //    }
 
 
-    fun id(str: String) = "$MODID:$str"
+    private fun id(str: String) = "$MODID:$str"
 
-    fun pairedSingle(
+    private fun pairedSingle(
         str: String, processors: RegistryEntry<StructureProcessorList>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedSingle(str, processors), weight)
 
-    fun processedSingle(
+    private fun processedSingle(
         str: String, processors: RegistryEntry<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedSingle(id(str), processors)
 
 
-    fun pairedLegacySingle(
+    private fun pairedLegacySingle(
         str: String, processors: RegistryEntry<StructureProcessorList>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedLegacySingle(str, processors), weight)
 
-    fun processedLegacySingle(
+    private fun processedLegacySingle(
         str: String, processors: RegistryEntry<StructureProcessorList>
     ): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofProcessedLegacySingle(id(str), processors)
 
 
-    fun pairedFeature(
+    private fun pairedFeature(
         placedFeatures: RegistryEntry<PlacedFeature>, weight: Int = 1
     ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedFeature(placedFeatures), weight)
 
-    fun processedFeature(holder: RegistryEntry<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
+    private fun processedFeature(holder: RegistryEntry<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
         StructurePoolElement.ofFeature(holder)
 
 }
