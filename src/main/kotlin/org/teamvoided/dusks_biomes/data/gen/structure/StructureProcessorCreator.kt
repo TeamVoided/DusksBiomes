@@ -141,7 +141,7 @@ object StructureProcessorCreator {
                 StructureProcessorRule(
                     RandomBlockStateMatchRuleTest(Blocks.LANTERN.defaultState.with(LanternBlock.HANGING, true), 0.05f),
                     AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.CHAIN.defaultState
+                    Blocks.IRON_CHAIN.defaultState
                 ),
                 StructureProcessorRule(
                     BlockMatchRuleTest(Blocks.LANTERN),
@@ -359,7 +359,7 @@ object StructureProcessorCreator {
                 StructureProcessorRule(
                     RandomBlockStateMatchRuleTest(Blocks.LANTERN.defaultState.with(LanternBlock.HANGING, true), 0.05f),
                     AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.CHAIN.defaultState
+                    Blocks.IRON_CHAIN.defaultState
                 ),
                 StructureProcessorRule(
                     BlockMatchRuleTest(Blocks.LANTERN),
