@@ -1,22 +1,21 @@
-package org.teamvoided.dusks_biomes.data.gen.structure.StructurePool
+package org.teamvoided.dusks_biomes.data.gen.structure.structure_pool
 
 import com.mojang.datafixers.util.Pair
-import net.minecraft.registry.Registerable
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.structure.pool.StructurePool
-import net.minecraft.structure.pool.StructurePoolElement
-import net.minecraft.structure.pool.StructurePools
-import net.minecraft.structure.processor.StructureProcessorList
-import net.minecraft.structure.processor.StructureProcessorLists
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.Pools
+import net.minecraft.data.worldgen.ProcessorLists
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
 import org.teamvoided.dusks_biomes.DusksBiomesMod
-import org.teamvoided.dusks_biomes.data.gen.structure.StructurePool.PaleManorCreaor.manorRooms
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import java.util.function.Function
 
 object PaleManorCreaor {
-    fun Registerable<StructurePool>.generatePaleManor() {
+    fun BootstrapContext<StructureTemplatePool>.generatePaleManor() {
         this.register(
             DuskStructurePools.PALE_MANOR_FOUNDATION,
             listOf(Piece("pale_manor/main").piece(this))
@@ -24,7 +23,7 @@ object PaleManorCreaor {
         this.manorRooms()
     }
 
-    private fun Registerable<StructurePool>.manorRooms() {
+    private fun BootstrapContext<StructureTemplatePool>.manorRooms() {
         this.register(
             DuskStructurePools.PALE_MANOR_ATTIC_ROOM,
             listOf(Piece("pale_manor/room/attic/").piece(this))
@@ -69,7 +68,7 @@ object PaleManorCreaor {
     private data class Piece(
         var prefix: String,
         var id: String = "",
-        var processors: RegistryKey<StructureProcessorList> = StructureProcessorLists.EMPTY,
+        var processors: ResourceKey<StructureProcessorList> = ProcessorLists.EMPTY,
         var weight: Int = 1
     ) {
         fun id(it: String): Piece {
@@ -79,16 +78,16 @@ object PaleManorCreaor {
 
         fun clear() {
             id = ""
-            processors = StructureProcessorLists.EMPTY
+            processors = ProcessorLists.EMPTY
             weight = 1
         }
 
         fun incrementing(
-            c: Registerable<StructurePool>,
+            c: BootstrapContext<StructureTemplatePool>,
             count: Int
-        ): List<Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int>> {
+        ): List<Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int>> {
             val listRoom =
-                arrayOfNulls<Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int>>(count)
+                arrayOfNulls<Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int>>(count)
 
             repeat(count) {
                 id = (it + 1).toString()
@@ -97,10 +96,10 @@ object PaleManorCreaor {
             return listRoom.asList().requireNoNulls()
         }
 
-        fun piece(c: Registerable<StructurePool>): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+        fun piece(c: BootstrapContext<StructureTemplatePool>): Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int> =
             singleStructure(
                 "$prefix$id",
-                c.getRegistryLookup(RegistryKeys.PROCESSOR_LIST).getOrThrow(processors),
+                c.lookup(Registries.PROCESSOR_LIST).getOrThrow(processors),
                 weight
             )
     }
@@ -109,21 +108,21 @@ object PaleManorCreaor {
 
     private fun singleStructure(
         str: String,
-        processors: RegistryEntry<StructureProcessorList>,
+        processors: Holder.Reference<StructureProcessorList>,
         weight: Int = 1
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
-        Pair(StructurePoolElement.ofProcessedSingle(id(str), processors), weight)
+    ): Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int> =
+        Pair(StructurePoolElement.single(id(str), processors), weight)
 
-    fun Registerable<StructurePool>.register(
-        pool: RegistryKey<StructurePool>,
-        pieces: List<Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int>>
-    ): RegistryEntry.Reference<StructurePool>? {
+    fun BootstrapContext<StructureTemplatePool>.register(
+        pool: ResourceKey<StructureTemplatePool>,
+        pieces: List<Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int>>
+    ): Holder.Reference<StructureTemplatePool>? {
         return this.register(
             pool,
-            StructurePool(
-                this.getRegistryLookup(RegistryKeys.TEMPLATE_POOL).getOrThrow(StructurePools.EMPTY),
+            StructureTemplatePool(
+                this.lookup(Registries.TEMPLATE_POOL).getOrThrow(Pools.EMPTY),
                 pieces,
-                StructurePool.Projection.RIGID
+                StructureTemplatePool.Projection.RIGID
             )
         )
     }

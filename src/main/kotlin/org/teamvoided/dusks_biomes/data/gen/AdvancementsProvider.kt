@@ -2,21 +2,21 @@ package org.teamvoided.dusks_biomes.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
-import net.minecraft.advancement.Advancement
-import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.advancement.AdvancementRewards
-import net.minecraft.advancement.AdvancementFrame
-import net.minecraft.item.Items
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.text.Text
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementRewards
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.core.HolderLookup
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Items
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import org.teamvoided.dusks_biomes.mixin.AdventureAdvancementTabGeneratorAccessor
+import org.teamvoided.dusks_biomes.mixin.VanillaAdventureAdvancementsAccessor.db_invokeAddBiomes
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricAdvancementProvider(o, r) {
     val biomes = listOf(
         DuskBiomes.COLD_FOREST,
@@ -54,21 +54,23 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWra
         DuskBiomes.RED_SAND_CAVES,
         DuskBiomes.GRAVEL_CAVES
     )
-    private val adventuringTime = AdvancementEntry(mc("adventure/adventuring_time"), null)
-    override fun generateAdvancement(provider: RegistryWrapper.WrapperLookup, c: Consumer<AdvancementEntry>?) {
-        AdventureAdvancementTabGeneratorAccessor.db_invokeAppendEnterAllBiomesCriterion(Advancement.Builder.create(), provider, biomes)
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    private val adventuringTime = AdvancementHolder(mc("adventure/adventuring_time"), null)
+    override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>) {
+        db_invokeAddBiomes(Advancement.Builder.advancement(), provider, biomes)
             .display(
                 Items.IRON_BOOTS,
-                Text.of("Strange Lands"),
-                Text.of("Visit all the biomes added by Dusks Biomes!"),
+                Component.literal("Strange Lands"),
+                Component.literal("Visit all the biomes added by Dusks Biomes!"),
                 null,
-                AdvancementFrame.CHALLENGE,
+                AdvancementType.CHALLENGE,
                 true,
                 true,
                 false
             )
             .rewards(AdvancementRewards.Builder.experience(500))
             .parent(adventuringTime)
-            .build(c, id("adventure/strange_lands").toString())
+            .save(c, id("adventure/strange_lands").toString())
     }
 }

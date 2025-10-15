@@ -1,6 +1,6 @@
 package org.teamvoided.dusks_biomes
 
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_biomes.init.DuskBiomes
@@ -21,7 +21,7 @@ object DusksBiomesMod {
         DuskStructureProcessorTypes.init()
     }
 
-    fun id(path: String) = Identifier.of(MODID, path)
-    fun id(namespace: String, path: String) = Identifier.of(namespace, path)
-    fun mc(path: String) = Identifier.ofVanilla(path)
+    fun id(namespace: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, path)
+    fun id(path: String) = id(MODID, path)
+    fun mc(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
 }

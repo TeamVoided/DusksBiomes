@@ -3,38 +3,33 @@ package org.teamvoided.dusks_biomes.structure
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.structure.StructurePlacementData
-import net.minecraft.structure.StructureTemplate.StructureBlockInfo
-import net.minecraft.structure.processor.StructureProcessor
-import net.minecraft.structure.processor.StructureProcessorType
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.WorldView
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
 
 class BlockReplacementStructureProcessor(val blockSwapMap: Map<Block, Block>) : StructureProcessor() {
     override fun getType(): StructureProcessorType<*> = DuskStructureProcessorTypes.BLOCK_REPLACE
-    override fun process(
-        world: WorldView,
+    override fun processBlock(
+        world: LevelReader,
         pos: BlockPos,
         pivot: BlockPos,
         localBlockInfo: StructureBlockInfo,
         currentBlock: StructureBlockInfo,
-        placementData: StructurePlacementData,
+        placementData: StructurePlaceSettings,
     ): StructureBlockInfo {
         val replaceWith = blockSwapMap[currentBlock.state().block] ?: return currentBlock
-
-        val blockState = currentBlock.state()
-        val newState = replaceWith.getStateWithProperties(blockState)
-        return StructureBlockInfo(currentBlock.pos(), newState, currentBlock.nbt())
+        return StructureBlockInfo(
+            currentBlock.pos(),
+            replaceWith.withPropertiesOf(currentBlock.state()),
+            currentBlock.nbt()
+        )
     }
-
-    private fun StructureBlockInfo.pos(): BlockPos = this.comp_1341
-    private fun StructureBlockInfo.state(): BlockState = this.comp_1342
-    private fun StructureBlockInfo.nbt(): NbtCompound? = this.comp_1343
 
     companion object {
         val CODEC: MapCodec<BlockReplacementStructureProcessor> =
@@ -46,7 +41,7 @@ class BlockReplacementStructureProcessor(val blockSwapMap: Map<Block, Block>) : 
                 ).apply(instance, ::BlockReplacementStructureProcessor)
             }
 
-        @JvmStatic
+        @JvmField
         val PALE_OAK_REPLACE = BlockReplacementStructureProcessor(
             mapOf(
                 Blocks.BIRCH_LOG to Blocks.PALE_OAK_LOG,

@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_biomes.data.world.gen
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 
@@ -65,5 +65,5 @@ object DuskConfiguredFeatures {
 
     val TEST_CAVE_PILLAR = create("test_cave_pillar")
 
-    fun create(id: String) = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
+    fun create(id: String) = ResourceKey.create(Registries.CONFIGURED_FEATURE, id(id))
 }

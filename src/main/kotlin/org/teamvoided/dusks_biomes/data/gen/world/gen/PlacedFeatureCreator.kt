@@ -1,23 +1,26 @@
 package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.block.Blocks
-import net.minecraft.registry.Registerable
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.intprovider.ConstantIntProvider
-import net.minecraft.util.math.intprovider.UniformIntProvider
-import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.blockpredicate.BlockPredicate
-import net.minecraft.world.gen.blockpredicate.BlockPredicate.not
-import net.minecraft.world.gen.feature.*
-import net.minecraft.world.gen.feature.PlacedFeature
-import net.minecraft.world.gen.placementmodifier.*
-import org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator.TreePlacedFeature.registerOnSnow
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.features.AquaticFeatures
+import net.minecraft.data.worldgen.features.MiscOverworldFeatures
+import net.minecraft.data.worldgen.features.TreeFeatures
+import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.data.worldgen.placement.VegetationPlacements
+import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.BlockTags
+import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.level.levelgen.placement.*
 import org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator.TreePlacedFeature.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
@@ -25,627 +28,627 @@ import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 
 @Suppress("MagicNumber")
 object PlacedFeatureCreator {
-    fun bootstrap(c: Registerable<PlacedFeature>) {
-        val configuredFeatureProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+    fun bootstrap(c: BootstrapContext<PlacedFeature>) {
+        val cfLookup = c.lookup(Registries.CONFIGURED_FEATURE)
         c.trees()
 
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,
-            configuredFeatureProvider.getOrThrow(MiscConfiguredFeatures.FOREST_ROCK)
+            cfLookup.getOrThrow(MiscOverworldFeatures.FOREST_ROCK)
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_OAK,
-            configuredFeatureProvider.getOrThrow(TreeConfiguredFeatures.SWAMP_OAK),
-            PlacedFeatures.wouldSurvive(Blocks.OAK_SAPLING)
+            cfLookup.getOrThrow(TreeFeatures.SWAMP_OAK),
+            PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING)
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_MANGROVE,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.MANGROVE_VEGETATION),
-            PlacedFeatures.wouldSurvive(Blocks.MANGROVE_PROPAGULE)
+            cfLookup.getOrThrow(VegetationFeatures.MANGROVE_VEGETATION),
+            PlacementUtils.filteredByBlockSurvival(Blocks.MANGROVE_PROPAGULE)
         )
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_FLOWERS,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.FLOWER_SWAMP)
+            cfLookup.getOrThrow(VegetationFeatures.FLOWER_SWAMP)
         )
         c.register(
             DuskPlacedFeatures.COBBLESTONE_ROCK,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_ROCK),
-            CountPlacementModifier.of(2),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_ROCK),
+            CountPlacement.of(2),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
 
         )
         c.register(
             DuskPlacedFeatures.TREES_WINDSWEPT_BIRCH,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.BIRCH_TALL),
-            VegetationPlacedFeatures.treeModifiers(
-                PlacedFeatures.createCountExtraModifier(2, 0.1f, 1)
+            cfLookup.getOrThrow(VegetationFeatures.BIRCH_TALL),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(2, 0.1f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_FROZEN_BADLANDS,
-            configuredFeatureProvider.getOrThrow(TreeConfiguredFeatures.SPRUCE),
-            VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                PlacedFeatures.createCountExtraModifier(5, 0.1f, 1),
+            cfLookup.getOrThrow(TreeFeatures.SPRUCE),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(5, 0.1f, 1),
                 Blocks.SPRUCE_SAPLING
             )
         )
         c.register(
             DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_CHECKED),
-            BlockFilterPlacementModifier.of(
-                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultState, BlockPos.ORIGIN)
+            cfLookup.getOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_CHECKED),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultBlockState(), BlockPos.ZERO)
             )
         )
         c.register(
             DuskPlacedFeatures.TALL_MANGROVE_FROZEN_CHECKED,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.TALL_MANGROVE_FROZEN_CHECKED),
-            BlockFilterPlacementModifier.of(
-                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultState, BlockPos.ORIGIN)
+            cfLookup.getOrThrow(DuskConfiguredFeatures.TALL_MANGROVE_FROZEN_CHECKED),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultBlockState(), BlockPos.ZERO)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_MANGROVE_FROZEN,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_VEGETATION),
-            CountPlacementModifier.of(15),
-            SquarePlacementModifier.of(),
-            SurfaceWaterDepthFilterPlacementModifier.of(5),
-            PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.of(),
-            BlockFilterPlacementModifier.of(
-                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultState, BlockPos.ORIGIN)
+            cfLookup.getOrThrow(DuskConfiguredFeatures.MANGROVE_FROZEN_VEGETATION),
+            CountPlacement.of(15),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(5),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BiomeFilter.biome(),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.wouldSurvive(Blocks.MANGROVE_PROPAGULE.defaultBlockState(), BlockPos.ZERO)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_COLD_FOREST,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_SPRUCE),
-            VegetationPlacedFeatures.treeModifiers(
-                PlacedFeatures.createCountExtraModifier(10, 0.1f, 1)
+            cfLookup.getOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_SPRUCE),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(10, 0.1f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_COLD_PLAINS,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.TREES_WINDSWEPT_HILLS),
-            VegetationPlacedFeatures.treeModifiers(
-                PlacedFeatures.createCountExtraModifier(0, 0.05f, 1)
+            cfLookup.getOrThrow(VegetationFeatures.TREES_WINDSWEPT_HILLS),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(0, 0.05f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_WARM_FOREST,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_ACACIA),
-            VegetationPlacedFeatures.treeModifiers(
-                PlacedFeatures.createCountExtraModifier(10, 0.1f, 1)
+            cfLookup.getOrThrow(DuskConfiguredFeatures.TREES_OAK_BIRCH_ACACIA),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(10, 0.1f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.TREES_WARM_PLAINS,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.TREES_SAVANNA),
-            VegetationPlacedFeatures.treeModifiers(
-                PlacedFeatures.createCountExtraModifier(0, 0.05f, 1)
+            cfLookup.getOrThrow(VegetationFeatures.TREES_SAVANNA),
+            VegetationPlacements.treePlacement(
+                PlacementUtils.countExtra(0, 0.05f, 1)
             )
         )
         c.register(
             DuskPlacedFeatures.FLOWER_SNOWY_CHERRY,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY),
-            NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10),
-            RarityFilterPlacementModifier.of(5),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.FLOWER_SNOWY_CHERRY),
+            NoiseThresholdCountPlacement.of(-0.8, 5, 10),
+            RarityFilter.onAverageOnceEvery(5),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.MUSHROOM_GROVE_VEGETATION,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.MUSHROOM_ISLAND_VEGETATION),
-            CountPlacementModifier.of(12),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(VegetationFeatures.MUSHROOM_ISLAND_VEGETATION),
+            CountPlacement.of(12),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
 
         c.register(
             DuskPlacedFeatures.CAVE_DEAD_BUSH,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.PATCH_DEAD_BUSH),
-            CountPlacementModifier.of(UniformIntProvider.create(124, 177)),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(VegetationFeatures.PATCH_DEAD_BUSH),
+            CountPlacement.of(UniformInt.of(124, 177)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-            CountPlacementModifier.of(UniformIntProvider.create(3, 33)),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+            CountPlacement.of(UniformInt.of(3, 33)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_COARSE_DIRT,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_COARSE_DIRT),
-            RarityFilterPlacementModifier.of(3),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_COARSE_DIRT),
+            RarityFilter.onAverageOnceEvery(3),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.MUSHROOM_CAVE_VEGETATION,
-            configuredFeatureProvider.getOrThrow(VegetationConfiguredFeatures.MUSHROOM_ISLAND_VEGETATION),
-            CountPlacementModifier.of(125),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(VegetationFeatures.MUSHROOM_ISLAND_VEGETATION),
+            CountPlacement.of(125),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.solid(),
-                BlockPredicate.IS_AIR,
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
                 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(1)),
+            BiomeFilter.biome()
         )
 
         c.register(
             DuskPlacedFeatures.MUSHROOM_CAVE_MUSHROOMS,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS),
-            CountPlacementModifier.of(33),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_MUSHROOMS),
+            CountPlacement.of(33),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.solid(),
-                BlockPredicate.IS_AIR,
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
                 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(1)),
+            BiomeFilter.biome()
         )
 
         c.register(
             DuskPlacedFeatures.MUSHROOM_CAVE_SURFACE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS),
-            CountPlacementModifier.of(UniformIntProvider.create(1, 2)),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR_OR_WATER, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.MUSHROOM_CAVE_ROOTS),
+            CountPlacement.of(UniformInt.of(1, 2)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_OR_WATER_PREDICATE, 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BiomeFilter.biome()
         )
 
 
         c.register(
             DuskPlacedFeatures.ICE_CAVE_PILLAR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ICE_CAVE_PILLAR),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ICE_CAVE_PILLAR),
             *arrayOf<PlacementModifier>(
-                CountPlacementModifier.of(UniformIntProvider.create(20, 48)),
-                SquarePlacementModifier.of(),
-                PlacedFeatures.BOTTOM_TO_120_RANGE,
-                BiomePlacementModifier.of()
+                CountPlacement.of(UniformInt.of(20, 48)),
+                InSquarePlacement.spread(),
+                PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+                BiomeFilter.biome()
             )
         )
         c.register(
             DuskPlacedFeatures.ICE_SPIKE_FLOOR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE_FLOOR),
-            CountPlacementModifier.of(125),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE_FLOOR),
+            CountPlacement.of(125),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
-                BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK),
-                BlockPredicate.matchingBlockTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
+                BlockPredicate.matchesBlocks(Blocks.SNOW_BLOCK),
+                BlockPredicate.matchesTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
                 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ICE_SPIKE_CEILING,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE_CEILING),
-            CountPlacementModifier.of(125),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE_CEILING),
+            CountPlacement.of(125),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.UP,
-                BlockPredicate.matchingBlocks(Blocks.SNOW_BLOCK),
-                BlockPredicate.matchingBlockTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
+                BlockPredicate.matchesBlocks(Blocks.SNOW_BLOCK),
+                BlockPredicate.matchesTag(DuskBlockTags.ICE_SPIKE_IGNORE_BLOCKS),
                 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_ICE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_ICE),
-            CountPlacementModifier.of(3),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_ICE),
+            CountPlacement.of(3),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ICE_CAVE_FOSSIL,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ICE_CAVE_FOSSIL),
-            CountPlacementModifier.of(3),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ICE_CAVE_FOSSIL),
+            CountPlacement.of(3),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_BLUE_ICE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_BLUE_ICE),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_BLUE_ICE),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_SAND,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_SAND),
-            CountPlacementModifier.of(14),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_SAND),
+            CountPlacement.of(14),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_RED_SAND,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_RED_SAND),
-            CountPlacementModifier.of(14),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_RED_SAND),
+            CountPlacement.of(14),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_CACTUS,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_CACTUS),
-            CountPlacementModifier.of(88),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.DOWN, BlockPredicate.matchingBlockTag(BlockTags.SAND), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_CACTUS),
+            CountPlacement.of(88),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.DOWN, BlockPredicate.matchesTag(BlockTags.SAND), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
 //        c.register(
 //            DuskPlacedFeatures.SAND_CAVE_VINES,
-//            configuredFeatureProvider.getOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),
-//            CountPlacementModifier.of(125),
-//            SquarePlacementModifier.of(),
-//            PlacedFeatures.BOTTOM_TO_120_RANGE,
-//            EnvironmentScanPlacementModifier.of(
-//                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+//            cfLookup.getOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),
+//            CountPlacement.of(125),
+//            InSquarePlacement.spread(),
+//            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+//            EnvironmentScanPlacement.scanningFor(
+//                Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
 //            ),
-//            BlockFilterPlacementModifier.of(BlockPredicate.matchingFluids(Vec3i(0, 4, 0), Fluids.WATER)),
-//            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-//            BiomePlacementModifier.of()
+//            BlockPredicateFilter.forPredicate(BlockPredicate.matchingFluids(Vec3i(0, 4, 0), Fluids.WATER)),
+//            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+//            BiomeFilter.biome()
 //        )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PILLAR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),
-            CountPlacementModifier.of(UniformIntProvider.create(20, 48)),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_PILLAR),
+            CountPlacement.of(UniformInt.of(20, 48)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_SPIKES,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_SPIKES),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_SPIKES),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_SPIKES_ROOF,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_SPIKES_ROOF),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.SANDSTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_SPIKES_ROOF),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.UP, BlockPredicate.matchesBlocks(Blocks.SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_CAVE_PILLAR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
-            CountPlacementModifier.of(UniformIntProvider.create(20, 48)),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_SAND_CAVE_PILLAR),
+            CountPlacement.of(UniformInt.of(20, 48)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_SAND_SPIKES),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_SAND_SPIKES),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_SPIKES_ROOF,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.RED_SANDSTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_SAND_SPIKES_ROOF),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.UP, BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_CORAL,
-            configuredFeatureProvider.getOrThrow(OceanConfiguredFeatures.WARM_OCEAN_VEGETATION),
-            CountPlacementModifier.of(256),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(AquaticFeatures.WARM_OCEAN_VEGETATION),
+            CountPlacement.of(256),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.hasSturdyFace(Direction.UP),
-                BlockPredicate.matchingBlocks(Blocks.WATER),
+                BlockPredicate.matchesBlocks(Blocks.WATER),
                 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_SEAGRASS,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_SEAGRASS),
-            CountPlacementModifier.of(128),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_SEAGRASS),
+            CountPlacement.of(128),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.hasSturdyFace(Direction.UP),
-                BlockPredicate.matchingBlocks(Blocks.WATER),
+                BlockPredicate.matchesBlocks(Blocks.WATER),
                 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.SAND_CAVE_PICKLE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_PICKLES),
-            CountPlacementModifier.of(256),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_CAVE_PICKLES),
+            CountPlacement.of(256),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.hasSturdyFace(Direction.UP),
-                BlockPredicate.matchingBlocks(Blocks.WATER),
+                BlockPredicate.matchesBlocks(Blocks.WATER),
                 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ORE_COBBLESTONE,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.ORE_COBBLESTONE),
-            CountPlacementModifier.of(14),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(160)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_COBBLESTONE),
+            CountPlacement.of(14),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(160)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLESTONE_CAVE_PILLAR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR),
-            CountPlacementModifier.of(UniformIntProvider.create(20, 48)),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.fixed(0), YOffset.fixed(256)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR),
+            CountPlacement.of(UniformInt.of(20, 48)),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(256)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLESTONE_SPIKES,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.COBBLESTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.COBBLESTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLESTONE_SPIKES_ROOF,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES_ROOF),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.COBBLESTONE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_SPIKES_ROOF),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.UP, BlockPredicate.matchesBlocks(Blocks.COBBLESTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR),
-            CountPlacementModifier.of(UniformIntProvider.create(20, 48)),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.BOTTOM, YOffset.fixed(0)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR),
+            CountPlacement.of(UniformInt.of(20, 48)),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.BOTTOM, VerticalAnchor.absolute(0)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.DOWN, BlockPredicate.matchingBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            BiomePlacementModifier.of()
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF),
-            CountPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
-                Direction.UP, BlockPredicate.matchingBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.IS_AIR, 12
+            cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_SPIKES_ROOF),
+            CountPlacement.of(100),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                Direction.UP, BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BiomeFilter.biome()
         )
 
 //Structure Piece Features
         c.register(
             DuskPlacedFeatures.DESERT_WELL,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.DESERT_WELL),
-            RarityFilterPlacementModifier.of(1000),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-2)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.DESERT_WELL),
+            RarityFilter.onAverageOnceEvery(1000),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            RandomOffsetPlacement.vertical(ConstantInt.of(-2)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.RED_DESERT_WELL,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
-            RarityFilterPlacementModifier.of(1000),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-2)),
-            BiomePlacementModifier.of()
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
+            RarityFilter.onAverageOnceEvery(1000),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            RandomOffsetPlacement.vertical(ConstantInt.of(-2)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.CAVE_DESERT_WELL,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.DESERT_WELL),
-            RarityFilterPlacementModifier.of(10),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.DESERT_WELL),
+            RarityFilter.onAverageOnceEvery(10),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.hasSturdyFace(Direction.UP),
-                BlockPredicate.IS_AIR_OR_WATER,
+                BlockPredicate.ONLY_IN_AIR_OR_WATER_PREDICATE,
                 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-2)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-2)),
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.CAVE_RED_DESERT_WELL,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
-            RarityFilterPlacementModifier.of(10),
-            SquarePlacementModifier.of(),
-            PlacedFeatures.BOTTOM_TO_120_RANGE,
-            EnvironmentScanPlacementModifier.of(
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_DESERT_WELL),
+            RarityFilter.onAverageOnceEvery(10),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
                 Direction.DOWN,
                 BlockPredicate.hasSturdyFace(Direction.UP),
-                BlockPredicate.IS_AIR_OR_WATER,
+                BlockPredicate.ONLY_IN_AIR_OR_WATER_PREDICATE,
                 12
             ),
-            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-2)),
-            BiomePlacementModifier.of()
+            RandomOffsetPlacement.vertical(ConstantInt.of(-2)),
+            BiomeFilter.biome()
         )
 
 //Monster Room features
         val upperMonsterRoom = listOf(
-            CountPlacementModifier.of(10),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.fixed(0), YOffset.getTop()),
-            BiomePlacementModifier.of()
+            CountPlacement.of(10),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.top()),
+            BiomeFilter.biome()
         )
         val lowerMonsterRoom = listOf(
-            CountPlacementModifier.of(4),
-            SquarePlacementModifier.of(),
-            HeightRangePlacementModifier.uniform(YOffset.aboveBottom(6), YOffset.fixed(-1)),
-            BiomePlacementModifier.of()
+            CountPlacement.of(4),
+            InSquarePlacement.spread(),
+            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(6), VerticalAnchor.absolute(-1)),
+            BiomeFilter.biome()
         )
 
         c.register(
             DuskPlacedFeatures.DEEP_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.DEEP_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.DEEP_MONSTER_ROOM),
             lowerMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.LUSH_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.LUSH_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.LUSH_MONSTER_ROOM),
             upperMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.DEEP_LUSH_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.DEEP_LUSH_MONSTER_ROOM),
             lowerMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.FROZEN_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.FROZEN_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.FROZEN_MONSTER_ROOM),
             upperMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.DEEP_FROZEN_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.DEEP_FROZEN_MONSTER_ROOM),
             lowerMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
             upperMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.DEEP_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.SAND_MONSTER_ROOM),
             lowerMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.RED_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
             upperMonsterRoom
         )
         c.register(
             DuskPlacedFeatures.DEEP_RED_SAND_MONSTER_ROOM,
-            configuredFeatureProvider.getOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
+            cfLookup.getOrThrow(DuskConfiguredFeatures.RED_SAND_MONSTER_ROOM),
             lowerMonsterRoom
         )
 
 //        c.register(
 //            UndergroundPlacedFeatures.SPORE_BLOSSOM, holder14,
-//            CountPlacementModifier.of(25),
-//            SquarePlacementModifier.of(),
-//            PlacedFeatures.BOTTOM_TO_120_RANGE,
-//            EnvironmentScanPlacementModifier.of(
-//                Direction.UP, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+//            CountPlacement.of(25),
+//            InSquarePlacement.spread(),
+//            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+//            EnvironmentScanPlacement.scanningFor(
+//                Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
 //            ),
-//            RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
-//            BiomePlacementModifier.of()
+//            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+//            BiomeFilter.biome()
 //
 //        )
 
     }
 
     private fun treePlacementModifiersBase(modifier: PlacementModifier): ImmutableList.Builder<PlacementModifier> {
-        return ImmutableList.builder<PlacementModifier>().add(modifier).add(SquarePlacementModifier.of())
-            .add(SurfaceWaterDepthFilterPlacementModifier.of(0)).add(PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP)
-            .add(BiomePlacementModifier.of())
+        return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacement.spread())
+            .add(SurfaceWaterDepthFilter.forMaxDepth(0)).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR)
+            .add(BiomeFilter.biome())
     }
 
 //    PlacedFeatureUtil.register(
 //    c,
 
-    fun Registerable<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryEntry<ConfiguredFeature<*, *>>,
+    fun BootstrapContext<PlacedFeature>.register(
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         vararg placementModifiers: PlacementModifier,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers.toList()))
 
-    fun Registerable<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryEntry<ConfiguredFeature<*, *>>,
+    fun BootstrapContext<PlacedFeature>.register(
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
 
-    fun Registerable<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryKey<ConfiguredFeature<*, *>>,
+    fun BootstrapContext<PlacedFeature>.register(
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>,
         vararg placementModifiers: PlacementModifier,
     ): Any {
-        val cf = this.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        val cf = this.lookup(Registries.CONFIGURED_FEATURE)
         return this.register(registryKey, PlacedFeature(cf.getOrThrow(configuredFeature), placementModifiers.toList()))
     }
 
-    fun Registerable<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: RegistryKey<ConfiguredFeature<*, *>>,
+    fun BootstrapContext<PlacedFeature>.register(
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>,
     ): Any {
-        val cf = this.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        val cf = this.lookup(Registries.CONFIGURED_FEATURE)
         return this.register(registryKey, PlacedFeature(cf.getOrThrow(configuredFeature), placementModifiers))
     }
 

@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_biomes.data.structure
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.pool.StructurePool
-import org.teamvoided.dusks_biomes.DusksBiomesMod
+import net.minecraft.core.registries.Registries.TEMPLATE_POOL
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
+import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 object DuskStructurePools {
     val PALE_MANOR_FOUNDATION = paleManor("foundation")
@@ -61,10 +61,9 @@ object DuskStructurePools {
 //    val RED_DESERT_RUINS_RUINS = create("red_desert_ruins/ruins")
 
 
-    private fun villageSwamp(id: String): RegistryKey<StructurePool> = create("village/swamp/$id")
-    private fun villageMangrove(id: String): RegistryKey<StructurePool> = create("village/mangrove_swamp/$id")
-    private fun paleManor(id: String): RegistryKey<StructurePool> = create("pale_manor/$id")
-    private fun paleManorRoom(id: String): RegistryKey<StructurePool> = create("pale_manor/room/$id")
-    private fun create(id: String): RegistryKey<StructurePool> =
-        RegistryKey.of(RegistryKeys.TEMPLATE_POOL, DusksBiomesMod.id(id))
+    private fun villageSwamp(id: String) = create("village/swamp/$id")
+    private fun villageMangrove(id: String) = create("village/mangrove_swamp/$id")
+    private fun paleManor(id: String) = create("pale_manor/$id")
+    private fun paleManorRoom(id: String) = create("pale_manor/room/$id")
+    private fun create(id: String): ResourceKey<StructureTemplatePool> = ResourceKey.create(TEMPLATE_POOL, id(id))
 }

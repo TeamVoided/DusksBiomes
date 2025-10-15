@@ -1,11 +1,9 @@
 package org.teamvoided.dusks_biomes.util
 
-import net.minecraft.loot.function.SetCountLootFunction
-import net.minecraft.loot.provider.number.UniformLootNumberProvider
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 
 object Utils {
-    fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
-
-    fun uniformNum(x: Number, y: Number): UniformLootNumberProvider =
-        UniformLootNumberProvider.create(x.toFloat(), y.toFloat())
+    fun setCount(x: Number, y: Number) = SetItemCountFunction.setCount(uniformNum(x, y))
+    fun uniformNum(x: Number, y: Number) = UniformGenerator.between(x.toFloat(), y.toFloat())
 }

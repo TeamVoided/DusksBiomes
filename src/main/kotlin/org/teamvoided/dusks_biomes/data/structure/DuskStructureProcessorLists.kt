@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_biomes.data.structure
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.processor.StructureProcessorList
-import org.teamvoided.dusks_biomes.DusksBiomesMod
+import net.minecraft.core.registries.Registries.PROCESSOR_LIST
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
+import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 object DuskStructureProcessorLists {
 
@@ -24,7 +24,5 @@ object DuskStructureProcessorLists {
 //    val RED_DESERT_RUINS_SMALL_RUINS_ARCHAEOLOGY = create("red_desert_ruins/small_ruins_archaeology")
 //    val RED_DESERT_RUINS_LARGE_RUINS_ARCHAEOLOGY = create("red_desert_ruins/large_ruins_archaeology")
 
-    fun create(id: String): RegistryKey<StructureProcessorList> =
-        RegistryKey.of(RegistryKeys.PROCESSOR_LIST, DusksBiomesMod.id(id))
-
+    fun create(id: String): ResourceKey<StructureProcessorList> = ResourceKey.create(PROCESSOR_LIST, id(id))
 }

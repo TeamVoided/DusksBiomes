@@ -3,16 +3,15 @@ package org.teamvoided.dusks_biomes.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.block.Blocks
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import java.util.concurrent.CompletableFuture
 
-class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
-    override fun configure(arg: RegistryWrapper.WrapperLookup) {
-
+    override fun addTags(arg: HolderLookup.Provider) {
 //VANILLA
         valueLookupBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
             .add(

@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_biomes.data.structure
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.structure.Structure
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.structure.Structure
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 object DuskStructureFeatures {
@@ -14,6 +14,5 @@ object DuskStructureFeatures {
 //    val LARGE_DESERT_RUINS = create("desert_ruins/large_desert_ruins")
 //    val LARGE_RED_DESERT_RUINS = create("desert_ruins/large_red_desert_ruins")
 
-    private fun create(id: String): RegistryKey<Structure> =
-        RegistryKey.of(RegistryKeys.STRUCTURE, id(id))
+    private fun create(id: String): ResourceKey<Structure> = ResourceKey.create(Registries.STRUCTURE, id(id))
 }

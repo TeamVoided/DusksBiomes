@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_biomes.data.tags
 
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.world.biome.Biome
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 object DuskBiomeTags {
@@ -25,6 +25,6 @@ object DuskBiomeTags {
     val VILLAGER_SWAMP = create("biome_tag_villagers", "villager_swamp")
     val VILLAGER_DESERT = create("biome_tag_villagers", "villager_desert")
 
-    fun create(id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(id))
-    fun create(namespace: String, id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(namespace, id))
+    fun create(id: String): TagKey<Biome> = TagKey.create(Registries.BIOME, id(id))
+    fun create(namespace: String, id: String): TagKey<Biome> = TagKey.create(Registries.BIOME, id(namespace, id))
 }

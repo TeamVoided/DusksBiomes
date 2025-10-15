@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_biomes.data.tags
 
-import net.minecraft.block.Block
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_biomes.DusksBiomesMod.id
 
 object DuskBlockTags {
@@ -14,5 +14,5 @@ object DuskBlockTags {
     val CAVE_PILLAR_PLACEABLE = create("cave_pillar_placeable")
 
 
-    fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))
+    fun create(id: String): TagKey<Block> = TagKey.create(Registries.BLOCK, id(id))
 }

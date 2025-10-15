@@ -1,14 +1,14 @@
 package org.teamvoided.dusks_biomes.data.gen.structure
 
-import net.minecraft.registry.Registerable
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.StructureSet
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.world.level.levelgen.structure.StructureSet
 
 object StructureSetCreator {
 
     // StructureSets
-    fun bootstrap(c: Registerable<StructureSet>) {
-        val structures = c.getRegistryLookup(RegistryKeys.STRUCTURE)
+    fun bootstrap(c: BootstrapContext<StructureSet>) {
+        val structures = c.lookup(Registries.STRUCTURE)
 
 //        c.register(
 //            DuskStructureSets.DESERT_RUINS,

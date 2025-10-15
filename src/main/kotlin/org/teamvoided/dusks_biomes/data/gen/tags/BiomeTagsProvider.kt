@@ -4,19 +4,20 @@ package org.teamvoided.dusks_biomes.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.BiomeTags
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.BiomeKeys
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.BiomeTags
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.reef.data.ReefTags
 import java.util.concurrent.CompletableFuture
 
-class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrapper.WrapperLookup>) :
-    FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
-    override fun configure(arg: RegistryWrapper.WrapperLookup) {
+
+class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricTagProvider<Biome>(o, Registries.BIOME, r) {
+    override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         duskTagsHasStructure()
         vanillaTags()
@@ -33,7 +34,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
 
     fun duskTags() {
         builder(DuskBiomeTags.DUSKS_BIOMES)
-            .add(DuskBiomes.DUSK_BIOMES)
+            .addAll(DuskBiomes.DUSK_BIOMES)
         builder(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.FROZEN_BADLANDS)
             .add(DuskBiomes.FROZEN_WOODED_BADLANDS)
@@ -44,8 +45,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
             .add(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS)
 
         builder(DuskBiomeTags.HAS_FROZEN_VARIANTS)
-            .add(BiomeKeys.DEEP_DARK)
-            .add(BiomeKeys.DEEP_FROZEN_OCEAN)
+            .add(Biomes.DEEP_DARK)
+            .add(Biomes.DEEP_FROZEN_OCEAN)
             .add(DuskBiomes.DARK_GROVE)
             .add(DuskBiomes.PALE_GROVE)
             .add(DuskBiomes.SNOWY_CHERRY_GROVE)
@@ -70,12 +71,12 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
 
     fun duskTagsHasStructure() {
         builder(DuskBiomeTags.HAS_VILLAGE_SWAMP_STRUCTURE)
-            .add(BiomeKeys.SWAMP)
+            .add(Biomes.SWAMP)
         builder(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-            .add(BiomeKeys.MANGROVE_SWAMP)
+            .add(Biomes.MANGROVE_SWAMP)
 //        builder(DuskBiomeTags.HAS_DESERT_RUIN)
-//            .add(BiomeKeys.DESERT)
+//            .add(Biomes.DESERT)
 //            .add(DuskBiomes.WARM_RIVER)
 //        builder(DuskBiomeTags.HAS_RED_DESERT_RUIN)
 //            .add(DuskBiomes.RED_DESERT)
@@ -144,14 +145,14 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.WARM_FOREST)
             .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
-            .add(BiomeKeys.CHERRY_GROVE)
+            .add(Biomes.CHERRY_GROVE)
             .add(DuskBiomes.DARK_GROVE)
             .add(DuskBiomes.PALE_GROVE)
             .add(DuskBiomes.SNOWY_CHERRY_GROVE)
         builder(BiomeTags.IS_HILL)
             .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
         builder(BiomeTags.IS_MOUNTAIN)
-            .add(BiomeKeys.GROVE)
+            .add(Biomes.GROVE)
             .add(DuskBiomes.DARK_GROVE)
             .add(DuskBiomes.PALE_GROVE)
             .add(DuskBiomes.SNOWY_CHERRY_GROVE)
@@ -169,7 +170,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
     }
 
     fun vanillaTagsHasStructure() {
-        builder(BiomeTags.IGLOO_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_IGLOO)
             .forceAddTag(DuskBiomeTags.IS_SNOWY_HILL)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
@@ -179,7 +180,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
             .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
             .add(DuskBiomes.FROZEN_CAVERNS)
-        builder(BiomeTags.MINESHAFT_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_MINESHAFT)
             .add(DuskBiomes.COLD_FOREST)
             .add(DuskBiomes.COLD_PLAINS)
             .add(DuskBiomes.WARM_FOREST)
@@ -207,52 +208,52 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<RegistryWrappe
             .add(DuskBiomes.SAND_CAVES)
             .add(DuskBiomes.RED_SAND_CAVES)
             .add(DuskBiomes.GRAVEL_CAVES)
-        builder(BiomeTags.MINESHAFT_MESA_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_MINESHAFT_MESA)
             .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        builder(BiomeTags.PILLAGER_OUTPOST_HAS_STRUCTURE)
-            .add(BiomeKeys.SUNFLOWER_PLAINS)
-            .add(BiomeKeys.SAVANNA_PLATEAU)
+        builder(BiomeTags.HAS_PILLAGER_OUTPOST)
+            .add(Biomes.SUNFLOWER_PLAINS)
+            .add(Biomes.SAVANNA_PLATEAU)
             .add(DuskBiomes.COLD_PLAINS)
             .add(DuskBiomes.WARM_PLAINS)
             .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.RED_DESERT)
-        builder(BiomeTags.RUINED_PORTAL_STANDARD_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_RUINED_PORTAL_STANDARD)
             .add(DuskBiomes.COLD_PLAINS)
             .add(DuskBiomes.WARM_PLAINS)
             .add(DuskBiomes.MUSHROOM_GROVE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
             .add(DuskBiomes.MUSHROOM_CAVES)
             .add(DuskBiomes.FROZEN_CAVERNS)
-        builder(BiomeTags.RUINED_PORTAL_DESERT_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_RUINED_PORTAL_DESERT)
             .add(DuskBiomes.RED_DESERT)
             .add(DuskBiomes.SAND_CAVES)
             .add(DuskBiomes.RED_SAND_CAVES)
-        builder(BiomeTags.RUINED_PORTAL_MOUNTAIN_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_RUINED_PORTAL_MOUNTAIN)
             .forceAddTag(DuskBiomeTags.IS_FROZEN_BADLANDS)
             .add(DuskBiomes.WINDSWEPT_BIRCH_FOREST)
             .add(DuskBiomes.SNOWY_STONY_SHORE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        builder(BiomeTags.RUINED_PORTAL_OCEAN_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_RUINED_PORTAL_OCEAN)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
-        builder(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_RUINED_PORTAL_SWAMP)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
-        builder(BiomeTags.TRIAL_CHAMBERS_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_TRIAL_CHAMBERS)
             .forceAddTag(DuskBiomeTags.DUSKS_BIOMES)
-        builder(BiomeTags.TRAIL_RUINS_HAS_STRUCTURE)
-            .add(BiomeKeys.DARK_FOREST)
-            .add(BiomeKeys.PALE_GARDEN)
-            .add(BiomeKeys.BIRCH_FOREST)
-            .add(BiomeKeys.BAMBOO_JUNGLE)
+        builder(BiomeTags.HAS_TRAIL_RUINS)
+            .add(Biomes.DARK_FOREST)
+            .add(Biomes.PALE_GARDEN)
+            .add(Biomes.BIRCH_FOREST)
+            .add(Biomes.BAMBOO_JUNGLE)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA)
             .add(DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA)
             .add(DuskBiomes.DARK_GROVE)
             .add(DuskBiomes.PALE_GROVE)
-        builder(BiomeTags.WOODLAND_MANSION_HAS_STRUCTURE)
+        builder(BiomeTags.HAS_WOODLAND_MANSION)
             .add(DuskBiomes.DARK_GROVE)
             .add(DuskBiomes.PALE_GROVE)
-        builder(BiomeTags.VILLAGE_PLAINS_HAS_STRUCTURE)
-            .add(BiomeKeys.SUNFLOWER_PLAINS)
+        builder(BiomeTags.HAS_VILLAGE_PLAINS)
+            .add(Biomes.SUNFLOWER_PLAINS)
             .add(DuskBiomes.COLD_PLAINS)
             .add(DuskBiomes.WARM_PLAINS)
         builder(BiomeTags.STRONGHOLD_BIASED_TO)

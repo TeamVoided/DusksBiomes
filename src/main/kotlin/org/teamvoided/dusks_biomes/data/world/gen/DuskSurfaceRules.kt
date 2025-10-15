@@ -1,101 +1,94 @@
 package org.teamvoided.dusks_biomes.data.world.gen
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.util.math.VerticalSurfaceType
-import net.minecraft.world.biome.BiomeKeys
-import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.noise.NoiseParametersKeys
-import net.minecraft.world.gen.surfacebuilder.MaterialRules.*
+import net.minecraft.world.level.biome.Biomes
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.Noises
+import net.minecraft.world.level.levelgen.SurfaceRules.*
+import net.minecraft.world.level.levelgen.SurfaceRules.ConditionSource
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.placement.CaveSurface
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
-@Suppress("MagicNumber")
 object DuskSurfaceRules {
 
-    private fun block(block: Block): MaterialRule {
-        return block(block.defaultState)
+    private fun block(block: Block): RuleSource {
+        return state(block.defaultBlockState()) 
     }
 
-    private val ON_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR
-    private val ON_CEILING: MaterialCondition = STONE_DEPTH_CEILING
-    private val UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH
-    private val UNDER_CEILING: MaterialCondition = STONE_DEPTH_CEILING_WITH_SURFACE_DEPTH
-    private val DEEP_UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_6
-    private val DEEPEST_LEVEL_UNDER_FLOOR: MaterialCondition = STONE_DEPTH_FLOOR_WITH_SURFACE_DEPTH_RANGE_30
-
-    val grass = sequence(
-        condition(
-            water(-1, 0),
+    val grass: RuleSource = sequence(
+        ifTrue(
+            waterBlockCheck(-1, 0),
             sequence(
-                condition(
+                ifTrue(
                     ON_FLOOR, block(Blocks.GRASS_BLOCK)
                 ),
                 block(Blocks.DIRT)
             )
         )
     )
-    val podzol = sequence(
-        condition(
-            water(-1, 0),
+    val podzol: RuleSource = sequence(
+        ifTrue(
+            waterBlockCheck(-1, 0),
             sequence(
-                condition(
+                ifTrue(
                     ON_FLOOR, block(Blocks.PODZOL)
                 ),
                 block(Blocks.DIRT)
             )
         )
     )
-    val mycelium = sequence(
-        condition(
-            water(-1, 0),
+    val mycelium: RuleSource = sequence(
+        ifTrue(
+            waterBlockCheck(-1, 0),
             sequence(
-                condition(
+                ifTrue(
                     ON_FLOOR, block(Blocks.MYCELIUM)
                 ),
                 block(Blocks.DIRT)
             )
         )
     )
-    val gravel = sequence(
-        condition(
+    val gravel: RuleSource = sequence(
+        ifTrue(
             ON_CEILING, block(Blocks.STONE)
         ),
         block(Blocks.GRAVEL)
     )
-    val sand = sequence(
-        condition(
+    val sand: RuleSource = sequence(
+        ifTrue(
             ON_CEILING, block(Blocks.SANDSTONE)
         ),
         block(Blocks.SAND)
     )
-    val sandRed = sequence(
-        condition(
+    val sandRed: RuleSource = sequence(
+        ifTrue(
             ON_CEILING, block(Blocks.RED_SANDSTONE)
         ),
         block(Blocks.RED_SAND)
     )
 
 
-    fun overworld(): MaterialRule {
+    fun overworld(): RuleSource {
         //Sorted like the vanilla surface rule locations https://minecraft.wiki/w/World_generation#Surface
         //Surface rule sequence 1: Floor
-        val woodedBadlands = condition(
-            biome(
+        val woodedBadlands = ifTrue(
+            isBiome(
                 DuskBiomes.FROZEN_WOODED_BADLANDS
-            ), condition(
+            ), ifTrue(
                 ON_FLOOR,
-                condition(
-                    aboveY(YOffset.fixed(97), 0),
+                ifTrue(
+                    yBlockCheck(VerticalAnchor.absolute(97), 0),
                     sequence(
-                        condition(
+                        ifTrue(
                             surfaceNoiseThresholdNoDivision(-0.909, -0.5454),
                             block(Blocks.COARSE_DIRT)
                         ),
-                        condition(
+                        ifTrue(
                             surfaceNoiseThresholdNoDivision(-0.1818, 0.1818),
                             block(Blocks.COARSE_DIRT)
                         ),
-                        condition(
+                        ifTrue(
                             surfaceNoiseThresholdNoDivision(0.5454, 0.909),
                             block(Blocks.COARSE_DIRT)
                         ),
@@ -104,16 +97,16 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val swampWater = condition(
-            biome(
+        val swampWater = ifTrue(
+            isBiome(
                 DuskBiomes.FROZEN_MANGROVE_SWAMP
-            ), condition(
+            ), ifTrue(
                 ON_FLOOR, sequence(
-                    condition(
-                        aboveY(YOffset.fixed(60), 0),
-                        condition(
-                            not(aboveY(YOffset.fixed(63), 0)),
-                            condition(
+                    ifTrue(
+                        yBlockCheck(VerticalAnchor.absolute(60), 0),
+                        ifTrue(
+                            not(yBlockCheck(VerticalAnchor.absolute(63), 0)),
+                            ifTrue(
                                 swampThreshold(0.0),
                                 block(Blocks.WATER)
                             )
@@ -124,21 +117,21 @@ object DuskSurfaceRules {
         )
 
         //Surface rule sequence 4: floor without water
-        val windsweptHillSurface = condition(
-            biome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
+        val windsweptHillSurface = ifTrue(
+            isBiome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
             sequence(
-                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
+                ifTrue(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
             )
         )
         val sandSurface = sequence(
-            condition(
-                biome(
+            ifTrue(
+                isBiome(
                     DuskBiomes.WARM_RIVER
                 ),
                 sand
             ),
-            condition(
-                biome(
+            ifTrue(
+                isBiome(
                     DuskBiomes.RED_WARM_RIVER,
                     DuskBiomes.RED_DESERT,
                     DuskBiomes.RED_WARM_OCEAN,
@@ -148,115 +141,115 @@ object DuskSurfaceRules {
                 sandRed
             )
         )
-        val windsweptBirchSurface = condition(
-            biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+        val windsweptBirchSurface = ifTrue(
+            isBiome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
             sequence(
-                condition(surfaceNoiseThreshold(1.75), block(Blocks.STONE)),
-                condition(surfaceNoiseThreshold(-0.5), block(Blocks.COARSE_DIRT))
+                ifTrue(surfaceNoiseThreshold(1.75), block(Blocks.STONE)),
+                ifTrue(surfaceNoiseThreshold(-0.5), block(Blocks.COARSE_DIRT))
             )
         )
-        val windsweptGravelSurface = condition(
-            biome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+        val windsweptGravelSurface = ifTrue(
+            isBiome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
             sequence(
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(2.0),
                     gravel
                 ),
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(1.0),
                     block(Blocks.STONE)
                 ),
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(-1.0),
                     grass
                 ),
                 gravel
             )
         )
-        val podzolAndCoarseDirt = condition(
-            biome(
+        val podzolAndCoarseDirt = ifTrue(
+            isBiome(
                 DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
                 DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA
             ),
             sequence(
-                condition(surfaceNoiseThreshold(1.75), block(Blocks.COARSE_DIRT)),
-                condition(surfaceNoiseThreshold(-0.95), block(Blocks.PODZOL))
+                ifTrue(surfaceNoiseThreshold(1.75), block(Blocks.COARSE_DIRT)),
+                ifTrue(surfaceNoiseThreshold(-0.95), block(Blocks.PODZOL))
             )
         )
-        val mushroomIslandSurface = condition(
-            biome(
-                BiomeKeys.MUSHROOM_FIELDS,
+        val mushroomIslandSurface = ifTrue(
+            isBiome(
+                Biomes.MUSHROOM_FIELDS,
                 DuskBiomes.ERODED_MUSHROOM_ISLAND,
                 DuskBiomes.MUSHROOM_GROVE
             ), sequence(
-                condition(
+                ifTrue(
                     DEEP_UNDER_FLOOR, sequence(
-                        condition(
+                        ifTrue(
                             surfaceNoiseThreshold(1.0),
                             mycelium
                         )
                     )
                 ),
-                condition(
+                ifTrue(
                     UNDER_FLOOR, sequence(
-                        condition(
+                        ifTrue(
                             surfaceSecondaryNoiseThreshold(-0.75, 0.75),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
                 ),
-                condition(
-                    stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                        condition(
+                ifTrue(
+                    stoneDepthCheck(0, false, 2, CaveSurface.FLOOR), sequence(
+                        ifTrue(
                             surfaceSecondaryNoiseThreshold(-2.0, 2.0),
                             podzol
                         )
                     )
                 ),
-                condition(
+                ifTrue(
                     UNDER_CEILING, sequence(
-                        condition(
+                        ifTrue(
                             surfaceNoiseThreshold(0.75),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
                 ),
-                condition(
-                    stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                        condition(
+                ifTrue(
+                    stoneDepthCheck(0, true, 6, CaveSurface.CEILING), sequence(
+                        ifTrue(
                             surfaceSecondaryNoiseThreshold(1.0),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
                 ),
-                condition(
+                ifTrue(
                     UNDER_FLOOR, mycelium
                 )
             )
         )
-        val mud = condition(
-            biome(
+        val mud = ifTrue(
+            isBiome(
                 DuskBiomes.FROZEN_MANGROVE_SWAMP
             ),
             block(Blocks.MUD)
         )
 
         //Deep under floor with water above (or not)
-        val deepWindsweptHillSurface = condition(
-            biome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
+        val deepWindsweptHillSurface = ifTrue(
+            isBiome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
             sequence(
-                condition(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
+                ifTrue(surfaceNoiseThreshold(1.0), block(Blocks.STONE))
             )
         )
         val deepSand = sequence(
-            condition(
-                biome(
+            ifTrue(
+                isBiome(
                     DuskBiomes.WARM_RIVER
                 ),
                 sand
             ),
-            condition(
-                biome(
+            ifTrue(
+                isBiome(
                     DuskBiomes.RED_WARM_RIVER,
                     DuskBiomes.RED_WARM_OCEAN,
                     DuskBiomes.RED_BEACH,
@@ -265,75 +258,75 @@ object DuskSurfaceRules {
                 sandRed
             )
         )
-        val deepWindsweptBirchSurface = condition(
-            biome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
-            condition(
+        val deepWindsweptBirchSurface = ifTrue(
+            isBiome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+            ifTrue(
                 surfaceNoiseThreshold(1.75),
                 block(Blocks.STONE)
             )
         )
-        val deepWindsweptGravelSurface = condition(
-            biome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+        val deepWindsweptGravelSurface = ifTrue(
+            isBiome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
             sequence(
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(2.0),
                     gravel
                 ),
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(1.0),
                     block(Blocks.STONE)
                 ),
-                condition(
+                ifTrue(
                     surfaceNoiseThreshold(-1.0),
                     block(Blocks.DIRT)
                 ),
                 gravel
             )
         )
-        val deepMud = condition(
-            biome(
+        val deepMud = ifTrue(
+            isBiome(
                 DuskBiomes.FROZEN_MANGROVE_SWAMP
             ),
             block(Blocks.MUD)
         )
-        val sandstoneDesert = condition(
-            biome(DuskBiomes.RED_DESERT),
+        val sandstoneDesert = ifTrue(
+            isBiome(DuskBiomes.RED_DESERT),
             sequence(
-                condition(
-                    DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
+                ifTrue(
+                    VERY_DEEP_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
                 )
             )
         )
         //Surface rule sequence 5
-        val sandOcean = condition(
-            ON_FLOOR, condition(
-                biome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
+        val sandOcean = ifTrue(
+            ON_FLOOR, ifTrue(
+                isBiome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
                 sandRed
             )
         )
 //Non-Vanilla adjacent biomes
-        val snowyCherryGrove = condition(
-            biome(
+        val snowyCherryGrove = ifTrue(
+            isBiome(
                 DuskBiomes.SNOWY_CHERRY_GROVE,
                 DuskBiomes.DARK_GROVE,
                 DuskBiomes.PALE_GROVE
             ),
-            condition(
-                stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(
-                    water(-6, 0),
+            ifTrue(
+                stoneDepthCheck(0, true, 0, CaveSurface.FLOOR), ifTrue(
+                    waterBlockCheck(-6, 0),
                     sequence(
-                        condition(
-                            stoneDepth(0, false, 0, VerticalSurfaceType.FLOOR),
-                            condition(
+                        ifTrue(
+                            stoneDepthCheck(0, false, 0, CaveSurface.FLOOR),
+                            ifTrue(
                                 powderSnowNoiseThreshold(0.35, 0.6),
                                 block(Blocks.POWDER_SNOW)
                             )
                         ),
-                        condition(
+                        ifTrue(
                             powderSnowNoiseThreshold(0.45, 0.58),
                             block(Blocks.POWDER_SNOW)
                         ),
-                        condition(
+                        ifTrue(
                             surfaceNoiseThreshold(-1.0),
                             block(Blocks.SNOW_BLOCK)
                         )
@@ -341,15 +334,15 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val stonyShore = condition(
-            biome(
+        val stonyShore = ifTrue(
+            isBiome(
                 DuskBiomes.SNOWY_STONY_SHORE
             ),
-            condition(
-                stoneDepth(0, true, 0, VerticalSurfaceType.FLOOR), condition(
-                    water(-6, 0),
+            ifTrue(
+                stoneDepthCheck(0, true, 0, CaveSurface.FLOOR), ifTrue(
+                    waterBlockCheck(-6, 0),
                     sequence(
-                        condition(
+                        ifTrue(
                             gravelNoiseThreshold(-0.05, 0.05),
                             gravel
                         ),
@@ -358,93 +351,93 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val badlands = condition(
-            biome(
+        val badlands = ifTrue(
+            isBiome(
                 DuskBiomes.FROZEN_BADLANDS,
                 DuskBiomes.FROZEN_WOODED_BADLANDS,
                 DuskBiomes.FROZEN_ERODED_BADLANDS
             ),
             sequence(
-                condition(
+                ifTrue(
                     UNDER_FLOOR,
-                    condition(
+                    ifTrue(
                         powderSnowNoiseThreshold(0.45, 0.58),
                         block(Blocks.POWDER_SNOW)
 
                     )
                 ),
-                condition(
+                ifTrue(
                     ON_FLOOR,
                     sequence(
-                        condition(
-                            water(-6, 0),
+                        ifTrue(
+                            waterBlockCheck(-6, 0),
                             sequence(
-                                condition(
+                                ifTrue(
                                     powderSnowNoiseThreshold(0.35, 0.6),
                                     block(Blocks.POWDER_SNOW)
                                 ),
-                                condition(
+                                ifTrue(
                                     surfaceNoiseThreshold(0.0),
                                     block(Blocks.SNOW_BLOCK)
                                 )
                             )
                         ),
-                        condition(
-                            aboveY(YOffset.fixed(256), 0),
+                        ifTrue(
+                            yBlockCheck(VerticalAnchor.absolute(256), 0),
                             block(Blocks.ORANGE_TERRACOTTA)
                         ),
-                        condition(
-                            aboveYWithStoneDepth(YOffset.fixed(74), 0),
+                        ifTrue(
+                            yStartCheck(VerticalAnchor.absolute(74), 0),
                             sequence(
-                                condition(
+                                ifTrue(
                                     surfaceNoiseThresholdNoDivision(-0.909, -0.5454),
                                     block(Blocks.TERRACOTTA)
                                 ),
-                                condition(
+                                ifTrue(
                                     surfaceNoiseThresholdNoDivision(-0.1818, 0.1818),
                                     block(Blocks.TERRACOTTA)
                                 ),
-                                condition(
+                                ifTrue(
                                     surfaceNoiseThresholdNoDivision(0.5454, 0.909),
                                     block(Blocks.TERRACOTTA)
                                 ),
-                                terracottaBands()
+                                bandlands()
                             )
                         ),
-                        condition(
-                            water(-1, 0),
+                        ifTrue(
+                            waterBlockCheck(-1, 0),
                             sandRed
                         ),
-                        condition(
+                        ifTrue(
                             not(hole()),
                             block(Blocks.ORANGE_TERRACOTTA)
                         ),
-                        condition(
-                            waterWithStoneDepth(-6, -1),
+                        ifTrue(
+                            waterStartCheck(-6, -1),
                             block(Blocks.WHITE_TERRACOTTA)
                         ),
                         gravel
                     )
                 ),
-                condition(
-                    aboveYWithStoneDepth(YOffset.fixed(63), -1),
+                ifTrue(
+                    yStartCheck(VerticalAnchor.absolute(63), -1),
                     sequence(
-                        condition(
-                            aboveY(YOffset.fixed(63), 0),
-                            condition(
+                        ifTrue(
+                            yBlockCheck(VerticalAnchor.absolute(63), 0),
+                            ifTrue(
                                 not(
-                                    aboveYWithStoneDepth(YOffset.fixed(74), 1)
+                                    yStartCheck(VerticalAnchor.absolute(74), 1)
                                 ),
                                 block(Blocks.ORANGE_TERRACOTTA)
                             )
                         ),
-                        terracottaBands()
+                        bandlands()
                     )
                 ),
-                condition(
+                ifTrue(
                     UNDER_FLOOR,
-                    condition(
-                        waterWithStoneDepth(-6, -1),
+                    ifTrue(
+                        waterStartCheck(-6, -1),
                         block(Blocks.WHITE_TERRACOTTA)
                     )
                 )
@@ -452,51 +445,51 @@ object DuskSurfaceRules {
         )
 //Cave Surface
         val mushroomCaves = sequence(
-            condition(
-                biome(DuskBiomes.MUSHROOM_CAVES),
+            ifTrue(
+                isBiome(DuskBiomes.MUSHROOM_CAVES),
                 sequence(
-                    condition(
+                    ifTrue(
                         DEEP_UNDER_FLOOR, sequence(
-                            condition(
+                            ifTrue(
                                 surfaceNoiseThreshold(1.0),
                                 mycelium
                             )
                         )
                     ),
-                    condition(
-                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                            condition(
+                    ifTrue(
+                        stoneDepthCheck(0, false, 2, CaveSurface.FLOOR), sequence(
+                            ifTrue(
                                 surfaceSecondaryNoiseThreshold(-2.0, 2.0),
                                 podzol
                             )
                         )
                     ),
-                    condition(
+                    ifTrue(
                         UNDER_FLOOR, sequence(
-                            condition(
+                            ifTrue(
                                 surfaceSecondaryNoiseThreshold(-0.75, 0.75),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
                     ),
-                    condition(
+                    ifTrue(
                         UNDER_CEILING, sequence(
-                            condition(
+                            ifTrue(
                                 surfaceNoiseThreshold(0.75),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
                     ),
-                    condition(
-                        stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                            condition(
+                    ifTrue(
+                        stoneDepthCheck(0, true, 6, CaveSurface.CEILING), sequence(
+                            ifTrue(
                                 surfaceSecondaryNoiseThreshold(1.0),
                                 block(Blocks.COARSE_DIRT)
                             )
                         )
                     ),
-                    condition(
-                        stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
+                    ifTrue(
+                        stoneDepthCheck(0, false, 2, CaveSurface.FLOOR), sequence(
                             sequence(
                                 mycelium
                             )
@@ -507,100 +500,100 @@ object DuskSurfaceRules {
         )
         val cobbledDeepslateDepth = verticalGradient(
             "minecraft:deepslate",
-            YOffset.fixed(0),
-            YOffset.fixed(8)
+            VerticalAnchor.absolute(0),
+            VerticalAnchor.absolute(8)
         )
         val fallingBlockCaves = sequence(
-            condition(
-                biome(DuskBiomes.SAND_CAVES),
+            ifTrue(
+                isBiome(DuskBiomes.SAND_CAVES),
                 fallingBlockCaveSurface(sand, block(Blocks.SANDSTONE))
             ),
-            condition(
-                biome(DuskBiomes.RED_SAND_CAVES),
+            ifTrue(
+                isBiome(DuskBiomes.RED_SAND_CAVES),
                 fallingBlockCaveSurface(sandRed, block(Blocks.RED_SANDSTONE))
             ),
-            condition(
-                biome(DuskBiomes.GRAVEL_CAVES),
+            ifTrue(
+                isBiome(DuskBiomes.GRAVEL_CAVES),
                 sequence(
-                    condition(
+                    ifTrue(
                         cobbledDeepslateDepth,
                         fallingBlockCaveSurface(gravel, block(Blocks.COBBLED_DEEPSLATE))
                     ),
-                    condition(
+                    ifTrue(
                         not(cobbledDeepslateDepth),
                         fallingBlockCaveSurface(gravel, block(Blocks.COBBLESTONE))
                     )
                 )
             )
         )
-        val frozenCaverns = condition(
-            biome(DuskBiomes.FROZEN_CAVERNS),
+        val frozenCaverns = ifTrue(
+            isBiome(DuskBiomes.FROZEN_CAVERNS),
             sequence(
-                condition(
+                ifTrue(
                     DEEP_UNDER_FLOOR, sequence(
                         sequence(
-                            condition(
-                                water(-6, 0), sequence(
-                                    condition(
+                            ifTrue(
+                                waterBlockCheck(-6, 0), sequence(
+                                    ifTrue(
                                         packedIceNoiseThreshold(0.0, 0.2),
                                         block(Blocks.PACKED_ICE)
                                     )
                                 )
                             ),
-                            condition(
-                                water(0, 0), sequence(
-                                    condition(
+                            ifTrue(
+                                waterBlockCheck(0, 0), sequence(
+                                    ifTrue(
                                         powderSnowNoiseThreshold(0.45, 0.58),
                                         block(Blocks.POWDER_SNOW)
                                     )
                                 )
                             )
                         ),
-                        condition(
+                        ifTrue(
                             ON_FLOOR,
-                            condition(
-                                water(-1, 0), sequence(
-                                    condition(
+                            ifTrue(
+                                waterBlockCheck(-1, 0), sequence(
+                                    ifTrue(
                                         iceNoiseThreshold(0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
                             )
                         ),
-                        condition(
-                            water(-1, 0), sequence(
+                        ifTrue(
+                            waterBlockCheck(-1, 0), sequence(
                                 block(Blocks.SNOW_BLOCK)
                             )
                         )
                     )
                 ),
-                condition(
-                    stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                        condition(
+                ifTrue(
+                    stoneDepthCheck(0, true, 6, CaveSurface.CEILING), sequence(
+                        ifTrue(
                             packedIceNoiseThreshold(0.0, 0.2),
                             block(Blocks.PACKED_ICE)
                         ),
-                        condition(
-                            water(0, 0), sequence(
-                                condition(
+                        ifTrue(
+                            waterBlockCheck(0, 0), sequence(
+                                ifTrue(
                                     powderSnowNoiseThreshold(0.45, 0.58),
                                     block(Blocks.POWDER_SNOW)
                                 )
                             )
                         ),
-                        condition(
+                        ifTrue(
                             ON_FLOOR,
-                            condition(
-                                water(1, 0), sequence(
-                                    condition(
+                            ifTrue(
+                                waterBlockCheck(1, 0), sequence(
+                                    ifTrue(
                                         iceNoiseThreshold(0.0, 0.025),
                                         block(Blocks.ICE)
                                     )
                                 )
                             )
                         ),
-                        condition(
-                            water(1, 0), sequence(
+                        ifTrue(
+                            waterBlockCheck(1, 0), sequence(
                                 block(Blocks.SNOW_BLOCK)
                             )
                         )
@@ -612,9 +605,9 @@ object DuskSurfaceRules {
         //Begin the Layout
         //
         //
-        val onFloorAndWater = condition(
-            ON_FLOOR, condition(
-                water(-1, 0), sequence(
+        val onFloorAndWater = ifTrue(
+            ON_FLOOR, ifTrue(
+                waterBlockCheck(-1, 0), sequence(
                     windsweptHillSurface,
                     sandSurface,
                     windsweptBirchSurface,
@@ -624,9 +617,9 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val onFloorInDeepWater = condition(
-            DEEP_UNDER_FLOOR, condition(
-                water(-6, 0), sequence(
+        val onFloorInDeepWater = ifTrue(
+            DEEP_UNDER_FLOOR, ifTrue(
+                waterBlockCheck(-6, 0), sequence(
                     deepWindsweptHillSurface,
                     sandSurface,
                     deepWindsweptBirchSurface,
@@ -636,8 +629,8 @@ object DuskSurfaceRules {
                 )
             )
         )
-        val surface = condition(
-            surface(),
+        val surface = ifTrue(
+            abovePreliminarySurface(),
             sequence(
                 swampWater,
                 woodedBadlands,
@@ -653,8 +646,8 @@ object DuskSurfaceRules {
         )
         // Return a surface-only sequence of surface rules
         return sequence(
-            condition(
-                aboveY(YOffset.fixed(-55), 0), sequence(
+            ifTrue(
+                yBlockCheck(VerticalAnchor.absolute(-55), 0), sequence(
                     surface, sequence(
                         mushroomCaves,
                         fallingBlockCaves,
@@ -665,50 +658,50 @@ object DuskSurfaceRules {
         )
     }
 
-    fun fallingBlockCaveSurface(fallingBlock: MaterialRule, solidBlock: MaterialRule): MaterialRule {
+    fun fallingBlockCaveSurface(fallingBlock: RuleSource, solidBlock: RuleSource): RuleSource {
         return sequence(
-            condition(
+            ifTrue(
                 DEEP_UNDER_FLOOR, sequence(
-                    condition(
+                    ifTrue(
                         surfaceNoiseThreshold(1.0),
                         solidBlock
                     )
                 )
             ),
-            condition(
+            ifTrue(
                 ON_FLOOR, sequence(
-                    condition(
+                    ifTrue(
                         surfaceSecondaryNoiseThreshold(0.0),
                         solidBlock
                     )
                 )
             ),
-            condition(
+            ifTrue(
                 UNDER_FLOOR, sequence(
-                    condition(
+                    ifTrue(
                         surfaceNoiseThreshold(-0.5),
                         fallingBlock
                     )
                 )
             ),
-            condition(
+            ifTrue(
                 UNDER_CEILING, sequence(
-                    condition(
+                    ifTrue(
                         surfaceNoiseThreshold(0.0),
                         solidBlock
                     )
                 )
             ),
-            condition(
-                stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                    condition(
+            ifTrue(
+                stoneDepthCheck(0, true, 6, CaveSurface.CEILING), sequence(
+                    ifTrue(
                         surfaceSecondaryNoiseThreshold(0.5),
                         solidBlock
                     )
                 )
             ),
-            condition(
-                stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
+            ifTrue(
+                stoneDepthCheck(0, false, 2, CaveSurface.FLOOR), sequence(
                     sequence(
                         fallingBlock
                     )
@@ -717,66 +710,66 @@ object DuskSurfaceRules {
         )
     }
 
-    fun surfaceNoiseThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, Double.MAX_VALUE)
+    fun surfaceNoiseThreshold(min: Double): ConditionSource {
+        return noiseCondition(Noises.SURFACE, min / 8.25, Double.MAX_VALUE)
     }
 
-    fun surfaceNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, max / 8.25)
+    fun surfaceNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.SURFACE, min / 8.25, max / 8.25)
     }
 
-    fun surfaceNoiseThresholdNoDivision(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE, min, max)
+    fun surfaceNoiseThresholdNoDivision(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.SURFACE, min, max)
     }
 
-    fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+    fun surfaceSecondaryNoiseThreshold(min: Double): ConditionSource {
+        return noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
     }
 
-    fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, max / 8.25)
+    fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, max / 8.25)
     }
 
-    fun swampThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE_SWAMP, min, Double.MAX_VALUE)
+    fun swampThreshold(min: Double): ConditionSource {
+        return noiseCondition(Noises.SWAMP, min, Double.MAX_VALUE)
     }
 
-    fun packedIceNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.PACKED_ICE, min, max)
+    fun packedIceNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.PACKED_ICE, min, max)
     }
 
-    fun iceNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.ICE, min, max)
+    fun iceNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.ICE, min, max)
     }
 
-    fun powderSnowNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.POWDER_SNOW, min, max)
+    fun powderSnowNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.POWDER_SNOW, min, max)
     }
 
-    fun gravelNoiseThreshold(min: Double, max: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.GRAVEL, min, max)
+    fun gravelNoiseThreshold(min: Double, max: Double): ConditionSource {
+        return noiseCondition(Noises.GRAVEL, min, max)
     }
 }
 
 
-//        val devilsRoar = condition(
-//            biome(
+//        val devilsRoar = ifTrue(
+//            isBiome(
 //                DuskBiomes.DEVILS_ROAR
 //            ),
 //            sequence(
-//                condition(surfaceSecondaryNoiseThreshold(-0.95), block(Blocks.BLACKSTONE)),
-//                condition(
+//                ifTrue(surfaceSecondaryNoiseThreshold(-0.95), block(Blocks.BLACKSTONE)),
+//                ifTrue(
 //                    surfaceNoiseThreshold(0.35),
 //                    sequence(
-//                        condition(
+//                        ifTrue(
 //                            DEEP_UNDER_FLOOR, sequence(
-//                                condition(
+//                                ifTrue(
 //                                    ON_CEILING, block(Blocks.RED_SANDSTONE)
 //                                ),
 //                                block(Blocks.RED_SAND)
 //                            )
 //                        ),
-//                        condition(
+//                        ifTrue(
 //                            DEEPEST_LEVEL_UNDER_FLOOR, block(Blocks.RED_SANDSTONE)
 //                        )
 //
