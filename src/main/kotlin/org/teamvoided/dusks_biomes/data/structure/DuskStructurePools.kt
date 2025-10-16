@@ -3,7 +3,7 @@ package org.teamvoided.dusks_biomes.data.structure
 import net.minecraft.core.registries.Registries.TEMPLATE_POOL
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomes.id
 
 object DuskStructurePools {
     val PALE_MANOR_FOUNDATION = paleManor("foundation")

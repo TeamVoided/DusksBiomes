@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
-import org.teamvoided.dusks_biomes.DusksBiomesMod.MODID
+import org.teamvoided.dusks_biomes.DusksBiomes.MODID
 import org.teamvoided.dusks_biomes.data.gen.structure.structure_pool.PaleManorCreaor.generatePaleManor
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists

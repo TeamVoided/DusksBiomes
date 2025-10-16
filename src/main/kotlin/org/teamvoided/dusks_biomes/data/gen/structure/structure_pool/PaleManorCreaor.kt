@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
-import org.teamvoided.dusks_biomes.DusksBiomesMod
+import org.teamvoided.dusks_biomes.DusksBiomes
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import java.util.function.Function
 
@@ -104,7 +104,7 @@ object PaleManorCreaor {
             )
     }
 
-    private fun id(str: String) = "${DusksBiomesMod.MODID}:$str"
+    private fun id(str: String) = "${DusksBiomes.MODID}:$str"
 
     private fun singleStructure(
         str: String,

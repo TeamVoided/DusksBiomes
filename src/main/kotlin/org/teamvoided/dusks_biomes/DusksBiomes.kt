@@ -9,14 +9,14 @@ import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
 
 
 @Suppress("unused")
-object DusksBiomesMod {
+object DusksBiomes {
     const val MODID = "dusks_biomes"
 
     @JvmField
-    val log: Logger = LoggerFactory.getLogger(DusksBiomesMod::class.simpleName)
+    val log: Logger = LoggerFactory.getLogger(DusksBiomes::class.simpleName)
 
     fun commonInit() {
-        log.info("Hello from Common")
+        log.info("Dusking and Biomeing")
 
         DuskBiomes.init()
         DuskStructureProcessorTypes.init()

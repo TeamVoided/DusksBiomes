@@ -29,7 +29,7 @@ repositories {
 
 
 modSettings {
-    entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomesMod::commonInit")
+    entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomes::commonInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
     mixinFile("${modId()}.mixins.json")
 }

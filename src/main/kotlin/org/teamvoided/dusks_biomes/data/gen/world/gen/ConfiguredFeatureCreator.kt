@@ -47,7 +47,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomes.id
 import org.teamvoided.dusks_biomes.data.gen.world.gen.configured_feature_creator.TreeConfiguredCreator.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures

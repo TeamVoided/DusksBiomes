@@ -3,7 +3,7 @@ package org.teamvoided.dusks_biomes.data
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.storage.loot.LootTable
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomes.id
 
 object DuskLootTables {
     private val READ_ONLY_LOOT_TABLES: MutableSet<ResourceKey<LootTable>> = mutableSetOf()

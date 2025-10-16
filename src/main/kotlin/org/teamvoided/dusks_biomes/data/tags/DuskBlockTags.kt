@@ -3,7 +3,7 @@ package org.teamvoided.dusks_biomes.data.tags
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomes.id
 
 object DuskBlockTags {
     val ICE_ORE_REPLACEABLE = create("ice_ore_replaceable")

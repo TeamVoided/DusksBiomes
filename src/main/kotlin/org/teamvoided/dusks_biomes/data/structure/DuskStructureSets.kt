@@ -3,7 +3,7 @@ package org.teamvoided.dusks_biomes.data.structure
 import net.minecraft.core.registries.Registries.STRUCTURE_SET
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.structure.StructureSet
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
+import org.teamvoided.dusks_biomes.DusksBiomes.id
 
 object DuskStructureSets {
 //    val DESERT_RUINS = create("desert_ruins")

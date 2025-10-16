@@ -9,8 +9,8 @@ import net.minecraft.advancements.AdvancementType
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
-import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
+import org.teamvoided.dusks_biomes.DusksBiomes.id
+import org.teamvoided.dusks_biomes.DusksBiomes.mc
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.mixin.VanillaAdventureAdvancementsAccessor.db_invokeAddBiomes
 import java.util.concurrent.CompletableFuture

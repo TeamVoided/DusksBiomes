@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.biome.Climate.ParameterPoint
-import org.teamvoided.dusks_biomes.DusksBiomesMod.id
-import org.teamvoided.dusks_biomes.DusksBiomesMod.mc
+import org.teamvoided.dusks_biomes.DusksBiomes.id
+import org.teamvoided.dusks_biomes.DusksBiomes.mc
 import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.util.Range
 

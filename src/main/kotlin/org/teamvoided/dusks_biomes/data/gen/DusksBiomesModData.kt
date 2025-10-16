@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
-import org.teamvoided.dusks_biomes.DusksBiomesMod.log
+import org.teamvoided.dusks_biomes.DusksBiomes.log
 import org.teamvoided.dusks_biomes.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.data.gen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.data.gen.structure.StructureProcessorCreator
