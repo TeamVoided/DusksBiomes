@@ -48,7 +48,7 @@ object TreePlacedFeature {
     fun BootstrapContext<PlacedFeature>.registerOnSnow(
         placed: ResourceKey<PlacedFeature>,
         configured: ResourceKey<ConfiguredFeature<*, *>>,
-        count: PlacementModifier
+        count: PlacementModifier,
     ) {
         val configuredFeatureProvider = this.lookup(Registries.CONFIGURED_FEATURE)
         this.register(
@@ -60,9 +60,9 @@ object TreePlacedFeature {
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome(),
             EnvironmentScanPlacement.scanningFor(
-                Direction.UP, BlockPredicate.not(
-                    BlockPredicate.matchesBlocks(*arrayOf(Blocks.POWDER_SNOW))
-                ), 8
+                Direction.UP,
+                BlockPredicate.not(BlockPredicate.matchesBlocks(Blocks.POWDER_SNOW)),
+                8
             ),
             BlockPredicateFilter.forPredicate(
                 BlockPredicate.matchesBlocks(

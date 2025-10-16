@@ -43,7 +43,6 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorato
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.UpwardsBranchingTrunkPlacer
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.material.Fluids
@@ -237,19 +236,16 @@ object ConfiguredFeatureCreator {
                         0.75f,
                         HolderSet.direct(
                             { it.builtInRegistryHolder() },
-                            *arrayOf<Block>(
-                                Blocks.STONE,
-                                Blocks.ANDESITE,
-                                Blocks.DIORITE,
-                                Blocks.GRANITE,
-                                Blocks.DRIPSTONE_BLOCK,
-                                Blocks.CALCITE,
-                                Blocks.TUFF,
-                                Blocks.DEEPSLATE
-                            )
+                            Blocks.STONE,
+                            Blocks.ANDESITE,
+                            Blocks.DIORITE,
+                            Blocks.GRANITE,
+                            Blocks.DRIPSTONE_BLOCK,
+                            Blocks.CALCITE,
+                            Blocks.TUFF,
+                            Blocks.DEEPSLATE
                         )
                     ),
-                    *arrayOfNulls<PlacementModifier>(0)
                 )
             )
         )
@@ -268,13 +264,11 @@ object ConfiguredFeatureCreator {
             RandomBooleanFeatureConfiguration(
                 PlacementUtils.inlinePlaced(
                     configuredFeatures.getOrThrow(VegetationFeatures.PATCH_RED_MUSHROOM),
-                    *arrayOfNulls<PlacementModifier>(0)
                 ),
                 PlacementUtils.inlinePlaced(
                     configuredFeatures.getOrThrow(
                         VegetationFeatures.PATCH_BROWN_MUSHROOM
-                    ),
-                    *arrayOfNulls<PlacementModifier>(0)
+                    )
                 )
             )
         )
@@ -284,7 +278,6 @@ object ConfiguredFeatureCreator {
             RootSystemConfiguration(
                 PlacementUtils.inlinePlaced(
                     configuredFeatures.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
-                    *arrayOfNulls<PlacementModifier>(0)
                 ),
                 2,
                 2,
@@ -425,12 +418,10 @@ object ConfiguredFeatureCreator {
                         BiasedToBottomInt.of(1, 7),
                         BlockStateProvider.simple(Blocks.CACTUS)
                     ),
-                    *arrayOf<PlacementModifier>(
-                        BlockPredicateFilter.forPredicate(
-                            BlockPredicate.allOf(
-                                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                                BlockPredicate.wouldSurvive(Blocks.CACTUS.defaultBlockState(), BlockPos.ZERO)
-                            )
+                    BlockPredicateFilter.forPredicate(
+                        BlockPredicate.allOf(
+                            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                            BlockPredicate.wouldSurvive(Blocks.CACTUS.defaultBlockState(), BlockPos.ZERO)
                         )
                     )
                 )
@@ -604,7 +595,7 @@ object ConfiguredFeatureCreator {
                     SimpleBlockConfiguration(
                         NoiseThresholdProvider(
                             6789L,
-                            NormalNoise.NoiseParameters(0, 1.0, *DoubleArray(0)),
+                            NormalNoise.NoiseParameters(0, 1.0),
                             0.005f,
                             -0.8f,
                             0.33333334f,
@@ -622,10 +613,8 @@ object ConfiguredFeatureCreator {
                         )
                     ),
                     BlockPredicate.allOf(
-                        *arrayOf<BlockPredicate>(
-                            BlockPredicate.matchesFluids(Fluids.WATER),
-                            BlockPredicate.wouldSurvive(Blocks.SEAGRASS.defaultBlockState(), BlockPos.ZERO)
-                        )
+                        BlockPredicate.matchesFluids(Fluids.WATER),
+                        BlockPredicate.wouldSurvive(Blocks.SEAGRASS.defaultBlockState(), BlockPos.ZERO)
                     )
                 )
             )
@@ -641,7 +630,6 @@ object ConfiguredFeatureCreator {
                         Blocks.COBBLESTONE.defaultBlockState(),
                         64
                     ),
-                    *arrayOfNulls<PlacementModifier>(0)
                 ),
                 PlacementUtils.inlinePlaced(
                     Feature.ORE,
@@ -650,7 +638,6 @@ object ConfiguredFeatureCreator {
                         Blocks.COBBLED_DEEPSLATE.defaultBlockState(),
                         64
                     ),
-                    *arrayOfNulls<PlacementModifier>(0)
                 )
             )
         )

@@ -219,12 +219,10 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.ICE_CAVE_PILLAR,
             cfLookup.getOrThrow(DuskConfiguredFeatures.ICE_CAVE_PILLAR),
-            *arrayOf<PlacementModifier>(
-                CountPlacement.of(UniformInt.of(20, 48)),
-                InSquarePlacement.spread(),
-                PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-                BiomeFilter.biome()
-            )
+            CountPlacement.of(UniformInt.of(20, 48)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
         )
         c.register(
             DuskPlacedFeatures.ICE_SPIKE_FLOOR,
@@ -363,7 +361,10 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
+                Direction.DOWN,
+                BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
             ),
             BiomeFilter.biome()
         )
@@ -374,7 +375,10 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.UP, BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
+                Direction.UP,
+                BlockPredicate.matchesBlocks(Blocks.RED_SANDSTONE),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
             ),
             RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
             BiomeFilter.biome()
@@ -444,7 +448,10 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.COBBLESTONE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
+                Direction.DOWN,
+                BlockPredicate.matchesBlocks(Blocks.COBBLESTONE),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
             ),
             BiomeFilter.biome()
         )
@@ -475,7 +482,10 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN, BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
+                Direction.DOWN,
+                BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
             ),
             BiomeFilter.biome()
         )
@@ -486,7 +496,10 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.UP, BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12
+                Direction.UP,
+                BlockPredicate.matchesBlocks(Blocks.COBBLED_DEEPSLATE),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
             ),
             RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
             BiomeFilter.biome()
