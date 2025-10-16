@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_biomes.init.DuskBiomes
+import org.teamvoided.dusks_biomes.init.DuskDebug
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
 
 
@@ -19,6 +20,7 @@ object DusksBiomesMod {
 
         DuskBiomes.init()
         DuskStructureProcessorTypes.init()
+        DuskDebug.init()
     }
 
     fun id(namespace: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, path)
