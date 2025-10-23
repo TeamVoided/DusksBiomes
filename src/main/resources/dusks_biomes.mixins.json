@@ -4,8 +4,11 @@
   "package": "org.teamvoided.dusks_biomes.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "VanillaAdventureAdvancementsAccessor",
-    "OverworldBiomesAccessor"
+    "OceanRuinPieceMixin",
+    "OverworldBiomesAccessor",
+    "StructureMixin",
+    "StructurePieceMixin",
+    "VanillaAdventureAdvancementsAccessor"
   ],
   "client": [],
   "injectors": {
