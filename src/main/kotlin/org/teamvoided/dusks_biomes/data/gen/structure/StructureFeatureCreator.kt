@@ -9,8 +9,10 @@ import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight
 import net.minecraft.world.level.levelgen.structure.Structure
+import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
+import net.minecraft.world.level.levelgen.structure.structures.OceanRuinStructure
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
@@ -48,6 +50,16 @@ object StructureFeatureCreator {
                 ConstantHeight.of(VerticalAnchor.absolute(0)),
                 true,
                 Heightmap.Types.WORLD_SURFACE_WG
+            )
+        )
+
+        c.register(
+            DuskStructureFeatures.OCEAN_RUIN_WARM_RED,
+            OceanRuinStructure(
+                StructureSettings(biomeTags.getOrThrow(DuskBiomeTags.HAS_OCEAN_RUIN_RED_WARM)),
+                OceanRuinStructure.Type.WARM,
+                0.3f,
+                0.9f
             )
         )
 //        c.register(

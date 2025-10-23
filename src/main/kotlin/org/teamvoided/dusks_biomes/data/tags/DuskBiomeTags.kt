@@ -19,7 +19,7 @@ object DuskBiomeTags {
 //    val HAS_DESERT_RUIN = create("has_structure/has_desert_ruin")
 //    val HAS_RED_DESERT_RUIN = create("has_structure/has_red_desert_ruin")
 
-    val HAS_OCEAN_RUIN_RED_WARM = create("voided_variance", "has_structure/ocean_ruin_red_warm")
+    val HAS_OCEAN_RUIN_RED_WARM = create("has_structure/ocean_ruin_red_warm")
     val VILLAGER_TAIGA = create("biome_tag_villagers", "villager_taiga")
     val VILLAGER_SNOWY = create("biome_tag_villagers", "villager_snowy")
     val VILLAGER_SWAMP = create("biome_tag_villagers", "villager_swamp")

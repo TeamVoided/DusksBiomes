@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.StructureTags
 import net.minecraft.world.level.levelgen.structure.Structure
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures
+import org.teamvoided.reef.data.tags.ReefStructureTags
 import java.util.concurrent.CompletableFuture
 
 class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
@@ -18,5 +19,8 @@ class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLook
         builder(StructureTags.VILLAGE)
             .add(DuskStructureFeatures.SWAMP_VILLAGE)
             .add(DuskStructureFeatures.MANGROVE_SWAMP_VILLAGE)
+
+        builder(ReefStructureTags.HAS_INJECTED_PROCESSOR_LISTS)
+            .add(DuskStructureFeatures.OCEAN_RUIN_WARM_RED)
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.LanternBlock
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
+import org.teamvoided.dusks_biomes.data.gen.structure.processor_list.OceanRuins.oceanRuinWarmRed
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 
 
@@ -20,7 +21,8 @@ object StructureProcessorCreator {
 
         swampVillageProcessorLists(c)
         mangroveSwampVillageProcessorLists(c)
-        desertRuinsProcessorLists(c)
+        c.oceanRuinWarmRed()
+//        desertRuinsProcessorLists(c)
     }
 
     fun swampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
@@ -603,11 +605,11 @@ object StructureProcessorCreator {
         )
     }
 
-    private fun BootstrapContext<StructureProcessorList>.register(
+     fun BootstrapContext<StructureProcessorList>.register(
         key: ResourceKey<StructureProcessorList>, vararg procList: StructureProcessor
     ) = this.register(key, StructureProcessorList(procList.toList()))
 
-    private fun RuleProcessor(vararg procRules: ProcessorRule): RuleProcessor =
+     fun RuleProcessor(vararg procRules: ProcessorRule): RuleProcessor =
         RuleProcessor(procRules.toList())
 
 }
