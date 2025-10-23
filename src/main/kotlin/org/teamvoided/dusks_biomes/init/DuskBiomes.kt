@@ -194,7 +194,7 @@ object DuskBiomes {
         BiomePlacement.addSubOverworld(
             Biomes.RIVER, WARM_RIVER, CriterionBuilder.allOf(
                 CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.55f, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.EROSION, -0.05f, 1f),
+                CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.05f, 1f),
             )
         )
         BiomePlacement.addSubOverworld(Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)

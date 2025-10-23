@@ -56,6 +56,7 @@ object BiomeFeatures {
         } else {
 //            generationSettings.addFeature(vd9, DuskPlacedFeatures.SAND_CAVE_VINES)
             generationSettings.addFeature(vd9, DuskPlacedFeatures.SAND_CACTUS)
+            generationSettings.addFeature(vd9, DuskPlacedFeatures.SAND_DRY_GRASS)
             generationSettings.addFeature(vd9, DuskPlacedFeatures.CAVE_DEAD_BUSH)
             generationSettings.addFeature(vd9, DuskPlacedFeatures.ORE_COARSE_DIRT)
             generationSettings.addFeature(vd9, DuskPlacedFeatures.CAVE_GLOW_LICHEN_EXTRA)

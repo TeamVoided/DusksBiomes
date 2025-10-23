@@ -111,7 +111,7 @@ object SnowyVariants {
         BiomeFeatures.addFrozenDungeons(generation)
         if (pale) {
             generation.addFeature(vd9, DuskPlacedFeatures.TREES_SNOWY_PALE_GROVE)
-            generation.addFeature(vd9, DuskPlacedFeatures.TREES_SNOWY_PALE_GROVE)
+            generation.addFeature(vd9, DuskPlacedFeatures.TREES_SNOWY_PALE_GROVE_ON_SNOW)
             generation.addFeature(vd9, VegetationPlacements.PALE_MOSS_PATCH)
             generation.addFeature(vd9, VegetationPlacements.PALE_GARDEN_FLOWERS)
         } else {

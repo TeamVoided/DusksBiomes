@@ -3,13 +3,13 @@ package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.sounds.Music
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.biome.OverworldBiomes
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
+import net.minecraft.sounds.Music
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.EntityType
@@ -98,8 +98,8 @@ object BiomeCreator {
         else if (warm) spawns.addFeature(vd9, DuskPlacedFeatures.TREES_WARM_FOREST)
         else BiomeDefaultFeatures.addOtherBirchTrees(spawns)
 
+        BiomeDefaultFeatures.addBushes(spawns)
         BiomeDefaultFeatures.addDefaultFlowers(spawns)
-        BiomeDefaultFeatures.addDefaultGrass(spawns)
         BiomeDefaultFeatures.addForestGrass(spawns)
         BiomeDefaultFeatures.addDefaultMushrooms(spawns)
         BiomeDefaultFeatures.addDefaultExtraVegetation(spawns, false)
@@ -125,6 +125,7 @@ object BiomeCreator {
         if (warm) BiomeDefaultFeatures.addFerns(generation)
         else BiomeDefaultFeatures.addPlainGrass(generation)
 
+        BiomeDefaultFeatures.addBushes(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         generation.addFeature(
@@ -157,6 +158,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addForestFlowers(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
+        BiomeDefaultFeatures.addBirchForestFlowers(generation)
         generation.addFeature(vd9, DuskPlacedFeatures.TREES_WINDSWEPT_BIRCH)
         BiomeDefaultFeatures.addDefaultFlowers(generation)
         generation.addFeature(vd9, VegetationPlacements.PATCH_GRASS_NORMAL)

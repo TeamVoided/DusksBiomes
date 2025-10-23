@@ -2,6 +2,7 @@ package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -14,10 +15,7 @@ import net.minecraft.data.worldgen.placement.TreePlacements
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.random.WeightedList
-import net.minecraft.util.valueproviders.BiasedToBottomInt
-import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.util.valueproviders.UniformFloat
-import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.util.valueproviders.*
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
@@ -43,6 +41,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorato
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.UpwardsBranchingTrunkPlacer
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.material.Fluids
@@ -55,13 +55,15 @@ import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.reef.init.ReefFeatures
 import org.teamvoided.reef.world.gen.configured_feature.config.*
 import java.util.*
+import java.util.List
+import kotlin.collections.listOf
 
 @Suppress("DEPRECATION")
 object ConfiguredFeatureCreator {
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         val blockTags = c.lookup(Registries.BLOCK)
-        val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
-        val placedFeatures = c.lookup(Registries.PLACED_FEATURE)
+        val cF = c.lookup(Registries.CONFIGURED_FEATURE)
+        val pF = c.lookup(Registries.PLACED_FEATURE)
         val procLists = c.lookup(Registries.PROCESSOR_LIST)
 
         c.trees()
@@ -174,12 +176,8 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.MANGROVE_FROZEN_VEGETATION,
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfiguration(
-                listOf(
-                    WeightedPlacedFeature(
-                        placedFeatures.getOrThrow(DuskPlacedFeatures.TALL_MANGROVE_FROZEN_CHECKED), 0.85f
-                    )
-                ),
-                placedFeatures.getOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
+                listOf(pF.wp(DuskPlacedFeatures.TALL_MANGROVE_FROZEN_CHECKED, 0.85f)),
+                pF.getOrThrow(DuskPlacedFeatures.MANGROVE_FROZEN_CHECKED)
             )
         )
 //DARK OAK TRUNK DOESN'T REPLACE WATER AAAAAAAAAAAAAAA
@@ -188,13 +186,12 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfiguration(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.BIRCH_BEES_0002_PLACED), 0.4f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getOrThrow(TreePlacements.FANCY_OAK_BEES_0002_LEAF_LITTER),
-                        0.2f
-                    ),
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.ACACIA_CHECKED), 0.15f)
-                ), placedFeatures.getOrThrow(TreePlacements.OAK_BEES_0002_LEAF_LITTER)
+                    pF.wp(TreePlacements.FALLEN_BIRCH_TREE, 0.0025f),
+                    pF.wp(TreePlacements.BIRCH_BEES_0002_LEAF_LITTER, 0.2f),
+                    pF.wp(TreePlacements.FANCY_OAK_BEES_0002_LEAF_LITTER, 0.1f),
+                    pF.wp(TreePlacements.FALLEN_OAK_TREE, 0.0125f),
+                    pF.wp(TreePlacements.ACACIA_CHECKED, 0.015f)
+                ), pF.getOrThrow(TreePlacements.OAK_BEES_0002_LEAF_LITTER)
             )
         )
         c.registerConfiguredFeature(
@@ -202,13 +199,13 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfiguration(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.BIRCH_BEES_0002_PLACED), 0.4f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getOrThrow(TreePlacements.FANCY_OAK_BEES_0002_LEAF_LITTER),
-                        0.2f
-                    ),
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(TreePlacements.SPRUCE_CHECKED), 0.15f)
-                ), placedFeatures.getOrThrow(TreePlacements.OAK_BEES_0002_LEAF_LITTER)
+                    pF.wp(TreePlacements.FALLEN_BIRCH_TREE, 0.0025f),
+                    pF.wp(TreePlacements.BIRCH_BEES_0002_LEAF_LITTER, 0.2f),
+                    pF.wp(TreePlacements.FANCY_OAK_BEES_0002_LEAF_LITTER, 0.1f),
+                    pF.wp(TreePlacements.FALLEN_OAK_TREE, 0.0125f),
+                    pF.wp(TreePlacements.SPRUCE_CHECKED, 0.02f),
+                    pF.wp(TreePlacements.FALLEN_SPRUCE_TREE, 0.0025f)
+                ), pF.getOrThrow(TreePlacements.OAK_BEES_0002_LEAF_LITTER)
             )
         )
         c.registerConfiguredFeature(
@@ -263,10 +260,10 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_BOOLEAN_SELECTOR,
             RandomBooleanFeatureConfiguration(
                 PlacementUtils.inlinePlaced(
-                    configuredFeatures.getOrThrow(VegetationFeatures.PATCH_RED_MUSHROOM),
+                    cF.getOrThrow(VegetationFeatures.PATCH_RED_MUSHROOM),
                 ),
                 PlacementUtils.inlinePlaced(
-                    configuredFeatures.getOrThrow(
+                    cF.getOrThrow(
                         VegetationFeatures.PATCH_BROWN_MUSHROOM
                     )
                 )
@@ -277,7 +274,7 @@ object ConfiguredFeatureCreator {
             Feature.ROOT_SYSTEM,
             RootSystemConfiguration(
                 PlacementUtils.inlinePlaced(
-                    configuredFeatures.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
+                    cF.getOrThrow(DuskConfiguredFeatures.CAVE_GLOW_LICHEN_EXTRA),
                 ),
                 2,
                 2,
@@ -364,11 +361,11 @@ object ConfiguredFeatureCreator {
             RandomFeatureConfiguration(
                 listOf(
                     WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE)),
+                        PlacementUtils.inlinePlaced(cF.getOrThrow(DuskConfiguredFeatures.BLUE_ICE_SPIKE)),
                         0.075f
                     )
                 ),
-                PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE))
+                PlacementUtils.inlinePlaced(cF.getOrThrow(DuskConfiguredFeatures.ICE_SPIKE))
             )
         )
         c.registerConfiguredFeature(
@@ -377,11 +374,11 @@ object ConfiguredFeatureCreator {
             RandomFeatureConfiguration(
                 listOf(
                     WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE)),
+                        PlacementUtils.inlinePlaced(cF.getOrThrow(DuskConfiguredFeatures.INVERTED_BLUE_ICE_SPIKE)),
                         0.075f
                     )
                 ),
-                PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE))
+                PlacementUtils.inlinePlaced(cF.getOrThrow(DuskConfiguredFeatures.INVERTED_ICE_SPIKE))
             )
         )
         c.registerConfiguredFeature(
@@ -403,8 +400,8 @@ object ConfiguredFeatureCreator {
             ReefFeatures.FEATURE_LIST,
             ListFeatureConfig(
                 10, listOf(
-                    PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(DuskConfiguredFeatures.ORE_ICE)),
-                    PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(CaveFeatures.FOSSIL_DIAMONDS))
+                    PlacementUtils.inlinePlaced(cF.getOrThrow(DuskConfiguredFeatures.ORE_ICE)),
+                    PlacementUtils.inlinePlaced(cF.getOrThrow(CaveFeatures.FOSSIL_DIAMONDS))
                 )
             )
         )
@@ -412,11 +409,22 @@ object ConfiguredFeatureCreator {
             DuskConfiguredFeatures.SAND_CAVE_CACTUS,
             Feature.RANDOM_PATCH,
             FeatureUtils.simpleRandomPatchConfiguration(
-                10, PlacementUtils.inlinePlaced(
-                    Feature.BLOCK_COLUMN,
-                    BlockColumnConfiguration.simple(
-                        BiasedToBottomInt.of(1, 7),
-                        BlockStateProvider.simple(Blocks.CACTUS)
+                10, PlacementUtils.inlinePlaced<BlockColumnConfiguration, Feature<BlockColumnConfiguration>>(
+                    Feature.BLOCK_COLUMN, BlockColumnConfiguration(
+                        listOf<BlockColumnConfiguration.Layer>(
+                            BlockColumnConfiguration.layer(
+                                BiasedToBottomInt.of(1, 7),
+                                BlockStateProvider.simple(Blocks.CACTUS)
+                            ), BlockColumnConfiguration.layer(
+                                WeightedListInt(
+                                    WeightedList.builder<IntProvider>()
+                                        .add(ConstantInt.of(0), 3)
+                                        .add(ConstantInt.of(1), 1)
+                                        .build()
+                                ),
+                                BlockStateProvider.simple(Blocks.CACTUS_FLOWER)
+                            )
+                        ), Direction.UP, BlockPredicate.ONLY_IN_AIR_PREDICATE, false
                     ),
                     BlockPredicateFilter.forPredicate(
                         BlockPredicate.allOf(
@@ -898,6 +906,11 @@ object ConfiguredFeatureCreator {
             )
         )
     }
+
+    private fun HolderGetter<PlacedFeature>.wp(
+        feature: ResourceKey<PlacedFeature>,
+        chance: Float
+    ): WeightedPlacedFeature = WeightedPlacedFeature(this.getOrThrow(feature), chance)
 
 
     @Suppress("SameParameterValue")

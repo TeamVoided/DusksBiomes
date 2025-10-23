@@ -302,6 +302,14 @@ object PlacedFeatureCreator {
             ),
             BiomeFilter.biome()
         )
+        c.register(
+            DuskPlacedFeatures.SAND_DRY_GRASS,
+            cfLookup.getOrThrow(VegetationFeatures.PATCH_DRY_GRASS),
+            CountPlacement.of(UniformInt.of(124, 177)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
+        )
 //        c.register(
 //            DuskPlacedFeatures.SAND_CAVE_VINES,
 //            cfLookup.getOrThrow(UndergroundConfiguredFeatures.MOSS_PATCH_CEILING),

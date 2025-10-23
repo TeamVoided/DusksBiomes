@@ -22,15 +22,15 @@ object TreeConfiguredCreator {
         val pf = this.lookup(Registries.PLACED_FEATURE)
         this.registerDenseGroveTrees(
             DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE,
-            pf.getOrThrow(TreePlacements.DARK_OAK_CHECKED),
+            pf.getOrThrow(TreePlacements.DARK_OAK_LEAF_LITTER),
             true
         )
         this.registerDenseGroveTrees(
             DuskConfiguredFeatures.TREES_OAK_DARK_SPRUCE_ON_SNOW,
-            cf.inline(TreeFeatures.DARK_OAK)
+            cf.inline(TreeFeatures.DARK_OAK_LEAF_LITTER)
         )
         this.registerDenseGroveTrees(DuskConfiguredFeatures.TREES_PALE_SPRUCE, null, true)
-        this.registerDenseGroveTrees(DuskConfiguredFeatures.TREES_PALE_SPRUCE_ON_SNOW, null, true)
+        this.registerDenseGroveTrees(DuskConfiguredFeatures.TREES_PALE_SPRUCE_ON_SNOW, null)
     }
 
     private fun BootstrapContext<ConfiguredFeature<*, *>>.registerDenseGroveTrees(
@@ -41,32 +41,41 @@ object TreeConfiguredCreator {
         val cf = this.lookup(Registries.CONFIGURED_FEATURE)
         val pf = this.lookup(Registries.PLACED_FEATURE)
 
-        val list: List<WeightedPlacedFeature> = if (bigTree != null)
+        val list: List<WeightedPlacedFeature> = if (bigTree != null) {
             if (check)
                 listOf(
                     WeightedPlacedFeature(cf.inline(TreeFeatures.HUGE_RED_MUSHROOM), 0.025f),
                     WeightedPlacedFeature(cf.inline(TreeFeatures.HUGE_BROWN_MUSHROOM), 0.0125f),
                     WeightedPlacedFeature(bigTree, 2 / 3f),
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.FALLEN_SPRUCE_TREE), 0.015f),
                     WeightedPlacedFeature(pf.getOrThrow(TreePlacements.SPRUCE_CHECKED), 0.3f),
-                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.FANCY_OAK_CHECKED), 0.125f)
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.FALLEN_OAK_TREE), 0.02f),
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.FANCY_OAK_LEAF_LITTER), 0.125f)
                 )
             else
                 listOf(
                     WeightedPlacedFeature(bigTree, 2 / 3f),
+                    WeightedPlacedFeature(cf.inline(TreeFeatures.FALLEN_SPRUCE_TREE), 0.015f),
                     WeightedPlacedFeature(cf.inline(TreeFeatures.SPRUCE), 0.3f),
+                    WeightedPlacedFeature(cf.inline(TreeFeatures.FALLEN_OAK_TREE), 0.02f),
                     WeightedPlacedFeature(cf.inline(TreeFeatures.FANCY_OAK), 0.125f)
                 )
-        else
+        } else {
             if (check)
                 listOf(
                     WeightedPlacedFeature(pf.getOrThrow(TreePlacements.PALE_OAK_CREAKING_CHECKED), 0.1f),
-                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.PALE_OAK_CHECKED), 0.9f)
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.PALE_OAK_CHECKED), 0.9f),
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.FALLEN_BIRCH_TREE), 0.015f),
+                    WeightedPlacedFeature(pf.getOrThrow(TreePlacements.BIRCH_CHECKED), 0.3f),
                 )
             else
                 listOf(
                     WeightedPlacedFeature(cf.inline(TreeFeatures.PALE_OAK_CREAKING), 0.1f),
-                    WeightedPlacedFeature(cf.inline(TreeFeatures.PALE_OAK), 0.9f)
+                    WeightedPlacedFeature(cf.inline(TreeFeatures.PALE_OAK), 0.9f),
+                    WeightedPlacedFeature(cf.inline(TreeFeatures.FALLEN_BIRCH_TREE), 0.015f),
+                    WeightedPlacedFeature(cf.inline(TreeFeatures.BIRCH), 0.2f),
                 )
+        }
         val fall = if (bigTree != null)
             if (check) pf.getOrThrow(TreePlacements.OAK_CHECKED)
             else PlacementUtils.inlinePlaced(cf.getOrThrow(TreeFeatures.OAK))
