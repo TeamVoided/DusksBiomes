@@ -7,7 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.StructureTags
 import net.minecraft.world.level.levelgen.structure.Structure
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures
-import org.teamvoided.reef.data.tags.ReefStructureTags
+import org.teamvoided.reef.data.ReefStructureTags
 import java.util.concurrent.CompletableFuture
 
 class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :

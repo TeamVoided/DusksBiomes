@@ -53,9 +53,8 @@ import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.reef.init.ReefFeatures
-import org.teamvoided.reef.world.gen.configured_feature.config.*
+import org.teamvoided.reef.world.level.levelgen.feature.config.*
 import java.util.*
-import java.util.List
 import kotlin.collections.listOf
 
 @Suppress("DEPRECATION")

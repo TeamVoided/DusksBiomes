@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import org.teamvoided.reef.data.ReefTags
+import org.teamvoided.reef.data.ReefBiomeTags
 import java.util.concurrent.CompletableFuture
 
 
@@ -397,9 +397,9 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     }
 
     fun reefTags() {
-        builder(ReefTags.HAS_VANILLA_ERODED_PILLAR)
+        builder(ReefBiomeTags.HAS_VANILLA_ERODED_PILLAR)
             .add(DuskBiomes.FROZEN_ERODED_BADLANDS)
-        builder(ReefTags.HAS_ERODED_PILLAR)
+        builder(ReefBiomeTags.HAS_ERODED_PILLAR)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
     }
 
