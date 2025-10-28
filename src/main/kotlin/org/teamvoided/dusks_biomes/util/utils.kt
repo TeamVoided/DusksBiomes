@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor
 import org.teamvoided.dusks_biomes.DusksBiomes.log
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures.OCEAN_RUIN_WARM_RED
+import org.teamvoided.dusks_biomes.mixin.CappedProcessorAccessor
 
 fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPos: ChunkPos) {
     if (holder.unwrapKey().get() == OCEAN_RUIN_WARM_RED) {
@@ -20,21 +21,28 @@ fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPo
             log.info("St piece(${it.javaClass.simpleName}): ")
             if (it !is TemplateStructurePiece) continue
             for (processor in it.placeSettings().processors) {
-                processor(processor)
+                processor(processor, 1)
             }
         }
     }
 }
 
-fun processor(processor: StructureProcessor, depth: Int = 0) {
+fun processor(processor: StructureProcessor, depth: Int) {
     log.info("${indent(depth)}- {}", processor.javaClass.getSimpleName())
-    if (processor is UnboundReferenceProcessor) {
-        log.info("${indent(depth + 1)}- {}", processor.name())
-    }
+    when (processor) {
+        is CappedProcessorAccessor -> {
+            log.info(
+                "${indent(depth + 1)}- Limit: [{}, {}]",
+                processor.reef_getLimit().minValue, processor.reef_getLimit().maxValue
+            )
+            processor(processor.reef_getDelegate(), depth + 1)
+        }
 
-    if (processor is ReferenceStructureProcessor) {
-        for (proc in processor.processorLists().flatMap { it.value().list() }) {
-            processor(proc, depth + 1)
+        is UnboundReferenceProcessor -> log.info("${indent(depth + 1)}- {}", processor.name())
+        is ReferenceStructureProcessor -> {
+            for (proc in processor.processorLists().flatMap { it.value().list() }) {
+                processor(proc, depth + 1)
+            }
         }
     }
 }
