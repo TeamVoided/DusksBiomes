@@ -300,7 +300,12 @@ object DuskSurfaceRules {
         //Surface rule sequence 5
         val sandOcean = ifTrue(
             ON_FLOOR, ifTrue(
-                isBiome(DuskBiomes.RED_WARM_OCEAN, DuskBiomes.RED_LUKEWARM_OCEAN, DuskBiomes.DEEP_RED_LUKEWARM_OCEAN),
+                isBiome(
+                    DuskBiomes.RED_WARM_RIVER,
+                    DuskBiomes.RED_WARM_OCEAN,
+                    DuskBiomes.RED_LUKEWARM_OCEAN,
+                    DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
+                ,
                 sandRed
             )
         )
@@ -621,7 +626,7 @@ object DuskSurfaceRules {
             DEEP_UNDER_FLOOR, ifTrue(
                 waterBlockCheck(-6, 0), sequence(
                     deepWindsweptHillSurface,
-                    sandSurface,
+                    deepSand,
                     deepWindsweptBirchSurface,
                     deepWindsweptGravelSurface,
                     mushroomIslandSurface,
@@ -639,7 +644,6 @@ object DuskSurfaceRules {
                 onFloorInDeepWater,
                 snowyCherryGrove,
                 stonyShore,
-                deepSand,
                 sandstoneDesert,
                 sandOcean
             )
