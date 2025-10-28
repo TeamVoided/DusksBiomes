@@ -18,6 +18,14 @@ object OceanRuins {
     fun BootstrapContext<StructureProcessorList>.oceanRuinWarmRed() {
         register(
             OCEAN_RUIN_WARM_RED,
+            blockSwap(
+                Blocks.SAND to Blocks.RED_SAND,
+                Blocks.GRAVEL to Blocks.RED_SAND,
+                Blocks.SANDSTONE to Blocks.RED_SANDSTONE,
+                Blocks.CUT_SANDSTONE to Blocks.CUT_RED_SANDSTONE,
+                Blocks.CHISELED_SANDSTONE to Blocks.CHISELED_RED_SANDSTONE,
+                Blocks.SANDSTONE_STAIRS to Blocks.RED_SANDSTONE_STAIRS,
+            ),
             CappedProcessor(
                 RuleProcessor(
                     ProcessorRule(
@@ -27,15 +35,7 @@ object OceanRuins {
                         Blocks.SUSPICIOUS_SAND.defaultBlockState(),
                         AppendLoot(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY)
                     )
-                ), ConstantInt.of(2)
-            ),
-            blockSwap(
-                Blocks.SUSPICIOUS_SAND to Blocks.SUSPICIOUS_SAND,
-                Blocks.SAND to Blocks.RED_SAND,
-                Blocks.SANDSTONE to Blocks.RED_SANDSTONE,
-                Blocks.CUT_SANDSTONE to Blocks.CUT_RED_SANDSTONE,
-                Blocks.CHISELED_SANDSTONE to Blocks.CHISELED_RED_SANDSTONE,
-                Blocks.SANDSTONE_STAIRS to Blocks.RED_SANDSTONE_STAIRS,
+                ), ConstantInt.of(5)
             ),
         )
     }
