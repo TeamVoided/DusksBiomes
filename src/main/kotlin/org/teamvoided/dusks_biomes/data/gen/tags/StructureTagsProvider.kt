@@ -22,5 +22,8 @@ class StructureTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLook
 
         builder(ReefStructureTags.HAS_INJECTED_PROCESSOR_LISTS)
             .add(DuskStructureFeatures.OCEAN_RUIN_WARM_RED)
+
+        builder(StructureTags.OCEAN_RUIN)
+            .add(DuskStructureFeatures.OCEAN_RUIN_WARM_RED)
     }
 }

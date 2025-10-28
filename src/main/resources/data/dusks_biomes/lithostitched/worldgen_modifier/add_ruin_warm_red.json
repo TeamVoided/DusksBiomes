@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_structure_set_entries",
+  "structure_sets": "minecraft:ocean_ruins",
+  "entries": [
+    {
+      "structure": "dusks_biomes:ocean_ruin_warm_red",
+      "weight": 1
+    }
+  ]
+}
