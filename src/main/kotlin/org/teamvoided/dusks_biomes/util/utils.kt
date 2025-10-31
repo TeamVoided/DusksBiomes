@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_biomes.util
 
+/*
 import dev.worldgen.lithostitched.worldgen.processor.ReferenceStructureProcessor
 import dev.worldgen.lithostitched.worldgen.processor.UnboundReferenceProcessor
 import net.minecraft.core.Holder
@@ -10,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor
 import org.teamvoided.dusks_biomes.DusksBiomes.log
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures.OCEAN_RUIN_WARM_RED
-import org.teamvoided.dusks_biomes.mixin.CappedProcessorAccessor
+import org.teamvoided.dusks_biomes.mixin.debug.CappedProcessorAccessor
 import org.teamvoided.reef.util.mixin.StructureRefHolder
 
 fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPos: ChunkPos) {
@@ -30,6 +31,13 @@ fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPo
     }
 }
 
+fun printProcHell(id: String, processors: List<StructureProcessor>) {
+    log.info("ID {}", id)
+    for (processor in processors) {
+        processor(processor, 1)
+    }
+}
+
 fun processor(processor: StructureProcessor, depth: Int) {
     log.info("${indent(depth)}- {}", processor.javaClass.getSimpleName())
     when (processor) {
@@ -43,11 +51,13 @@ fun processor(processor: StructureProcessor, depth: Int) {
 
         is UnboundReferenceProcessor -> log.info("${indent(depth + 1)}- {}", processor.name())
         is ReferenceStructureProcessor -> {
-            for (proc in processor.processorLists().flatMap { it.value().list() }) {
+            val list = processor.processorLists().flatMap { it.value().list() }
+            if (list.isEmpty()) log.info("${indent(depth + 1)}- Empy")
+            for (proc in list) {
                 processor(proc, depth + 1)
             }
         }
     }
 }
 
-fun indent(depth: Int) = "\t".repeat(depth)
+fun indent(depth: Int) = "\t".repeat(depth)*/
