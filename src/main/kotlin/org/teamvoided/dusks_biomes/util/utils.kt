@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import org.teamvoided.dusks_biomes.DusksBiomes.log
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures.OCEAN_RUIN_WARM_RED
 import org.teamvoided.dusks_biomes.mixin.CappedProcessorAccessor
+import org.teamvoided.reef.util.mixin.StructureRefHolder
 
 fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPos: ChunkPos) {
     if (holder.unwrapKey().get() == OCEAN_RUIN_WARM_RED) {
@@ -18,7 +19,9 @@ fun printHell(holder: Holder<Structure>, structureStart: StructureStart, chunkPo
         log.info("Pos {}", chunkPos)
         log.info("BlockPos: ${chunkPos.x * 16} ~ ${chunkPos.z * 16}")
         for (it in structureStart.pieces) {
-            log.info("St piece(${it.javaClass.simpleName}): ")
+            val addon = if (it is StructureRefHolder) "(${it.reef_getStructureRef()})" else ""
+            log.info("${it.javaClass.simpleName}$addon: ")
+
             if (it !is TemplateStructurePiece) continue
             for (processor in it.placeSettings().processors) {
                 processor(processor, 1)
