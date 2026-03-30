@@ -43,6 +43,6 @@ object OceanRuins {
     fun blockSwap(vararg pair: Pair<Block, Block>): BlockSwapStructureProcessor =
         BlockSwapStructureProcessor(pair.associate { it.first.id() to it.second.id() })
 
-    fun Block.id() = BuiltInRegistries.BLOCK.getKey(this)
+    fun Block.id() = BuiltInRegistries.BLOCK.getResourceKey(this).get()
 }
 
