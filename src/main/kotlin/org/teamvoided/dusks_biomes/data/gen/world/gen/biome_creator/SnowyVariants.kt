@@ -65,7 +65,7 @@ object SnowyVariants {
             BiomeDefaultFeatures.commonSpawns(spawns)
         } else {
             BiomeDefaultFeatures.caveSpawns(spawns)
-            BiomeDefaultFeatures.monsters(spawns, 100, 25, 100, false)
+            BiomeDefaultFeatures.monsters(spawns, 100, 25, 0, 100, false)
         }
 
         BiomeCreator.addBasicFeatures(generation)
@@ -101,9 +101,7 @@ object SnowyVariants {
                 .addSpawn(MobCategory.CREATURE, 8, MobSpawnSettings.SpawnerData(EntityType.RABBIT, 2, 3))
                 .addSpawn(MobCategory.CREATURE, 4, MobSpawnSettings.SpawnerData(EntityType.FOX, 2, 4))
         }
-        BiomeDefaultFeatures.commonSpawns(spawns)
-        BiomeDefaultFeatures.caveSpawns(spawns)
-        BiomeDefaultFeatures.monsters(spawns, 95, 5, 20, false)
+        BiomeDefaultFeatures.commonSpawns(spawns, 20)
         spawns.addSpawn(MobCategory.MONSTER, 80, MobSpawnSettings.SpawnerData(EntityType.STRAY, 4, 4))
 
         val generation = BiomeGenerationSettings.Builder(features, carver)
@@ -174,8 +172,7 @@ object SnowyVariants {
             .addSpawn(MobCategory.CREATURE, 2, MobSpawnSettings.SpawnerData(EntityType.SHEEP, 2, 4))
             .addSpawn(MobCategory.CREATURE, 1, MobSpawnSettings.SpawnerData(EntityType.FOX, 2, 4))
             .addSpawn(MobCategory.MONSTER, 80, MobSpawnSettings.SpawnerData(EntityType.STRAY, 4, 4))
-        BiomeDefaultFeatures.caveSpawns(spawns)
-        BiomeDefaultFeatures.monsters(spawns, 95, 5, 20, false)
+        BiomeDefaultFeatures.commonSpawns(spawns, 20)
 
         BiomeCreator.addBasicFeatures(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
@@ -205,8 +202,8 @@ object SnowyVariants {
         val spawns = MobSpawnSettings.Builder()
         val generation = BiomeGenerationSettings.Builder(features, carver)
 
-        BiomeDefaultFeatures.caveSpawns(spawns)
-        BiomeDefaultFeatures.monsters(spawns, 95, 5, 20, false)
+        // prob not accurate but idk
+        BiomeDefaultFeatures.commonSpawns(spawns, 20)
         spawns.addSpawn(MobCategory.MONSTER, 80, MobSpawnSettings.SpawnerData(EntityType.STRAY, 4, 4))
         spawns.creatureGenerationProbability(0.03f)
         if (trees) {
@@ -249,8 +246,7 @@ object SnowyVariants {
         val generation = BiomeGenerationSettings.Builder(features, carver)
 
 
-        BiomeDefaultFeatures.caveSpawns(spawns)
-        BiomeDefaultFeatures.monsters(spawns, 95, 5, 20, false)
+        BiomeDefaultFeatures.swampSpawns(spawns, 70)
         spawns.addSpawn(MobCategory.MONSTER, 80, MobSpawnSettings.SpawnerData(EntityType.STRAY, 4, 4))
 
         spawns.addSpawn(MobCategory.MONSTER, 1, MobSpawnSettings.SpawnerData(EntityType.SLIME, 1, 1))

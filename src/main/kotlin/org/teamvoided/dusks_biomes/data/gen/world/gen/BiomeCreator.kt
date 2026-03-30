@@ -176,7 +176,6 @@ object BiomeCreator {
     }
 
 
-
     fun BootstrapContext<Biome>.createSwamp(oldGrowth: Boolean): Biome {
         val features = this.lookup(Registries.PLACED_FEATURE)
         val carver = this.lookup(Registries.CONFIGURED_CARVER)
@@ -412,8 +411,7 @@ object BiomeCreator {
         val spawns = MobSpawnSettings.Builder()
         val generation = BiomeGenerationSettings.Builder(features, carver)
 
-        BiomeDefaultFeatures.caveSpawns(spawns)
-        BiomeDefaultFeatures.monsters(spawns, 95, 5, 20, false)
+        BiomeDefaultFeatures.commonSpawns(spawns, 20)
         spawns.addSpawn(MobCategory.MONSTER, 80, SpawnerData(EntityType.STRAY, 4, 4))
 
         BiomeDefaultFeatures.addFossilDecoration(generation)
