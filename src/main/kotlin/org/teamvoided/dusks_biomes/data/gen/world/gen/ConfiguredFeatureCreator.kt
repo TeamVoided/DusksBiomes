@@ -840,7 +840,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.simple(Blocks.TUFF),
                 defaultMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -850,7 +850,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.MOSSY_COBBLESTONE),
                 BlockStateProvider.simple(Blocks.MUD),
                 lushMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -860,7 +860,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.simple(Blocks.MUD),
                 lushMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -870,7 +870,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.COBBLESTONE),
                 BlockStateProvider.simple(Blocks.PACKED_ICE),
                 frozenMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -880,7 +880,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.COBBLED_DEEPSLATE),
                 BlockStateProvider.simple(Blocks.BLUE_ICE),
                 frozenMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -890,7 +890,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.SANDSTONE),
                 BlockStateProvider.simple(Blocks.SAND),
                 sandMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
         c.registerConfiguredFeature(
@@ -900,7 +900,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.RED_SANDSTONE),
                 BlockStateProvider.simple(Blocks.RED_SAND),
                 sandMonstersRoom,
-                BuiltInLootTables.SIMPLE_DUNGEON.location()
+                BuiltInLootTables.SIMPLE_DUNGEON.identifier()
             )
         )
     }

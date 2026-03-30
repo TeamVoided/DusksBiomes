@@ -23,7 +23,7 @@ object DuskLootTables {
     private fun register(id: String): ResourceKey<LootTable> = register(ResourceKey.create(Registries.LOOT_TABLE, id(id)))
     private fun register(registryKey: ResourceKey<LootTable>): ResourceKey<LootTable> {
         if (READ_ONLY_LOOT_TABLES.add(registryKey)) return registryKey
-        throw IllegalArgumentException(registryKey.location().toString() + " is already a registered built-in loot table")
+        throw IllegalArgumentException(registryKey.identifier().toString() + " is already a registered built-in loot table")
     }
     fun getAll(): Set<ResourceKey<LootTable>> = READ_ONLY_LOOT_TABLES.toSet()
 }
