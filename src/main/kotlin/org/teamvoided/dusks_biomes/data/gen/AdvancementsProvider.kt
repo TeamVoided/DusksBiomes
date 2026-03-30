@@ -16,6 +16,7 @@ import org.teamvoided.dusks_biomes.mixin.VanillaAdventureAdvancementsAccessor.db
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+@Suppress("removal")
 class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricAdvancementProvider(o, r) {
     val biomes = listOf(
@@ -56,7 +57,6 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
     )
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    private val adventuringTime = AdvancementHolder(mc("adventure/adventuring_time"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>) {
         db_invokeAddBiomes(Advancement.Builder.advancement(), provider, biomes)
             .display(
@@ -70,7 +70,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
                 false
             )
             .rewards(AdvancementRewards.Builder.experience(500))
-            .parent(adventuringTime)
+            .parent(mc("adventure/adventuring_time"))
             .save(c, id("adventure/strange_lands").toString())
     }
 }
