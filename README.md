@@ -1,2 +1,2 @@
-# The TeamVoided Template
-Template mod by TeamVoided
+# Dusk's Biomes
+Mod that adds biomes
