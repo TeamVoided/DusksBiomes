@@ -12,10 +12,16 @@ import net.minecraft.data.worldgen.placement.VegetationPlacements
 import net.minecraft.sounds.Music
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.attribute.AmbientParticle
+import net.minecraft.world.attribute.BackgroundMusic
+import net.minecraft.world.attribute.EnvironmentAttributes
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.level.biome.*
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biome.TemperatureModifier
+import net.minecraft.world.level.biome.BiomeGenerationSettings
+import net.minecraft.world.level.biome.BiomeSpecialEffects
+import net.minecraft.world.level.biome.MobSpawnSettings
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createDenseGrove
@@ -78,39 +84,45 @@ object BiomeCreator {
         val features = this.lookup(Registries.PLACED_FEATURE)
         val carver = this.lookup(Registries.CONFIGURED_CARVER)
 
-        val spawns = BiomeGenerationSettings.Builder(features, carver)
+        val generation = BiomeGenerationSettings.Builder(features, carver)
 
-        val generation = MobSpawnSettings.Builder()
+        val spawns = MobSpawnSettings.Builder()
 
-        BiomeDefaultFeatures.farmAnimals(generation)
-        BiomeDefaultFeatures.commonSpawns(generation)
+        BiomeDefaultFeatures.farmAnimals(spawns)
+        BiomeDefaultFeatures.commonSpawns(spawns)
         if (cold) {
-            generation.addSpawn(MobCategory.CREATURE, 2, SpawnerData(EntityType.RABBIT, 2, 3))
-            generation.addSpawn(MobCategory.CREATURE, 6, SpawnerData(EntityType.FOX, 2, 4))
+            spawns.addSpawn(MobCategory.CREATURE, 2, SpawnerData(EntityType.RABBIT, 2, 3))
+            spawns.addSpawn(MobCategory.CREATURE, 6, SpawnerData(EntityType.FOX, 2, 4))
         }
-        addBasicFeatures(spawns)
-        if (cold) BiomeDefaultFeatures.addFerns(spawns)
+        addBasicFeatures(generation)
+        if (cold) BiomeDefaultFeatures.addFerns(generation)
 
-        BiomeDefaultFeatures.addForestFlowers(spawns)
-        BiomeDefaultFeatures.addDefaultOres(spawns)
-        BiomeDefaultFeatures.addDefaultSoftDisks(spawns)
-        if (cold) spawns.addFeature(vd9, DuskPlacedFeatures.TREES_COLD_FOREST)
-        else if (warm) spawns.addFeature(vd9, DuskPlacedFeatures.TREES_WARM_FOREST)
-        else BiomeDefaultFeatures.addOtherBirchTrees(spawns)
+        BiomeDefaultFeatures.addForestFlowers(generation)
+        BiomeDefaultFeatures.addDefaultOres(generation)
+        BiomeDefaultFeatures.addDefaultSoftDisks(generation)
+        if (cold) generation.addFeature(vd9, DuskPlacedFeatures.TREES_COLD_FOREST)
+        else if (warm) generation.addFeature(vd9, DuskPlacedFeatures.TREES_WARM_FOREST)
+        else BiomeDefaultFeatures.addOtherBirchTrees(generation)
 
-        BiomeDefaultFeatures.addBushes(spawns)
-        BiomeDefaultFeatures.addDefaultFlowers(spawns)
-        BiomeDefaultFeatures.addForestGrass(spawns)
-        BiomeDefaultFeatures.addDefaultMushrooms(spawns)
-        BiomeDefaultFeatures.addDefaultExtraVegetation(spawns, false)
+        BiomeDefaultFeatures.addBushes(generation)
+        BiomeDefaultFeatures.addDefaultFlowers(generation)
+        BiomeDefaultFeatures.addForestGrass(generation)
+        BiomeDefaultFeatures.addDefaultMushrooms(generation)
+        BiomeDefaultFeatures.addDefaultExtraVegetation(generation, false)
 
-        return createBiome(
-            true,
+        val biome = OverworldBiomes.baseBiome(
             if (cold) 0.4f else 1.4f,
             if (cold) 0.8f else 0.3f,
-            generation, spawns,
-            Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FOREST)
         )
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_FOREST))
+
+        if (warm) {
+            biome.setAttribute(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
+        }
+
+        return biome.build()
     }
 
     fun BootstrapContext<Biome>.createTemperaturePlains(cold: Boolean, warm: Boolean): Biome {
@@ -139,12 +151,18 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, true)
         if (warm) BiomeDefaultFeatures.addSparseJungleMelons(generation)
 
-        return createBiome(
-            true,
+        val biome = OverworldBiomes.baseBiome(
             if (cold) 0.6f else 1.45f,
             if (cold) 0.8f else 0.2f,
-            spawns, generation, DEFAULT_MUSIC
         )
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+
+        if (warm) {
+            biome.setAttribute(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
+        }
+
+        return biome.build()
     }
 
     fun BootstrapContext<Biome>.createWindsweptBirchForest(): Biome {
@@ -204,15 +222,14 @@ object BiomeCreator {
             .specialEffects(
                 BiomeSpecialEffects.Builder()
                     .waterColor(6388580)
-                    .waterFogColor(2302743)
-                    .fogColor(DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomes.calculateSkyColor(0.8f))
                     .foliageColorOverride(6975545)
                     .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.SWAMP)
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                    .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP))
                     .build()
             )
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 2302743)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(0.8f))
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_SWAMP))
             .mobSpawnSettings(spawns.build())
             .generationSettings(generation.build())
             .build()
@@ -236,36 +253,32 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, cave)
 
-        val biomeEffects = if (cave) {
-            BiomeSpecialEffects.Builder().ambientParticle(
-                AmbientParticleSettings(
-                    BlockParticleOption(
-                        ParticleTypes.FALLING_DUST,
-                        if (red) Blocks.RED_SAND.defaultBlockState()
-                        else Blocks.SAND.defaultBlockState()
-                    ), 0.00025F
-                )
-            )
-        } else {
-            BiomeSpecialEffects.Builder()
-        }
-
-        return Biome.BiomeBuilder()
+        val biome = Biome.BiomeBuilder()
             .hasPrecipitation(false)
             .temperature(2f)
             .downfall(0f)
-            .specialEffects(
-                biomeEffects
-                    .waterColor(4445678)
-                    .waterFogColor(270131)
-                    .fogColor(DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomes.calculateSkyColor(2f))
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                    .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DESERT)).build()
-            )
+            .specialEffects(BiomeSpecialEffects.Builder().waterColor(4445678).build())
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 270131)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(2f))
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_DESERT))
+            .setAttribute(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
             .mobSpawnSettings(spawns.build())
             .generationSettings(generation.build())
-            .build()
+
+        if (cave) {
+            biome.setAttribute(
+                EnvironmentAttributes.AMBIENT_PARTICLES,
+                AmbientParticle.of(
+                    BlockParticleOption(
+                        ParticleTypes.FALLING_DUST,
+                        (if (red) Blocks.RED_SAND else Blocks.SAND).defaultBlockState()
+                    ), 0.00025F
+                )
+            )
+        }
+
+        return biome.build()
     }
 
     fun BootstrapContext<Biome>.createWarmRiver(red: Boolean): Biome {
@@ -301,6 +314,8 @@ object BiomeCreator {
             null,
             spawns, generation, DEFAULT_MUSIC
         )
+        // TODO fix this and vanilla warm oceans
+//            .setAttribute(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
     }
 
     fun BootstrapContext<Biome>.createWarmOcean(): Biome {
@@ -353,11 +368,14 @@ object BiomeCreator {
             .specialEffects(
                 BiomeSpecialEffects.Builder()
                     .waterColor(if (snowy) 4020182 else DEFAULT_WATER_COLOR)
-                    .waterFogColor(DEFAULT_WATER_FOG_COLOR)
-                    .fogColor(DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomes.calculateSkyColor(temperature))
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build()
-            ).mobSpawnSettings(spawns.build()).generationSettings(generation.build()).build()
+                    .build()
+            )
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, DEFAULT_WATER_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(temperature))
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .build()
     }
 
     fun BootstrapContext<Biome>.createMushroomIsland(grove: Boolean, eroded: Boolean): Biome {
@@ -377,12 +395,21 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, true)
         if (eroded) BiomeFeatures.addMushroomErodedFeatures(generation)
 
-        return createBiome(
-            true,
-            0.9f,
-            1.0f,
-            spawns, generation, DEFAULT_MUSIC
-        )
+        val biome = OverworldBiomes.baseBiome(0.9f, 1f)
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+
+        if (eroded) {
+            biome.setAttribute(
+                EnvironmentAttributes.BACKGROUND_MUSIC,
+                BackgroundMusic.OVERWORLD.withUnderwater(Musics.UNDER_WATER)
+            )
+        }
+
+        return biome
+            .setAttribute(EnvironmentAttributes.CAN_PILLAGER_PATROL_SPAWN, false)
+            .setAttribute(EnvironmentAttributes.INCREASED_FIRE_BURNOUT, true)
+            .build()
     }
 
     fun BootstrapContext<Biome>.createMushroomCave(): Biome {
@@ -396,12 +423,13 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, false)
         BiomeFeatures.addMushroomCaveFeatures(generation)
-        return createBiome(
-            true,
-            0.9f,
-            1.0f,
-            spawns, generation, DEFAULT_MUSIC
-        )
+
+        return OverworldBiomes.baseBiome(0.9f, 1f)
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .setAttribute(EnvironmentAttributes.CAN_PILLAGER_PATROL_SPAWN, false)
+            .setAttribute(EnvironmentAttributes.INCREASED_FIRE_BURNOUT, true)
+            .build()
     }
 
     fun BootstrapContext<Biome>.createFrozenCaves(): Biome {
@@ -425,13 +453,12 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, false)
         BiomeFeatures.addFrozenCavernsFeatures(generation)
 
-        return createBiome(
-            true,
-            0f,
-            0.4f,
-            spawns, generation,
-            Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FROZEN_PEAKS)
-        )
+        return OverworldBiomes.baseBiome(0f, 0.4f)
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_FROZEN_PEAKS))
+            .setAttribute(EnvironmentAttributes.INCREASED_FIRE_BURNOUT, true)
+            .build()
     }
 
     fun BootstrapContext<Biome>.createGravelCave(): Biome {
@@ -450,27 +477,24 @@ object BiomeCreator {
         BiomeFeatures.addGravelCaveFeatures(generation)
         BiomeDefaultFeatures.addExtraEmeralds(generation)
         BiomeDefaultFeatures.addInfestedStone(generation)
-        val temp = 0.2f
         return Biome.BiomeBuilder()
             .hasPrecipitation(true)
-            .temperature(temp)
+            .temperature(0.2f)
             .downfall(0.3f)
             .specialEffects(
-                BiomeSpecialEffects.Builder().ambientParticle(
-                    AmbientParticleSettings(
-                        BlockParticleOption(
-                            ParticleTypes.FALLING_DUST,
-                            Blocks.GRAVEL.defaultBlockState()
-                        ), 0.00025F
-                    )
-                )
+                BiomeSpecialEffects.Builder()
                     .waterColor(DEFAULT_WATER_COLOR)
-                    .waterFogColor(DEFAULT_WATER_FOG_COLOR)
-                    .fogColor(DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomes.calculateSkyColor(temp))
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                    .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_STONY_PEAKS)).build()
+                    .build()
             )
+            .setAttribute(
+                EnvironmentAttributes.AMBIENT_PARTICLES, AmbientParticle.of(
+                    BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.GRAVEL.defaultBlockState()), 0.00025F
+                )
+            )
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, DEFAULT_WATER_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(0.2f))
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_STONY_PEAKS))
             .mobSpawnSettings(spawns.build())
             .generationSettings(generation.build())
             .build()
@@ -642,6 +666,7 @@ object BiomeCreator {
         bl, temperature, f, i, j, integer, null, integer2, builder, builder2, value
     )
 
-    fun addBasicFeatures(generation: BiomeGenerationSettings.Builder) = OverworldBiomesAccessor.db_invokerGlobalOverworldGeneration(generation)
+    fun addBasicFeatures(generation: BiomeGenerationSettings.Builder) =
+        OverworldBiomesAccessor.db_invokerGlobalOverworldGeneration(generation)
 
 }

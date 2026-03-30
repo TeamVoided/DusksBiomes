@@ -8,6 +8,9 @@ import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.attribute.BackgroundMusic
+import net.minecraft.world.attribute.EnvironmentAttributes
+import net.minecraft.world.attribute.modifier.FloatModifier
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.*
@@ -133,31 +136,43 @@ object SnowyVariants {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, true)
         BiomeDefaultFeatures.addExtraEmeralds(generation)
         BiomeDefaultFeatures.addInfestedStone(generation)
-        return Biome.BiomeBuilder().hasPrecipitation(true).temperature(-0.2f).downfall(0.8f).specialEffects(
-            if (pale)
-                BiomeSpecialEffects.Builder()
-                    .waterColor(7768221)
-                    .waterFogColor(5597568)
-                    .fogColor(8484720)
-                    .skyColor(12171705)
-                    .grassColorOverride(7832178)
-                    .foliageColorOverride(8883574)
-                    .dryFoliageColorOverride(10528412)
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                    .silenceAllBackgroundMusic()
-                    .build()
-            else
-                BiomeSpecialEffects.Builder()
-                    .waterColor(BiomeCreator.DEFAULT_WATER_COLOR)
-                    .waterFogColor(BiomeCreator.DEFAULT_WATER_FOG_COLOR)
-                    .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
-                    .skyColor(OverworldBiomes.calculateSkyColor(-0.2f))
-                    .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.DARK_FOREST)
-                    .dryFoliageColorOverride(8082228)
-                    .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                    .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FOREST))
-                    .build()
-        ).mobSpawnSettings(spawns.build()).generationSettings(generation.build()).build()
+        var biome = Biome.BiomeBuilder()
+            .hasPrecipitation(true)
+            .temperature(-0.2f)
+            .downfall(0.8f)
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+        if (pale) {
+            biome
+                .specialEffects(
+                    BiomeSpecialEffects.Builder()
+                        .waterColor(7768221)
+                        .grassColorOverride(7832178)
+                        .foliageColorOverride(8883574)
+                        .dryFoliageColorOverride(10528412)
+                        .build()
+                )
+                .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 5597568)
+                .setAttribute(EnvironmentAttributes.FOG_COLOR, 8484720)
+                .setAttribute(EnvironmentAttributes.SKY_COLOR, 12171705)
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic.EMPTY)
+                .setAttribute(EnvironmentAttributes.MUSIC_VOLUME, 0.0F)
+        } else {
+            biome
+                .specialEffects(
+                    BiomeSpecialEffects.Builder()
+                        .waterColor(BiomeCreator.DEFAULT_WATER_COLOR)
+                        .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.DARK_FOREST)
+                        .dryFoliageColorOverride(8082228)
+                        .build()
+                )
+                .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, BiomeCreator.DEFAULT_WATER_FOG_COLOR)
+                .setAttribute(EnvironmentAttributes.FOG_COLOR, BiomeCreator.DEFAULT_FOG_COLOR)
+                .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(-0.2f))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_FOREST))
+        }
+
+        return biome.build()
     }
 
     fun BootstrapContext<Biome>.createSnowyCherryGrove(): Biome {
@@ -224,18 +239,23 @@ object SnowyVariants {
         BiomeDefaultFeatures.addBadlandExtraVegetation(generation)
         BiomeDefaultFeatures.addRareBerryBushes(generation)
         val temperature = -0.6f
-        return Biome.BiomeBuilder().hasPrecipitation(true).temperature(temperature).downfall(0.5f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(BiomeCreator.DEFAULT_WATER_COLOR)
-                .waterFogColor(BiomeCreator.DEFAULT_WATER_FOG_COLOR)
-                .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
-                .skyColor(OverworldBiomes.calculateSkyColor(temperature))
-                .foliageColorOverride(10387789)
-                .grassColorOverride(9470285)
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BADLANDS))
-                .build()
-        ).mobSpawnSettings(spawns.build()).generationSettings(generation.build()).build()
+        return Biome.BiomeBuilder()
+            .hasPrecipitation(true)
+            .temperature(temperature).downfall(0.5f)
+            .specialEffects(
+                BiomeSpecialEffects.Builder()
+                    .waterColor(BiomeCreator.DEFAULT_WATER_COLOR)
+                    .foliageColorOverride(10387789)
+                    .grassColorOverride(9470285)
+                    .build()
+            )
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, BiomeCreator.DEFAULT_WATER_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, BiomeCreator.DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_BADLANDS))
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generation.build())
+            .build()
     }
 
     fun BootstrapContext<Biome>.createFrozenMangroveSwamp(): Biome {
@@ -262,16 +282,10 @@ object SnowyVariants {
         generation.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH)
         generation.addFeature(vd9, VegetationPlacements.PATCH_WATERLILY)
         generation.addFeature(vd9, AquaticPlacements.SEAGRASS_SWAMP)
-        val musicSound = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP)
 
         val biomeEffects = BiomeSpecialEffects.Builder()
             .waterColor(8692872)
-            .waterFogColor(3815975)
-            .skyColor(OverworldBiomes.calculateSkyColor(-0.5f))
-            .fogColor(BiomeCreator.DEFAULT_FOG_COLOR)
             .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.SWAMP)
-            .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-            .backgroundMusic(musicSound)
 
 
         return Biome.BiomeBuilder()
@@ -280,6 +294,12 @@ object SnowyVariants {
             .downfall(0.9f)
             .temperatureAdjustment(Biome.TemperatureModifier.FROZEN)
             .specialEffects(biomeEffects.build())
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 3815975)
+            .modifyAttribute(EnvironmentAttributes.WATER_FOG_END_DISTANCE, FloatModifier.MULTIPLY, 0.85F)
+            .setAttribute(EnvironmentAttributes.FOG_COLOR, BiomeCreator.DEFAULT_FOG_COLOR)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(-0.5f))
+            .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(SoundEvents.MUSIC_BIOME_SWAMP))
+            .setAttribute(EnvironmentAttributes.INCREASED_FIRE_BURNOUT, true)
             .mobSpawnSettings(spawns.build())
             .generationSettings(generation.build())
             .build()

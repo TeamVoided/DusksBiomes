@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "OverworldBiomesAccessor",
-    "ReferenceStructureProcessorMixin",
-    "VanillaAdventureAdvancementsAccessor"
+    "ReferenceStructureProcessorMixin"
   ],
   "client": [],
   "injectors": {
