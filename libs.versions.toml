@@ -1,13 +1,13 @@
 [versions]
-kotlin = "2.1.20"
-fabric-loom = "1.11-SNAPSHOT"
+kotlin = "2.2.0"
+fabric-loom = "1.15-SNAPSHOT"
 iridium = "3.5.0"
 
-reef = "0.3.0+1.21.10-alpha.5"
-biolith = "3.4.0-beta.3"
-lithostitched = "OHVYggvo" # 1.5.1
+reef = "0.3.0+1.21.11"
+biolith = "3.5.0-beta.3"
+lithostitched = "1.6.1-fabric-1.21.11" # 1.5.1
 # Dev
-modmenu = "16.0.0-rc.1"
+modmenu = "17.0.0"
 
 [libraries]
 

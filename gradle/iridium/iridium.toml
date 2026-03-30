@@ -5,11 +5,11 @@ group = "org.teamvoided"
 githubRepo = "Teamvoided/DusksBiomes"
 discordServerInviteId = "KZ5Q364hEg"
 authors = [ "DuskAutumnStorm", "TheEnderCore" ]
-majorMinecraftVersion = ">=1.21.10"
-minecraftVersion = "1.21.10"
-fabricLoaderVersion = "0.17.3"
-fabricApiVersion = "0.135.0+1.21.10"
-fabricLangKotlinVersion = "1.13.2+kotlin.2.1.20"
+majorMinecraftVersion = ">=1.21.11"
+minecraftVersion = "1.21.11"
+fabricLoaderVersion = "0.18.5"
+fabricApiVersion = "0.141.3+1.21.11"
+fabricLangKotlinVersion = "1.13.10+kotlin.2.3.20"
 license = "MIT"
 modules = [ ]
 modDescription = "Worldgen Whatever"
@@ -27,4 +27,4 @@ disableKotlin = false
     # MOJYARN: Yarn layered on top of the official Mojang mappings
     # CUSTOM: Custom mapping jar. Uses mappings version as file location
     type = "MOJANG"
-    version = "1.21.10"
+    version = "1.21.11"

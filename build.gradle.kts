@@ -35,7 +35,7 @@ modSettings {
 }
 
 dependencies {
-    modImplementation(fileTree("libs"))
+//    modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
 
     modImplementation(libs.biolith)
