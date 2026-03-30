@@ -6,13 +6,17 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.criterion.LocationPredicate
+import net.minecraft.advancements.criterion.PlayerTrigger
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_biomes.DusksBiomes.id
 import org.teamvoided.dusks_biomes.DusksBiomes.mc
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import org.teamvoided.dusks_biomes.mixin.VanillaAdventureAdvancementsAccessor.db_invokeAddBiomes
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -58,9 +62,11 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>) {
-        db_invokeAddBiomes(Advancement.Builder.advancement(), provider, biomes)
+        Advancement.Builder.advancement()
+            .addBiomes(provider, biomes)
             .display(
                 Items.IRON_BOOTS,
+                // TODO make these be translated texts
                 Component.literal("Strange Lands"),
                 Component.literal("Visit all the biomes added by Dusks Biomes!"),
                 null,
@@ -72,5 +78,22 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
             .rewards(AdvancementRewards.Builder.experience(500))
             .parent(mc("adventure/adventuring_time"))
             .save(c, id("adventure/strange_lands").toString())
+    }
+
+    fun Advancement.Builder.addBiomes(
+        provider: HolderLookup.Provider, biomes: List<ResourceKey<Biome>>,
+    ): Advancement.Builder {
+        val lookup = provider.lookupOrThrow(Registries.BIOME)
+
+        for (key in biomes) {
+            addCriterion(
+                key.identifier().toString(),
+                PlayerTrigger.TriggerInstance.located(
+                    LocationPredicate.Builder.inBiome(lookup.getOrThrow(key))
+                )
+            )
+        }
+
+        return this
     }
 }
