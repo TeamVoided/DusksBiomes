@@ -104,11 +104,15 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
         builder(BiomeTags.SPAWNS_COLD_VARIANT_FROGS)
             .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
+        builder(BiomeTags.SPAWNS_COLD_VARIANT_FARM_ANIMALS)
+            .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         builder(BiomeTags.SPAWNS_SNOW_FOXES)
             .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         builder(BiomeTags.SPAWNS_WHITE_RABBITS)
             .forceAddTag(DuskBiomeTags.HAS_FROZEN_VARIANTS)
         builder(BiomeTags.SPAWNS_WARM_VARIANT_FROGS)
+            .forceAddTag(DuskBiomeTags.HAS_HOT_VARIANTS)
+        builder(BiomeTags.SPAWNS_WARM_VARIANT_FARM_ANIMALS)
             .forceAddTag(DuskBiomeTags.HAS_HOT_VARIANTS)
         builder(BiomeTags.WATER_ON_MAP_OUTLINES)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
@@ -117,6 +121,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.MUSHROOM_GROVE)
             .add(DuskBiomes.ERODED_MUSHROOM_ISLAND)
             .add(DuskBiomes.MUSHROOM_CAVES)
+        builder(BiomeTags.SPAWNS_CORAL_VARIANT_ZOMBIE_NAUTILUS)
+            .add(DuskBiomes.RED_WARM_OCEAN)
     }
 
     fun vanillaTagIsBiome() {
