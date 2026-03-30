@@ -6,14 +6,16 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.biome.OverworldBiomes
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
-import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.attribute.BackgroundMusic
 import net.minecraft.world.attribute.EnvironmentAttributes
 import net.minecraft.world.attribute.modifier.FloatModifier
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.level.biome.*
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.BiomeGenerationSettings
+import net.minecraft.world.level.biome.BiomeSpecialEffects
+import net.minecraft.world.level.biome.MobSpawnSettings
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeCreator
 import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
@@ -45,12 +47,7 @@ object SnowyVariants {
         BiomeDefaultFeatures.addExtraEmeralds(generation)
         BiomeDefaultFeatures.addInfestedStone(generation)
 
-        return BiomeCreator.createBiome(
-            true,
-            -0.55f,
-            0.15f,
-            spawns, generation, BiomeCreator.DEFAULT_MUSIC
-        )
+        return BiomeCreator.createBiome(-0.55f, 0.15f, spawns, generation)
     }
 
     fun BootstrapContext<Biome>.createSnowyOldGrowthTaiga(spruce: Boolean): Biome {
@@ -87,11 +84,10 @@ object SnowyVariants {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, false)
         BiomeDefaultFeatures.addRareBerryBushes(generation)
         return BiomeCreator.createBiome(
-            true,
             if (spruce) -0.45f else -0.5f,
             0.8f,
             spawns, generation,
-            Musics.createGameMusic(SoundEvents.MUSIC_BIOME_OLD_GROWTH_TAIGA)
+            SoundEvents.MUSIC_BIOME_OLD_GROWTH_TAIGA
         )
     }
 
@@ -207,7 +203,7 @@ object SnowyVariants {
             6528354,
             6339166,
             spawns, generation,
-            Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CHERRY_GROVE)
+            SoundEvents.MUSIC_BIOME_CHERRY_GROVE
         )
     }
 

@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_biomes.data.gen.world.gen
 
 
+import net.minecraft.core.Holder
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.Registries
@@ -11,6 +12,7 @@ import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
 import net.minecraft.sounds.Music
 import net.minecraft.sounds.Musics
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.attribute.AmbientParticle
 import net.minecraft.world.attribute.BackgroundMusic
@@ -18,6 +20,7 @@ import net.minecraft.world.attribute.EnvironmentAttributes
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biome.BiomeBuilder
 import net.minecraft.world.level.biome.Biome.TemperatureModifier
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.level.biome.BiomeSpecialEffects
@@ -184,13 +187,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, true)
         BiomeDefaultFeatures.farmAnimals(spawns)
         BiomeDefaultFeatures.commonSpawns(spawns)
-        return createBiome(
-            true,
-            0.6f,
-            0.6f,
-            spawns, generation,
-            Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FOREST)
-        )
+        return createBiome(0.6f, 0.6f, spawns, generation, SoundEvents.MUSIC_BIOME_FOREST)
     }
 
 
@@ -305,14 +302,10 @@ object BiomeCreator {
         generation.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
         return createBiome(
-            false,
-            1.5f,
-            0.25f,
-            4445678,
-            270131,
-            null,
-            null,
-            spawns, generation, DEFAULT_MUSIC
+            false, 1.5f, 0.25f,
+            4445678, 270131,
+            null, null,
+            spawns, generation
         )
         // TODO fix this and vanilla warm oceans
 //            .setAttribute(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
@@ -628,44 +621,63 @@ object BiomeCreator {
      */
 
     fun createBiome(
-        precipitation: Boolean,
         temperate: Float,
         downfall: Float,
-        mobSpawnSettings: MobSpawnSettings.Builder?,
-        generationSettings: BiomeGenerationSettings.Builder?,
-        backgroundMusic: Music?,
-    ): Biome = OverworldBiomesAccessor.db_invokeBiome(
-        precipitation,
-        temperate,
-        downfall,
-        DEFAULT_WATER_COLOR,
-        DEFAULT_WATER_FOG_COLOR,
-        null,
-        null,
-        null,
-        mobSpawnSettings,
-        generationSettings,
-        backgroundMusic
-    )
-    //OverworldBiomeCreatorAccessor.db_invokeCreate(
-    //    precipitation, temperate, downfall, mobSpawnSettings, generationSettings, backgroundMusic
-    //)
+        mobSpawnSettings: MobSpawnSettings.Builder,
+        generationSettings: BiomeGenerationSettings.Builder,
+        backgroundMusic: Holder<SoundEvent>? = null,
+    ): Biome {
+        val biome = OverworldBiomes
+            .baseBiome(temperate, downfall)
+            .mobSpawnSettings(mobSpawnSettings.build())
+            .generationSettings(generationSettings.build())
+
+        if (backgroundMusic != null) {
+            biome.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(backgroundMusic))
+        }
+
+        return biome.build()
+    }
 
     fun createBiome(
-        bl: Boolean,
+        precipitation: Boolean,
         temperature: Float,
-        f: Float,
-        i: Int,
-        j: Int,
-        integer: Int?,
-        integer2: Int?,
-        builder: MobSpawnSettings.Builder?,
-        builder2: BiomeGenerationSettings.Builder?,
-        value: Music?,
-    ): Biome = OverworldBiomesAccessor.db_invokeBiome(
-        bl, temperature, f, i, j, integer, null, integer2, builder, builder2, value
-    )
+        downfall: Float,
+        waterColor: Int,
+        waterFogColor: Int,
+        grassColor: Int?,
+        dryFoliage: Int?,
+        spawns: MobSpawnSettings.Builder,
+        generators: BiomeGenerationSettings.Builder,
+        music: Holder<SoundEvent>? = null,
+    ): Biome {
+        val effects = BiomeSpecialEffects.Builder().waterColor(waterColor)
 
+        if (grassColor != null) effects.grassColorOverride(grassColor)
+        if (dryFoliage != null) effects.dryFoliageColorOverride(dryFoliage)
+
+        val biome = BiomeBuilder()
+            .hasPrecipitation(precipitation)
+            .temperature(temperature)
+            .downfall(downfall)
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, waterFogColor)
+            .specialEffects(effects.build())
+            .mobSpawnSettings(spawns.build())
+            .generationSettings(generators.build())
+
+        if (music != null) {
+            biome.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, BackgroundMusic(music))
+        }
+
+        return biome.build()
+    }
+
+    // TODO remove all uses
+    @Deprecated(
+        "Original Function is now public!",
+        ReplaceWith("OverworldBiomes.globalOverworldGeneration(generation)", "net.minecraft.data.worldgen.biome")
+    )
     fun addBasicFeatures(generation: BiomeGenerationSettings.Builder) =
         OverworldBiomesAccessor.db_invokerGlobalOverworldGeneration(generation)
 
