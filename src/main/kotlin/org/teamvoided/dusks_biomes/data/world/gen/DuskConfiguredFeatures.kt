@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_biomes.DusksBiomes.id
 
 
-@Suppress("HasPlatformType")
 object DuskConfiguredFeatures {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val TREES_OAK_BIRCH_SPRUCE = create("tree/trees_oak_birch_spruce")
