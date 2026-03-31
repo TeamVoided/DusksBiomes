@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskDebug
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
+import org.teamvoided.reef.util.isDev
 
 
 @Suppress("unused")
@@ -20,7 +21,7 @@ object DusksBiomes {
 
         DuskBiomes.init()
         DuskStructureProcessorTypes.init()
-        DuskDebug.init()
+        if (isDev()) DuskDebug.init()
     }
 
     fun id(namespace: String, path: String): Identifier = Identifier.fromNamespaceAndPath(namespace, path)

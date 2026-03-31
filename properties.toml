@@ -1,0 +1,11 @@
+mod_name = "Dusk's Biomes"
+mod_id = "dusks_biomes"
+mod_group = "org.teamvoided"
+mod_version = "1.3.0+1.21.11-alpha.1"
+mod_description = "Worldgen Whatever"
+github_repo = "Teamvoided/DusksBiomes"
+discord_invite = "https://discord.gg/KZ5Q364hEg"
+authors = [ "DuskAutumnStorm", "TheEnderCore" ]
+license = "MIT"
+min_minecraft = "1.21.11" # Inclusive
+max_minecraft = "26.1" # Exclusive

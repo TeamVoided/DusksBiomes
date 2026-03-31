@@ -3,110 +3,147 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
-    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.iridium)
     alias(libs.plugins.iridium.publish)
     alias(libs.plugins.iridium.upload)
+    alias(libs.plugins.fabric.loom)
 }
 
-base.archivesName.set(modSettings.modId())
-
 repositories {
-    exclusiveContent {
-        forRepository { maven("https://maven.terraformersmc.com/") }
-        filter { includeGroup("com.terraformersmc") }
+    maven("https://maven.fabricmc.net/")
+    maven("https://teamvoided.org/releases") { content { includeGroup("org.teamvoided") } }
+    maven("https://teamvoided.org/snapshots") { content { includeGroup("org.teamvoided") } }
+    maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven"; content { includeGroup("me.fzzyhmstrs") } }
+    maven("https://maven.terraformersmc.com/") {
+        name = "Terraformers"
+        content {
+            includeGroup("com.terraformersmc")
+            includeGroup("dev.emi")
+        }
     }
-    exclusiveContent {
-        forRepository { maven("https://api.modrinth.com/maven") }
-        filter { includeGroup("maven.modrinth") }
-    }
-    maven("https://teamvoided.org/releases")
+    maven("https://api.modrinth.com/maven") { content { includeGroup("maven.modrinth") } }
+    mavenLocal()
     mavenCentral()
 }
 
-
-modSettings {
-    entrypoint("main", "org.teamvoided.dusks_biomes.DusksBiomes::commonInit")
-    entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
-    mixinFile("${modId()}.mixins.json")
-}
-
 dependencies {
-//    modImplementation(fileTree("libs"))
-    modImplementation(libs.modmenu)
+    modImplementation(fileTree("libs"))
 
-    modImplementation(libs.biolith)
-    include(libs.reef)
-    modImplementation(libs.reef)
+    minecraft(libs.minecraft)
+    mappings(loom.officialMojangMappings())
 
+    // Dependencies
+    modImplementation(libs.fabric.loader)
+    modImplementation(libs.fabric.api)
+    modImplementation(libs.fabric.kotlin)
     modImplementation(libs.lithostitched)
+    modImplementation(libs.biolith)
+    modImplementation(libs.reef)
+    include(libs.reef)
+    // Compatibility
+    // Runtime
+    modImplementation(libs.modmenu)
+    // Testing
+//    modImplementation(libs.creative.works)
+//    modImplementation(libs.imguimc)
 }
+
+val username = "vDev"
+val uuid = iridium.fetchUUID(username) // Dev & vDev will always be null
 
 loom {
+    mods {
+        register(iridium.modId) {
+            sourceSet(sourceSets.main.get())
+        }
+    }
+
     runs {
-        create("DataGen") {
+        named("client") {
+            programArgs("--username", username)
+            uuid?.let { programArgs("--uuid", it) }
+        }
+
+        create("randomClient") {
             client()
+            runDir("run")
             ideConfigGenerated(true)
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=${modSettings.modId()}")
-            runDir("build/datagen")
         }
 
         create("TestWorld") {
             client()
-            ideConfigGenerated(true)
             runDir("run")
-            programArgs("--quickPlaySingleplayer", "test")
+            ideConfigGenerated(true)
+            programArgs("--quickPlaySingleplayer", "test", "--username", username)
+            uuid?.let { programArgs("--uuid", it) }
         }
     }
 }
 
-sourceSets["main"].resources.srcDir("src/main/generated")
+fabricApi {
+    configureDataGeneration {
+        client = true
+        createRunConfiguration = true
+        createSourceSet = true
+        addToResources = true
+        modId = iridium.modId + "_vdatagen"
+
+        strictValidation = false
+    }
+}
 
 tasks {
-    val targetJavaVersion = 21
+    val javaVersion = libs.versions.java.get()
     withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release.set(targetJavaVersion)
+        options.release.set(javaVersion.toInt())
     }
 
-    withType<KotlinCompile> {
-        compilerOptions.jvmTarget = JvmTarget.JVM_21
+    withType<KotlinCompile>().all {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(javaVersion)
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(javaVersion).toString()))
         withSourcesJar()
     }
-    jar {
-        val valTaskNames = gradle.startParameter.taskNames
-        if (!valTaskNames.contains("runDataGen")) {
-            exclude("org/teamvoided/dusks_biomes/data/gen/*")
-        } else {
-            println("Running datagen for task ${valTaskNames.joinToString(" ")}")
+
+    sourceSets.forEach { set ->
+        named<ProcessResources>(set.processResourcesTaskName) {
+            var expandProps = iridium.props.toMutableMap()
+            iridium.appendLibsVersionProps(expandProps, File("libs.versions.toml"))
+            filesMatching(
+                listOf("pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml")
+            ) {
+                expand(expandProps)
+            }
+            inputs.properties(expandProps)
         }
     }
 }
 
 publishScript {
     releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
-    publication(modSettings.modId(), false)
-    publishSources(true)
+    publication(iridium.modId, isSnapshot = false)
+    publishSources = true
 }
 
-uploadConfig {
-//    debugMode = true
-    modrinthId = "Wy3e2UDp"
-//    curseId = curse_id
+uploadScript {
+    debugMode = false
 
-    // FabricApi
-    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
-    curseDependency("fabric-api", uploadConfig.REQUIRED)
-    // Fabric Language Kotlin
-    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
-    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+    modrinthId = "Wy3e2UDp"
+//    curseId = "0"
+
+    changelog = File("changelog.md").readText()
+
+    version += libs.versions.minecraft.get()
+    versionName = "${iridium.modName()} ${iridium.modVersion}"
+    jarTask = tasks.remapJar.get()
+
+    dependency("P7dR8mSH", "fabric-api")
+    dependency("Ha28R6CL", "fabric-language-kotlin")
+    dependency("hYykXjDp", "fzzy-config")
 }
