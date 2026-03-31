@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen
+package org.teamvoided.dusks_biomes.data.gen.assets
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -7,7 +7,6 @@ import net.minecraft.resources.Identifier
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import java.util.concurrent.CompletableFuture
 
-@Suppress("MemberVisibilityCanBePrivate")
 class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricLanguageProvider(o, r) {
 

@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen.configured_feature_creator
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.configured_feature
 
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
 import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import org.teamvoided.dusks_biomes.data.gen.world.gen.ConfiguredFeatureCreator.registerConfiguredFeature
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 
 object TreeConfiguredCreator {

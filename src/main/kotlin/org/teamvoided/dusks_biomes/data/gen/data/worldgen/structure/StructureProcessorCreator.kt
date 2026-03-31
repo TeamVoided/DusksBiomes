@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -7,11 +7,10 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.LanternBlock
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
-import org.teamvoided.dusks_biomes.data.gen.structure.processor_list.OceanRuins.oceanRuinWarmRed
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure.processor_list.OceanRuins.oceanRuinWarmRed
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 
 
-@Suppress("MagicNumber")
 object StructureProcessorCreator {
 
 

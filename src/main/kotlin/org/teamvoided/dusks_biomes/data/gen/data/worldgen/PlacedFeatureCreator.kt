@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.core.BlockPos
@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator.TreePlacedFeature.trees
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.placed_feature.TreePlacedFeature.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures

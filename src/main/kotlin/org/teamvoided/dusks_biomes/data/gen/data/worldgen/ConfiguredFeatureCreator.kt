@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -47,7 +47,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import org.teamvoided.dusks_biomes.DusksBiomes.id
-import org.teamvoided.dusks_biomes.data.gen.world.gen.configured_feature_creator.TreeConfiguredCreator.trees
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.configured_feature.TreeConfiguredCreator.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures

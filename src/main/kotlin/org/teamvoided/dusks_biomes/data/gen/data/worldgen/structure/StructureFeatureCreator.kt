@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure
 
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -128,5 +128,5 @@ object StructureFeatureCreator {
         biomes: HolderSet<Biome>,
         step: GenerationStep.Decoration,
         terrainAdaptation: TerrainAdjustment,
-    ) = Structure.StructureSettings(biomes, mapOf(), step, terrainAdaptation)
+    ) = StructureSettings(biomes, mapOf(), step, terrainAdaptation)
 }

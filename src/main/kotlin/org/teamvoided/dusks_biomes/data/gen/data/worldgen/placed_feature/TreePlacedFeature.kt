@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen.placed_feature_creator
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.placed_feature
 
 
 import net.minecraft.core.Direction
@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import org.teamvoided.dusks_biomes.data.gen.world.gen.PlacedFeatureCreator.register
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.PlacedFeatureCreator.register
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 

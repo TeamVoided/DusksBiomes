@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext

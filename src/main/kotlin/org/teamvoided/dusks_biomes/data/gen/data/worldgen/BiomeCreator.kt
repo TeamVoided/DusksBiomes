@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen
 
 
 import net.minecraft.core.Holder
@@ -27,12 +27,12 @@ import net.minecraft.world.level.biome.BiomeSpecialEffects
 import net.minecraft.world.level.biome.MobSpawnSettings
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createDenseGrove
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createFrozenBadlands
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createFrozenMangroveSwamp
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createSnowyCherryGrove
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createSnowyOldGrowthTaiga
-import org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator.SnowyVariants.createSnowyWindsweptHills
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createDenseGrove
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createFrozenBadlands
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createFrozenMangroveSwamp
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createSnowyCherryGrove
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createSnowyOldGrowthTaiga
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome.SnowyVariants.createSnowyWindsweptHills
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.mixin.OverworldBiomesAccessor
@@ -212,7 +212,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addSwampExtraVegetation(generation)
         generation.addFeature(vd9, AquaticPlacements.SEAGRASS_SWAMP)
 
-        return Biome.BiomeBuilder()
+        return BiomeBuilder()
             .hasPrecipitation(true)
             .temperature(0.8f)
             .downfall(0.9f)
@@ -250,7 +250,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultMushrooms(generation)
         BiomeFeatures.addDesertsFeatures(generation, red, cave)
 
-        val biome = Biome.BiomeBuilder()
+        val biome = BiomeBuilder()
             .hasPrecipitation(false)
             .temperature(2f)
             .downfall(0f)
@@ -353,7 +353,7 @@ object BiomeCreator {
         } else {
             TemperatureModifier.NONE
         }
-        return Biome.BiomeBuilder()
+        return BiomeBuilder()
             .hasPrecipitation(true)
             .temperature(temperature)
             .temperatureAdjustment(tempMod)
@@ -470,7 +470,7 @@ object BiomeCreator {
         BiomeFeatures.addGravelCaveFeatures(generation)
         BiomeDefaultFeatures.addExtraEmeralds(generation)
         BiomeDefaultFeatures.addInfestedStone(generation)
-        return Biome.BiomeBuilder()
+        return BiomeBuilder()
             .hasPrecipitation(true)
             .temperature(0.2f)
             .downfall(0.3f)

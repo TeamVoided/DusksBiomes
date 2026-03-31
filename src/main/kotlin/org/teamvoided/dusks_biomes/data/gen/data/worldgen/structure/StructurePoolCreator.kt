@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure
 
 import com.mojang.datafixers.util.Pair
 import net.minecraft.core.Holder
@@ -13,13 +13,11 @@ import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
 import org.teamvoided.dusks_biomes.DusksBiomes.MODID
-import org.teamvoided.dusks_biomes.data.gen.structure.structure_pool.PaleManorCreaor.generatePaleManor
 import org.teamvoided.dusks_biomes.data.structure.DuskStructurePools
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import java.util.function.Function
 
-@Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object StructurePoolCreator {
 
 //    const val zombieChance = (1 / 50) * 100
@@ -32,7 +30,7 @@ object StructurePoolCreator {
         val poolEmpty = structurePools.getOrThrow(Pools.EMPTY)
         val procEmpty = procLists.getOrThrow(ProcessorLists.EMPTY)
 
-        c.generatePaleManor()
+//        c.generatePaleManor()
 
         generateSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
         generateMangroveSwampVillage(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)

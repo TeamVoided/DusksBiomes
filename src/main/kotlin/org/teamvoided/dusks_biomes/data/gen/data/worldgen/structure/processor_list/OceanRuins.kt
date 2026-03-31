@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure.processor_list
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure.processor_list
 
 import dev.worldgen.lithostitched.worldgen.processor.BlockSwapStructureProcessor
 import net.minecraft.core.registries.BuiltInRegistries
@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
 import net.minecraft.world.level.levelgen.structure.templatesystem.rule.blockentity.AppendLoot
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
-import org.teamvoided.dusks_biomes.data.gen.structure.StructureProcessorCreator.RuleProcessor
-import org.teamvoided.dusks_biomes.data.gen.structure.StructureProcessorCreator.register
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure.StructureProcessorCreator.RuleProcessor
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure.StructureProcessorCreator.register
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists.OCEAN_RUIN_WARM_RED
 
 

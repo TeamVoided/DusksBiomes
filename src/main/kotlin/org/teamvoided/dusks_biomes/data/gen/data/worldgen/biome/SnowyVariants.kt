@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.world.gen.biome_creator
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.biome
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
@@ -16,8 +16,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.level.biome.BiomeSpecialEffects
 import net.minecraft.world.level.biome.MobSpawnSettings
-import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeCreator
-import org.teamvoided.dusks_biomes.data.gen.world.gen.BiomeFeatures
+import org.teamvoided.dusks_biomes.data.gen.data.worldgen.BiomeCreator
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION as vd9

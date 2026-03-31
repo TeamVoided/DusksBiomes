@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.tags
+package org.teamvoided.dusks_biomes.data.gen.data.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider

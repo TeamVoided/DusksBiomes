@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.structure.structure_pool
+package org.teamvoided.dusks_biomes.data.gen.data.worldgen.structure.structure_pool
 
 import com.mojang.datafixers.util.Pair
 import net.minecraft.core.Holder

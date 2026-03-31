@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.gen.tags
+package org.teamvoided.dusks_biomes.data.gen.data.tags
 
 //import com.theendercore.biome_tag_villagers.BiomeTagVillagers
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
