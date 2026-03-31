@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.biome.OverworldBiomes
+import net.minecraft.data.worldgen.biome.OverworldBiomes.globalOverworldGeneration
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
 import net.minecraft.sounds.SoundEvents
@@ -33,7 +34,7 @@ object SnowyVariants {
         spawns.addSpawn(MobCategory.CREATURE, 5, MobSpawnSettings.SpawnerData(EntityType.LLAMA, 4, 6))
         BiomeDefaultFeatures.commonSpawns(spawns)
 
-        BiomeCreator.addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         if (forest) BiomeDefaultFeatures.addMountainForestTrees(generation)
@@ -67,7 +68,7 @@ object SnowyVariants {
             BiomeDefaultFeatures.monsters(spawns, 100, 25, 0, 100, false)
         }
 
-        BiomeCreator.addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         generation.addFeature(lm2, DuskPlacedFeatures.COBBLESTONE_ROCK)
         BiomeDefaultFeatures.addFerns(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
@@ -131,7 +132,7 @@ object SnowyVariants {
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, true)
         BiomeDefaultFeatures.addExtraEmeralds(generation)
         BiomeDefaultFeatures.addInfestedStone(generation)
-        var biome = Biome.BiomeBuilder()
+        val biome = Biome.BiomeBuilder()
             .hasPrecipitation(true)
             .temperature(-0.2f)
             .downfall(0.8f)
@@ -184,7 +185,7 @@ object SnowyVariants {
             .addSpawn(MobCategory.MONSTER, 80, MobSpawnSettings.SpawnerData(EntityType.STRAY, 4, 4))
         BiomeDefaultFeatures.commonSpawns(spawns, 20)
 
-        BiomeCreator.addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         generation.addFeature(vd9, VegetationPlacements.PATCH_GRASS_BADLANDS)
@@ -221,7 +222,7 @@ object SnowyVariants {
             spawns.creatureGenerationProbability(0.04f)
         }
 
-        BiomeCreator.addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addExtraGold(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)

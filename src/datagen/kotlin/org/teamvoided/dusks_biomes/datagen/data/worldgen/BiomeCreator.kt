@@ -8,9 +8,9 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.biome.OverworldBiomes
+import net.minecraft.data.worldgen.biome.OverworldBiomes.globalOverworldGeneration
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
-import net.minecraft.sounds.Music
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -36,21 +36,18 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.SnowyVariants.cre
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.BiomeFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import org.teamvoided.dusks_biomes.mixin.OverworldBiomesAccessor
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION as vd9
 
 object BiomeCreator {
     const val DEFAULT_WATER_COLOR: Int = 4159204
     const val DEFAULT_WATER_FOG_COLOR: Int = 329011
     const val DEFAULT_FOG_COLOR = 12638463
-    val DEFAULT_MUSIC: Music? = null
 
-    @Suppress("BooleanLiteralArgument")
     fun boostrap(c: BootstrapContext<Biome>) {
-        c.register(DuskBiomes.COLD_FOREST, c.createTemperatureForest(true, false))
-        c.register(DuskBiomes.COLD_PLAINS, c.createTemperaturePlains(true, false))
-        c.register(DuskBiomes.WARM_FOREST, c.createTemperatureForest(false, true))
-        c.register(DuskBiomes.WARM_PLAINS, c.createTemperaturePlains(false, true))
+        c.register(DuskBiomes.COLD_FOREST, c.createTemperatureForest(cold = true, warm = false))
+        c.register(DuskBiomes.COLD_PLAINS, c.createTemperaturePlains(cold = true, warm = false))
+        c.register(DuskBiomes.WARM_FOREST, c.createTemperatureForest(cold = false, warm = true))
+        c.register(DuskBiomes.WARM_PLAINS, c.createTemperaturePlains(cold = false, warm = true))
         c.register(DuskBiomes.WINDSWEPT_BIRCH_FOREST, c.createWindsweptBirchForest())
         c.register(DuskBiomes.SNOWY_WINDSWEPT_HILLS, c.createSnowyWindsweptHills())
         c.register(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS, c.createSnowyWindsweptHills())
@@ -65,20 +62,20 @@ object BiomeCreator {
         c.register(DuskBiomes.FROZEN_ERODED_BADLANDS, c.createFrozenBadlands())
         c.register(DuskBiomes.FROZEN_MANGROVE_SWAMP, c.createFrozenMangroveSwamp())
         c.register(DuskBiomes.WARM_RIVER, c.createWarmRiver(false))
-        c.register(DuskBiomes.RED_DESERT, c.createDesert(true, false))
+        c.register(DuskBiomes.RED_DESERT, c.createDesert(red = true, cave = false))
         c.register(DuskBiomes.RED_WARM_RIVER, c.createWarmRiver(true))
         c.register(DuskBiomes.RED_WARM_OCEAN, c.createWarmOcean())
         c.register(DuskBiomes.RED_LUKEWARM_OCEAN, c.createLukewarmOcean(false))
         c.register(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN, c.createLukewarmOcean(true))
-        c.register(DuskBiomes.RED_BEACH, c.createBeach(false, false))
-        c.register(DuskBiomes.SNOWY_RED_BEACH, c.createBeach(true, false))
-        c.register(DuskBiomes.SNOWY_STONY_SHORE, c.createBeach(true, true))
-        c.register(DuskBiomes.MUSHROOM_GROVE, c.createMushroomIsland(true, false))
-        c.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, c.createMushroomIsland(true, true))
+        c.register(DuskBiomes.RED_BEACH, c.createBeach(snowy = false, stony = false))
+        c.register(DuskBiomes.SNOWY_RED_BEACH, c.createBeach(snowy = true, stony = false))
+        c.register(DuskBiomes.SNOWY_STONY_SHORE, c.createBeach(snowy = true, stony = true))
+        c.register(DuskBiomes.MUSHROOM_GROVE, c.createMushroomIsland(grove = true, eroded = false))
+        c.register(DuskBiomes.ERODED_MUSHROOM_ISLAND, c.createMushroomIsland(grove = true, eroded = true))
         c.register(DuskBiomes.MUSHROOM_CAVES, c.createMushroomCave())
         c.register(DuskBiomes.FROZEN_CAVERNS, c.createFrozenCaves())
-        c.register(DuskBiomes.SAND_CAVES, c.createDesert(false, true))
-        c.register(DuskBiomes.RED_SAND_CAVES, c.createDesert(true, true))
+        c.register(DuskBiomes.SAND_CAVES, c.createDesert(red = false, cave = true))
+        c.register(DuskBiomes.RED_SAND_CAVES, c.createDesert(red = true, cave = true))
         c.register(DuskBiomes.GRAVEL_CAVES, c.createGravelCave())
     }
 
@@ -97,7 +94,7 @@ object BiomeCreator {
             spawns.addSpawn(MobCategory.CREATURE, 2, SpawnerData(EntityType.RABBIT, 2, 3))
             spawns.addSpawn(MobCategory.CREATURE, 6, SpawnerData(EntityType.FOX, 2, 4))
         }
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         if (cold) BiomeDefaultFeatures.addFerns(generation)
 
         BiomeDefaultFeatures.addForestFlowers(generation)
@@ -135,7 +132,7 @@ object BiomeCreator {
         val spawns = MobSpawnSettings.Builder()
         val generation = BiomeGenerationSettings.Builder(features, carver)
 
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.plainsSpawns(spawns)
         if (warm) BiomeDefaultFeatures.addFerns(generation)
         else BiomeDefaultFeatures.addPlainGrass(generation)
@@ -175,7 +172,7 @@ object BiomeCreator {
         val spawns = MobSpawnSettings.Builder()
         val generation = BiomeGenerationSettings.Builder(features, carver)
 
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addForestFlowers(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
@@ -202,7 +199,7 @@ object BiomeCreator {
         spawns.addSpawn(MobCategory.MONSTER, 1, SpawnerData(EntityType.SLIME, 1, 1))
         spawns.addSpawn(MobCategory.CREATURE, 10, SpawnerData(EntityType.FROG, 2, 5))
         BiomeDefaultFeatures.addFossilDecoration(generation)
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addSwampClayDisk(generation)
         if (oldGrowth) BiomeFeatures.addOldGrowthSwampFeatures(generation)
@@ -291,7 +288,7 @@ object BiomeCreator {
         spawns.addSpawn(MobCategory.MONSTER, 100, SpawnerData(EntityType.DROWNED, 1, 1))
         BiomeDefaultFeatures.commonSpawns(spawns)
 
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         BiomeDefaultFeatures.addDefaultFlowers(generation)
@@ -334,7 +331,7 @@ object BiomeCreator {
         }
         BiomeDefaultFeatures.commonSpawns(spawns)
         val generation = BiomeGenerationSettings.Builder(features, carver)
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         BiomeDefaultFeatures.addDefaultFlowers(generation)
@@ -380,7 +377,7 @@ object BiomeCreator {
 
         BiomeDefaultFeatures.mooshroomSpawns(spawns)
 
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         if (grove) BiomeFeatures.addMushroomGroveFeatures(generation)
@@ -411,7 +408,7 @@ object BiomeCreator {
         val spawns = MobSpawnSettings.Builder()
         val generation = BiomeGenerationSettings.Builder(features, carver)
         BiomeDefaultFeatures.mooshroomSpawns(spawns)
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         BiomeDefaultFeatures.addDefaultExtraVegetation(generation, false)
@@ -460,7 +457,7 @@ object BiomeCreator {
         val spawns = MobSpawnSettings.Builder()
         BiomeDefaultFeatures.commonSpawns(spawns)
         val generation = BiomeGenerationSettings.Builder(features, carver)
-        addBasicFeatures(generation)
+        globalOverworldGeneration(generation)
         BiomeDefaultFeatures.addDefaultOres(generation)
         BiomeDefaultFeatures.addDefaultSoftDisks(generation)
         BiomeDefaultFeatures.addDefaultFlowers(generation)
@@ -672,13 +669,5 @@ object BiomeCreator {
 
         return biome.build()
     }
-
-    // TODO remove all uses
-    @Deprecated(
-        "Original Function is now public!",
-        ReplaceWith("OverworldBiomes.globalOverworldGeneration(generation)", "net.minecraft.data.worldgen.biome")
-    )
-    fun addBasicFeatures(generation: BiomeGenerationSettings.Builder) =
-        OverworldBiomesAccessor.db_invokerGlobalOverworldGeneration(generation)
 
 }

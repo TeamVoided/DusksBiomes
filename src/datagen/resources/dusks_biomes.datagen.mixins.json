@@ -3,9 +3,7 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.dusks_biomes.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "OverworldBiomesAccessor"
-  ],
+  "mixins": [ ],
   "injectors": {
     "defaultRequire": 1
   }
