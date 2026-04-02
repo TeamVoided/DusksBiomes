@@ -15,7 +15,7 @@
     # Runtime
     modmenu = "11.0.3"
     # Testing
-    creative_works = "0.5.0"
+    creative_works = "0.5.1+1.21.11"
     imguimc = "1.21.1-1.0.8"
 
 [libraries]
