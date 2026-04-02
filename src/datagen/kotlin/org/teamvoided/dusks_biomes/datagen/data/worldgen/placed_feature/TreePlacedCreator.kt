@@ -16,7 +16,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.PlacedFeatureCreator.re
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 
-object TreePlacedFeature {
+object TreePlacedCreator {
     fun BootstrapContext<PlacedFeature>.trees() {
         this.register(
             DuskPlacedFeatures.TREES_SNOWY_DARK_GROVE,
@@ -45,7 +45,7 @@ object TreePlacedFeature {
         )
     }
 
-    fun BootstrapContext<PlacedFeature>.registerOnSnow(
+    private fun BootstrapContext<PlacedFeature>.registerOnSnow(
         placed: ResourceKey<PlacedFeature>,
         configured: ResourceKey<ConfiguredFeature<*, *>>,
         count: PlacementModifier,

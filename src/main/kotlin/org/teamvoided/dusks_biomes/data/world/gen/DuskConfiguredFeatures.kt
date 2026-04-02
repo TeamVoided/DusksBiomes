@@ -49,6 +49,16 @@ object DuskConfiguredFeatures {
     val COBBLED_DEEPSLATE_CAVE_PILLAR = create("cave/gravel/cobbled_deepslate_cave_pillar")
     val COBBLED_DEEPSLATE_SPIKES = create("cave/gravel/cobbled_deepslate_spikes")
     val COBBLED_DEEPSLATE_SPIKES_ROOF = create("cave/gravel/cobbled_deepslate_spikes_roof")
+    val PALE_CAVE_VINES = create("cave/pale/vines")
+    val PALE_CAVE_VINE_IN_MOSS = create("cave/pale/vine_in_moss")
+    val PALE_CAVE_MOSS_VEGETATION = create("cave/pale/moss_vegetation")
+    val PALE_CAVE_MOSS_PATCH = create("cave/pale/moss_patch")
+    val PALE_CAVE_MOSS_PATCH_CEILING = create("cave/pale/moss_patch_ceiling")
+    val PALE_CAVE_CLAY_PATCH = create("cave/pale/clay_patch")
+    val PALE_CAVE_CLAY_POOL = create("cave/pale/clay_pool_patch")
+    val PALE_CAVE_CLAY = create("cave/pale/clay")
+    val PALE_CAVE_HEART_CEILING = create("cave/pale/heart_ceiling")
+
 
     val DEEP_MONSTER_ROOM = create("monster_room/deep_monster_room")
     val FROZEN_MONSTER_ROOM = create("monster_room/frozen_monster_room")

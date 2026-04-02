@@ -21,15 +21,17 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.TreePlacedFeature.trees
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.TreePlacedCreator.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.CavePlacedCreator.caves
 
 object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val cfLookup = c.lookup(Registries.CONFIGURED_FEATURE)
         c.trees()
+        c.caves()
 
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,

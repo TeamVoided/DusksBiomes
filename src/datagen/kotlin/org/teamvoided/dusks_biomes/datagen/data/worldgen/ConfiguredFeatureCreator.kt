@@ -2,6 +2,7 @@ package org.teamvoided.dusks_biomes.datagen.data.worldgen
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -51,6 +52,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.Tree
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.CaveConfiguredCreator.caves
 import org.teamvoided.reef.init.ReefFeatures
 import org.teamvoided.reef.world.level.levelgen.feature.config.*
 import java.util.*
@@ -64,6 +66,7 @@ object ConfiguredFeatureCreator {
         val procLists = c.lookup(Registries.PROCESSOR_LIST)
 
         c.trees()
+        c.caves()
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -909,6 +912,9 @@ object ConfiguredFeatureCreator {
         chance: Float
     ): WeightedPlacedFeature = WeightedPlacedFeature(this.getOrThrow(feature), chance)
 
+
+    fun HolderGetter<ConfiguredFeature<*, *>>.inline(feature: ResourceKey<ConfiguredFeature<*, *>>): Holder<PlacedFeature> =
+        PlacementUtils.inlinePlaced(this.getOrThrow(feature))
 
     @Suppress("SameParameterValue")
     private fun flowerbed(block: Block): WeightedList.Builder<BlockState> = segmentedBlock(

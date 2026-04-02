@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureCo
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 
 object TreeConfiguredCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.trees() {
@@ -90,7 +91,4 @@ object TreeConfiguredCreator {
             RandomFeatureConfiguration(list, fall)
         )
     }
-
-    private fun HolderGetter<ConfiguredFeature<*, *>>.inline(feature: ResourceKey<ConfiguredFeature<*, *>>): Holder<PlacedFeature> =
-        PlacementUtils.inlinePlaced(this.getOrThrow(feature))
 }

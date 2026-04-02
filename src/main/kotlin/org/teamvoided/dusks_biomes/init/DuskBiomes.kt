@@ -52,6 +52,7 @@ object DuskBiomes {
     val SAND_CAVES = create("sand_caverns")
     val RED_SAND_CAVES = create("red_sand_caverns")
     val GRAVEL_CAVES = create("gravel_caves")
+    val PALE_CAVES = create("pale_caves")
 
     fun init() {
         val windsweptVariant = CriterionBuilder.allOf(
@@ -69,7 +70,7 @@ object DuskBiomes {
 
         val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
 
-        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.223f)
+        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, -0.223f)
 
         val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
 
