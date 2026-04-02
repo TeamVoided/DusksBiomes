@@ -46,6 +46,7 @@ object CavesCreator {
             .setAttribute(EnvironmentAttributes.SKY_COLOR, 12171705)
             .setAttribute(EnvironmentAttributes.MUSIC_VOLUME, 0f)
             .setAttribute(EnvironmentAttributes.EYEBLOSSOM_OPEN, TriState.TRUE)
+            .setAttribute(EnvironmentAttributes.CREAKING_ACTIVE, true)
             .mobSpawnSettings(spawns.build())
             .generationSettings(gen.build()).build()
     }

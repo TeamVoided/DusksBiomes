@@ -157,7 +157,7 @@ object CaveConfiguredCreator {
             Feature.VEGETATION_PATCH,
             VegetationPatchConfiguration(
                 BlockTags.MOSS_REPLACEABLE,
-                BlockStateProvider.simple(Blocks.MOSS_BLOCK),
+                BlockStateProvider.simple(Blocks.PALE_MOSS_BLOCK),
                 cf.inline(DuskConfiguredFeatures.PALE_CAVE_VINE_IN_MOSS),
                 CaveSurface.CEILING,
                 UniformInt.of(1, 2),
