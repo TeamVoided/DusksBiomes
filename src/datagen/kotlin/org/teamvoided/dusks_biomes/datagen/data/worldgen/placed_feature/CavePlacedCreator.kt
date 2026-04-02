@@ -36,10 +36,9 @@ object CavePlacedCreator {
             RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
             BiomeFilter.biome()
         )
-
         this.register(
             DuskPlacedFeatures.PALE_CAVES_VEGETATION,
-            DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION,
+            DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH,
             CountPlacement.of(125),
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
@@ -55,7 +54,7 @@ object CavePlacedCreator {
         this.register(
             DuskPlacedFeatures.PALE_CAVES_CLAY,
             DuskConfiguredFeatures.PALE_CAVE_CLAY,
-            CountPlacement.of(62),
+            CountPlacement.of(15),
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
@@ -107,8 +106,8 @@ object CavePlacedCreator {
         )
         this.register(
             DuskPlacedFeatures.FLOWER_PALE_CAVE,
-            VegetationFeatures.PALE_FOREST_FLOWERS,
-            CountPlacement.of(25),
+            DuskConfiguredFeatures.PALE_CAVE_FLOWERS,
+            CountPlacement.of(50),
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(

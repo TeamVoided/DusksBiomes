@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature
 
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
@@ -8,7 +7,6 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.VegetationFeatures
-import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.random.WeightedList
 import net.minecraft.util.valueproviders.*
@@ -21,14 +19,11 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
-import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
-import java.util.List
 
 object CaveConfiguredCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.caves() {
@@ -45,24 +40,24 @@ object CaveConfiguredCreator {
             Blocks.PALE_HANGING_MOSS.defaultBlockState()
                 .setValue(BlockStateProperties.TIP, false)
         )
-        val hangingMossTip = BlockStateProvider.simple(Blocks.PALE_HANGING_MOSS)
+        val hangingMossTip =
+            BlockColumnConfiguration.layer(ConstantInt.of(1), BlockStateProvider.simple(Blocks.PALE_HANGING_MOSS))
+        val hangingMossColumnList = listOf(
+            BlockColumnConfiguration.layer(
+                WeightedListInt(
+                    WeightedList.builder<IntProvider>()
+                        .add(UniformInt.of(0, 19), 2)
+                        .add(UniformInt.of(0, 2), 3)
+                        .add(UniformInt.of(0, 6), 10).build()
+                ),
+                hangingMoss
+            ),
+            hangingMossTip
+        )
         this.registerConfiguredFeature(
             DuskConfiguredFeatures.PALE_CAVE_VINES,
             Feature.BLOCK_COLUMN,
-            BlockColumnConfiguration(
-                listOf(
-                    BlockColumnConfiguration.layer(
-                        WeightedListInt(
-                            WeightedList.builder<IntProvider>()
-                                .add(UniformInt.of(0, 19), 2)
-                                .add(UniformInt.of(0, 2), 3)
-                                .add(UniformInt.of(0, 6), 10).build()
-                        ),
-                        hangingMoss
-                    ),
-                    BlockColumnConfiguration.layer(ConstantInt.of(1), hangingMossTip)
-                ), Direction.DOWN, BlockPredicate.ONLY_IN_AIR_PREDICATE, true
-            )
+            BlockColumnConfiguration(hangingMossColumnList, Direction.DOWN, BlockPredicate.ONLY_IN_AIR_PREDICATE, true)
         )
         this.registerConfiguredFeature(
             DuskConfiguredFeatures.PALE_CAVE_VINE_IN_MOSS,
@@ -78,7 +73,7 @@ object CaveConfiguredCreator {
                         ),
                         hangingMoss
                     ),
-                    BlockColumnConfiguration.layer(ConstantInt.of(1), hangingMossTip)
+                    hangingMossTip
                 ), Direction.DOWN, BlockPredicate.ONLY_IN_AIR_PREDICATE, true
             )
         )
@@ -88,10 +83,17 @@ object CaveConfiguredCreator {
             SimpleBlockConfiguration(
                 WeightedStateProvider(
                     WeightedList.builder<BlockState>()
-                        .add(Blocks.PALE_OAK_LEAVES.defaultBlockState(), 4)
-                        .add(Blocks.PALE_OAK_SAPLING.defaultBlockState(), 7)
+                        .add(
+                            Blocks.PALE_OAK_LEAVES.defaultBlockState()
+                                .setValue(BlockStateProperties.PERSISTENT, true), 7
+                        )
+                        .add(
+                            Blocks.DARK_OAK_LEAVES.defaultBlockState()
+                                .setValue(BlockStateProperties.PERSISTENT, true), 7
+                        )
+                        .add(Blocks.PALE_OAK_SAPLING.defaultBlockState(), 4)
                         .add(Blocks.PALE_MOSS_CARPET.defaultBlockState(), 25)
-                        .add(Blocks.SHORT_GRASS.defaultBlockState(), 50)
+                        .add(Blocks.SHORT_GRASS.defaultBlockState(), 25)
                         .add(Blocks.TALL_GRASS.defaultBlockState(), 10)
                 )
             )
@@ -118,7 +120,7 @@ object CaveConfiguredCreator {
             VegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.simple(Blocks.CLAY),
-                cf.inline(CaveFeatures.DRIPLEAF),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION),
                 CaveSurface.FLOOR,
                 ConstantInt.of(3),
                 0.8f,
@@ -134,7 +136,7 @@ object CaveConfiguredCreator {
             VegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.simple(Blocks.CLAY),
-                cf.inline(CaveFeatures.DRIPLEAF),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION),
                 CaveSurface.FLOOR,
                 ConstantInt.of(3),
                 0.8f,
@@ -189,6 +191,14 @@ object CaveConfiguredCreator {
                 Direction.DOWN,
                 BlockPredicate.alwaysTrue(),
                 false
+            )
+        )
+        this.registerConfiguredFeature(
+            DuskConfiguredFeatures.PALE_CAVE_FLOWERS,
+            Feature.RANDOM_PATCH,
+            FeatureUtils.simplePatchConfiguration(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.OPEN_EYEBLOSSOM))
             )
         )
 

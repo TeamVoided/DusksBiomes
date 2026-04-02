@@ -65,13 +65,9 @@ object DuskBiomes {
             CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f)
         )
         val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
-
         val coldRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.3f)
-
         val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
-
         val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, -0.223f)
-
         val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
 
 
