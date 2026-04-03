@@ -7,10 +7,13 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.random.WeightedList
 import net.minecraft.util.valueproviders.*
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.LeavesBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
@@ -24,6 +27,8 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
+import org.teamvoided.dusks_biomes.init.DuskFeatures
+import org.teamvoided.dusks_biomes.world.level.levelgen.config.DirectionalBlockPileFeatureConfig
 
 object CaveConfiguredCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.caves() {
@@ -202,38 +207,22 @@ object CaveConfiguredCreator {
             )
         )
 
+        this.leafPile(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES, Blocks.PALE_OAK_LEAVES)
+        this.leafPile(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES, Blocks.DARK_OAK_LEAVES)
+    }
 
-        //this.registerConfiguredFeature(
-        //    CaveFeatures.ROOTED_AZALEA_TREE,
-        //    Feature.ROOT_SYSTEM,
-        //    RootSystemConfiguration(
-        //        PlacementUtils.inlinePlaced(
-        //            holderGetter.getOrThrow(TreeFeatures.AZALEA_TREE),
-        //            *arrayOfNulls<PlacementModifier>(0)
-        //        ),
-        //        3,
-        //        3,
-        //        BlockTags.AZALEA_ROOT_REPLACEABLE,
-        //        BlockStateProvider.simple(Blocks.ROOTED_DIRT),
-        //        20,
-        //        100,
-        //        3,
-        //        2,
-        //        BlockStateProvider.simple(Blocks.HANGING_ROOTS),
-        //        20,
-        //        2,
-        //        BlockPredicate.allOf(
-        //            BlockPredicate.anyOf(
-        //                BlockPredicate.matchesBlocks(
-        //                    List.of<Block?>(
-        //                        Blocks.AIR,
-        //                        Blocks.CAVE_AIR,
-        //                        Blocks.VOID_AIR
-        //                    )
-        //                ), BlockPredicate.matchesTag(BlockTags.REPLACEABLE_BY_TREES)
-        //            ), BlockPredicate.matchesTag(Direction.DOWN.getUnitVec3i(), BlockTags.AZALEA_GROWS_ON)
-        //        )
-        //    )
-        //)
+    private fun BootstrapContext<ConfiguredFeature<*, *>>.leafPile(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        leaves: Block
+    ) {
+        val blockTags = this.lookup(Registries.BLOCK)
+        this.registerConfiguredFeature(
+            feature,
+            DuskFeatures.DIRECTIONAL_BLOCK_PILE,
+            DirectionalBlockPileFeatureConfig(
+                BlockStateProvider.simple(leaves.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true)),
+                blockTags.getOrThrow(BlockTags.REPLACEABLE),
+            )
+        )
     }
 }

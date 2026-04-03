@@ -13,29 +13,37 @@ import org.teamvoided.dusks_biomes.world.level.levelgen.config.DirectionalBlockP
 class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig>) :
     Feature<DirectionalBlockPileFeatureConfig>(codec) {
 
-    override fun place(c: FeaturePlaceContext<DirectionalBlockPileFeatureConfig>): Boolean {
-        val blockPos = c.origin()
-        val worldGenLevel = c.level()
-        if (blockPos.y < worldGenLevel.minY + 5) {
+    override fun place(context: FeaturePlaceContext<DirectionalBlockPileFeatureConfig>): Boolean {
+        val blockPos = context.origin()
+        val worldGenLevel = context.level()
+        val c = context.config()
+        if (blockPos.y < worldGenLevel.minY + 5 ||
+            (worldGenLevel.getBlockState(blockPos).`is`(c.canReplace))
+        ) {
             return false
         } else {
-            val config = c.config()
-            val r = c.random()
-            val xRad = config.radius.sample(r) //2 + randomSource.nextInt(2)
-            val zRad = config.radius.sample(r)
-            val dir = Direction.DOWN
+            val r = context.random()
+            val xRad = c.radius.sample(r) //2 + randomSource.nextInt(2)
+            val zRad = c.radius.sample(r)
+            val height = c.height.sample(r) - 1
+            var dir: Direction? = null
+            Direction.entries.shuffled().forEach {
+                if ((it == Direction.DOWN && c.floor) || (it == Direction.UP && c.ceiling) || (it.axis != Direction.Axis.Y && c.walls)) {
+                    if (this.mayPlaceOn(worldGenLevel, blockPos, it))
+                        dir = it
+                }
+            }
+            if (dir == null) return false
             val sizeLow = BlockPos(-xRad, 0, -zRad).rotate(dir)
-            val sizeHigh = BlockPos(xRad, config.height.sample(r), zRad).rotate(dir)
+            val sizeHigh = BlockPos(xRad, height, zRad).rotate(dir)
 
-            for (loopPos in BlockPos.betweenClosed(
-                sizeLow,
-                sizeHigh
-            )) {
+            //between closed does min(a,b) so block stacking issues will arise when facing negative directions?
+            for (loopPos in BlockPos.betweenClosed(sizeLow, sizeHigh)) {
                 if (
-                    circleRange(loopPos, xRad, zRad, dir, r) ||
-                    r.nextFloat() < config.blockChance.sample(r) //0.03f
+                    circleRange(loopPos, xRad, zRad, dir, c, r) ||
+                    r.nextFloat() < c.blockChance.sample(r) //0.03f
                 ) {
-                    this.tryPlaceBlock(worldGenLevel, loopPos.offset(blockPos), dir, r, config)
+                    this.tryPlaceBlock(worldGenLevel, warp(loopPos, dir, height).offset(blockPos), dir, r, c)
                 }
             }
             worldGenLevel.setBlock(blockPos.offset(sizeLow), Blocks.GLOWSTONE.defaultBlockState(), 260)
@@ -43,6 +51,17 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
 
             return true
         }
+    }
+
+    private fun warp(pos: BlockPos, dir: Direction, height: Int): BlockPos {
+        return if (dir.axisDirection == Direction.AxisDirection.NEGATIVE) {
+            when (dir.axis) {
+                Direction.Axis.Y -> BlockPos(pos.x, height - pos.y, pos.z)
+                Direction.Axis.X -> BlockPos(height - pos.x, pos.y, pos.z)
+                Direction.Axis.Z -> BlockPos(pos.x, pos.y, height - pos.z)
+            }
+        } else
+            pos
     }
 
     private fun circleRange(
@@ -76,22 +95,21 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
         levelAccessor: LevelAccessor,
         blockPos: BlockPos,
         dir: Direction,
-        randomSource: RandomSource,
-        config: DirectionalBlockPileFeatureConfig
+        r: RandomSource,
+        c: DirectionalBlockPileFeatureConfig
     ): Boolean {
         return if (
-            levelAccessor.getBlockState(blockPos).`is`(config.canReplace) &&
-            this.mayPlaceOn(levelAccessor, blockPos, dir, randomSource)
+            levelAccessor.getBlockState(blockPos).`is`(c.canReplace) &&
+            this.mayPlaceOn(levelAccessor, blockPos, dir)
         ) {
-            levelAccessor.setBlock(blockPos, config.blockstate.getState(randomSource, blockPos), 260)
+            levelAccessor.setBlock(blockPos, c.blockstate.getState(r, blockPos), 260)
         } else false
     }
 
     private fun mayPlaceOn(
         levelAccessor: LevelAccessor,
         blockPos: BlockPos,
-        dir: Direction,
-        randomSource: RandomSource
+        dir: Direction
     ): Boolean {
         val blockPosDir = blockPos.relative(dir)
         val dirState = levelAccessor.getBlockState(blockPosDir)

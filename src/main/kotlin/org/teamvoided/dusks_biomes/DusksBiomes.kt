@@ -5,6 +5,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskDebug
+import org.teamvoided.dusks_biomes.init.DuskFeatures
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
 import org.teamvoided.reef.util.isDev
 
@@ -20,6 +21,7 @@ object DusksBiomes {
         log.info("Dusking and Biomeing")
 
         DuskBiomes.init()
+        DuskFeatures.init()
         DuskStructureProcessorTypes.init()
         if (isDev()) DuskDebug.init()
     }
