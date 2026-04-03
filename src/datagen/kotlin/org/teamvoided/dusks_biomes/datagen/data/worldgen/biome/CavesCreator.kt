@@ -47,6 +47,8 @@ object CavesCreator {
             .setAttribute(EnvironmentAttributes.MUSIC_VOLUME, 0f)
             .setAttribute(EnvironmentAttributes.EYEBLOSSOM_OPEN, TriState.TRUE)
             .setAttribute(EnvironmentAttributes.CREAKING_ACTIVE, true)
+            .setAttribute(EnvironmentAttributes.FOG_START_DISTANCE,-32f)
+            .setAttribute(EnvironmentAttributes.FOG_END_DISTANCE,256f)
             .mobSpawnSettings(spawns.build())
             .generationSettings(gen.build()).build()
     }
@@ -62,6 +64,7 @@ object CavesCreator {
         builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_HEART_CEILING)
         //builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.ROOTED_AZALEA_TREE)
         builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.FLOWER_PALE_CAVE)
+        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_CAVE_LEAVES)
 
     }
 }

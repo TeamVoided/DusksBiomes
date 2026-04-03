@@ -5,7 +5,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_biomes.world.level.levelgen.config.DirectionalBlockPileFeatureConfig
@@ -17,9 +19,7 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
         val blockPos = context.origin()
         val worldGenLevel = context.level()
         val c = context.config()
-        if (blockPos.y < worldGenLevel.minY + 5 ||
-            (worldGenLevel.getBlockState(blockPos).`is`(c.canReplace))
-        ) {
+        if (blockPos.y < worldGenLevel.minY + 5) {
             return false
         } else {
             val r = context.random()
@@ -29,8 +29,9 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
             var dir: Direction? = null
             Direction.entries.shuffled().forEach {
                 if ((it == Direction.DOWN && c.floor) || (it == Direction.UP && c.ceiling) || (it.axis != Direction.Axis.Y && c.walls)) {
-                    if (this.mayPlaceOn(worldGenLevel, blockPos, it))
+                    if (this.mayPlaceOn(worldGenLevel, blockPos, it)) {
                         dir = it
+                    }
                 }
             }
             if (dir == null) return false
@@ -46,9 +47,8 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
                     this.tryPlaceBlock(worldGenLevel, warp(loopPos, dir, height).offset(blockPos), dir, r, c)
                 }
             }
-            worldGenLevel.setBlock(blockPos.offset(sizeLow), Blocks.GLOWSTONE.defaultBlockState(), 260)
-            worldGenLevel.setBlock(blockPos.offset(sizeHigh), Blocks.GLOWSTONE.defaultBlockState(), 260)
-
+            worldGenLevel.setBlock(blockPos.offset(sizeLow), Blocks.GLOWSTONE.defaultBlockState(), 2)
+            worldGenLevel.setBlock(blockPos.offset(sizeHigh), Blocks.GLOWSTONE.defaultBlockState(), 2)
             return true
         }
     }
@@ -102,7 +102,7 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
             levelAccessor.getBlockState(blockPos).`is`(c.canReplace) &&
             this.mayPlaceOn(levelAccessor, blockPos, dir)
         ) {
-            levelAccessor.setBlock(blockPos, c.blockstate.getState(r, blockPos), 260)
+            levelAccessor.setBlock(blockPos, c.blockstate.getState(r, blockPos), 2)
         } else false
     }
 
@@ -111,8 +111,9 @@ class DirectionalBlockPileFeature(codec: Codec<DirectionalBlockPileFeatureConfig
         blockPos: BlockPos,
         dir: Direction
     ): Boolean {
-        val blockPosDir = blockPos.relative(dir)
-        val dirState = levelAccessor.getBlockState(blockPosDir)
-        return dirState.isFaceSturdy(levelAccessor, blockPosDir, dir.opposite)
+        //val blockPosDir = blockPos.relative(dir)
+        //val dirState = levelAccessor.getBlockState(blockPosDir)
+        //return dirState.isFaceSturdy(levelAccessor, blockPosDir, dir.opposite)
+        return MultifaceBlock.canAttachTo(levelAccessor, blockPos,dir)
     }
 }

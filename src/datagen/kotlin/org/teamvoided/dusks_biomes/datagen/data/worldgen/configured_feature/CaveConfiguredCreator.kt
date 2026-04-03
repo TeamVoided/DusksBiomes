@@ -28,6 +28,7 @@ import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
 import org.teamvoided.dusks_biomes.init.DuskFeatures
+import org.teamvoided.dusks_biomes.world.level.levelgen.config.CaveSurfaceFeatureConfig
 import org.teamvoided.dusks_biomes.world.level.levelgen.config.DirectionalBlockPileFeatureConfig
 
 object CaveConfiguredCreator {
@@ -114,7 +115,7 @@ object CaveConfiguredCreator {
                 ConstantInt.of(1),
                 0f,
                 5,
-                0.8f,
+                0.5f,
                 UniformInt.of(4, 7),
                 0.3f
             )
@@ -125,7 +126,7 @@ object CaveConfiguredCreator {
             VegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.simple(Blocks.CLAY),
-                cf.inline(DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_LEAVES),
                 CaveSurface.FLOOR,
                 ConstantInt.of(3),
                 0.8f,
@@ -141,7 +142,7 @@ object CaveConfiguredCreator {
             VegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.simple(Blocks.CLAY),
-                cf.inline(DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_LEAVES),
                 CaveSurface.FLOOR,
                 ConstantInt.of(3),
                 0.8f,
@@ -209,6 +210,14 @@ object CaveConfiguredCreator {
 
         this.leafPile(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES, Blocks.PALE_OAK_LEAVES)
         this.leafPile(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES, Blocks.DARK_OAK_LEAVES)
+        this.registerConfiguredFeature(
+            DuskConfiguredFeatures.PALE_CAVE_LEAVES,
+            Feature.RANDOM_BOOLEAN_SELECTOR,
+            RandomBooleanFeatureConfiguration(
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES)
+            )
+        )
     }
 
     private fun BootstrapContext<ConfiguredFeature<*, *>>.leafPile(
@@ -218,9 +227,11 @@ object CaveConfiguredCreator {
         val blockTags = this.lookup(Registries.BLOCK)
         this.registerConfiguredFeature(
             feature,
-            DuskFeatures.DIRECTIONAL_BLOCK_PILE,
-            DirectionalBlockPileFeatureConfig(
-                BlockStateProvider.simple(leaves.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true)),
+            DuskFeatures.CaveSurfaceFeature,
+            CaveSurfaceFeatureConfig(
+                BlockStateProvider.simple(
+                    leaves.defaultBlockState().trySetValue(BlockStateProperties.PERSISTENT, true)
+                ),
                 blockTags.getOrThrow(BlockTags.REPLACEABLE),
             )
         )

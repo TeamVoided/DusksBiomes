@@ -4,9 +4,11 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
@@ -119,5 +121,14 @@ object CavePlacedCreator {
             RandomOffsetPlacement.vertical(ConstantInt.of(1)),
             BiomeFilter.biome()
         )
+        this.register(
+            DuskPlacedFeatures.PALE_CAVE_LEAVES,
+            DuskConfiguredFeatures.PALE_CAVE_LEAVES,
+            CountPlacement.of(25),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            InSquarePlacement.spread(),
+            BiomeFilter.biome()
+        )
+
     }
 }
