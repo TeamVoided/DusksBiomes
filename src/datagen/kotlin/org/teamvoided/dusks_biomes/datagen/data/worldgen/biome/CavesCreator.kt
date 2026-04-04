@@ -14,6 +14,8 @@ import net.minecraft.world.level.biome.BiomeSpecialEffects
 import net.minecraft.world.level.biome.MobSpawnSettings
 import net.minecraft.world.level.levelgen.GenerationStep
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION as vd9
+
 
 object CavesCreator {
 
@@ -47,24 +49,22 @@ object CavesCreator {
             .setAttribute(EnvironmentAttributes.MUSIC_VOLUME, 0f)
             .setAttribute(EnvironmentAttributes.EYEBLOSSOM_OPEN, TriState.TRUE)
             .setAttribute(EnvironmentAttributes.CREAKING_ACTIVE, true)
-            .setAttribute(EnvironmentAttributes.FOG_START_DISTANCE,-32f)
-            .setAttribute(EnvironmentAttributes.FOG_END_DISTANCE,256f)
+            .setAttribute(EnvironmentAttributes.FOG_START_DISTANCE, -32f)
+            .setAttribute(EnvironmentAttributes.FOG_END_DISTANCE, 256f)
             .mobSpawnSettings(spawns.build())
             .generationSettings(gen.build()).build()
     }
 
     fun addPaleCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
-        builder.addFeature(
-            GenerationStep.Decoration.VEGETAL_DECORATION,
-            DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION
-        )
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_CAVES_VINES)
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_CAVES_CLAY)
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_CAVES_VEGETATION)
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_HEART_CEILING)
-        //builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.ROOTED_AZALEA_TREE)
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.FLOWER_PALE_CAVE)
-        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, DuskPlacedFeatures.PALE_CAVE_LEAVES)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES_CEILING)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VINES)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_CLAY)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VEGETATION)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_HEART_CEILING)
+        //builder.addFeature(vd9, CavePlacements.ROOTED_AZALEA_TREE)
+        builder.addFeature(vd9, DuskPlacedFeatures.FLOWER_PALE_CAVE)
 
     }
 }

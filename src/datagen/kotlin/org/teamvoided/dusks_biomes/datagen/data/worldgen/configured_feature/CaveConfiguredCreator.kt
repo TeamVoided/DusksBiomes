@@ -1,19 +1,19 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature
 
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.random.WeightedList
 import net.minecraft.util.valueproviders.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.LeavesBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
@@ -22,14 +22,14 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
+import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
-import org.teamvoided.dusks_biomes.init.DuskFeatures
-import org.teamvoided.dusks_biomes.world.level.levelgen.config.CaveSurfaceFeatureConfig
-import org.teamvoided.dusks_biomes.world.level.levelgen.config.DirectionalBlockPileFeatureConfig
+import java.util.List
 
 object CaveConfiguredCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.caves() {
@@ -208,8 +208,10 @@ object CaveConfiguredCreator {
             )
         )
 
-        this.leafPile(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES, Blocks.PALE_OAK_LEAVES)
-        this.leafPile(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES, Blocks.DARK_OAK_LEAVES)
+
+
+        this.leafCollumPatch(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES, Blocks.PALE_OAK_LEAVES, Direction.UP)
+        this.leafCollumPatch(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES, Blocks.DARK_OAK_LEAVES, Direction.UP)
         this.registerConfiguredFeature(
             DuskConfiguredFeatures.PALE_CAVE_LEAVES,
             Feature.RANDOM_BOOLEAN_SELECTOR,
@@ -218,22 +220,59 @@ object CaveConfiguredCreator {
                 cf.inline(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES)
             )
         )
-    }
 
-    private fun BootstrapContext<ConfiguredFeature<*, *>>.leafPile(
-        feature: ResourceKey<ConfiguredFeature<*, *>>,
-        leaves: Block
-    ) {
-        val blockTags = this.lookup(Registries.BLOCK)
+        this.leafCollumPatch(
+            DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES_CEILING,
+            Blocks.PALE_OAK_LEAVES,
+            Direction.DOWN
+        )
+        this.leafCollumPatch(
+            DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES_CEILING,
+            Blocks.DARK_OAK_LEAVES,
+            Direction.DOWN
+        )
         this.registerConfiguredFeature(
-            feature,
-            DuskFeatures.CaveSurfaceFeature,
-            CaveSurfaceFeatureConfig(
-                BlockStateProvider.simple(
-                    leaves.defaultBlockState().trySetValue(BlockStateProperties.PERSISTENT, true)
-                ),
-                blockTags.getOrThrow(BlockTags.REPLACEABLE),
+            DuskConfiguredFeatures.PALE_CAVE_LEAVES_CEILING,
+            Feature.RANDOM_BOOLEAN_SELECTOR,
+            RandomBooleanFeatureConfiguration(
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_PALE_LEAVES_CEILING),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_DARK_LEAVES_CEILING)
             )
         )
     }
+
+    private fun BootstrapContext<ConfiguredFeature<*, *>>.leafCollumPatch(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        leaves: Block,
+        dir: Direction
+    ) {
+        this.registerConfiguredFeature(
+            feature,
+            Feature.RANDOM_PATCH,
+            FeatureUtils.simpleRandomPatchConfiguration(
+                15,
+                PlacementUtils.inlinePlaced(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnConfiguration(
+                        listOf(
+                            BlockColumnConfiguration.layer(
+                                BiasedToBottomInt.of(1, 4),
+                                BlockStateProvider.simple(
+                                    leaves.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true)
+                                )
+                            )
+                        ), dir, BlockPredicate.ONLY_IN_AIR_OR_WATER_PREDICATE, false
+                    ),
+                    BlockPredicateFilter.forPredicate(
+                        BlockPredicate.allOf(
+                            BlockPredicate.ONLY_IN_AIR_OR_WATER_PREDICATE,
+                            BlockPredicate.hasSturdyFace(dir.opposite.unitVec3i, dir)
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+
 }

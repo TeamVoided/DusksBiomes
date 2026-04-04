@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.levelgen.Heightmap
@@ -23,67 +24,6 @@ object CavePlacedCreator {
     }
 
     private fun BootstrapContext<PlacedFeature>.pale(cf: HolderGetter<ConfiguredFeature<*, *>>) {
-        this.register(
-            DuskPlacedFeatures.PALE_CAVES_VINES,
-            DuskConfiguredFeatures.PALE_CAVE_VINES,
-            CountPlacement.of(188),
-            InSquarePlacement.spread(),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            EnvironmentScanPlacement.scanningFor(
-                Direction.UP,
-                BlockPredicate.hasSturdyFace(Direction.DOWN),
-                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                12
-            ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
-            BiomeFilter.biome()
-        )
-        this.register(
-            DuskPlacedFeatures.PALE_CAVES_VEGETATION,
-            DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH,
-            CountPlacement.of(125),
-            InSquarePlacement.spread(),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN,
-                BlockPredicate.solid(),
-                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                12
-            ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(1)),
-            BiomeFilter.biome()
-        )
-        this.register(
-            DuskPlacedFeatures.PALE_CAVES_CLAY,
-            DuskConfiguredFeatures.PALE_CAVE_CLAY,
-            CountPlacement.of(15),
-            InSquarePlacement.spread(),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN,
-                BlockPredicate.solid(),
-                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                12
-            ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(1)),
-            BiomeFilter.biome()
-        )
-        this.register(
-            DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION,
-            DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH_CEILING,
-            CountPlacement.of(125),
-            InSquarePlacement.spread(),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            EnvironmentScanPlacement.scanningFor(
-                Direction.UP,
-                BlockPredicate.solid(),
-                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                12
-            ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
-            BiomeFilter.biome()
-
-        )
         this.register(
             DuskPlacedFeatures.PALE_HEART_CEILING,
             DuskConfiguredFeatures.PALE_CAVE_HEART_CEILING,
@@ -106,29 +46,70 @@ object CavePlacedCreator {
             RandomOffsetPlacement.vertical(ConstantInt.of(1)),
             BiomeFilter.biome()
         )
-        this.register(
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVES_VINES,
+            DuskConfiguredFeatures.PALE_CAVE_VINES,
+            188,
+            Direction.UP
+        )
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVES_VEGETATION,
+            DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH,
+            125,
+            Direction.DOWN
+        )
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVES_CLAY,
+            DuskConfiguredFeatures.PALE_CAVE_CLAY,
+            15,
+            Direction.DOWN
+        )
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION,
+            DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH_CEILING,
+            125,
+            Direction.UP
+        )
+        this.basicCavePlacement(
             DuskPlacedFeatures.FLOWER_PALE_CAVE,
             DuskConfiguredFeatures.PALE_CAVE_FLOWERS,
-            CountPlacement.of(50),
+            100,
+            Direction.DOWN
+        )
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVE_LEAVES,
+            DuskConfiguredFeatures.PALE_CAVE_LEAVES,
+            100,
+            Direction.DOWN
+        )
+        this.basicCavePlacement(
+            DuskPlacedFeatures.PALE_CAVE_LEAVES_CEILING,
+            DuskConfiguredFeatures.PALE_CAVE_LEAVES_CEILING,
+            100,
+            Direction.UP
+        )
+    }
+
+    fun BootstrapContext<PlacedFeature>.basicCavePlacement(
+        placed: ResourceKey<PlacedFeature>,
+        configured: ResourceKey<ConfiguredFeature<*, *>>,
+        count: Int,
+        direction: Direction = Direction.DOWN
+    ) {
+        this.register(
+            placed,
+            configured,
+            CountPlacement.of(count),
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
-                Direction.DOWN,
+                direction,
                 BlockPredicate.solid(),
                 BlockPredicate.ONLY_IN_AIR_PREDICATE,
                 12
             ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(1)),
+            RandomOffsetPlacement.vertical(ConstantInt.of(direction.opposite.stepY)),
             BiomeFilter.biome()
         )
-        this.register(
-            DuskPlacedFeatures.PALE_CAVE_LEAVES,
-            DuskConfiguredFeatures.PALE_CAVE_LEAVES,
-            CountPlacement.of(25),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            InSquarePlacement.spread(),
-            BiomeFilter.biome()
-        )
-
     }
 }

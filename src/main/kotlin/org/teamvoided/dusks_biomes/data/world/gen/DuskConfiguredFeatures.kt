@@ -59,10 +59,12 @@ object DuskConfiguredFeatures {
     val PALE_CAVE_CLAY = create("cave/pale/clay")
     val PALE_CAVE_HEART_CEILING = create("cave/pale/heart_ceiling")
     val PALE_CAVE_FLOWERS = create("cave/pale/flowers")
-    val PALE_CAVE_PALE_LEAVES= create("cave/pale/pale_leaves")
-    val PALE_CAVE_DARK_LEAVES= create("cave/pale/dark_leaves")
+    val PALE_CAVE_PALE_LEAVES = create("cave/pale/pale_leaves")
+    val PALE_CAVE_DARK_LEAVES = create("cave/pale/dark_leaves")
     val PALE_CAVE_LEAVES = create("cave/pale/leaves")
-
+    val PALE_CAVE_PALE_LEAVES_CEILING = create("cave/pale/pale_leaves_ceiling")
+    val PALE_CAVE_DARK_LEAVES_CEILING = create("cave/pale/dark_leaves_ceiling")
+    val PALE_CAVE_LEAVES_CEILING = create("cave/pale/leaves_ceiling")
 
 
     val DEEP_MONSTER_ROOM = create("monster_room/deep_monster_room")

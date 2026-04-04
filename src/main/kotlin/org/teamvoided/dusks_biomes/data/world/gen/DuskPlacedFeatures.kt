@@ -70,6 +70,7 @@ object DuskPlacedFeatures {
     val PALE_HEART_CEILING = create("cave/pale/heart_ceiling")
     val FLOWER_PALE_CAVE = create("cave/pale/flowers")
     val PALE_CAVE_LEAVES = create("cave/pale/leaves")
+    val PALE_CAVE_LEAVES_CEILING = create("cave/pale/leaves_ceiling")
 
 
 

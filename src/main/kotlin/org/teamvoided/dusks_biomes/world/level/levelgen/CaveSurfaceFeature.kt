@@ -1,17 +1,19 @@
 package org.teamvoided.dusks_biomes.world.level.levelgen
 
 import com.mojang.serialization.Codec
+import net.minecraft.core.BlockBox
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.Mth.lerp
 import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_biomes.world.level.levelgen.config.CaveSurfaceFeatureConfig
+import java.util.Collections
+import java.util.stream.Collectors
 
 class CaveSurfaceFeature(codec: Codec<CaveSurfaceFeatureConfig>) :
     Feature<CaveSurfaceFeatureConfig>(codec) {
@@ -22,15 +24,23 @@ class CaveSurfaceFeature(codec: Codec<CaveSurfaceFeatureConfig>) :
         if (flatFaceDir(worldGenLevel, sourcePos) == null) return false
         val c = context.config()
         val r = context.random()
-        if (worldGenLevel.getBlockState(sourcePos).`is`(c.canReplace))
-            worldGenLevel.setBlock(sourcePos, c.blockstate.getState(r, sourcePos), 2)
+        //if (worldGenLevel.getBlockState(sourcePos).`is`(c.canReplace))
+        //    worldGenLevel.setBlock(sourcePos, c.blockstate.getState(r, sourcePos), 2)
 
-        val rad = c.radius.sample(r)
+        val rad = 2//c.radius.sample(r)
         val lowPos = sourcePos.offset(-rad, -rad, -rad)
         val highPos = sourcePos.offset(rad, rad, rad)
-        val iterator = BlockPos.betweenClosed(lowPos, highPos)//.sortedBy { it.distSqr(sourcePos) }
+        val looper = BlockPos.betweenClosedStream(lowPos, highPos)
+        //.sorted { pos1, pos2 ->
+        //    val a = pos1.distSqr(sourcePos)
+        //    val b = pos2.distSqr(sourcePos)
+        //    if (a > b) 1
+        //    else if (a < b) -1
+        //    else 0
+        //}
 
-        for (pos in iterator) {
+        for (pos in looper) {
+            println(pos)
             val chanceCore = c.blockChanceCenter.sample(r).toDouble()
             val chanceEdge = c.blockChanceEdge.sample(r).toDouble()
             val chance = lerp(pos.distSqr(sourcePos) / (rad * rad), chanceCore, chanceEdge)
