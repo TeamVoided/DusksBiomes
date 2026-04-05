@@ -8,13 +8,16 @@ import org.teamvoided.dusks_biomes.DusksBiomes.id
 import org.teamvoided.dusks_biomes.world.level.levelgen.BuriedHeartFeature
 import org.teamvoided.dusks_biomes.world.level.levelgen.CaveSurfaceFeature
 import org.teamvoided.dusks_biomes.world.level.levelgen.CreepingVineFeature
+import org.teamvoided.dusks_biomes.world.level.levelgen.MultifaceFeature
 import org.teamvoided.dusks_biomes.world.level.levelgen.config.CaveSurfaceFeatureConfig
+import org.teamvoided.dusks_biomes.world.level.levelgen.config.MultifaceFeatureConfig
 import org.teamvoided.reef.util.register
 
 object DuskFeatures {
     val CAVE_SURFACE = register("cave_surface_feature", CaveSurfaceFeature(CaveSurfaceFeatureConfig.CODEC))
     val CREEPING_VINE = register("creeping_vine", CreepingVineFeature(NoneFeatureConfiguration.CODEC))
     val BURIED_HEART = register("buried_heart_feature", BuriedHeartFeature(NoneFeatureConfiguration.CODEC))
+    val MULTIFACE_GROWTH = register("multiface_growth", MultifaceFeature(MultifaceFeatureConfig.CODEC))
 
     fun init() = Unit
 

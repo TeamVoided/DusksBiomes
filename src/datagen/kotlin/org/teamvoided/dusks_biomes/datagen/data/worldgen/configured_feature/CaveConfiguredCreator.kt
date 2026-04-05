@@ -1,12 +1,10 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature
 
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
-import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -19,17 +17,18 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
 import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.inline
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
-import java.util.List
+import org.teamvoided.dusks_biomes.init.DuskFeatures
+import org.teamvoided.dusks_biomes.world.level.levelgen.config.MultifaceFeatureConfig
 
 object CaveConfiguredCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.caves() {
@@ -97,7 +96,8 @@ object CaveConfiguredCreator {
                             Blocks.DARK_OAK_LEAVES.defaultBlockState()
                                 .setValue(BlockStateProperties.PERSISTENT, true), 7
                         )
-                        .add(Blocks.PALE_OAK_SAPLING.defaultBlockState(), 4)
+                        .add(Blocks.OPEN_EYEBLOSSOM.defaultBlockState(), 4)
+                        .add(Blocks.PALE_OAK_SAPLING.defaultBlockState())
                         .add(Blocks.PALE_MOSS_CARPET.defaultBlockState(), 25)
                         .add(Blocks.SHORT_GRASS.defaultBlockState(), 25)
                         .add(Blocks.TALL_GRASS.defaultBlockState(), 10)
@@ -121,27 +121,11 @@ object CaveConfiguredCreator {
             )
         )
         this.registerConfiguredFeature(
-            DuskConfiguredFeatures.PALE_CAVE_CLAY_PATCH,
-            Feature.VEGETATION_PATCH,
-            VegetationPatchConfiguration(
-                BlockTags.LUSH_GROUND_REPLACEABLE,
-                BlockStateProvider.simple(Blocks.CLAY),
-                cf.inline(DuskConfiguredFeatures.PALE_CAVE_LEAVES),
-                CaveSurface.FLOOR,
-                ConstantInt.of(3),
-                0.8f,
-                2,
-                0.05f,
-                UniformInt.of(4, 7),
-                0.7f
-            )
-        )
-        this.registerConfiguredFeature(
-            DuskConfiguredFeatures.PALE_CAVE_CLAY_POOL,
+            DuskConfiguredFeatures.PALE_CAVE_POOL,
             Feature.WATERLOGGED_VEGETATION_PATCH,
             VegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
-                BlockStateProvider.simple(Blocks.CLAY),
+                BlockStateProvider.simple(Blocks.PALE_MOSS_BLOCK),
                 cf.inline(DuskConfiguredFeatures.PALE_CAVE_LEAVES),
                 CaveSurface.FLOOR,
                 ConstantInt.of(3),
@@ -153,11 +137,31 @@ object CaveConfiguredCreator {
             )
         )
         this.registerConfiguredFeature(
-            DuskConfiguredFeatures.PALE_CAVE_CLAY,
-            Feature.RANDOM_BOOLEAN_SELECTOR,
-            RandomBooleanFeatureConfiguration(
-                cf.inline(DuskConfiguredFeatures.PALE_CAVE_CLAY_PATCH),
-                cf.inline(DuskConfiguredFeatures.PALE_CAVE_CLAY_POOL)
+            DuskConfiguredFeatures.PALE_CAVE_GRASS_PATCH,
+            Feature.VEGETATION_PATCH,
+            VegetationPatchConfiguration(
+                BlockTags.LUSH_GROUND_REPLACEABLE,
+                BlockStateProvider.simple(Blocks.GRASS_BLOCK),
+                cf.inline(DuskConfiguredFeatures.PALE_CAVE_MOSS_VEGETATION),
+                CaveSurface.FLOOR,
+                ConstantInt.of(1),
+                0f,
+                5,
+                0.4f,
+                UniformInt.of(4, 7),
+                0.7f
+            )
+        )
+
+        this.registerConfiguredFeature(
+            DuskConfiguredFeatures.PALE_CAVE_VEGETATION,
+            Feature.RANDOM_SELECTOR,
+            RandomFeatureConfiguration(
+                listOf(
+                    WeightedPlacedFeature(cf.inline(DuskConfiguredFeatures.PALE_CAVE_POOL), 0.1f),
+                    WeightedPlacedFeature(cf.inline(DuskConfiguredFeatures.PALE_CAVE_GRASS_PATCH), 0.5f)
+                ),
+                PlacementUtils.inlinePlaced(cf.getOrThrow(DuskConfiguredFeatures.PALE_CAVE_MOSS_PATCH))
             )
         )
         this.registerConfiguredFeature(
@@ -178,26 +182,13 @@ object CaveConfiguredCreator {
         )
         this.registerConfiguredFeature(
             DuskConfiguredFeatures.PALE_CAVE_HEART_CEILING,
-            Feature.BLOCK_COLUMN,
-            BlockColumnConfiguration(
-                listOf(
-                    BlockColumnConfiguration.layer(
-                        ConstantInt.of(1),
-                        BlockStateProvider.simple(Blocks.PALE_OAK_LOG)
-                    ),
-                    BlockColumnConfiguration.layer(
-                        ConstantInt.of(1),
-                        BlockStateProvider.simple(Blocks.CREAKING_HEART)
-                    ),
-                    BlockColumnConfiguration.layer(
-                        ConstantInt.of(1),
-                        BlockStateProvider.simple(Blocks.PALE_OAK_LOG)
-                    )
-                ),
-                Direction.DOWN,
-                BlockPredicate.alwaysTrue(),
-                false
-            )
+            DuskFeatures.BURIED_HEART,
+            NoneFeatureConfiguration()
+        )
+        this.registerConfiguredFeature(
+            DuskConfiguredFeatures.PALE_CAVE_RESIN,
+            DuskFeatures.MULTIFACE_GROWTH,
+            MultifaceFeatureConfig(BlockStateProvider.simple(Blocks.RESIN_CLUMP))
         )
         this.registerConfiguredFeature(
             DuskConfiguredFeatures.PALE_CAVE_FLOWERS,
@@ -206,6 +197,11 @@ object CaveConfiguredCreator {
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.OPEN_EYEBLOSSOM))
             )
+        )
+        this.registerConfiguredFeature(
+            DuskConfiguredFeatures.PALE_CAVE_ROOTS,
+            DuskFeatures.CREEPING_VINE,
+            NoneFeatureConfiguration()
         )
 
 

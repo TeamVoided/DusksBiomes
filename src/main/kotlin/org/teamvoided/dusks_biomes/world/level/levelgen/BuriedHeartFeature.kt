@@ -8,6 +8,8 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CreakingHeartBlock
+import net.minecraft.world.level.block.state.properties.CreakingHeartState
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
@@ -30,10 +32,10 @@ class BuriedHeartFeature(codec: Codec<NoneFeatureConfiguration>) :
                     break
                 }
             }
-            if (thisAxis && world.getBlockState(origin).`is`(BlockTags.BASE_STONE_OVERWORLD) &&
-                ((world.getBlockState(origin.relative(it.positive)).`is`(BlockTags.REPLACEABLE) &&
-                        world.getBlockState(origin.relative(it.negative)).`is`(BlockTags.BASE_STONE_OVERWORLD)) ||
-                        (world.getBlockState(origin.relative(it.positive)).`is`(BlockTags.BASE_STONE_OVERWORLD) &&
+            if (thisAxis && world.getBlockState(origin).`is`(BlockTags.LUSH_GROUND_REPLACEABLE) &&
+                ((world.getBlockState(origin.relative(it.positive)).`is`(BlockTags.REPLACEABLE) ||
+                        world.getBlockState(origin.relative(it.positive)).`is`(BlockTags.LUSH_GROUND_REPLACEABLE)) &&
+                        (world.getBlockState(origin.relative(it.negative)).`is`(BlockTags.LUSH_GROUND_REPLACEABLE) ||
                                 world.getBlockState(origin.relative(it.negative)).`is`(BlockTags.REPLACEABLE))
                         )
             ) {
@@ -47,7 +49,13 @@ class BuriedHeartFeature(codec: Codec<NoneFeatureConfiguration>) :
                     Utils.trySetDirectionals(Blocks.PALE_OAK_LOG, it.negative),
                     2
                 )
-                world.setBlock(origin, Utils.trySetDirectionals(Blocks.CREAKING_HEART, it.positive), 2)
+                world.setBlock(
+                    origin,
+                    Utils.trySetDirectionals(Blocks.CREAKING_HEART, it.positive)
+                        .setValue(CreakingHeartBlock.STATE, CreakingHeartState.AWAKE)
+                        .setValue(CreakingHeartBlock.NATURAL, true),
+                    2
+                )
                 return true
             }
         }

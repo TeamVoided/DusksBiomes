@@ -63,7 +63,6 @@ object DuskPlacedFeatures {
     val COBBLED_DEEPSLATE_CAVE_PILLAR = create("cave/gravel/cobbled_deepslate_cave_pillar")
     val COBBLED_DEEPSLATE_SPIKES = create("cave/gravel/cobbled_deepslate_spikes")
     val COBBLED_DEEPSLATE_SPIKES_ROOF = create("cave/gravel/cobbled_deepslate_spikes_roof")
-    val PALE_CAVES_CLAY = create("cave/pale/clay")
     val PALE_CAVES_VINES = create("cave/pale/vines")
     val PALE_CAVES_VEGETATION = create("cave/pale/vegetation")
     val PALE_CAVES_CEILING_VEGETATION = create("cave/pale/ceiling_vegetation")
