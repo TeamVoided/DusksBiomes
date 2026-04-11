@@ -47,7 +47,7 @@ dependencies {
     // Runtime
     modImplementation(libs.modmenu)
     // Testing
-    //modImplementation(libs.creative.works)
+    modImplementation(libs.creative.works)
 //    modImplementation(libs.imguimc)
 }
 
