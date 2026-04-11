@@ -2,9 +2,11 @@ package org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature
 
 import net.minecraft.core.Direction
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
@@ -61,6 +63,23 @@ object CavePlacedCreator {
             100,
             Direction.UP
         )
+        this.register(
+            DuskPlacedFeatures.PALE_CAVE_RESIN,
+            DuskConfiguredFeatures.PALE_CAVE_RESIN,
+            CountPlacement.of(UniformInt.of(24, 32)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
+        )
+        this.register(
+            DuskPlacedFeatures.PALE_CAVE_ROOTS,
+            DuskConfiguredFeatures.PALE_CAVE_ROOTS,
+            CountPlacement.of(UniformInt.of(24, 32)),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            BiomeFilter.biome()
+        )
+
     }
 
     fun BootstrapContext<PlacedFeature>.basicCavePlacement(

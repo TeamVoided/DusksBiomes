@@ -57,10 +57,12 @@ object CavesCreator {
 
     fun addPaleCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VEGETATION)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_ROOTS)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES_CEILING)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VINES)
-        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VEGETATION)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES)
+        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_RESIN)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_HEART_CEILING)
         //builder.addFeature(vd9, CavePlacements.ROOTED_AZALEA_TREE)
         builder.addFeature(vd9, DuskPlacedFeatures.FLOWER_PALE_CAVE)
