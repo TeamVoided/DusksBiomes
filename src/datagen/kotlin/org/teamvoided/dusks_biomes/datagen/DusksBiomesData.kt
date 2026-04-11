@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_biomes.datagen
 
+import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -19,6 +20,7 @@ import org.teamvoided.dusks_biomes.datagen.data.tags.StructureTagsProvider
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.BiomeCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.PlacedFeatureCreator
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.BiomeInjectors
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureProcessorCreator
@@ -54,6 +56,8 @@ object DusksBiomesData : DataGeneratorEntrypoint {
         gen.add(Registries.TEMPLATE_POOL, StructurePoolCreator::bootstrap)
         gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
+
+        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::boostrap)
     }
 
 
@@ -72,6 +76,8 @@ object DusksBiomesData : DataGeneratorEntrypoint {
             e.addAll(reg.lookupOrThrow(Registries.TEMPLATE_POOL))
             e.addAll(reg.lookupOrThrow(Registries.STRUCTURE_SET))
             e.addAll(reg.lookupOrThrow(Registries.STRUCTURE))
+
+            e.addAll(reg.lookupOrThrow(LithostitchedRegistries.BIOME_INJECTOR))
         }
 
         fun <T : Any> Entries.addEverything(registry: RegistryLookup<T>): MutableList<Holder<T>> {

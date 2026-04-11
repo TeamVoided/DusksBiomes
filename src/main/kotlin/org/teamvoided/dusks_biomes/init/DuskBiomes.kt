@@ -71,10 +71,10 @@ object DuskBiomes {
         val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
 
 
-        BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion)
+      /*  BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion)
         BiomePlacement.addSubOverworld(Biomes.PLAINS, COLD_PLAINS, coldRegion)
         BiomePlacement.addSubOverworld(Biomes.FOREST, WARM_FOREST, warmRegion)
-        BiomePlacement.addSubOverworld(Biomes.PLAINS, WARM_PLAINS, warmRegion)
+        BiomePlacement.addSubOverworld(Biomes.PLAINS, WARM_PLAINS, warmRegion)*/
 
         addOverworld(
             WINDSWEPT_BIRCH_FOREST,
