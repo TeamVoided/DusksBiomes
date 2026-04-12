@@ -8,9 +8,11 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.ERODED_MUSHROOM_ISLAND
 import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_CAVERNS
 import org.teamvoided.dusks_biomes.init.DuskBiomes.GRAVEL_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_CAVES
+import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_SAND_CAVES
@@ -78,6 +80,31 @@ object BiomeInjectors {
         replacePartially(DBInject.RED_BEACH, Biomes.BEACH, RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_RED_BEACH, Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_STONY_SHORE, Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
+
+        // region Mushroom
+        replacePartially(
+            DBInject.MUSHROOM_GROVE, Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE,
+            parameter(HUMIDITY, 0.3, 1.0)
+        )
+        replacePartially(
+            DBInject.MUSHROOM_GROVE_WEIRDNESS, Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE,
+            parameterMap(
+                climateParam(HUMIDITY, 0.1, 1.0),
+                climateParam(WEIRDNESS, -1.0, 0.0),
+            )
+        )
+        replacePartially(
+            DBInject.ERODED_MUSHROOM_ISLAND, Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND,
+            parameter(HUMIDITY, -1.0, -0.35),
+        )
+        replacePartially(
+            DBInject.ERODED_MUSHROOM_ISLAND_HUMIDITY, Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND,
+            parameterMap(
+                climateParam(HUMIDITY, -1.0, -0.1),
+                climateParam(WEIRDNESS, 0.0, 1.0),
+            )
+        )
+        // endregion
 
         // region Caves
         val caveParms = parameter(DEPTH, 0.2, 1.0)

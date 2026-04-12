@@ -157,26 +157,7 @@ object DuskBiomes {
                 CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.05f, 1f),
             )
         )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE,
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3f, 1f),
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.1f, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1f, 0f),
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND,
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.35f),
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.MUSHROOM_FIELDS, ERODED_MUSHROOM_ISLAND, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.1f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0f, 1f),
-            )
-        )
+
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
 //      namespace should be the identical to the namespace of all biomes to which the rules apply.
