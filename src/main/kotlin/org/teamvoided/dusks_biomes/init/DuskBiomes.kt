@@ -55,33 +55,8 @@ object DuskBiomes {
     val PALE_CAVES = create("pale_caves")
 
     fun init() {
-        val windsweptVariant = CriterionBuilder.allOf(
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, 0.1f),
-            CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f)
-        )
-
-        val oldGrowthVariant = CriterionBuilder.allOf(
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.1F, 1f),
-            CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f)
-        )
-        val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
         val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
 
-        addOverworld(
-            WINDSWEPT_BIRCH_FOREST,
-            Range(-0.45, 0.2),        // Temperature
-            Range(-1, 0.3),            // Humidity
-            Range(-0.19, 0.03),          // Continentalness
-            Range(0.45, 0.55),         // Erosion
-            Range(0.05, 1),         // Weirdness
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST,
-            CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, 0.2f)
-        )
-        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, snowyVariant)
-        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_GRAVELLY_HILLS, SNOWY_WINDSWEPT_GRAVELLY_HILLS, snowyVariant)
-        BiomePlacement.addSubOverworld(Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
         BiomePlacement.addSubOverworld(
             Biomes.TAIGA, SNOWY_OLD_GROWTH_SPRUCE_TAIGA, CriterionBuilder.allOf(
                 CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),

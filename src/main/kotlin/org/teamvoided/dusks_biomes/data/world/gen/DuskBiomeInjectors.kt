@@ -11,6 +11,7 @@ object DuskBiomeInjectors {
     val WARM_FOREST = key("warm_forest")
     val WARM_PLAINS = key("warm_plains")
     val WINDSWEPT_BIRCH_FOREST = key("windswept_birch_forest")
+    val WINDSWEPT_BIRCH_FOREST_REPLACE = key("windswept_birch_forest_replace")
     val SNOWY_WINDSWEPT_HILLS = key("snowy_windswept_hills")
     val SNOWY_WINDSWEPT_GRAVELLY_HILLS = key("snowy_windswept_gravelly_hills")
     val SNOWY_WINDSWEPT_FOREST = key("snowy_windswept_forest")
