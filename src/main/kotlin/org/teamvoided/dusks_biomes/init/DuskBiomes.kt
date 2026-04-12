@@ -1,15 +1,9 @@
 package org.teamvoided.dusks_biomes.init
 
-import com.terraformersmc.biolith.api.biome.BiomePlacement
-import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.biome.Climate.ParameterPoint
 import org.teamvoided.dusks_biomes.DusksBiomes.id
-import org.teamvoided.dusks_biomes.DusksBiomes.mc
-import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
-import org.teamvoided.dusks_biomes.util.Range
 import org.teamvoided.reef.util.key
 
 
@@ -52,95 +46,10 @@ object DuskBiomes {
     val GRAVEL_CAVES = create("gravel_caves")
     val PALE_CAVES = create("pale_caves")
 
-    fun init() {
-
-        addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, 1),            // Humidity
-            Range(-0.11, 1),          // Continentalness
-            Range(0.55, 1.0),         // Erosion
-            Range(0, 0.4),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, 1),            // Humidity
-            Range(-0.11, 1),          // Continentalness
-            Range(0.55, 1.0),         // Erosion
-            Range(-0.4, 0.4),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, 1),            // Humidity
-            Range(-0.11, 1),          // Continentalness
-            Range(0.55, 1.0),         // Erosion
-            Range(0.933, 1),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_MANGROVE_SWAMP,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, 0.1),            // Humidity
-            Range(-0.11, 1),          // Continentalness
-            Range(0.55, 1.0),         // Erosion
-            Range(-1, -0.933),         // Weirdness
-        )
-
-
-
-//      For TerraBlender compatibility, it is important the rulesOwner's
-//      namespace should be the identical to the namespace of all biomes to which the rules apply.
-        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
-    }
-
     fun create(id: String): ResourceKey<Biome> {
         val retorn = Registries.BIOME.key(id(id))
         DUSK_BIOMES.add(retorn)
         return retorn
-    }
-
-    fun createNoise(
-        temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
-        depth: Range, weirdness: Range, offset: Long,
-    ): ParameterPoint = ParameterPoint(
-        temperature.toParameterRange(),
-        humidity.toParameterRange(),
-        continentalness.toParameterRange(),
-        erosion.toParameterRange(),
-        depth.toParameterRange(),
-        weirdness.toParameterRange(),
-        offset
-    )
-
-    fun addOverworld(
-        biome: ResourceKey<Biome>, temperature: Range, humidity: Range,
-        continentalness: Range, erosion: Range, weirdness: Range,
-    ) {
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(0.0),         // Depth
-                weirdness,         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(1),         // Depth
-                weirdness,         // Weirdness
-                0L                  // Offset
-            )
-        )
     }
 
 }

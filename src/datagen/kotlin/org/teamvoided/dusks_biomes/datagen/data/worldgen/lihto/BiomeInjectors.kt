@@ -133,8 +133,47 @@ object BiomeInjectors {
         // endregion
 
         // region Frozen Mangrove Swamp
+        addPoints(DBInject.FROZEN_MANGROVE_SWAMP, buildList {
+            addAll(
+                mangroveSwampPoints(
+                    temperature = param(-1.0, -0.45),
+                    humidity = param(-1.0, 1.0),
+                    continentalness = param(-0.11, 1.0),
+                    erosion = param(0.55, 1.0),
+                    weirdness = param(0.0, 0.4),
+                )
+            )
+            addAll(
+                mangroveSwampPoints(
+                    temperature = param(-1.0, -0.45),
+                    humidity = param(-1.0, 1.0),
+                    continentalness = param(-0.11, 1.0),
+                    erosion = param(0.55, 1.0),
+                    weirdness = param(-0.4, 0.4),
+                )
+            )
+            addAll(
+                mangroveSwampPoints(
+                    temperature = param(-1.0, -0.45),
+                    humidity = param(-1.0, 1.0),
+                    continentalness = param(-0.11, 1.0),
+                    erosion = param(0.55, 1.0),
+                    weirdness = param(0.933, 1.0),
+                )
+            )
+            addAll(
+                mangroveSwampPoints(
+                    temperature = param(-1.0, -0.45),
+                    humidity = param(-1.0, 0.1),
+                    continentalness = param(-0.11, 1.0),
+                    erosion = param(0.55, 1.0),
+                    weirdness = param(-1.0, -0.933),
+                )
+            )
+        })
+
         replacePartially(
-            DBInject.FROZEN_MANGROVE_SWAMP, Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP,
+            DBInject.FROZEN_MANGROVE_SWAMP_RIVER, Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP,
             parameterMap(
                 climateParam(TEMPERATURE, -1.0, -0.45),
                 climateParam(EROSION, 0.55, 1.0),
@@ -227,6 +266,7 @@ object BiomeInjectors {
         replacePartially(DBInject.FROZEN_CAVERNS_ICE_SPIKE, Biomes.ICE_SPIKES, FROZEN_CAVERNS, caveParms)
         replacePartially(DBInject.FROZEN_CAVERNS_PEAKS, Biomes.FROZEN_PEAKS, FROZEN_CAVERNS, caveParms)
         replacePartially(DBInject.FROZEN_CAVERNS_FROZEN_OCEAN, Biomes.FROZEN_OCEAN, FROZEN_CAVERNS, caveParms)
+        replacePartially(DBInject.FROZEN_CAVERNS_DEEP_FROZEN_OCEAN, Biomes.DEEP_FROZEN_OCEAN, FROZEN_CAVERNS, caveParms)
 
         forcePlacement(
             DBInject.SAND_CAVES, SAND_CAVES,

@@ -26,6 +26,7 @@ object DuskBiomeInjectors {
 //    val FROZEN_WOODED_BADLANDS = key("frozen_wooded_badlands")
 //    val FROZEN_ERODED_BADLANDS = key("frozen_eroded_badlands")
     val FROZEN_MANGROVE_SWAMP = key("frozen_mangrove_swamp")
+    val FROZEN_MANGROVE_SWAMP_RIVER = key("frozen_mangrove_swamp_river")
     val ERODED_BADLANDS = key("eroded_badlands")
     val WARM_RIVER = key("warm_river")
     val RED_DESERT = key("red_desert")
@@ -45,12 +46,14 @@ object DuskBiomeInjectors {
     val FROZEN_CAVERNS_ICE_SPIKE = key("frozen_caverns_ice_spike")
     val FROZEN_CAVERNS_PEAKS = key("frozen_caverns_peaks")
     val FROZEN_CAVERNS_FROZEN_OCEAN = key("frozen_caverns_frozen_ocean")
+    val FROZEN_CAVERNS_DEEP_FROZEN_OCEAN = key("frozen_caverns_deep_frozen_ocean")
     val SAND_CAVES = key("sand_caves")
     val SAND_CAVES_DESERT = key("sand_caves_desert")
     val SAND_CAVES_WARM_OCEAN = key("sand_caves_warm_ocean")
     val RED_SAND_CAVES = key("red_sand_caves")
     val RED_SAND_CAVES_BADLANDS = key("red_sand_caves_badlands")
     val GRAVEL_CAVES = key("gravel_caves")
+    // TODO make spawn in world
     val PALE_CAVES = key("pale_caves")
 
     fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))

@@ -1,9 +1,10 @@
 package org.teamvoided.dusks_biomes
 
+import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.teamvoided.dusks_biomes.init.DuskBiomes
+import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.init.DuskDebug
 import org.teamvoided.dusks_biomes.init.DuskFeatures
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
@@ -20,7 +21,9 @@ object DusksBiomes {
     fun commonInit() {
         log.info("Dusking and Biomeing")
 
-        DuskBiomes.init()
+//      For TerraBlender compatibility, it is important the rulesOwner's
+//      namespace should be the identical to the namespace of all biomes to which the rules apply.
+        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
         DuskFeatures.init()
         DuskStructureProcessorTypes.init()
         if (isDev()) DuskDebug.init()
