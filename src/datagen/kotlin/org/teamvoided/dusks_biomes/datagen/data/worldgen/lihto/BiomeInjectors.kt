@@ -10,19 +10,23 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.ERODED_MUSHROOM_ISLAND
 import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_CAVERNS
+import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_MANGROVE_SWAMP
 import org.teamvoided.dusks_biomes.init.DuskBiomes.GRAVEL_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_DESERT
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_STONY_SHORE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_FOREST
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_HILLS
+import org.teamvoided.dusks_biomes.init.DuskBiomes.WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.WINDSWEPT_BIRCH_FOREST
 import org.teamvoided.dusks_biomes.data.world.gen.DuskBiomeInjectors as DBInject
 
@@ -70,6 +74,33 @@ object BiomeInjectors {
             snowyVariant
         )
         replacePartially(DBInject.SNOWY_WINDSWEPT_FOREST, Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
+        // endregion
+
+
+        replacePartially(
+            DBInject.FROZEN_MANGROVE_SWAMP, Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP,
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, -0.45),
+                climateParam(EROSION, 0.55, 1.0),
+            )
+        )
+
+        // region Rivers
+        replacePartially(DBInject.RED_DESERT, Biomes.DESERT, RED_DESERT, redSandInlandVariant)
+        replacePartially(
+            DBInject.RED_WARM_RIVER, Biomes.RIVER, RED_WARM_RIVER,
+            parameterMap(
+                climateParam(TEMPERATURE, 0.55, 1.0),
+                climateParam(EROSION, -1.0, 0.05),
+            )
+        )
+        replacePartially(
+            DBInject.WARM_RIVER, Biomes.RIVER, WARM_RIVER,
+            parameterMap(
+                climateParam(TEMPERATURE, 0.55, 1.0),
+                climateParam(EROSION, 0.05, 1.0),
+            )
+        )
         // endregion
 
         replacePartially(DBInject.RED_WARM_OCEAN, Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)

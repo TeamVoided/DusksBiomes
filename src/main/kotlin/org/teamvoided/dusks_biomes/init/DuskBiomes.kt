@@ -138,25 +138,7 @@ object DuskBiomes {
             Range(0.55, 1.0),         // Erosion
             Range(-1, -0.933),         // Weirdness
         )
-        BiomePlacement.addSubOverworld(
-            Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
-                CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.55F, 1f),
-            )
-        )
-        BiomePlacement.addSubOverworld(Biomes.DESERT, RED_DESERT, redSandInlandVariant)
-        BiomePlacement.addSubOverworld(
-            Biomes.RIVER, RED_WARM_RIVER, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.55f, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f),
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.RIVER, WARM_RIVER, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.55f, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.05f, 1f),
-            )
-        )
+
 
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
