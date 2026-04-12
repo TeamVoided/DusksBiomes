@@ -57,7 +57,7 @@ object DusksBiomesData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
 
-        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::boostrap)
+        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)
     }
 
 

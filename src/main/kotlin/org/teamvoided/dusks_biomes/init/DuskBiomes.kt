@@ -65,16 +65,7 @@ object DuskBiomes {
             CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f)
         )
         val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
-        val coldRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.3f)
-        val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
-        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, -0.223f)
         val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
-
-
-      /*  BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion)
-        BiomePlacement.addSubOverworld(Biomes.PLAINS, COLD_PLAINS, coldRegion)
-        BiomePlacement.addSubOverworld(Biomes.FOREST, WARM_FOREST, warmRegion)
-        BiomePlacement.addSubOverworld(Biomes.PLAINS, WARM_PLAINS, warmRegion)*/
 
         addOverworld(
             WINDSWEPT_BIRCH_FOREST,
@@ -194,12 +185,6 @@ object DuskBiomes {
                 CriterionBuilder.value(BiomeParameterTargets.EROSION, 0.05f, 1f),
             )
         )
-        BiomePlacement.addSubOverworld(Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)
-        BiomePlacement.addSubOverworld(Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN, redSandVariant)
-        BiomePlacement.addSubOverworld(Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN, redSandVariant)
-        BiomePlacement.addSubOverworld(Biomes.BEACH, RED_BEACH, redSandInlandVariant)
-        BiomePlacement.addSubOverworld(Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
-        BiomePlacement.addSubOverworld(Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
         BiomePlacement.addSubOverworld(
             Biomes.MUSHROOM_FIELDS, MUSHROOM_GROVE,
             CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3f, 1f),

@@ -1,61 +1,43 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
 
 
-import com.mojang.datafixers.util.Either
-import com.terraformersmc.biolith.api.biome.sub.BiomeParameterTargets
-import com.terraformersmc.biolith.api.biome.sub.CriterionBuilder
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter
-import dev.worldgen.lithostitched.impl.worldgen.biomeinjector.ReplacePartially
-import dev.worldgen.lithostitched.impl.worldgen.biomeinjector.internal.ParameterMap
-import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.util.InclusiveRange
 import net.minecraft.world.level.biome.Biomes
-import net.minecraft.world.level.dimension.LevelStem
-import net.minecraft.world.level.levelgen.DensityFunction
-import org.teamvoided.dusks_biomes.data.world.gen.DuskBiomeInjectors
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import java.util.*
+import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_RED_BEACH
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_STONY_SHORE
+import org.teamvoided.dusks_biomes.data.world.gen.DuskBiomeInjectors as DBInject
 
 object BiomeInjectors {
 
-    fun boostrap(c: BootstrapContext<BiomeInjector>) {
-        val biomes = c.lookup(Registries.BIOME)
+    fun init(c: BootstrapContext<BiomeInjector>) = c.boostrap()
 
+    fun BootstrapContext<BiomeInjector>.boostrap() {
 
-        val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
-        val coldRegion2 = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.3f)
-        val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
-        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, -0.223f)
-        val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
+        val snowyVariant = parameterMap(climateParam(ClimateParameter.TEMPERATURE, -1.0, -0.45))
+        val coldRegion = parameterMap(climateParam(ClimateParameter.TEMPERATURE, -1.0, -0.25))
+        val warmRegion = parameterMap(climateParam(ClimateParameter.TEMPERATURE, 0.25, 1.0))
+        val redSandVariant = parameterMap(climateParam(ClimateParameter.EROSION, -1.0, -0.223))
+        val redSandInlandVariant = parameterMap(climateParam(ClimateParameter.EROSION, -1.0, 0.005))
 
+        replacePartially(DBInject.COLD_FOREST, Biomes.FOREST, DuskBiomes.COLD_FOREST, coldRegion)
+        replacePartially(DBInject.COLD_PLAINS, Biomes.PLAINS, DuskBiomes.COLD_PLAINS, coldRegion)
+        replacePartially(DBInject.WARM_FOREST, Biomes.FOREST, DuskBiomes.WARM_FOREST, warmRegion)
+        replacePartially(DBInject.WARM_PLAINS, Biomes.PLAINS, DuskBiomes.WARM_PLAINS, warmRegion)
 
-//        BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion2)
-//        BiomePlacement.addSubOverworld(Biomes.PLAINS, COLD_PLAINS, coldRegion2)
-//        BiomePlacement.addSubOverworld(Biomes.FOREST, WARM_FOREST, warmRegion)
-//        BiomePlacement.addSubOverworld(Biomes.PLAINS, WARM_PLAINS, warmRegion)
-
-
-        val coldRegion = ParameterMap(mapOf(climateParam(ClimateParameter.TEMPERATURE, -1.0, -0.3)), Optional.empty())
-
-        c.register(
-            DuskBiomeInjectors.COLD_FOREST,
-            ReplacePartially(
-                Optional.empty(),
-                LevelStem.OVERWORLD,
-                1,
-                HolderSet.direct(biomes.getOrThrow(Biomes.FOREST)),
-                biomes.getOrThrow(DuskBiomes.PALE_CAVES),
-                coldRegion
-            )
+        replacePartially(DBInject.RED_WARM_OCEAN, Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)
+        replacePartially(DBInject.RED_LUKEWARM_OCEAN, Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN, redSandVariant)
+        replacePartially(
+            DBInject.DEEP_RED_LUKEWARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN, DEEP_RED_LUKEWARM_OCEAN, redSandVariant
         )
-    }
-
-    fun climateParam(
-        param: ClimateParameter, min: Double, max: Double,
-    ): Pair<Either<ClimateParameter, DensityFunction>, InclusiveRange<Double>> {
-        return Either.left<ClimateParameter, DensityFunction>(param) to InclusiveRange(min, max)
+        replacePartially(DBInject.RED_BEACH, Biomes.BEACH, RED_BEACH, redSandInlandVariant)
+        replacePartially(DBInject.SNOWY_RED_BEACH, Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
+        replacePartially(DBInject.SNOWY_STONY_SHORE, Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
     }
 }

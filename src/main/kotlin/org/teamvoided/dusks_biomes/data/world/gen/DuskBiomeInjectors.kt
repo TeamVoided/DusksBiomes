@@ -1,18 +1,45 @@
 package org.teamvoided.dusks_biomes.data.world.gen
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
-import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
-import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_biomes.DusksBiomes.id
+import org.teamvoided.dusks_biomes.util.key
 
 object DuskBiomeInjectors {
 
+    val COLD_FOREST = key("cold_forest")
+    val COLD_PLAINS = key("cold_plains")
+    val WARM_FOREST = key("warm_forest")
+    val WARM_PLAINS = key("warm_plains")
+    val WINDSWEPT_BIRCH_FOREST = key("windswept_birch_forest")
+    val SNOWY_WINDSWEPT_HILLS = key("snowy_windswept_hills")
+    val SNOWY_WINDSWEPT_GRAVELLY_HILLS = key("snowy_windswept_gravelly_hills")
+    val SNOWY_WINDSWEPT_FOREST = key("snowy_windswept_forest")
+    val SNOWY_OLD_GROWTH_PINE_TAIGA = key("snowy_old_growth_pine_taiga")
+    val SNOWY_OLD_GROWTH_SPRUCE_TAIGA = key("snowy_old_growth_spruce_taiga")
+    val DARK_GROVE = key("dark_grove")
+    val PALE_GROVE = key("pale_grove")
+    val SNOWY_CHERRY_GROVE = key("snowy_cherry_grove")
+    val FROZEN_BADLANDS = key("frozen_badlands")
+    val FROZEN_WOODED_BADLANDS = key("frozen_wooded_badlands")
+    val FROZEN_ERODED_BADLANDS = key("frozen_eroded_badlands")
+    val FROZEN_MANGROVE_SWAMP = key("frozen_mangrove_swamp")
+    val WARM_RIVER = key("warm_river")
+    val RED_DESERT = key("red_desert")
+    val RED_WARM_RIVER = key("red_warm_river")
+    val RED_WARM_OCEAN = key("red_warm_ocean")
+    val RED_LUKEWARM_OCEAN = key("red_lukewarm_ocean")
+    val DEEP_RED_LUKEWARM_OCEAN = key("deep_red_lukewarm_ocean")
+    val RED_BEACH = key("red_beach")
+    val SNOWY_RED_BEACH = key("snowy_red_beach")
+    val SNOWY_STONY_SHORE = key("snowy_stony_shore")
+    val MUSHROOM_GROVE = key("mushroom_grove")
+    val ERODED_MUSHROOM_ISLAND = key("eroded_mushroom_island")
+    val MUSHROOM_CAVES = key("mushroom_caves")
+    val FROZEN_CAVERNS = key("frozen_caverns")
+    val SAND_CAVES = key("sand_caves")
+    val RED_SAND_CAVES = key("red_sand_caves")
+    val GRAVEL_CAVES = key("gravel_caves")
+    val PALE_CAVES = key("pale_caves")
 
-    val COLD_FOREST = create("cold_forest")
-    val COLD_PLAINS = create("cold_plains")
-    val WARM_FOREST = create("warm_forest")
-    val WARM_PLAINS = create("warm_plains")
-
-    fun create(id: String): ResourceKey<BiomeInjector> =
-        ResourceKey.create(LithostitchedRegistries.BIOME_INJECTOR, id(id))
+    fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))
 }
