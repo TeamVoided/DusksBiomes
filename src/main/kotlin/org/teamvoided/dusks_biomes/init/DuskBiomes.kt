@@ -180,67 +180,6 @@ object DuskBiomes {
                 CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0f, 1f),
             )
         )
-        BiomePlacement.addOverworld(
-            MUSHROOM_CAVES,
-            createNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, 0.7),      // Humidity
-                Range(-1.2, -1.05),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            FROZEN_CAVERNS,
-            createNoise(
-                Range(-1, -0.9),        // Temperature
-                Range(-1, -0.7),      // Humidity
-                Range(-1, 0.8),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            SAND_CAVES,
-            createNoise(
-                Range(0.8, 1),        // Temperature
-                Range(-1, -0.65),      // Humidity
-                Range(-1, 0.8),          // Continentalness
-                Range(0.05, 1),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            RED_SAND_CAVES,
-            createNoise(
-                Range(0.8, 1),        // Temperature
-                Range(-1, -0.65),      // Humidity
-                Range(-1, 0.8),          // Continentalness
-                Range(-1, 0.05),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            GRAVEL_CAVES,
-            createNoise(
-                Range(-0.9, 1),        // Temperature
-                Range(-1, -0.8),      // Humidity
-                Range(-0.95, 0.8),          // Continentalness
-                Range(-1, 1),         // Erosion
-                Range(0.2, 0.9),         // Depth
-                Range(-1, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
 //      namespace should be the identical to the namespace of all biomes to which the rules apply.

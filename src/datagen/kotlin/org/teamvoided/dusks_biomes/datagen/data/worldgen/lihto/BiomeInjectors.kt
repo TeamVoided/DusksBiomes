@@ -2,14 +2,20 @@ package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
 
 
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
-import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter
+import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter.*
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_CAVERNS
+import org.teamvoided.dusks_biomes.init.DuskBiomes.GRAVEL_CAVES
+import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_STONY_SHORE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_FOREST
@@ -24,11 +30,11 @@ object BiomeInjectors {
 
     fun BootstrapContext<BiomeInjector>.boostrap() {
 
-        val snowyVariant = parameter(ClimateParameter.TEMPERATURE, -1.0, -0.45)
-        val coldRegion = parameter(ClimateParameter.TEMPERATURE, -1.0, -0.25)
-        val warmRegion = parameter(ClimateParameter.TEMPERATURE, 0.25, 1.0)
-        val redSandVariant = parameter(ClimateParameter.EROSION, -1.0, -0.223)
-        val redSandInlandVariant = parameter(ClimateParameter.EROSION, -1.0, 0.005)
+        val snowyVariant = parameter(TEMPERATURE, -1.0, -0.45)
+        val coldRegion = parameter(TEMPERATURE, -1.0, -0.25)
+        val warmRegion = parameter(TEMPERATURE, 0.25, 1.0)
+        val redSandVariant = parameter(EROSION, -1.0, -0.223)
+        val redSandInlandVariant = parameter(EROSION, -1.0, 0.005)
 
         replacePartially(DBInject.COLD_FOREST, Biomes.FOREST, DuskBiomes.COLD_FOREST, coldRegion)
         replacePartially(DBInject.COLD_PLAINS, Biomes.PLAINS, DuskBiomes.COLD_PLAINS, coldRegion)
@@ -37,14 +43,13 @@ object BiomeInjectors {
 
         // region Windswept Variants
         forcePlacement(
-            DBInject.WINDSWEPT_BIRCH_FOREST,
-            WINDSWEPT_BIRCH_FOREST,
+            DBInject.WINDSWEPT_BIRCH_FOREST, WINDSWEPT_BIRCH_FOREST,
             parameterMap(
-                climateParam(ClimateParameter.TEMPERATURE, -0.45, 0.2),        // Temperature
-                climateParam(ClimateParameter.HUMIDITY, -1.0, 0.3),            // Humidity
-                climateParam(ClimateParameter.CONTINENTALNESS, -0.19, 0.03),          // Continentalness
-                climateParam(ClimateParameter.EROSION, 0.45, 0.55),         // Erosion
-                climateParam(ClimateParameter.WEIRDNESS, 0.05, 1.0),         // Weirdness
+                climateParam(TEMPERATURE, -0.45, 0.2),        // Temperature
+                climateParam(HUMIDITY, -1.0, 0.3),            // Humidity
+                climateParam(CONTINENTALNESS, -0.19, 0.03),          // Continentalness
+                climateParam(EROSION, 0.45, 0.55),         // Erosion
+                climateParam(WEIRDNESS, 0.05, 1.0),         // Weirdness
             )
         )
 
@@ -52,7 +57,7 @@ object BiomeInjectors {
             DBInject.WINDSWEPT_BIRCH_FOREST_REPLACE,
             Biomes.WINDSWEPT_SAVANNA,
             WINDSWEPT_BIRCH_FOREST,
-            parameter(ClimateParameter.TEMPERATURE, -1.0, 0.2)
+            parameter(TEMPERATURE, -1.0, 0.2)
         )
 
         replacePartially(DBInject.SNOWY_WINDSWEPT_HILLS, Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, snowyVariant)
@@ -73,5 +78,77 @@ object BiomeInjectors {
         replacePartially(DBInject.RED_BEACH, Biomes.BEACH, RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_RED_BEACH, Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_STONY_SHORE, Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
+
+        // region Caves
+        val caveParms = parameter(DEPTH, 0.2, 1.0)
+
+        forcePlacement(
+            DBInject.MUSHROOM_CAVES, MUSHROOM_CAVES,
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, 1.0),
+                climateParam(HUMIDITY, -1.0, 0.7),
+                climateParam(CONTINENTALNESS, -1.2, -1.05),
+                climateParam(EROSION, -1.0, 1.0),
+                climateParam(DEPTH, 0.2, 0.9),
+                climateParam(WEIRDNESS, -1.0, 1.0),
+            )
+        )
+
+        forcePlacement(
+            DBInject.FROZEN_CAVERNS, FROZEN_CAVERNS,
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, -0.9),
+                climateParam(HUMIDITY, -1.0, -0.7),
+                climateParam(CONTINENTALNESS, -1.0, 0.8),
+                climateParam(EROSION, -1.0, 1.0),
+                climateParam(DEPTH, 0.2, 0.9),
+                climateParam(WEIRDNESS, -1.0, 1.0),
+            )
+        )
+        replacePartially(DBInject.FROZEN_CAVERNS_ICE_SPIKE, Biomes.ICE_SPIKES, FROZEN_CAVERNS, caveParms)
+        replacePartially(DBInject.FROZEN_CAVERNS_PEAKS, Biomes.FROZEN_PEAKS, FROZEN_CAVERNS, caveParms)
+        replacePartially(DBInject.FROZEN_CAVERNS_FROZEN_OCEAN, Biomes.FROZEN_OCEAN, FROZEN_CAVERNS, caveParms)
+
+        forcePlacement(
+            DBInject.SAND_CAVES, SAND_CAVES,
+            parameterMap(
+                climateParam(TEMPERATURE, 0.8, 1.0),
+                climateParam(HUMIDITY, -1.0, -0.65),
+                climateParam(CONTINENTALNESS, -1.0, 0.8),
+                climateParam(EROSION, 0.05, 1.0),
+                climateParam(DEPTH, 0.2, 0.9),
+                climateParam(WEIRDNESS, -1.0, 1.0),
+            )
+        )
+        replacePartially(DBInject.SAND_CAVES_DESERT, Biomes.DESERT, SAND_CAVES, caveParms)
+        replacePartially(DBInject.SAND_CAVES_WARM_OCEAN, Biomes.WARM_OCEAN, SAND_CAVES, caveParms)
+
+        forcePlacement(
+            DBInject.RED_SAND_CAVES, RED_SAND_CAVES,
+            parameterMap(
+                climateParam(TEMPERATURE, 0.8, 1.0),
+                climateParam(HUMIDITY, -1.0, -0.65),
+                climateParam(CONTINENTALNESS, -1.0, 0.8),
+                climateParam(EROSION, -1.0, 0.05),
+                climateParam(DEPTH, 0.2, 0.9),
+                climateParam(WEIRDNESS, -1.0, 1.0),
+            )
+        )
+
+        replacePartially(DBInject.RED_SAND_CAVES_BADLANDS, ConventionalBiomeTags.IS_BADLANDS, RED_SAND_CAVES, caveParms)
+
+        forcePlacement(
+            DBInject.GRAVEL_CAVES, GRAVEL_CAVES,
+            parameterMap(
+                climateParam(TEMPERATURE, -0.9, 1.0),
+                climateParam(HUMIDITY, -1.0, -0.8),
+                climateParam(CONTINENTALNESS, -0.95, 0.8),
+                climateParam(EROSION, -1.0, 1.0),
+                climateParam(DEPTH, 0.2, 0.9),
+                climateParam(WEIRDNESS, -1.0, 1.0),
+            )
+        )
+
+        // endregion
     }
 }

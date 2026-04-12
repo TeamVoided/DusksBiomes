@@ -10,6 +10,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.util.InclusiveRange
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.dimension.LevelStem
@@ -30,6 +31,26 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
             LevelStem.OVERWORLD,
             10,
             HolderSet.direct(biomes.getOrThrow(target)),
+            biomes.getOrThrow(replacement),
+            parameters
+        )
+    )
+}
+
+fun BootstrapContext<BiomeInjector>.replacePartially(
+    key: ResourceKey<BiomeInjector>,
+    target: TagKey<Biome>,
+    replacement: ResourceKey<Biome>,
+    parameters: ParameterMap,
+) {
+    val biomes = lookup(Registries.BIOME)
+    register(
+        key,
+        ReplacePartially(
+            Optional.empty(),
+            LevelStem.OVERWORLD,
+            10,
+            biomes.getOrThrow(target),
             biomes.getOrThrow(replacement),
             parameters
         )
