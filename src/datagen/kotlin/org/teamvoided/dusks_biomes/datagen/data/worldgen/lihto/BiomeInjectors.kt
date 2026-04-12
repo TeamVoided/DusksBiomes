@@ -24,6 +24,8 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_CHERRY_GROVE
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_STONY_SHORE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_FOREST
@@ -75,7 +77,22 @@ object BiomeInjectors {
         replacePartially(DBInject.SNOWY_WINDSWEPT_FOREST, Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
         // endregion
 
-        
+        replacePartially(
+            DBInject.SNOWY_OLD_GROWTH_SPRUCE_TAIGA, Biomes.TAIGA, SNOWY_OLD_GROWTH_SPRUCE_TAIGA,
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, -0.45),
+                climateParam(WEIRDNESS, -1.0, 0.0),
+            )
+        )
+        replacePartially(
+            DBInject.SNOWY_OLD_GROWTH_PINE_TAIGA, Biomes.TAIGA, SNOWY_OLD_GROWTH_PINE_TAIGA,
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, -0.45),
+                climateParam(WEIRDNESS, 0.0, 1.0),
+            )
+        )
+
+
         // region Grove
         replacePartially(
             DBInject.DARK_GROVE,
@@ -106,7 +123,7 @@ object BiomeInjectors {
 
         replacePartially(
             DBInject.SNOWY_CHERRY_GROVE,
-            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, 
+            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE,
             parameterMap(
                 climateParam(TEMPERATURE, -1.0, -0.45),
                 climateParam(HUMIDITY, -1.0, -0.35),

@@ -1,13 +1,10 @@
 package org.teamvoided.dusks_biomes.init
 
 import com.terraformersmc.biolith.api.biome.BiomePlacement
-import com.terraformersmc.biolith.api.biome.sub.BiomeParameterTargets
-import com.terraformersmc.biolith.api.biome.sub.CriterionBuilder
 import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.biome.Climate.ParameterPoint
 import org.teamvoided.dusks_biomes.DusksBiomes.id
 import org.teamvoided.dusks_biomes.DusksBiomes.mc
@@ -56,21 +53,6 @@ object DuskBiomes {
     val PALE_CAVES = create("pale_caves")
 
     fun init() {
-        val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
-
-        BiomePlacement.addSubOverworld(
-            Biomes.TAIGA, SNOWY_OLD_GROWTH_SPRUCE_TAIGA, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f),
-            )
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.TAIGA, SNOWY_OLD_GROWTH_PINE_TAIGA, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, 0F, 1f),
-            )
-        )
-
 
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
