@@ -13,6 +13,7 @@ import org.teamvoided.dusks_biomes.DusksBiomes.id
 import org.teamvoided.dusks_biomes.DusksBiomes.mc
 import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.util.Range
+import org.teamvoided.reef.util.key
 
 
 @Suppress("MagicNumber")
@@ -113,10 +114,6 @@ object DuskBiomes {
             Biomes.BADLANDS, Biomes.ERODED_BADLANDS,
             CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, -0.35f),
         )
-//        addFrozenBadlands(
-//            Range(-0.11, 1),
-//            Range(-1, 0.05)
-//        )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature
@@ -187,14 +184,14 @@ object DuskBiomes {
     }
 
     fun create(id: String): ResourceKey<Biome> {
-        val retorn = ResourceKey.create(Registries.BIOME, id(id))
+        val retorn = Registries.BIOME.key(id(id))
         DUSK_BIOMES.add(retorn)
         return retorn
     }
 
     fun createNoise(
         temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
-        depth: Range, weirdness: Range, offset: Long
+        depth: Range, weirdness: Range, offset: Long,
     ): ParameterPoint = ParameterPoint(
         temperature.toParameterRange(),
         humidity.toParameterRange(),
@@ -205,62 +202,9 @@ object DuskBiomes {
         offset
     )
 
-    fun addFrozenBadlands(
-        continentalness: Range, erosion: Range
-    ) {
-        addOverworld(
-            FROZEN_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(-0.1, 0.1),      // Humidity
-            continentalness,
-            erosion,
-            Range(-1, -0.05),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(-0.35, 0.1),      // Humidity
-            continentalness,
-            erosion,
-            Range(0.05, 1),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_WOODED_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(0.1, 1),      // Humidity
-            continentalness,
-            erosion,
-            Range(0.05, 1),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_WOODED_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(0.1, 1),      // Humidity
-            continentalness,
-            erosion,
-            Range(-1, -0.05),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_ERODED_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, -0.35),      // Humidity
-            continentalness,
-            erosion,
-            Range(0.05, 1),         // Weirdness
-        )
-        addOverworld(
-            FROZEN_ERODED_BADLANDS,
-            Range(-1, -0.45),        // Temperature
-            Range(-1, -0.1),      // Humidity
-            continentalness,
-            erosion,
-            Range(-1, -0.05),         // Weirdness
-        )
-    }
-
     fun addOverworld(
         biome: ResourceKey<Biome>, temperature: Range, humidity: Range,
-        continentalness: Range, erosion: Range, weirdness: Range
+        continentalness: Range, erosion: Range, weirdness: Range,
     ) {
         BiomePlacement.addOverworld(
             biome,
@@ -288,72 +232,4 @@ object DuskBiomes {
         )
     }
 
-    fun addOverworld(
-        biome: ResourceKey<Biome>, temperature: Range, humidity: Range,
-        continentalness: Range, erosion: Range
-    ) {
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(0.0),         // Depth
-                Range(0.05, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(0.0),         // Depth
-                Range(-1, -0.05),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(1),         // Depth
-                Range(0.05, 1),         // Weirdness
-                0L                  // Offset
-            )
-        )
-        BiomePlacement.addOverworld(
-            biome,
-            createNoise(
-                temperature,        // Temperature
-                humidity,            // Humidity
-                continentalness,          // Continentalness
-                erosion,         // Erosion
-                Range(1),         // Depth
-                Range(-1, -0.05),         // Weirdness
-                0L                  // Offset
-            )
-        )
-    }
 }
-
-/*
-        BiomePlacement.addOverworld(
-            DEVILS_ROAR,
-            makeNoise(
-                Range(-1, 1),        // Temperature
-                Range(-1, 1),      // Humidity
-                Range(-1.05, -0.415),          // Continentalness
-                Range(-0.78, -0.375),         // Erosion
-                Range(0),         // Depth
-                Range(-1, 0),         // Weirdness
-                0L                  // Offset
-            )
-        )
- */
