@@ -71,37 +71,7 @@ object DuskBiomes {
             )
         )
 
-        BiomePlacement.addSubOverworld(
-            Biomes.GROVE, DARK_GROVE,
-            CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f),
-                CriterionBuilder.value(BiomeParameterTargets.CONTINENTALNESS, -1f, 0.3f)
-            ),
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.GROVE, PALE_GROVE,
-            CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -0.15F, 1f)
-            ),
-        )
-        BiomePlacement.addSubOverworld(
-            Biomes.GROVE, PALE_GROVE,
-            CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, 0.3F, 1f),
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f),
-                CriterionBuilder.value(BiomeParameterTargets.CONTINENTALNESS, 0.3f, 1f)
-            ),
-        )
 
-        BiomePlacement.addSubOverworld(
-            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, CriterionBuilder.allOf(
-                CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.45f),
-                CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, -0.35f),
-                CriterionBuilder.value(BiomeParameterTargets.WEIRDNESS, -1F, 0f),
-            )
-        )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature

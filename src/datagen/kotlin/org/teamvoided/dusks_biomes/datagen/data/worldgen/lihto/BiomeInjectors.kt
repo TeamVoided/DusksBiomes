@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes
+import org.teamvoided.dusks_biomes.init.DuskBiomes.DARK_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.ERODED_MUSHROOM_ISLAND
 import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_CAVERNS
@@ -14,6 +15,7 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_MANGROVE_SWAMP
 import org.teamvoided.dusks_biomes.init.DuskBiomes.GRAVEL_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_GROVE
+import org.teamvoided.dusks_biomes.init.DuskBiomes.PALE_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_DESERT
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
@@ -21,6 +23,7 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SAND_CAVES
+import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_CHERRY_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_STONY_SHORE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_FOREST
@@ -72,6 +75,45 @@ object BiomeInjectors {
         replacePartially(DBInject.SNOWY_WINDSWEPT_FOREST, Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
         // endregion
 
+        
+        // region Grove
+        replacePartially(
+            DBInject.DARK_GROVE,
+            Biomes.GROVE, DARK_GROVE,
+            parameterMap(
+                climateParam(HUMIDITY, 0.3, 1.0),
+                climateParam(TEMPERATURE, -1.0, -0.15),
+                climateParam(CONTINENTALNESS, -1.0, 0.3)
+            ),
+        )
+        replacePartially(
+            DBInject.PALE_GROVE,
+            Biomes.GROVE, PALE_GROVE,
+            parameterMap(
+                climateParam(HUMIDITY, 0.3, 1.0),
+                climateParam(TEMPERATURE, -0.15, 1.0)
+            ),
+        )
+        replacePartially(
+            DBInject.PALE_GROVE_CONTINENTALNESS,
+            Biomes.GROVE, PALE_GROVE,
+            parameterMap(
+                climateParam(HUMIDITY, 0.3, 1.0),
+                climateParam(TEMPERATURE, -1.0, -0.15),
+                climateParam(CONTINENTALNESS, 0.3, 1.0)
+            ),
+        )
+
+        replacePartially(
+            DBInject.SNOWY_CHERRY_GROVE,
+            Biomes.SNOWY_SLOPES, SNOWY_CHERRY_GROVE, 
+            parameterMap(
+                climateParam(TEMPERATURE, -1.0, -0.45),
+                climateParam(HUMIDITY, -1.0, -0.35),
+                climateParam(WEIRDNESS, -1.0, 0.0),
+            )
+        )
+        // endregion
 
         // region Frozen Mangrove Swamp
         replacePartially(
