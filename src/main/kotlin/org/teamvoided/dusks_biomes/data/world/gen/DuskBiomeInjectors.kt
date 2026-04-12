@@ -24,6 +24,7 @@ object DuskBiomeInjectors {
     val FROZEN_WOODED_BADLANDS = key("frozen_wooded_badlands")
     val FROZEN_ERODED_BADLANDS = key("frozen_eroded_badlands")
     val FROZEN_MANGROVE_SWAMP = key("frozen_mangrove_swamp")
+    val ERODED_BADLANDS = key("eroded_badlands")
     val WARM_RIVER = key("warm_river")
     val RED_DESERT = key("red_desert")
     val RED_WARM_RIVER = key("red_warm_river")

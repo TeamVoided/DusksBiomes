@@ -110,10 +110,6 @@ object DuskBiomes {
             Range(0.55, 1.0),         // Erosion
             Range(0, 0.4),         // Weirdness
         )
-        BiomePlacement.addSubOverworld(
-            Biomes.BADLANDS, Biomes.ERODED_BADLANDS,
-            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1F, -0.35f),
-        )
         addOverworld(
             FROZEN_MANGROVE_SWAMP,
             Range(-1, -0.45),        // Temperature

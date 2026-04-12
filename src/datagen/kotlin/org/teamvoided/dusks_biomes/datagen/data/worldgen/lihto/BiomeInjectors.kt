@@ -51,32 +51,29 @@ object BiomeInjectors {
         forcePlacement(
             DBInject.WINDSWEPT_BIRCH_FOREST, WINDSWEPT_BIRCH_FOREST,
             parameterMap(
-                climateParam(TEMPERATURE, -0.45, 0.2),        // Temperature
-                climateParam(HUMIDITY, -1.0, 0.3),            // Humidity
-                climateParam(CONTINENTALNESS, -0.19, 0.03),          // Continentalness
-                climateParam(EROSION, 0.45, 0.55),         // Erosion
-                climateParam(WEIRDNESS, 0.05, 1.0),         // Weirdness
+                climateParam(TEMPERATURE, -0.45, 0.2),
+                climateParam(HUMIDITY, -1.0, 0.3),
+                climateParam(CONTINENTALNESS, -0.19, 0.03),
+                climateParam(EROSION, 0.45, 0.55),
+                climateParam(WEIRDNESS, 0.05, 1.0),
             )
         )
 
         replacePartially(
-            DBInject.WINDSWEPT_BIRCH_FOREST_REPLACE,
-            Biomes.WINDSWEPT_SAVANNA,
-            WINDSWEPT_BIRCH_FOREST,
+            DBInject.WINDSWEPT_BIRCH_FOREST_REPLACE, Biomes.WINDSWEPT_SAVANNA, WINDSWEPT_BIRCH_FOREST,
             parameter(TEMPERATURE, -1.0, 0.2)
         )
 
         replacePartially(DBInject.SNOWY_WINDSWEPT_HILLS, Biomes.WINDSWEPT_HILLS, SNOWY_WINDSWEPT_HILLS, snowyVariant)
         replacePartially(
-            DBInject.SNOWY_WINDSWEPT_GRAVELLY_HILLS,
-            Biomes.WINDSWEPT_GRAVELLY_HILLS,
-            SNOWY_WINDSWEPT_GRAVELLY_HILLS,
+            DBInject.SNOWY_WINDSWEPT_GRAVELLY_HILLS, Biomes.WINDSWEPT_GRAVELLY_HILLS, SNOWY_WINDSWEPT_GRAVELLY_HILLS,
             snowyVariant
         )
         replacePartially(DBInject.SNOWY_WINDSWEPT_FOREST, Biomes.WINDSWEPT_FOREST, SNOWY_WINDSWEPT_FOREST, snowyVariant)
         // endregion
 
 
+        // region Frozen Mangrove Swamp
         replacePartially(
             DBInject.FROZEN_MANGROVE_SWAMP, Biomes.FROZEN_RIVER, FROZEN_MANGROVE_SWAMP,
             parameterMap(
@@ -84,9 +81,15 @@ object BiomeInjectors {
                 climateParam(EROSION, 0.55, 1.0),
             )
         )
+        // endregion
 
-        // region Rivers
+        replacePartially(
+            DBInject.ERODED_BADLANDS, Biomes.BADLANDS, Biomes.ERODED_BADLANDS,
+            parameter(HUMIDITY, -1.0, -0.35),
+        )
         replacePartially(DBInject.RED_DESERT, Biomes.DESERT, RED_DESERT, redSandInlandVariant)
+
+        // region Water Biomes
         replacePartially(
             DBInject.RED_WARM_RIVER, Biomes.RIVER, RED_WARM_RIVER,
             parameterMap(
@@ -101,8 +104,6 @@ object BiomeInjectors {
                 climateParam(EROSION, 0.05, 1.0),
             )
         )
-        // endregion
-
         replacePartially(DBInject.RED_WARM_OCEAN, Biomes.WARM_OCEAN, RED_WARM_OCEAN, redSandVariant)
         replacePartially(DBInject.RED_LUKEWARM_OCEAN, Biomes.LUKEWARM_OCEAN, RED_LUKEWARM_OCEAN, redSandVariant)
         replacePartially(
@@ -111,6 +112,7 @@ object BiomeInjectors {
         replacePartially(DBInject.RED_BEACH, Biomes.BEACH, RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_RED_BEACH, Biomes.SNOWY_BEACH, SNOWY_RED_BEACH, redSandInlandVariant)
         replacePartially(DBInject.SNOWY_STONY_SHORE, Biomes.STONY_SHORE, SNOWY_STONY_SHORE, snowyVariant)
+        // endregion
 
         // region Mushroom
         replacePartially(
