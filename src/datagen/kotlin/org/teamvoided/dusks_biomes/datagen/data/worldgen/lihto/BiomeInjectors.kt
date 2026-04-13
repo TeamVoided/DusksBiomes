@@ -3,9 +3,9 @@ package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
 
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter.*
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
+import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.ERODED_MUSHROOM_ISLAND
@@ -260,10 +260,10 @@ object BiomeInjectors {
                 climateParam(WEIRDNESS, -1.0, 1.0),
             )
         )
-        replacePartially(DBInject.FROZEN_CAVERNS_ICE_SPIKE, Biomes.ICE_SPIKES, FROZEN_CAVERNS, caveParms)
-        replacePartially(DBInject.FROZEN_CAVERNS_PEAKS, Biomes.FROZEN_PEAKS, FROZEN_CAVERNS, caveParms)
-        replacePartially(DBInject.FROZEN_CAVERNS_FROZEN_OCEAN, Biomes.FROZEN_OCEAN, FROZEN_CAVERNS, caveParms)
-        replacePartially(DBInject.FROZEN_CAVERNS_DEEP_FROZEN_OCEAN, Biomes.DEEP_FROZEN_OCEAN, FROZEN_CAVERNS, caveParms)
+
+        replacePartially(
+            DBInject.FROZEN_CAVERNS_UNDER_BIOMES, DuskBiomeTags.HAS_FROZEN_CAVERNS, FROZEN_CAVERNS, caveParms
+        )
 
         forcePlacement(
             DBInject.SAND_CAVES, SAND_CAVES,
@@ -276,11 +276,11 @@ object BiomeInjectors {
                 climateParam(WEIRDNESS, -1.0, 1.0),
             )
         )
-        replacePartially(DBInject.SAND_CAVES_DESERT, Biomes.DESERT, SAND_CAVES, caveParms)
-        replacePartially(DBInject.SAND_CAVES_WARM_OCEAN, Biomes.WARM_OCEAN, SAND_CAVES, caveParms)
+
+        replacePartially(DBInject.SAND_CAVES_UNDER_BIOMES, DuskBiomeTags.HAS_SAND_CAVES, SAND_CAVES, caveParms)
 
         forcePlacement(
-            DBInject.RED_SAND_CAVES, RED_SAND_CAVES,
+            DBInject.RED_SAND_CAVES, DuskBiomes.RED_SAND_CAVES,
             parameterMap(
                 climateParam(TEMPERATURE, 0.8, 1.0),
                 climateParam(HUMIDITY, -1.0, -0.65),
@@ -291,7 +291,9 @@ object BiomeInjectors {
             )
         )
 
-        replacePartially(DBInject.RED_SAND_CAVES_BADLANDS, ConventionalBiomeTags.IS_BADLANDS, DuskBiomes.RED_SAND_CAVES, caveParms)
+        replacePartially(
+            DBInject.RED_SAND_CAVES_UNDER_BIOMES, DuskBiomeTags.HAS_RED_SAND_CAVES, DuskBiomes.RED_SAND_CAVES, caveParms
+        )
 
         forcePlacement(
             DBInject.GRAVEL_CAVES, GRAVEL_CAVES,

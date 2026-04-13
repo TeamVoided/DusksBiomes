@@ -20,6 +20,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         duskTagsHasStructure()
+        duskTagsHasBiome()
         vanillaTags()
         vanillaTagIsBiome()
         vanillaTagsHasStructure()
@@ -75,16 +76,27 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         builder(DuskBiomeTags.HAS_VILLAGE_MANGROVE_SWAMP_STRUCTURE)
             .add(DuskBiomes.FROZEN_MANGROVE_SWAMP)
             .add(Biomes.MANGROVE_SWAMP)
-//        builder(DuskBiomeTags.HAS_DESERT_RUIN)
-//            .add(Biomes.DESERT)
-//            .add(DuskBiomes.WARM_RIVER)
-//        builder(DuskBiomeTags.HAS_RED_DESERT_RUIN)
-//            .add(DuskBiomes.RED_DESERT)
-//            .add(DuskBiomes.RED_WARM_RIVER)
         builder(DuskBiomeTags.HAS_OCEAN_RUIN_RED_WARM)
             .add(DuskBiomes.RED_WARM_OCEAN)
             .add(DuskBiomes.RED_LUKEWARM_OCEAN)
             .add(DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
+    }
+
+    fun duskTagsHasBiome() {
+        builder(DuskBiomeTags.HAS_SAND_CAVES)
+            .add(
+                Biomes.DESERT,
+                Biomes.WARM_OCEAN
+            )
+        builder(DuskBiomeTags.HAS_RED_SAND_CAVES)
+            .forceAddTag(ConventionalBiomeTags.IS_BADLANDS)
+        builder(DuskBiomeTags.HAS_FROZEN_CAVERNS)
+            .add(
+                Biomes.ICE_SPIKES,
+                Biomes.FROZEN_PEAKS,
+                Biomes.FROZEN_OCEAN,
+                Biomes.DEEP_FROZEN_OCEAN,
+            )
     }
 
     fun vanillaTags() {

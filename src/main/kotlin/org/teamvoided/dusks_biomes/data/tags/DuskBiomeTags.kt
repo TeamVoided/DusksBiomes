@@ -19,6 +19,10 @@ object DuskBiomeTags {
 //    val HAS_DESERT_RUIN = create("has_structure/has_desert_ruin")
 //    val HAS_RED_DESERT_RUIN = create("has_structure/has_red_desert_ruin")
 
+    val HAS_SAND_CAVES = create("has_biome/sand_caves")
+    val HAS_RED_SAND_CAVES = create("has_biome/red_sand_caves")
+    val HAS_FROZEN_CAVERNS = create("has_biome/frozen_caverns")
+
     val HAS_OCEAN_RUIN_RED_WARM = create("has_structure/ocean_ruin_red_warm")
     val VILLAGER_TAIGA = create("biome_tag_villagers", "villager_taiga")
     val VILLAGER_SNOWY = create("biome_tag_villagers", "villager_snowy")
