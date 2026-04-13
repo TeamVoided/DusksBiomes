@@ -41,7 +41,7 @@ object BiomeInjectors {
         val snowyVariant = parameter(TEMPERATURE, -1.0, -0.45)
         val coldRegion = parameter(TEMPERATURE, -1.0, -0.25)
         val warmRegion = parameter(TEMPERATURE, 0.25, 1.0)
-        val redSandVariant = parameter(EROSION, -1.0, -0.223)
+        val redSandVariant = parameter(EROSION, -1.0, -0.005)
         val redSandInlandVariant = parameter(EROSION, -1.0, 0.005)
 
         replacePartially(DBInject.COLD_FOREST, Biomes.FOREST, DuskBiomes.COLD_FOREST, coldRegion)
@@ -292,7 +292,27 @@ object BiomeInjectors {
         )
 
         replacePartially(
-            DBInject.RED_SAND_CAVES_UNDER_BIOMES, DuskBiomeTags.HAS_RED_SAND_CAVES, DuskBiomes.RED_SAND_CAVES, caveParms
+            DBInject.RED_SAND_CAVES_RED_DESERT, Biomes.DESERT, DuskBiomes.RED_SAND_CAVES,
+            parameterMap(
+                climateParam(EROSION, -1.0, 0.005),
+                climateParam(DEPTH, 0.2, 1.0),
+            ),
+            700
+        )
+
+        replacePartially(
+            DBInject.RED_SAND_CAVES_REPLACE_SAND_CAVE, DuskBiomeTags.HAS_SAND_CAVES, DuskBiomes.RED_SAND_CAVES,
+            parameterMap(
+                climateParam(EROSION, -1.0, 0.005),
+                climateParam(DEPTH, 0.2, 1.0),
+            ),
+            700
+        )
+
+        replacePartially(
+            DBInject.RED_SAND_CAVES_UNDER_BIOMES, DuskBiomeTags.HAS_RED_SAND_CAVES, DuskBiomes.RED_SAND_CAVES,
+            caveParms,
+            700
         )
 
         forcePlacement(
