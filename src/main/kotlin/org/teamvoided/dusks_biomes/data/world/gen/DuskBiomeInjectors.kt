@@ -53,8 +53,11 @@ object DuskBiomeInjectors {
     val RED_SAND_CAVES = key("red_sand_caves")
     val RED_SAND_CAVES_BADLANDS = key("red_sand_caves_badlands")
     val GRAVEL_CAVES = key("gravel_caves")
-    // TODO make spawn in world
+    // TODO dusk should add his spawn conditions
     val PALE_CAVES = key("pale_caves")
+    val PALE_CAVES_PALE_GROVE = key("pale_caves_pale_grove")
+    val PALE_CAVES_PALE_GROVE_CONTINENTALNESS = key("pale_caves_pale_grove_continentalness")
+    val PALE_CAVES_PALE_GARDEN = key("pale_caves_pale_garden")
 
     fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))
 }

@@ -27,6 +27,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
     target: ResourceKey<Biome>,
     replacement: ResourceKey<Biome>,
     parameters: ParameterMap,
+    priority: Int = 800
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -34,7 +35,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
         ReplacePartially(
             Optional.empty(),
             LevelStem.OVERWORLD,
-            10,
+            priority,
             HolderSet.direct(biomes.getOrThrow(target)),
             biomes.getOrThrow(replacement),
             parameters
@@ -47,6 +48,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
     target: TagKey<Biome>,
     replacement: ResourceKey<Biome>,
     parameters: ParameterMap,
+    priority: Int = 800
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -54,7 +56,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
         ReplacePartially(
             Optional.empty(),
             LevelStem.OVERWORLD,
-            10,
+            priority,
             biomes.getOrThrow(target),
             biomes.getOrThrow(replacement),
             parameters
@@ -66,6 +68,7 @@ fun BootstrapContext<BiomeInjector>.forcePlacement(
     key: ResourceKey<BiomeInjector>,
     biome: ResourceKey<Biome>,
     parameters: ParameterMap,
+    priority: Int = 800
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -73,7 +76,7 @@ fun BootstrapContext<BiomeInjector>.forcePlacement(
         ForcePlacement(
             Optional.empty(),
             LevelStem.OVERWORLD,
-            10,
+            priority,
             biomes.getOrThrow(biome),
             parameters
         )
@@ -84,13 +87,17 @@ fun BootstrapContext<BiomeInjector>.addPoints(key: ResourceKey<BiomeInjector>, v
     return addPoints(key, points.toList())
 }
 
-fun BootstrapContext<BiomeInjector>.addPoints(key: ResourceKey<BiomeInjector>, points: List<BiomePoint>) {
+fun BootstrapContext<BiomeInjector>.addPoints(
+    key: ResourceKey<BiomeInjector>,
+    points: List<BiomePoint>,
+    priority: Int = 800
+) {
     register(
         key,
         AddPoints(
             Optional.empty(),
             LevelStem.OVERWORLD,
-            10,
+            priority,
             Climate.ParameterList(points)
         )
     )

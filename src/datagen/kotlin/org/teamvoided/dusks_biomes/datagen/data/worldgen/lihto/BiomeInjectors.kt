@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_biomes.init.DuskBiomes
-import org.teamvoided.dusks_biomes.init.DuskBiomes.DARK_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.ERODED_MUSHROOM_ISLAND
 import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_CAVERNS
@@ -15,11 +14,9 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes.FROZEN_MANGROVE_SWAMP
 import org.teamvoided.dusks_biomes.init.DuskBiomes.GRAVEL_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.MUSHROOM_GROVE
-import org.teamvoided.dusks_biomes.init.DuskBiomes.PALE_GROVE
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_BEACH
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_DESERT
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_LUKEWARM_OCEAN
-import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_SAND_CAVES
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_OCEAN
 import org.teamvoided.dusks_biomes.init.DuskBiomes.RED_WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SAND_CAVES
@@ -96,7 +93,7 @@ object BiomeInjectors {
         // region Grove
         replacePartially(
             DBInject.DARK_GROVE,
-            Biomes.GROVE, DARK_GROVE,
+            Biomes.GROVE, DuskBiomes.DARK_GROVE,
             parameterMap(
                 climateParam(HUMIDITY, 0.3, 1.0),
                 climateParam(TEMPERATURE, -1.0, -0.15),
@@ -105,7 +102,7 @@ object BiomeInjectors {
         )
         replacePartially(
             DBInject.PALE_GROVE,
-            Biomes.GROVE, PALE_GROVE,
+            Biomes.GROVE, DuskBiomes.PALE_GROVE,
             parameterMap(
                 climateParam(HUMIDITY, 0.3, 1.0),
                 climateParam(TEMPERATURE, -0.15, 1.0)
@@ -113,7 +110,7 @@ object BiomeInjectors {
         )
         replacePartially(
             DBInject.PALE_GROVE_CONTINENTALNESS,
-            Biomes.GROVE, PALE_GROVE,
+            Biomes.GROVE, DuskBiomes.PALE_GROVE,
             parameterMap(
                 climateParam(HUMIDITY, 0.3, 1.0),
                 climateParam(TEMPERATURE, -1.0, -0.15),
@@ -294,7 +291,7 @@ object BiomeInjectors {
             )
         )
 
-        replacePartially(DBInject.RED_SAND_CAVES_BADLANDS, ConventionalBiomeTags.IS_BADLANDS, RED_SAND_CAVES, caveParms)
+        replacePartially(DBInject.RED_SAND_CAVES_BADLANDS, ConventionalBiomeTags.IS_BADLANDS, DuskBiomes.RED_SAND_CAVES, caveParms)
 
         forcePlacement(
             DBInject.GRAVEL_CAVES, GRAVEL_CAVES,
@@ -308,6 +305,29 @@ object BiomeInjectors {
             )
         )
 
+
+        replacePartially(
+            DBInject.PALE_CAVES_PALE_GROVE, Biomes.GROVE, DuskBiomes.PALE_CAVES,
+            parameterMap(
+                climateParam(HUMIDITY, 0.3, 1.0),
+                climateParam(TEMPERATURE, -0.15, 1.0),
+                climateParam(DEPTH, 0.2, 1.0)
+            ),
+            700
+        )
+
+        replacePartially(
+            DBInject.PALE_CAVES_PALE_GROVE_CONTINENTALNESS, Biomes.GROVE, DuskBiomes.PALE_CAVES,
+            parameterMap(
+                climateParam(HUMIDITY, 0.3, 1.0),
+                climateParam(TEMPERATURE, -1.0, -0.15),
+                climateParam(CONTINENTALNESS, 0.3, 1.0),
+                climateParam(DEPTH, 0.2, 1.0)
+            ),
+            700
+        )
+
+        replacePartially(DBInject.PALE_CAVES_PALE_GARDEN, Biomes.PALE_GARDEN, DuskBiomes.PALE_CAVES, caveParms)
         // endregion
     }
 }
