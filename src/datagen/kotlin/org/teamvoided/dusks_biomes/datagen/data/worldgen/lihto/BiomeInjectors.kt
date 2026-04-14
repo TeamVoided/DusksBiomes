@@ -329,7 +329,7 @@ object BiomeInjectors {
 
 
         replacePartially(
-            DBInject.PALE_CAVES_PALE_GROVE, Biomes.GROVE, DuskBiomes.PALE_CAVES,
+            DBInject.PALE_UNDERGARDEN_PALE_GROVE, Biomes.GROVE, DuskBiomes.PALE_UNDERGARDEN,
             parameterMap(
                 climateParam(HUMIDITY, 0.3, 1.0),
                 climateParam(TEMPERATURE, -0.15, 1.0),
@@ -339,7 +339,7 @@ object BiomeInjectors {
         )
 
         replacePartially(
-            DBInject.PALE_CAVES_PALE_GROVE_CONTINENTALNESS, Biomes.GROVE, DuskBiomes.PALE_CAVES,
+            DBInject.PALE_UNDERGARDEN_PALE_GROVE_CONTINENTALNESS, Biomes.GROVE, DuskBiomes.PALE_UNDERGARDEN,
             parameterMap(
                 climateParam(HUMIDITY, 0.3, 1.0),
                 climateParam(TEMPERATURE, -1.0, -0.15),
@@ -349,7 +349,7 @@ object BiomeInjectors {
             700
         )
 
-        replacePartially(DBInject.PALE_CAVES_PALE_GARDEN, Biomes.PALE_GARDEN, DuskBiomes.PALE_CAVES, caveParms)
+        replacePartially(DBInject.PALE_UNDERGARDEN_PALE_GARDEN, Biomes.PALE_GARDEN, DuskBiomes.PALE_UNDERGARDEN, caveParms)
         // endregion
     }
 }

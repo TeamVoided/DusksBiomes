@@ -44,7 +44,7 @@ object DuskBiomes {
     val SAND_CAVES = create("sand_caverns")
     val RED_SAND_CAVES = create("red_sand_caverns")
     val GRAVEL_CAVES = create("gravel_caves")
-    val PALE_CAVES = create("pale_caves")
+    val PALE_UNDERGARDEN = create("pale_undergarden")
 
     fun create(id: String): ResourceKey<Biome> {
         val retorn = Registries.BIOME.key(id(id))

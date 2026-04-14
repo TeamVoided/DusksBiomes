@@ -35,7 +35,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.SnowyVariants.cre
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.SnowyVariants.createSnowyWindsweptHills
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.BiomeFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.CavesCreator.createPaleCave
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.biome.CavesCreator.createPaleUndergarden
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION as vd9
 
@@ -78,7 +78,7 @@ object BiomeCreator {
         c.register(DuskBiomes.SAND_CAVES, c.createDesert(red = false, cave = true))
         c.register(DuskBiomes.RED_SAND_CAVES, c.createDesert(red = true, cave = true))
         c.register(DuskBiomes.GRAVEL_CAVES, c.createGravelCave())
-        c.register(DuskBiomes.PALE_CAVES, c.createPaleCave())
+        c.register(DuskBiomes.PALE_UNDERGARDEN, c.createPaleUndergarden())
     }
 
 

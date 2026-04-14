@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen.biome
 
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
@@ -12,14 +11,13 @@ import net.minecraft.world.level.biome.Biome.BiomeBuilder
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.level.biome.BiomeSpecialEffects
 import net.minecraft.world.level.biome.MobSpawnSettings
-import net.minecraft.world.level.levelgen.GenerationStep
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION as vd9
 
 
 object CavesCreator {
 
-    fun BootstrapContext<Biome>.createPaleCave(): Biome {
+    fun BootstrapContext<Biome>.createPaleUndergarden(): Biome {
         val features = this.lookup(Registries.PLACED_FEATURE)
         val carver = this.lookup(Registries.CONFIGURED_CARVER)
         val spawns = MobSpawnSettings.Builder()
