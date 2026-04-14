@@ -4,9 +4,12 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.LanternBlock
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
+import net.minecraft.world.level.levelgen.structure.templatesystem.rule.blockentity.AppendLoot
+import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists.TRIAL_CHAMBERS_FIX
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.processor_list.OceanRuins.blockSwap
@@ -27,6 +30,28 @@ object StructureProcessorCreator {
         c.register(
             TRIAL_CHAMBERS_FIX,
             blockSwap(Blocks.IRON_CHAIN to Blocks.COPPER_CHAIN.waxedOxidized)
+        )
+
+        c.register(
+            DuskStructureProcessorLists.WELL_PROCESSOR,
+            CappedProcessor(
+                RuleProcessor(
+                    ProcessorRule(
+                        BlockMatchTest(Blocks.RED_SAND),
+                        AlwaysTrueTest.INSTANCE,
+                        PosAlwaysTrueTest.INSTANCE,
+                        Blocks.SUSPICIOUS_SAND.defaultBlockState(),
+                        AppendLoot(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY)
+                    ),
+                    ProcessorRule(
+                        BlockMatchTest(Blocks.SAND),
+                        AlwaysTrueTest.INSTANCE,
+                        PosAlwaysTrueTest.INSTANCE,
+                        Blocks.SUSPICIOUS_SAND.defaultBlockState(),
+                        AppendLoot(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY)
+                    )
+                ), ConstantInt.of(2)
+            ),
         )
 
     }

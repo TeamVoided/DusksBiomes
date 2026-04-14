@@ -1,13 +1,8 @@
 package org.teamvoided.dusks_biomes.datagen.data.worldgen
 
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderSet
+import net.minecraft.core.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.ProcessorLists
 import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.VegetationFeatures
@@ -48,15 +43,15 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import org.teamvoided.dusks_biomes.DusksBiomes.id
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.TreeConfiguredCreator.trees
+import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.CaveConfiguredCreator.caves
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.TreeConfiguredCreator.trees
 import org.teamvoided.reef.init.ReefFeatures
 import org.teamvoided.reef.world.level.levelgen.feature.config.*
 import java.util.*
-import kotlin.collections.listOf
 
 object ConfiguredFeatureCreator {
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -807,7 +802,7 @@ object ConfiguredFeatureCreator {
         )
 
 //Structure Piece features
-        val procDesertWell = procLists.getOrThrow(ProcessorLists.EMPTY)
+        val procDesertWell = procLists.getOrThrow(DuskStructureProcessorLists.WELL_PROCESSOR)
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.DESERT_WELL,
             ReefFeatures.STRUCTURE_PIECE,
@@ -909,7 +904,7 @@ object ConfiguredFeatureCreator {
 
     private fun HolderGetter<PlacedFeature>.wp(
         feature: ResourceKey<PlacedFeature>,
-        chance: Float
+        chance: Float,
     ): WeightedPlacedFeature = WeightedPlacedFeature(this.getOrThrow(feature), chance)
 
 
