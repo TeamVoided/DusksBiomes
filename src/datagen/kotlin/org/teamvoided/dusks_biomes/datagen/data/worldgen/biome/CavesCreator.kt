@@ -56,7 +56,7 @@ object CavesCreator {
     fun addPaleCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_CEILING_VEGETATION)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VEGETATION)
-        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_ROOTS)
+//        builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_ROOTS)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES_CEILING)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVES_VINES)
         builder.addFeature(vd9, DuskPlacedFeatures.PALE_CAVE_LEAVES)
