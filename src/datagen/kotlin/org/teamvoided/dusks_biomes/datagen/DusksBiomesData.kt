@@ -16,11 +16,13 @@ import org.teamvoided.dusks_biomes.datagen.assets.EnglishTranslationProvider
 import org.teamvoided.dusks_biomes.datagen.data.ChestLootTablesProvider
 import org.teamvoided.dusks_biomes.datagen.data.tags.BiomeTagsProvider
 import org.teamvoided.dusks_biomes.datagen.data.tags.BlockTagsProvider
+import org.teamvoided.dusks_biomes.datagen.data.tags.PoolTagsProvider
 import org.teamvoided.dusks_biomes.datagen.data.tags.StructureTagsProvider
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.BiomeCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.BiomeInjectors
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.WordgenModifiers
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureProcessorCreator
@@ -41,6 +43,7 @@ object DusksBiomesData : DataGeneratorEntrypoint {
         // Data
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
+        pack.addProvider(::PoolTagsProvider)
         pack.addProvider(::StructureTagsProvider)
         pack.addProvider(::WorldgenProvider)
         pack.addProvider(::AdvancementsProvider)
@@ -58,6 +61,7 @@ object DusksBiomesData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
 
         gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)
+        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WordgenModifiers::init)
     }
 
 
@@ -78,6 +82,7 @@ object DusksBiomesData : DataGeneratorEntrypoint {
             e.addAll(reg.lookupOrThrow(Registries.STRUCTURE))
 
             e.addAll(reg.lookupOrThrow(LithostitchedRegistries.BIOME_INJECTOR))
+            e.addAll(reg.lookupOrThrow(LithostitchedRegistries.WORLDGEN_MODIFIER))
         }
 
         fun <T : Any> Entries.addEverything(registry: RegistryLookup<T>): MutableList<Holder<T>> {

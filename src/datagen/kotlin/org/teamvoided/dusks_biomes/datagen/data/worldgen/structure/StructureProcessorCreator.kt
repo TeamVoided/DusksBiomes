@@ -7,8 +7,10 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.LanternBlock
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.processor_list.OceanRuins.oceanRuinWarmRed
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
+import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists.TRIAL_CHAMBERS_FIX
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.processor_list.OceanRuins.blockSwap
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.processor_list.OceanRuins.oceanRuinWarmRed
 
 
 object StructureProcessorCreator {
@@ -22,6 +24,11 @@ object StructureProcessorCreator {
         mangroveSwampVillageProcessorLists(c)
         c.oceanRuinWarmRed()
 //        desertRuinsProcessorLists(c)
+        c.register(
+            TRIAL_CHAMBERS_FIX,
+            blockSwap(Blocks.IRON_CHAIN to Blocks.COPPER_CHAIN.waxedOxidized)
+        )
+
     }
 
     fun swampVillageProcessorLists(c: BootstrapContext<StructureProcessorList>) {
@@ -360,7 +367,10 @@ object StructureProcessorCreator {
                     Blocks.AIR.defaultBlockState()
                 ),
                 ProcessorRule(
-                    RandomBlockStateMatchTest(Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true), 0.05f),
+                    RandomBlockStateMatchTest(
+                        Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true),
+                        0.05f
+                    ),
                     AlwaysTrueTest.INSTANCE,
                     Blocks.IRON_CHAIN.defaultBlockState()
                 ),
@@ -604,11 +614,11 @@ object StructureProcessorCreator {
         )
     }
 
-     fun BootstrapContext<StructureProcessorList>.register(
-        key: ResourceKey<StructureProcessorList>, vararg procList: StructureProcessor
+    fun BootstrapContext<StructureProcessorList>.register(
+        key: ResourceKey<StructureProcessorList>, vararg procList: StructureProcessor,
     ) = this.register(key, StructureProcessorList(procList.toList()))
 
-     fun RuleProcessor(vararg procRules: ProcessorRule): RuleProcessor =
+    fun RuleProcessor(vararg procRules: ProcessorRule): RuleProcessor =
         RuleProcessor(procRules.toList())
 
 }

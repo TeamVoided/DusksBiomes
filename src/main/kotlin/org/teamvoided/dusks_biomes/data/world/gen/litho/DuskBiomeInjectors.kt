@@ -1,7 +1,7 @@
-package org.teamvoided.dusks_biomes.data.world.gen
+package org.teamvoided.dusks_biomes.data.world.gen.litho
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
-import org.teamvoided.dusks_biomes.DusksBiomes.id
+import org.teamvoided.dusks_biomes.DusksBiomes
 import org.teamvoided.dusks_biomes.util.key
 
 object DuskBiomeInjectors {
@@ -57,5 +57,5 @@ object DuskBiomeInjectors {
     val PALE_UNDERGARDEN_PALE_GROVE_CONTINENTALNESS = key("pale_undergarden_pale_grove_continentalness")
     val PALE_UNDERGARDEN_PALE_GARDEN = key("pale_undergarden_pale_garden")
 
-    fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))
+    fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(DusksBiomes.id(id))
 }

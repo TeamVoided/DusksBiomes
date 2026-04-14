@@ -17,6 +17,7 @@ object DuskStructureProcessorLists {
 
     val OCEAN_RUIN_WARM_RED = create("ocean_ruin_warm_red")
 
+    val TRIAL_CHAMBERS_FIX = create("trial_chambers_fix")
 //    val DESERT_RUINS_OBELISK_TOP_ARCHAEOLOGY = create("desert_ruins/obelisk_top_archaeology")
 //    val DESERT_RUINS_ROADS_ARCHAEOLOGY = create("desert_ruins/roads_archaeology")
 //    val DESERT_RUINS_SMALL_RUINS_ARCHAEOLOGY = create("desert_ruins/small_ruins_archaeology")
