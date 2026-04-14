@@ -135,6 +135,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.MUSHROOM_CAVES)
         builder(BiomeTags.SPAWNS_CORAL_VARIANT_ZOMBIE_NAUTILUS)
             .add(DuskBiomes.RED_WARM_OCEAN)
+            .add(DuskBiomes.SAND_CAVES)
+            .add(DuskBiomes.RED_SAND_CAVES)
     }
 
     fun vanillaTagIsBiome() {
