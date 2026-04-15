@@ -328,6 +328,15 @@ object BiomeInjectors {
         )
 
 
+        replacePartially( //would like to only replace half of them in this region but oh well
+            DBInject.PALE_UNDERGARDEN, Biomes.LUSH_CAVES, DuskBiomes.PALE_UNDERGARDEN,
+            parameterMap(
+                climateParam(EROSION, -1.0, -0.223)
+            ),
+            700
+        )
+
+
         replacePartially(
             DBInject.PALE_UNDERGARDEN_PALE_GROVE, Biomes.GROVE, DuskBiomes.PALE_UNDERGARDEN,
             parameterMap(

@@ -51,7 +51,6 @@ object DuskBiomeInjectors {
     val RED_SAND_CAVES_REPLACE_SAND_CAVE = key("red_sand_caves_replace_sand_cave")
     val RED_SAND_CAVES_UNDER_BIOMES = key("red_sand_caves_under_biomes")
     val GRAVEL_CAVES = key("gravel_caves")
-    // TODO dusk should add his spawn conditions
     val PALE_UNDERGARDEN = key("pale_undergarden")
     val PALE_UNDERGARDEN_PALE_GROVE = key("pale_undergarden_pale_grove")
     val PALE_UNDERGARDEN_PALE_GROVE_CONTINENTALNESS = key("pale_undergarden_pale_grove_continentalness")
