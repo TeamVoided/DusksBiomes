@@ -15,4 +15,4 @@
   - Parched have been added to the ranged and slow_ranged templated pools
 - Fixed:
   - Custom dessert wells not spawning suspicious sand
-  - Red biome variants being to common 
+  - Red biome variants being too common 
