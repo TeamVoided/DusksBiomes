@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
+package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier
 import dev.worldgen.lithostitched.api.worldgen.util.BiomeEffects
@@ -12,7 +12,7 @@ import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.tags.DuskPoolTags
 import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
-import java.util.*
+import java.util.Optional
 
 object WorldgenModifiers {
 

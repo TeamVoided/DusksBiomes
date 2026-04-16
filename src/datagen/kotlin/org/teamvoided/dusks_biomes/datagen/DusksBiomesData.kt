@@ -22,7 +22,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.BiomeCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.BiomeInjectors
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.WorldgenModifiers
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers.WorldgenModifiers
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureProcessorCreator
