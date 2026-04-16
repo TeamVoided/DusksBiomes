@@ -14,7 +14,7 @@ import org.teamvoided.dusks_biomes.data.tags.DuskPoolTags
 import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
 import java.util.*
 
-object WordgenModifiers {
+object WorldgenModifiers {
 
     fun init(c: BootstrapContext<WorldgenModifier>) = c.boostrap()
 

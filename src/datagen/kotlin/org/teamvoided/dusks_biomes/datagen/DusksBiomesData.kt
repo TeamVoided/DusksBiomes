@@ -22,7 +22,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.BiomeCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.BiomeInjectors
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.WordgenModifiers
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.WorldgenModifiers
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructurePoolCreator
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.structure.StructureProcessorCreator
@@ -61,7 +61,7 @@ object DusksBiomesData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
 
         gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)
-        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WordgenModifiers::init)
+        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::init)
     }
 
 
