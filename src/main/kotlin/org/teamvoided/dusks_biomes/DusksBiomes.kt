@@ -1,10 +1,8 @@
 package org.teamvoided.dusks_biomes
 
-import com.terraformersmc.biolith.api.surface.SurfaceGeneration
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
 import org.teamvoided.dusks_biomes.init.DuskDebug
 import org.teamvoided.dusks_biomes.init.DuskFeatures
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes

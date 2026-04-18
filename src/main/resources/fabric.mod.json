@@ -22,8 +22,7 @@
     "fabricloader": "*",
     "fabric-api": "*",
     "fabric-language-kotlin": ">=${fabric_kotlin}",
-    "reef": ">=${reef}",
-    "biolith": ">=${biolith}"
+    "reef": ">=${reef}"
   },
   "contact": {
     "homepage": "https://github.com/${github_repo}",
