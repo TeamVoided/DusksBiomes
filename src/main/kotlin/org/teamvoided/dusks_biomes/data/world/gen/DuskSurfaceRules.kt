@@ -5,16 +5,13 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.SurfaceRules.*
-import net.minecraft.world.level.levelgen.SurfaceRules.ConditionSource
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
 object DuskSurfaceRules {
 
-    private fun block(block: Block): RuleSource {
-        return state(block.defaultBlockState()) 
-    }
+    fun block(block: Block): RuleSource = state(block.defaultBlockState())
 
     val grass: RuleSource = sequence(
         ifTrue(
@@ -56,15 +53,11 @@ object DuskSurfaceRules {
         block(Blocks.GRAVEL)
     )
     val sand: RuleSource = sequence(
-        ifTrue(
-            ON_CEILING, block(Blocks.SANDSTONE)
-        ),
+        ifTrue(ON_CEILING, block(Blocks.SANDSTONE)),
         block(Blocks.SAND)
     )
-    val sandRed: RuleSource = sequence(
-        ifTrue(
-            ON_CEILING, block(Blocks.RED_SANDSTONE)
-        ),
+    val redSand: RuleSource = sequence(
+        ifTrue(ON_CEILING, block(Blocks.RED_SANDSTONE)),
         block(Blocks.RED_SAND)
     )
 
@@ -138,7 +131,7 @@ object DuskSurfaceRules {
                     DuskBiomes.RED_BEACH,
                     DuskBiomes.SNOWY_RED_BEACH
                 ),
-                sandRed
+                redSand
             )
         )
         val windsweptBirchSurface = ifTrue(
@@ -255,7 +248,7 @@ object DuskSurfaceRules {
                     DuskBiomes.RED_BEACH,
                     DuskBiomes.SNOWY_RED_BEACH
                 ),
-                sandRed
+                redSand
             )
         )
         val deepWindsweptBirchSurface = ifTrue(
@@ -304,9 +297,9 @@ object DuskSurfaceRules {
                     DuskBiomes.RED_WARM_RIVER,
                     DuskBiomes.RED_WARM_OCEAN,
                     DuskBiomes.RED_LUKEWARM_OCEAN,
-                    DuskBiomes.DEEP_RED_LUKEWARM_OCEAN)
-                ,
-                sandRed
+                    DuskBiomes.DEEP_RED_LUKEWARM_OCEAN
+                ),
+                redSand
             )
         )
 //Non-Vanilla adjacent biomes
@@ -411,7 +404,7 @@ object DuskSurfaceRules {
                         ),
                         ifTrue(
                             waterBlockCheck(-1, 0),
-                            sandRed
+                            redSand
                         ),
                         ifTrue(
                             not(hole()),
@@ -515,7 +508,7 @@ object DuskSurfaceRules {
             ),
             ifTrue(
                 isBiome(DuskBiomes.RED_SAND_CAVES),
-                fallingBlockCaveSurface(sandRed, block(Blocks.RED_SANDSTONE))
+                fallingBlockCaveSurface(redSand, block(Blocks.RED_SANDSTONE))
             ),
             ifTrue(
                 isBiome(DuskBiomes.GRAVEL_CAVES),
@@ -651,8 +644,10 @@ object DuskSurfaceRules {
         // Return a surface-only sequence of surface rules
         return sequence(
             ifTrue(
-                yBlockCheck(VerticalAnchor.absolute(-55), 0), sequence(
-                    surface, sequence(
+                yBlockCheck(VerticalAnchor.absolute(-55), 0),
+                sequence(
+                    surface,
+                    sequence(
                         mushroomCaves,
                         fallingBlockCaves,
                         frozenCaverns
