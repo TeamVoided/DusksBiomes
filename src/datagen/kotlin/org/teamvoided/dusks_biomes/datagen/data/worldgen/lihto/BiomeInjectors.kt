@@ -40,7 +40,7 @@ object BiomeInjectors {
 
         val snowyVariant = parameter(TEMPERATURE, -1.0, -0.45)
         val coldRegion = parameter(TEMPERATURE, -1.0, -0.25)
-        val warmRegion = parameter(TEMPERATURE, 0.25, 1.0)
+        val warmRegion = parameter(TEMPERATURE, 0.25, 1.1)
         val redSandVariant = parameter(EROSION, -1.0, -0.005)
         val redSandInlandVariant = parameter(EROSION, -1.0, 0.005)
 
@@ -188,14 +188,14 @@ object BiomeInjectors {
         replacePartially(
             DBInject.RED_WARM_RIVER, Biomes.RIVER, RED_WARM_RIVER,
             parameterMap(
-                climateParam(TEMPERATURE, 0.55, 1.0),
+                climateParam(TEMPERATURE, 0.55, 1.1),
                 climateParam(EROSION, -1.0, 0.05),
             )
         )
         replacePartially(
             DBInject.WARM_RIVER, Biomes.RIVER, WARM_RIVER,
             parameterMap(
-                climateParam(TEMPERATURE, 0.55, 1.0),
+                climateParam(TEMPERATURE, 0.55, 1.1),
                 climateParam(EROSION, 0.05, 1.0),
             )
         )
