@@ -23,7 +23,7 @@ object DusksBiomes {
 
 //      For TerraBlender compatibility, it is important the rulesOwner's
 //      namespace should be the identical to the namespace of all biomes to which the rules apply.
-        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
+//        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
         DuskFeatures.init()
         DuskStructureProcessorTypes.init()
         if (isDev()) DuskDebug.init()
