@@ -18,6 +18,10 @@ object DSurfaceRules {
         ifTrue(ON_CEILING, block(Blocks.RED_SANDSTONE)),
         block(Blocks.RED_SAND)
     )
+    val GRAVEL = sequence(
+        ifTrue(ON_CEILING, block(Blocks.STONE)),
+        block(Blocks.GRAVEL)
+    )
     val RED_SANDSTONE = block(Blocks.RED_SANDSTONE)
     val SANDSTONE = block(Blocks.SANDSTONE)
     val MUD = block(Blocks.MUD)
@@ -27,6 +31,7 @@ object DSurfaceRules {
     val PODZOL = block(Blocks.PODZOL)
     val POWDER_SNOW = block(Blocks.POWDER_SNOW)
     val SNOW_BLOCK = block(Blocks.SNOW_BLOCK)
+    val STONE = block(Blocks.STONE)
 
     fun overworld(): RuleSource {
         val above97 = yBlockCheck(VerticalAnchor.absolute(97), 2)
@@ -97,6 +102,13 @@ object DSurfaceRules {
         )
 
         val rule4 = sequence(
+            ifTrue(
+                isBiome(DuskBiomes.SNOWY_STONY_SHORE),
+                sequence(
+                    ifTrue(noiseCondition(Noises.GRAVEL, -0.05, 0.05), GRAVEL),
+                    STONE
+                )
+            ),
             ifTrue(isSandBiome, SAND),
             ifTrue(isRedSandBiome, RED_SAND),
             ifTrue(isRedDesertBiome, RED_SAND),
