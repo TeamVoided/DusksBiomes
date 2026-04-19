@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.SurfaceRules.*
 import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.placement.CaveSurface
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
 object DSurfaceRules {
@@ -29,6 +30,11 @@ object DSurfaceRules {
     val DIRT = block(Blocks.DIRT)
     val COARSE_DIRT = block(Blocks.COARSE_DIRT)
     val PODZOL = block(Blocks.PODZOL)
+    val PODZOL_RULE: RuleSource = ifTrue(
+        waterBlockCheck(-1, 0),
+        sequence(ifTrue(ON_FLOOR, PODZOL), DIRT)
+    )
+    val MYCELIUM = block(Blocks.MYCELIUM)
     val POWDER_SNOW = block(Blocks.POWDER_SNOW)
     val SNOW_BLOCK = block(Blocks.SNOW_BLOCK)
     val STONE = block(Blocks.STONE)
@@ -79,6 +85,11 @@ object DSurfaceRules {
         )
         val isGroveLike = isBiome(
             DuskBiomes.SNOWY_CHERRY_GROVE,
+        )
+        val isMushroom = isBiome(
+            Biomes.MUSHROOM_FIELDS,
+            DuskBiomes.ERODED_MUSHROOM_ISLAND,
+            DuskBiomes.MUSHROOM_GROVE
         )
 
         val hasSandOceanFloor = isBiome(
@@ -157,7 +168,30 @@ object DSurfaceRules {
                     ifTrue(surfaceNoiseAbove(-0.95), PODZOL)
                 )
             ),
+            ifTrue(isMushroom, MYCELIUM),
             mangroveMud
+        )
+
+        val mushroomRules = ifTrue(
+            isMushroom,
+            sequence(
+                ifTrue(
+                    UNDER_FLOOR,
+                    ifTrue(surfaceSecondaryNoiseAbove(-0.75, 0.75), COARSE_DIRT),
+                ),
+                ifTrue(
+                    stoneDepthCheck(0, false, 2, CaveSurface.FLOOR),
+                    ifTrue(surfaceSecondaryNoiseAbove(-2.0, 2.0), PODZOL_RULE)
+                ),
+                ifTrue(
+                    UNDER_CEILING,
+                    ifTrue(surfaceNoiseAbove(0.75), COARSE_DIRT)
+                ),
+                ifTrue(
+                    stoneDepthCheck(0, true, 6, CaveSurface.CEILING),
+                    ifTrue(surfaceSecondaryNoiseAbove(1.0), COARSE_DIRT)
+                ),
+            )
         )
 
         val prelimSurfaceRules = ifTrue(
@@ -172,20 +206,25 @@ object DSurfaceRules {
                                 above60,
                                 ifTrue(
                                     not(above63),
-                                    ifTrue(
-                                        noiseCondition(Noises.SWAMP, 0.0),
-                                        WATER
-                                    )
+                                    ifTrue(noiseCondition(Noises.SWAMP, 0.0), WATER)
                                 )
                             )
                         )
                     )
                 ),
+                mushroomRules,
                 ifTrue(
                     ON_FLOOR,
                     ifTrue(
                         waterDepth1Check,
                         floorWaterDepth1Rule
+                    )
+                ),
+                ifTrue(
+                    isMushroom,
+                    ifTrue(
+                        DEEP_UNDER_FLOOR,
+                        ifTrue(surfaceNoiseAbove(1.0), DIRT)
                     )
                 ),
                 ifTrue(
@@ -235,6 +274,8 @@ object DSurfaceRules {
 
     // region Helpers
     fun block(block: Block): RuleSource = state(block.defaultBlockState())
-    fun surfaceNoiseAbove(d: Double): ConditionSource = noiseCondition(Noises.SURFACE, d / 8.25, Double.MAX_VALUE)
+    fun surfaceNoiseAbove(x: Double): ConditionSource = noiseCondition(Noises.SURFACE, x / 8.25, Double.MAX_VALUE)
+    fun surfaceSecondaryNoiseAbove(min: Double): ConditionSource =noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+    fun surfaceSecondaryNoiseAbove(x: Double, z: Double): ConditionSource = noiseCondition(Noises.SURFACE_SECONDARY, x / 8.25, z / 8.25)
     // endregion
 }
