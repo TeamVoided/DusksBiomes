@@ -92,11 +92,11 @@ object VanillaSurfaceRules {
             ifTrue(desertCheck, sandRule),
             ifTrue(isBiome(Biomes.DRIPSTONE_CAVES), STONE)
         )
-        val powderedSnowCheck = ifTrue(
+        val powderedSnowCheck1 = ifTrue(
             noiseCondition(Noises.POWDER_SNOW, 0.45, 0.58),
             ifTrue(waterCheck, POWDER_SNOW)
         )
-        val rule6 = ifTrue(
+        val powderedSnowCheck2 = ifTrue(
             noiseCondition(Noises.POWDER_SNOW, 0.35, 0.6),
             ifTrue(waterCheck, POWDER_SNOW)
         )
@@ -114,14 +114,14 @@ object VanillaSurfaceRules {
                 isBiome(Biomes.SNOWY_SLOPES),
                 sequence(
                     ifTrue(stepCheck, STONE),
-                    powderedSnowCheck,
+                    powderedSnowCheck1,
                     ifTrue(waterCheck, SNOW_BLOCK)
                 )
             ),
             ifTrue(isBiome(Biomes.JAGGED_PEAKS), STONE),
             ifTrue(
                 isBiome(Biomes.GROVE),
-                sequence(powderedSnowCheck, DIRT)
+                sequence(powderedSnowCheck1, DIRT)
             ),
             rule4,
             ifTrue(
@@ -157,7 +157,7 @@ object VanillaSurfaceRules {
                 isBiome(Biomes.SNOWY_SLOPES),
                 sequence(
                     ifTrue(stepCheck, STONE),
-                    rule6,
+                    powderedSnowCheck2,
                     ifTrue(waterCheck, SNOW_BLOCK)
                 )
             ),
@@ -170,7 +170,7 @@ object VanillaSurfaceRules {
             ),
             ifTrue(
                 isBiome(Biomes.GROVE),
-                sequence(rule6, ifTrue(waterCheck, SNOW_BLOCK))
+                sequence(powderedSnowCheck2, ifTrue(waterCheck, SNOW_BLOCK))
             ),
             rule4,
             ifTrue(
