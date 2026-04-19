@@ -141,6 +141,10 @@ object DSurfaceRules {
             ),
             ifTrue(isGroveLike, powderedSnowCheck1),
             rule4,
+            ifTrue(
+                isBiome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+                ifTrue(surfaceNoiseAbove(1.75), STONE)
+            ),
             mangroveMud
         )
 
@@ -165,6 +169,13 @@ object DSurfaceRules {
                 )
             ),
             rule4,
+            ifTrue(
+                isBiome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
+                sequence(
+                    ifTrue(surfaceNoiseAbove(1.75), STONE),
+                    ifTrue(surfaceNoiseAbove(-0.5), COARSE_DIRT)
+                )
+            ),
             ifTrue(
                 isSnowyOldGrowth,
                 sequence(
