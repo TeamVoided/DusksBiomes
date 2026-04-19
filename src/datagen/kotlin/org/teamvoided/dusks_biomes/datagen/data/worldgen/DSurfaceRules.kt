@@ -120,6 +120,10 @@ object DSurfaceRules {
                     STONE
                 )
             ),
+            ifTrue(
+                isBiome(DuskBiomes.SNOWY_WINDSWEPT_HILLS),
+                ifTrue(surfaceNoiseAbove(1.0), STONE)
+            ),
             ifTrue(isSandBiome, SAND),
             ifTrue(isRedSandBiome, RED_SAND),
             ifTrue(isRedDesertBiome, RED_SAND),
@@ -275,7 +279,10 @@ object DSurfaceRules {
     // region Helpers
     fun block(block: Block): RuleSource = state(block.defaultBlockState())
     fun surfaceNoiseAbove(x: Double): ConditionSource = noiseCondition(Noises.SURFACE, x / 8.25, Double.MAX_VALUE)
-    fun surfaceSecondaryNoiseAbove(min: Double): ConditionSource =noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
-    fun surfaceSecondaryNoiseAbove(x: Double, z: Double): ConditionSource = noiseCondition(Noises.SURFACE_SECONDARY, x / 8.25, z / 8.25)
+    fun surfaceSecondaryNoiseAbove(min: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
+
+    fun surfaceSecondaryNoiseAbove(x: Double, z: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE_SECONDARY, x / 8.25, z / 8.25)
     // endregion
 }
