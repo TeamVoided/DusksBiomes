@@ -22,6 +22,8 @@ object DSurfaceRules {
     val SANDSTONE = block(Blocks.SANDSTONE)
     val MUD = block(Blocks.MUD)
     val WATER = block(Blocks.WATER)
+    val PODZOL = block(Blocks.PODZOL)
+    val COARSE_DIRT = block(Blocks.COARSE_DIRT)
 
     fun overworld(): RuleSource {
         val above97 = yBlockCheck(VerticalAnchor.absolute(97), 2)
@@ -37,6 +39,7 @@ object DSurfaceRules {
         val holeCheck = hole()
         val stepCheck = steep()
 
+        // region Biome Checks
         val isSandBiome = isBiome(DuskBiomes.WARM_RIVER)
         val isRedSandBiome = isBiome(
             DuskBiomes.RED_WARM_RIVER,
@@ -45,6 +48,12 @@ object DSurfaceRules {
 
             DuskBiomes.RED_WARM_OCEAN,
             DuskBiomes.RED_LUKEWARM_OCEAN,
+        )
+        val isRedDesertBiome = isBiome(DuskBiomes.RED_DESERT)
+
+        val isSnowyOldGrowth = isBiome(
+            DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
+            DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA
         )
 
         val hasSandOceanFloor = isBiome(
@@ -60,8 +69,7 @@ object DSurfaceRules {
             DuskBiomes.RED_LUKEWARM_OCEAN,
             DuskBiomes.DEEP_RED_LUKEWARM_OCEAN,
         )
-
-        val isRedDesertBiome = isBiome(DuskBiomes.RED_DESERT)
+        // endregion
 
         val mangroveMud = ifTrue(
             isBiome(DuskBiomes.FROZEN_MANGROVE_SWAMP),
@@ -85,6 +93,13 @@ object DSurfaceRules {
         // rule8
         val floorWaterDepth1Rule = sequence(
             rule4,
+            ifTrue(
+                isSnowyOldGrowth,
+                sequence(
+                    ifTrue(surfaceNoiseAbove(1.75), COARSE_DIRT),
+                    ifTrue(surfaceNoiseAbove(-0.95), PODZOL)
+                )
+            ),
             mangroveMud
         )
 
@@ -163,5 +178,6 @@ object DSurfaceRules {
 
     // region Helpers
     fun block(block: Block): RuleSource = state(block.defaultBlockState())
+    fun surfaceNoiseAbove(d: Double): ConditionSource = noiseCondition(Noises.SURFACE, d / 8.25, Double.MAX_VALUE)
     // endregion
 }
