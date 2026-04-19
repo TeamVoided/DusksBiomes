@@ -22,8 +22,11 @@ object DSurfaceRules {
     val SANDSTONE = block(Blocks.SANDSTONE)
     val MUD = block(Blocks.MUD)
     val WATER = block(Blocks.WATER)
-    val PODZOL = block(Blocks.PODZOL)
+    val DIRT = block(Blocks.DIRT)
     val COARSE_DIRT = block(Blocks.COARSE_DIRT)
+    val PODZOL = block(Blocks.PODZOL)
+    val POWDER_SNOW = block(Blocks.POWDER_SNOW)
+    val SNOW_BLOCK = block(Blocks.SNOW_BLOCK)
 
     fun overworld(): RuleSource {
         val above97 = yBlockCheck(VerticalAnchor.absolute(97), 2)
@@ -38,6 +41,15 @@ object DSurfaceRules {
         val waterDepth6Check = waterStartCheck(-6, -1)
         val holeCheck = hole()
         val stepCheck = steep()
+
+        val powderedSnowCheck1 = ifTrue(
+            noiseCondition(Noises.POWDER_SNOW, 0.45, 0.58),
+            ifTrue(waterCheck, POWDER_SNOW)
+        )
+        val powderedSnowCheck2 = ifTrue(
+            noiseCondition(Noises.POWDER_SNOW, 0.35, 0.6),
+            ifTrue(waterCheck, POWDER_SNOW)
+        )
 
         // region Biome Checks
         val isSandBiome = isBiome(DuskBiomes.WARM_RIVER)
@@ -54,6 +66,14 @@ object DSurfaceRules {
         val isSnowyOldGrowth = isBiome(
             DuskBiomes.SNOWY_OLD_GROWTH_PINE_TAIGA,
             DuskBiomes.SNOWY_OLD_GROWTH_SPRUCE_TAIGA
+        )
+
+        val isGrove = isBiome(
+            DuskBiomes.DARK_GROVE,
+            DuskBiomes.PALE_GROVE,
+        )
+        val isGroveLike = isBiome(
+            DuskBiomes.SNOWY_CHERRY_GROVE,
         )
 
         val hasSandOceanFloor = isBiome(
@@ -85,6 +105,14 @@ object DSurfaceRules {
 
         // rule7
         val floorWaterDepth6Rule = sequence(
+            ifTrue(
+                isGrove,
+                sequence(
+                    powderedSnowCheck1,
+                    DIRT
+                )
+            ),
+            ifTrue(isGroveLike, powderedSnowCheck1),
             rule4,
             mangroveMud
         )
@@ -92,6 +120,23 @@ object DSurfaceRules {
 
         // rule8
         val floorWaterDepth1Rule = sequence(
+            ifTrue(
+                isGrove,
+                sequence(
+                    powderedSnowCheck2,
+                    ifTrue(waterCheck, SNOW_BLOCK)
+                )
+            ),
+            ifTrue(
+                isGroveLike,
+                sequence(
+                    powderedSnowCheck2,
+                    ifTrue(
+                        waterCheck,
+                        ifTrue(surfaceNoiseAbove(-1.0), SNOW_BLOCK)
+                    )
+                )
+            ),
             rule4,
             ifTrue(
                 isSnowyOldGrowth,
