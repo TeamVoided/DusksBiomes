@@ -6,14 +6,22 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.SurfaceRules.*
 import net.minecraft.world.level.levelgen.VerticalAnchor
-import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules
-import org.teamvoided.dusks_biomes.data.world.gen.VanillaSurfaceRules
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
 object DSurfaceRules {
 
-    val RED_SAND_STONE = block(Blocks.RED_SANDSTONE)
-    val MOD = block(Blocks.MUD)
+    val SAND = sequence(
+        ifTrue(ON_CEILING, block(Blocks.SANDSTONE)),
+        block(Blocks.SAND)
+    )
+    val RED_SAND = sequence(
+        ifTrue(ON_CEILING, block(Blocks.RED_SANDSTONE)),
+        block(Blocks.RED_SAND)
+    )
+    val RED_SANDSTONE = block(Blocks.RED_SANDSTONE)
+    val SANDSTONE = block(Blocks.SANDSTONE)
+    val MUD = block(Blocks.MUD)
+    val WATER = block(Blocks.WATER)
 
     fun overworld(): RuleSource {
         val above97 = yBlockCheck(VerticalAnchor.absolute(97), 2)
@@ -28,6 +36,7 @@ object DSurfaceRules {
         val waterDepth6Check = waterStartCheck(-6, -1)
         val holeCheck = hole()
         val stepCheck = steep()
+
         val isSandBiome = isBiome(DuskBiomes.WARM_RIVER)
         val isRedSandBiome = isBiome(
             DuskBiomes.RED_WARM_RIVER,
@@ -38,6 +47,11 @@ object DSurfaceRules {
             DuskBiomes.RED_LUKEWARM_OCEAN,
         )
 
+        val hasSandOceanFloor = isBiome(
+            DuskBiomes.WARM_RIVER,
+            Biomes.DESERT,
+            Biomes.BEACH,
+        )
         val hasRedSandOceanFloor = isBiome(
             DuskBiomes.RED_DESERT,
             DuskBiomes.RED_BEACH,
@@ -47,35 +61,29 @@ object DSurfaceRules {
             DuskBiomes.DEEP_RED_LUKEWARM_OCEAN,
         )
 
-        val hasSandOceanFloor = isBiome(
-            DuskBiomes.WARM_RIVER,
-            Biomes.DESERT,
-            Biomes.BEACH,
-        )
-
         val isRedDesertBiome = isBiome(DuskBiomes.RED_DESERT)
 
         val mangroveMud = ifTrue(
             isBiome(DuskBiomes.FROZEN_MANGROVE_SWAMP),
-            DuskSurfaceRules.block(Blocks.MUD)
+            MUD
         )
 
         val rule4 = sequence(
-            ifTrue(isSandBiome, DuskSurfaceRules.sand),
-            ifTrue(isRedSandBiome, DuskSurfaceRules.redSand),
-            ifTrue(isRedDesertBiome, DuskSurfaceRules.redSand),
+            ifTrue(isSandBiome, SAND),
+            ifTrue(isRedSandBiome, RED_SAND),
+            ifTrue(isRedDesertBiome, RED_SAND),
         )
 
 
         // rule7
-        val floorWaterDepth6 = sequence(
+        val floorWaterDepth6Rule = sequence(
             rule4,
             mangroveMud
         )
 
 
         // rule8
-        val floorWaterDepth1 = sequence(
+        val floorWaterDepth1Rule = sequence(
             rule4,
             mangroveMud
         )
@@ -94,7 +102,7 @@ object DSurfaceRules {
                                     not(above63),
                                     ifTrue(
                                         noiseCondition(Noises.SWAMP, 0.0),
-                                        VanillaSurfaceRules.WATER
+                                        WATER
                                     )
                                 )
                             )
@@ -105,38 +113,32 @@ object DSurfaceRules {
                     ON_FLOOR,
                     ifTrue(
                         waterDepth1Check,
-                        floorWaterDepth1
+                        floorWaterDepth1Rule
                     )
                 ),
                 ifTrue(
                     waterDepth6Check,
                     sequence(
-                        ifTrue(UNDER_FLOOR, floorWaterDepth6),
+                        ifTrue(UNDER_FLOOR, floorWaterDepth6Rule),
                         ifTrue(
                             isSandBiome,
-                            ifTrue(DEEP_UNDER_FLOOR, VanillaSurfaceRules.SANDSTONE)
+                            ifTrue(DEEP_UNDER_FLOOR, SANDSTONE)
                         ),
                         ifTrue(
                             isRedSandBiome,
-                            ifTrue(DEEP_UNDER_FLOOR, RED_SAND_STONE)
+                            ifTrue(DEEP_UNDER_FLOOR, RED_SANDSTONE)
                         ),
                         ifTrue(
                             isRedDesertBiome,
-                            ifTrue(VERY_DEEP_UNDER_FLOOR, RED_SAND_STONE)
+                            ifTrue(VERY_DEEP_UNDER_FLOOR, RED_SANDSTONE)
                         )
                     )
                 ),
                 ifTrue(
                     ON_FLOOR,
                     sequence(
-                        ifTrue(
-                            hasRedSandOceanFloor,
-                            DuskSurfaceRules.redSand
-                        ),
-                        ifTrue(
-                            hasSandOceanFloor,
-                            DuskSurfaceRules.sand
-                        )
+                        ifTrue(hasSandOceanFloor, SAND),
+                        ifTrue(hasRedSandOceanFloor, RED_SAND)
                     )
                 )
             )
@@ -145,7 +147,7 @@ object DSurfaceRules {
         val caveRules = sequence(
             ifTrue(
                 isBiome(DuskBiomes.FROZEN_ERODED_BADLANDS),
-                block(Blocks.MUD)
+                MUD
             )
         )
 
