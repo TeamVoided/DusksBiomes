@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.SurfaceRules.*
-import net.minecraft.world.level.levelgen.SurfaceRules.ConditionSource
 import net.minecraft.world.level.levelgen.VerticalAnchor
 
 object VanillaSurfaceRules {
@@ -38,7 +37,7 @@ object VanillaSurfaceRules {
 
     fun makeStateRule(block: Block): RuleSource = state(block.defaultBlockState())
 
-     fun surfaceNoiseAbove(d: Double): ConditionSource {
+    fun surfaceNoiseAbove(d: Double): ConditionSource {
         return noiseCondition(Noises.SURFACE, d / 8.25, Double.MAX_VALUE)
     }
 
@@ -74,19 +73,15 @@ object VanillaSurfaceRules {
             ifTrue(
                 isBiome(Biomes.STONY_PEAKS),
                 sequence(
-                    ifTrue(
-                        noiseCondition(Noises.CALCITE, -0.0125, 0.0125),
-                        CALCITE
-                    ), STONE
+                    ifTrue(noiseCondition(Noises.CALCITE, -0.0125, 0.0125), CALCITE),
+                    STONE
                 )
             ),
             ifTrue(
                 isBiome(Biomes.STONY_SHORE),
                 sequence(
-                    ifTrue(
-                        noiseCondition(Noises.GRAVEL, -0.05, 0.05),
-                        gravelRule
-                    ), STONE
+                    ifTrue(noiseCondition(Noises.GRAVEL, -0.05, 0.05), gravelRule),
+                    STONE
                 )
             ),
             ifTrue(
@@ -110,10 +105,7 @@ object VanillaSurfaceRules {
                 isBiome(Biomes.FROZEN_PEAKS),
                 sequence(
                     ifTrue(stepCheck, PACKED_ICE),
-                    ifTrue(
-                        noiseCondition(Noises.PACKED_ICE, -0.5, 0.2),
-                        PACKED_ICE
-                    ),
+                    ifTrue(noiseCondition(Noises.PACKED_ICE, -0.5, 0.2), PACKED_ICE),
                     ifTrue(noiseCondition(Noises.ICE, -0.0625, 0.025), ICE),
                     ifTrue(waterCheck, SNOW_BLOCK)
                 )
@@ -184,10 +176,8 @@ object VanillaSurfaceRules {
             ifTrue(
                 isBiome(Biomes.WINDSWEPT_SAVANNA),
                 sequence(
-                    ifTrue(
-                        surfaceNoiseAbove(1.75),
-                        STONE
-                    ), ifTrue(surfaceNoiseAbove(-0.5), COARSE_DIRT)
+                    ifTrue(surfaceNoiseAbove(1.75), STONE),
+                    ifTrue(surfaceNoiseAbove(-0.5), COARSE_DIRT)
                 )
             ),
             ifTrue(
@@ -202,10 +192,8 @@ object VanillaSurfaceRules {
             ifTrue(
                 isBiome(Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA),
                 sequence(
-                    ifTrue(
-                        surfaceNoiseAbove(1.75),
-                        COARSE_DIRT
-                    ), ifTrue(surfaceNoiseAbove(-0.95), PODZOL)
+                    ifTrue(surfaceNoiseAbove(1.75), COARSE_DIRT),
+                    ifTrue(surfaceNoiseAbove(-0.95), PODZOL)
                 )
             ),
             ifTrue(
@@ -241,10 +229,7 @@ object VanillaSurfaceRules {
                             above62,
                             ifTrue(
                                 not(above63),
-                                ifTrue(
-                                    noiseCondition(Noises.SWAMP, 0.0),
-                                    WATER
-                                )
+                                ifTrue(noiseCondition(Noises.SWAMP, 0.0), WATER)
                             )
                         )
                     ),
@@ -254,10 +239,7 @@ object VanillaSurfaceRules {
                             above60,
                             ifTrue(
                                 not(above63),
-                                ifTrue(
-                                    noiseCondition(Noises.SWAMP, 0.0),
-                                    WATER
-                                )
+                                ifTrue(noiseCondition(Noises.SWAMP, 0.0), WATER)
                             )
                         )
                     )
@@ -282,10 +264,8 @@ object VanillaSurfaceRules {
                             ifTrue(
                                 waterDepth1Check,
                                 sequence(
-                                    ifTrue(
-                                        ON_CEILING,
-                                        RED_SANDSTONE
-                                    ), RED_SAND
+                                    ifTrue(ON_CEILING, RED_SANDSTONE),
+                                    RED_SAND
                                 )
                             ),
                             ifTrue(not(holeCheck), ORANGE_TERRACOTTA),
@@ -298,11 +278,9 @@ object VanillaSurfaceRules {
                         sequence(
                             ifTrue(
                                 above63,
-                                ifTrue(
-                                    not(above74),
-                                    ORANGE_TERRACOTTA
-                                )
-                            ), bandlands()
+                                ifTrue(not(above74), ORANGE_TERRACOTTA)
+                            ),
+                            bandlands()
                         )
                     ),
                     ifTrue(
@@ -355,16 +333,14 @@ object VanillaSurfaceRules {
             ifTrue(
                 ON_FLOOR,
                 sequence(
-                    ifTrue(
-                        isBiome(Biomes.FROZEN_PEAKS, Biomes.JAGGED_PEAKS),
-                        STONE
-                    ),
+                    ifTrue(isBiome(Biomes.FROZEN_PEAKS, Biomes.JAGGED_PEAKS), STONE),
                     ifTrue(
                         isBiome(
                             Biomes.WARM_OCEAN,
                             Biomes.LUKEWARM_OCEAN,
                             Biomes.DEEP_LUKEWARM_OCEAN
-                        ), sandRule
+                        ),
+                        sandRule
                     ),
                     gravelRule
                 )
