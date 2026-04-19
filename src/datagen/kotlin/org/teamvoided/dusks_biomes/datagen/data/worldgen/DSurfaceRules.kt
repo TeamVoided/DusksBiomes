@@ -145,6 +145,15 @@ object DSurfaceRules {
                 isBiome(DuskBiomes.WINDSWEPT_BIRCH_FOREST),
                 ifTrue(surfaceNoiseAbove(1.75), STONE)
             ),
+            ifTrue(
+                isBiome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+                sequence(
+                    ifTrue(surfaceNoiseAbove(2.0), GRAVEL),
+                    ifTrue(surfaceNoiseAbove(1.0), STONE),
+                    ifTrue(surfaceNoiseAbove(-1.0), DIRT),
+                    GRAVEL
+                )
+            ),
             mangroveMud
         )
 
@@ -174,6 +183,15 @@ object DSurfaceRules {
                 sequence(
                     ifTrue(surfaceNoiseAbove(1.75), STONE),
                     ifTrue(surfaceNoiseAbove(-0.5), COARSE_DIRT)
+                )
+            ),
+            ifTrue(
+                isBiome(DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILLS),
+                sequence(
+                    ifTrue(surfaceNoiseAbove(2.0), GRAVEL),
+                    ifTrue(surfaceNoiseAbove(1.0), STONE),
+                    ifTrue(surfaceNoiseAbove(-1.0), DIRT),
+                    GRAVEL
                 )
             ),
             ifTrue(
