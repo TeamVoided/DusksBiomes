@@ -9,7 +9,6 @@
     fabric_api = "0.141.3+1.21.11"
     fabric_kotlin = "1.13.10+kotlin.2.3.20"
     reef = "0.3.0+1.21.11"
-    biolith = "3.5.0-beta.3"
     lithostitched = "1.6.1-fabric-1.21.11"
     # Compatibility
     # Runtime
@@ -25,7 +24,6 @@
     fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
     fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
     reef = { module = "org.teamvoided:reef", version.ref = "reef" }
-    biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
     lithostitched = { module = "maven.modrinth:lithostitched", version.ref = "lithostitched" }
     # Compatibility
     # Runtime
