@@ -68,6 +68,9 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.RED_WARM_OCEAN)
             .add(DuskBiomes.SAND_CAVES)
             .add(DuskBiomes.RED_SAND_CAVES)
+
+        builder(DuskBiomeTags.HAS_SWAMP_CARBON)
+            .forceAddTag(ConventionalBiomeTags.IS_SWAMP)
     }
 
     fun duskTagsHasStructure() {

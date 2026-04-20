@@ -52,6 +52,7 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.configured_feature.Tree
 import org.teamvoided.reef.init.ReefFeatures
 import org.teamvoided.reef.world.level.levelgen.feature.config.*
 import java.util.*
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.target as ore
 
 object ConfiguredFeatureCreator {
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -62,6 +63,7 @@ object ConfiguredFeatureCreator {
 
         c.trees()
         c.caves()
+        c.ores()
 
         c.registerConfiguredFeature(
             DuskConfiguredFeatures.COBBLESTONE_ROCK, Feature.FOREST_ROCK,
@@ -950,4 +952,28 @@ object ConfiguredFeatureCreator {
         registryKey: ResourceKey<ConfiguredFeature<*, *>>, feature: Feature<NoneFeatureConfiguration>,
     ) = this.registerConfiguredFeature(registryKey, feature, FeatureConfiguration.NONE)
 
+    fun BootstrapContext<ConfiguredFeature<*, *>>.ores() {
+        val isStone = TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES)
+        val isDeepslate = TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+
+        val copper = listOf(
+            ore(isStone, Blocks.COAL_ORE.defaultBlockState()),
+            ore(isDeepslate, Blocks.DEEPSLATE_COAL_ORE.defaultBlockState())
+        )
+        val diamonds = listOf(
+            ore(isStone, Blocks.DIAMOND_ORE.defaultBlockState()),
+            ore(isDeepslate, Blocks.DEEPSLATE_DIAMOND_ORE.defaultBlockState())
+        )
+
+        registerConfiguredFeature(
+            DuskConfiguredFeatures.ORE_CARBON_COAL, Feature.ORE,
+            OreConfiguration(copper, 20)
+        )
+
+        registerConfiguredFeature(
+            DuskConfiguredFeatures.ORE_CARBON_DIAMONDS, Feature.ORE,
+            OreConfiguration(diamonds, 4, 0.25f)
+        )
+
+    }
 }

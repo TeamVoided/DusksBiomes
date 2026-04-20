@@ -81,6 +81,8 @@ object DuskConfiguredFeatures {
     val DESERT_WELL = key("structure/desert_well")
     val RED_DESERT_WELL = key("structure/red_desert_well")
 
+    val ORE_CARBON_COAL = key("ore_carbon_coal")
+    val ORE_CARBON_DIAMONDS = key("ore_carbon_diamonds")
 
     val TEST_CAVE_PILLAR = key("test_cave_pillar")
 

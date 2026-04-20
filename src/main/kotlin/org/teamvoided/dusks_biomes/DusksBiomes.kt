@@ -1,8 +1,13 @@
 package org.teamvoided.dusks_biomes
 
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.minecraft.resources.Identifier
+import net.minecraft.world.level.levelgen.GenerationStep
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusks_biomes.data.tags.DuskBiomeTags
+import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.dusks_biomes.init.DuskDebug
 import org.teamvoided.dusks_biomes.init.DuskFeatures
 import org.teamvoided.dusks_biomes.init.DuskStructureProcessorTypes
@@ -24,6 +29,17 @@ object DusksBiomes {
 //        SurfaceGeneration.addOverworldSurfaceRules(mc("rules/overworld"), DuskSurfaceRules.overworld())
         DuskFeatures.init()
         DuskStructureProcessorTypes.init()
+
+        BiomeModifications.addFeature(
+            BiomeSelectors.tag(DuskBiomeTags.HAS_SWAMP_CARBON),
+            GenerationStep.Decoration.UNDERGROUND_ORES,
+            DuskPlacedFeatures.ORE_CARBON_COAL
+        )
+        BiomeModifications.addFeature(
+            BiomeSelectors.tag(DuskBiomeTags.HAS_SWAMP_CARBON),
+            GenerationStep.Decoration.UNDERGROUND_ORES,
+            DuskPlacedFeatures.ORE_CARBON_DIAMONDS
+        )
         if (isDev()) DuskDebug.init()
     }
 

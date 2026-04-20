@@ -94,6 +94,10 @@ object DuskPlacedFeatures {
     val CAVE_DESERT_WELL = key("structure/cave_desert_well")
     val CAVE_RED_DESERT_WELL = key("structure/cave_red_desert_well")
 
+    // Ores
+    val ORE_CARBON_COAL = key("ore_carbon_coal")
+    val ORE_CARBON_DIAMONDS = key("ore_carbon_diamonds")
+
     fun key(id: String) = Registries.PLACED_FEATURE.key(id(id))
 
 }

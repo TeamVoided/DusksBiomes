@@ -29,6 +29,8 @@ object DuskBiomeTags {
     val VILLAGER_SWAMP = create("biome_tag_villagers", "villager_swamp")
     val VILLAGER_DESERT = create("biome_tag_villagers", "villager_desert")
 
+    val HAS_SWAMP_CARBON = create("has_feature/swamp_carbon")
+
     fun create(id: String): TagKey<Biome> = TagKey.create(Registries.BIOME, id(id))
     fun create(namespace: String, id: String): TagKey<Biome> = TagKey.create(Registries.BIOME, id(namespace, id))
 }

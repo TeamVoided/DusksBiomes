@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.AquaticFeatures
@@ -21,17 +22,18 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.TreePlacedCreator.trees
 import org.teamvoided.dusks_biomes.data.tags.DuskBlockTags
 import org.teamvoided.dusks_biomes.data.world.gen.DuskConfiguredFeatures
 import org.teamvoided.dusks_biomes.data.world.gen.DuskPlacedFeatures
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.CavePlacedCreator.caves
+import org.teamvoided.dusks_biomes.datagen.data.worldgen.placed_feature.TreePlacedCreator.trees
 
 object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val cfLookup = c.lookup(Registries.CONFIGURED_FEATURE)
         c.trees()
         c.caves()
+        c.ores(cfLookup)
 
         c.register(
             DuskPlacedFeatures.SWAMP_VILLAGE_ROCK,
@@ -674,4 +676,32 @@ object PlacedFeatureCreator {
         return this.register(registryKey, PlacedFeature(cf.getOrThrow(configuredFeature), placementModifiers))
     }
 
+    fun BootstrapContext<PlacedFeature>.ores(cfLookup: HolderGetter<ConfiguredFeature<*, *>>) {
+        register(
+            DuskPlacedFeatures.ORE_CARBON_COAL,
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_CARBON_COAL),
+            commonOrePlacement(
+                12,
+                HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(30), VerticalAnchor.absolute(82))
+            )
+        )
+
+        register(
+            DuskPlacedFeatures.ORE_CARBON_DIAMONDS,
+            cfLookup.getOrThrow(DuskConfiguredFeatures.ORE_CARBON_DIAMONDS),
+            commonOrePlacement(
+                4,
+                HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-5), VerticalAnchor.absolute(4))
+            )
+        )
+    }
+
+    fun commonOrePlacement(count: Int, verticalRange: PlacementModifier): List<PlacementModifier> {
+        return orePlacement(CountPlacement.of(count), verticalRange)
+    }
+
+    fun orePlacement(amount: PlacementModifier, verticalRange: PlacementModifier): List<PlacementModifier> {
+        return listOf(amount, InSquarePlacement.spread(), verticalRange, BiomeFilter.biome())
+    }
 }
+
