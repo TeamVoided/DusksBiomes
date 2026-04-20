@@ -7,6 +7,9 @@ import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.SurfaceRules.*
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.CaveSurface
+import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules.iceNoiseThreshold
+import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules.packedIceNoiseThreshold
+import org.teamvoided.dusks_biomes.data.world.gen.DuskSurfaceRules.powderSnowNoiseThreshold
 import org.teamvoided.dusks_biomes.init.DuskBiomes
 
 object DSurfaceRules {
@@ -317,8 +320,57 @@ object DSurfaceRules {
             )
         )
 
+        val frozenCaverns = ifTrue(
+            isBiome(DuskBiomes.FROZEN_CAVERNS),
+            sequence(
+                ifTrue(
+                    stoneDepthCheck(0, true, 3, CaveSurface.FLOOR),
+                    sequence(
+                        ifTrue(
+                            waterBlockCheck(-6, 0),
+                            ifTrue(packedIceNoiseThreshold(0.0, 0.2), block(Blocks.PACKED_ICE))
+                        ),
+                        ifTrue(
+                            waterBlockCheck(0, 0),
+                            ifTrue(powderSnowNoiseThreshold(0.45, 0.58), POWDER_SNOW)
+                        ),
+                        ifTrue(
+                            ON_FLOOR,
+                            ifTrue(
+                                waterBlockCheck(-1, 0),
+                                ifTrue(iceNoiseThreshold(0.0, 0.025), block(Blocks.ICE))
+                            )
+                        ),
+                        ifTrue(waterBlockCheck(-1, 0), SNOW_BLOCK)
+                    )
+                ),
+                ifTrue(
+                    stoneDepthCheck(0, true, 3, CaveSurface.CEILING),
+                    sequence(
+                        ifTrue(
+                            packedIceNoiseThreshold(0.0, 0.2),
+                            block(Blocks.PACKED_ICE)
+                        ),
+                        ifTrue(
+                            waterBlockCheck(0, 0),
+                            ifTrue(powderSnowNoiseThreshold(0.45, 0.58), POWDER_SNOW)
+                        ),
+                        ifTrue(
+                            ON_FLOOR,
+                            ifTrue(
+                                waterBlockCheck(1, 0),
+                                ifTrue(iceNoiseThreshold(0.0, 0.025), block(Blocks.ICE))
+                            )
+                        ),
+                        ifTrue(waterBlockCheck(1, 0), SNOW_BLOCK)
+                    )
+                )
+            )
+        )
+
         val caveRules = sequence(
             mushroomCaves,
+            frozenCaverns,
             ifTrue(isBiome(DuskBiomes.SAND_CAVES), fallingBlockCaveSurface(SAND, SANDSTONE)),
             ifTrue(isBiome(DuskBiomes.RED_SAND_CAVES), fallingBlockCaveSurface(RED_SAND, RED_SANDSTONE)),
             ifTrue(
