@@ -35,6 +35,10 @@ object DSurfaceRules {
         sequence(ifTrue(ON_FLOOR, PODZOL), DIRT)
     )
     val MYCELIUM = block(Blocks.MYCELIUM)
+    val MYCELIUM_RULE: RuleSource = ifTrue(
+        waterBlockCheck(-1, 0),
+        sequence(ifTrue(ON_FLOOR, MYCELIUM), DIRT)
+    )
     val POWDER_SNOW = block(Blocks.POWDER_SNOW)
     val SNOW_BLOCK = block(Blocks.SNOW_BLOCK)
     val STONE = block(Blocks.STONE)
@@ -291,7 +295,30 @@ object DSurfaceRules {
         )
         val cobbledDeepslateDepth =
             verticalGradient("minecraft:deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8))
+
+        val mushroomCaves = sequence(
+            ifTrue(
+                isBiome(DuskBiomes.MUSHROOM_CAVES),
+                sequence(
+                    ifTrue(
+                        stoneDepthCheck(0, false, 2, CaveSurface.FLOOR),
+                        ifTrue(surfaceSecondaryNoiseAbove(-2.0, 2.0), PODZOL_RULE)
+                    ),
+                    ifTrue(
+                        UNDER_FLOOR,
+                        ifTrue(surfaceSecondaryNoiseAbove(-0.75, 0.75), COARSE_DIRT)
+                    ),
+                    ifTrue(
+                        UNDER_CEILING,
+                        ifTrue(surfaceNoiseAbove(0.75), COARSE_DIRT)
+                    ),
+                    ifTrue(stoneDepthCheck(0, false, 2, CaveSurface.FLOOR), MYCELIUM_RULE)
+                )
+            )
+        )
+
         val caveRules = sequence(
+            mushroomCaves,
             ifTrue(isBiome(DuskBiomes.SAND_CAVES), fallingBlockCaveSurface(SAND, SANDSTONE)),
             ifTrue(isBiome(DuskBiomes.RED_SAND_CAVES), fallingBlockCaveSurface(RED_SAND, RED_SANDSTONE)),
             ifTrue(
