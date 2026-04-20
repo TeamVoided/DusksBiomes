@@ -8,18 +8,8 @@ import org.teamvoided.dusks_biomes.datagen.data.worldgen.DSurfaceRules
 
 fun BootstrapContext<WorldgenModifier>.addSurfaceRules() {
     register(
-        DuskWorldgenModifiers.DUSKS_PRE_RULES,
-        WorldgenModifier.builder().prependSurfaceRule(
-            LevelStem.OVERWORLD,
-            DSurfaceRules.overworld()
-        )
+        DuskWorldgenModifiers.DUSKS_BIOMES_RULES,
+        WorldgenModifier.builder()
+            .prependSurfaceRule(LevelStem.OVERWORLD, DSurfaceRules.overworld())
     )
-/*
-    register(
-        DuskWorldgenModifiers.DUSKS_POST_RULES,
-        WorldgenModifier.builder().appendSurfaceRule(
-            LevelStem.OVERWORLD,
-            DuskSurfaceRules.overworld()
-        )
-    )*/
 }

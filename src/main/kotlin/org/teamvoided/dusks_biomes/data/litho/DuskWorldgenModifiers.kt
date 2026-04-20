@@ -6,8 +6,7 @@ import org.teamvoided.dusks_biomes.util.key
 
 object DuskWorldgenModifiers {
 
-    val DUSKS_PRE_RULES = key("dusks_pre_rules")
-    val DUSKS_POST_RULES = key("dusks_post_rules")
+    val DUSKS_BIOMES_RULES = key("dusks_biomes_rules")
     // Add Structures
     val ADD_RUIN_WARM_RED = key("add_ruin_warm_red")
     val ADD_VILLAGES = key("add_villages")
