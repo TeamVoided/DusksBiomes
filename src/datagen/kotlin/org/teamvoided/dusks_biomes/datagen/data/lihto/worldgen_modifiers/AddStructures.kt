@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers
+package org.teamvoided.dusks_biomes.datagen.data.lihto.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier
 import net.minecraft.core.registries.Registries
@@ -6,7 +6,7 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets
 import net.minecraft.world.level.levelgen.structure.StructureSet
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureFeatures
-import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
+import org.teamvoided.dusks_biomes.data.litho.DuskWorldgenModifiers
 
 fun BootstrapContext<WorldgenModifier>.addStructures() {
     val structureSets = lookup(Registries.STRUCTURE_SET)

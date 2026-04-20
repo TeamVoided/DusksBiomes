@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
+package org.teamvoided.dusks_biomes.datagen.data.lihto
 
 
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
@@ -30,7 +30,7 @@ import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_GRAVELLY_HILL
 import org.teamvoided.dusks_biomes.init.DuskBiomes.SNOWY_WINDSWEPT_HILLS
 import org.teamvoided.dusks_biomes.init.DuskBiomes.WARM_RIVER
 import org.teamvoided.dusks_biomes.init.DuskBiomes.WINDSWEPT_BIRCH_FOREST
-import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskBiomeInjectors as DBInject
+import org.teamvoided.dusks_biomes.data.litho.DuskBiomeInjectors as DBInject
 
 object BiomeInjectors {
 

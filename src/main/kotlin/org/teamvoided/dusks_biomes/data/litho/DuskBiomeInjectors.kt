@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.data.world.gen.litho
+package org.teamvoided.dusks_biomes.data.litho
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import org.teamvoided.dusks_biomes.DusksBiomes

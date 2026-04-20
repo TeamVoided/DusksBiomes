@@ -1,11 +1,11 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers
+package org.teamvoided.dusks_biomes.datagen.data.lihto.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import org.teamvoided.dusks_biomes.data.structure.DuskStructureProcessorLists
 import org.teamvoided.dusks_biomes.data.tags.DuskPoolTags
-import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
+import org.teamvoided.dusks_biomes.data.litho.DuskWorldgenModifiers
 
 object WorldgenModifiers {
 

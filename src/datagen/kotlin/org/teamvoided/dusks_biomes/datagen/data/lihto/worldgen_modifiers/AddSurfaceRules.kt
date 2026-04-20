@@ -1,9 +1,9 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers
+package org.teamvoided.dusks_biomes.datagen.data.lihto.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.dimension.LevelStem
-import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
+import org.teamvoided.dusks_biomes.data.litho.DuskWorldgenModifiers
 import org.teamvoided.dusks_biomes.datagen.data.worldgen.DSurfaceRules
 
 fun BootstrapContext<WorldgenModifier>.addSurfaceRules() {

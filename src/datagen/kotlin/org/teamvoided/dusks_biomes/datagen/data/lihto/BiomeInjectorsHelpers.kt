@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto
+package org.teamvoided.dusks_biomes.datagen.data.lihto
 
 import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair

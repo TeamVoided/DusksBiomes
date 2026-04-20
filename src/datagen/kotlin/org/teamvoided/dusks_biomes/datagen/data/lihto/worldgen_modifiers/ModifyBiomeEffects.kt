@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_biomes.datagen.data.worldgen.lihto.worldgen_modifiers
+package org.teamvoided.dusks_biomes.datagen.data.lihto.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier
 import dev.worldgen.lithostitched.api.worldgen.util.BiomeEffects
@@ -6,7 +6,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.level.biome.Biomes
-import org.teamvoided.dusks_biomes.data.world.gen.litho.DuskWorldgenModifiers
+import org.teamvoided.dusks_biomes.data.litho.DuskWorldgenModifiers
 import java.util.*
 
 fun BootstrapContext<WorldgenModifier>.modifyBiomeEffects() {
