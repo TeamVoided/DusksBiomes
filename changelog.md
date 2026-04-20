@@ -1,18 +1,4 @@
-- Added Pale Undergarden - A pale variant of the lush caves
-- All Cave biomes now spawn a lot more often:
-  - Sand Caverns spawn under ever Dessert and Warm Ocean
-  - Red Sand Caverns spawn under ever Red Dessert, Badlands and Red Warm Ocean
-  - Ice Caverns spawn under Frozen Oceans, Ice Spikes and Frozen Peaks
-  - Pale Undergarden spawn under Pale Garden and Pale Grove
-  - All these new placements are in addition to the original ones
-- Switched biome placements to from Biolith to Lithostitched (Surface rules still use Biolith for now)
-- Ported some biome color changes from Voided Variance:
-  - Deep Dark grass, foliage and water
-  - Lush Cave grass, foliage and water
-  - Dripstone Cave grass and foliage
-- Trail chamber changes:
-  - Iron chains have been replaced with Copper ones
-  - Parched have been added to the ranged and slow_ranged templated pools
-- Fixed:
-  - Custom dessert wells not spawning suspicious sand
-  - Red biome variants being too common 
+- Switched Surface Rules to from Biolith to Lithostitched
+- Removed Biolith dependency
+- Added `#dusks_biomes:has_feature/swamp_carbon` tag
+  - Biomes in this tag contain more coal and slightly more diamonds
