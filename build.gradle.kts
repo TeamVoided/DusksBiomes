@@ -40,7 +40,6 @@ dependencies {
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.kotlin)
     modImplementation(libs.lithostitched)
-//    modImplementation(libs.biolith)
     modImplementation(libs.reef)
     include(libs.reef)
     // Compatibility
@@ -145,7 +144,6 @@ uploadScript {
 
     dependency("P7dR8mSH", "fabric-api")
     dependency("Ha28R6CL", "fabric-language-kotlin")
-//    dependency("iGEl6Crx", "biolith")
     dependency("XaDC71GB", "lithostitched")
     dependency("AqJVwCCS", "reef", EMBEDDED)
 }
