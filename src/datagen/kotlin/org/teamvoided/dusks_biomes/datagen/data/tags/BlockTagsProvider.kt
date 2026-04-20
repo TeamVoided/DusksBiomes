@@ -25,6 +25,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         valueLookupBuilder(BlockTags.DRY_VEGETATION_MAY_PLACE_ON)
             .add(Blocks.SANDSTONE, Blocks.RED_SANDSTONE)
 
+        valueLookupBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+            .add(Blocks.COBBLED_DEEPSLATE)
+
+        valueLookupBuilder(BlockTags.STONE_ORE_REPLACEABLES)
+            .add(Blocks.COBBLESTONE)
+
 //Dusk Tags
         valueLookupBuilder(DuskBlockTags.MUSHROOM_ROOT_PLACEABLE)
             .addOptionalTag(BlockTags.AZALEA_GROWS_ON)

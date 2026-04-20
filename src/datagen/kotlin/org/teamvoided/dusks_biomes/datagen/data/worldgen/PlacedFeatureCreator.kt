@@ -445,7 +445,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.COBBLESTONE_CAVE_PILLAR,
             cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLESTONE_CAVE_PILLAR),
-            CountPlacement.of(UniformInt.of(20, 48)),
+            CountPlacement.of(UniformInt.of(10, 16)),
             InSquarePlacement.spread(),
             HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(256)),
             BiomeFilter.biome()
@@ -479,7 +479,7 @@ object PlacedFeatureCreator {
         c.register(
             DuskPlacedFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR,
             cfLookup.getOrThrow(DuskConfiguredFeatures.COBBLED_DEEPSLATE_CAVE_PILLAR),
-            CountPlacement.of(UniformInt.of(20, 48)),
+            CountPlacement.of(UniformInt.of(10, 16)),
             InSquarePlacement.spread(),
             HeightRangePlacement.uniform(VerticalAnchor.BOTTOM, VerticalAnchor.absolute(0)),
             BiomeFilter.biome()

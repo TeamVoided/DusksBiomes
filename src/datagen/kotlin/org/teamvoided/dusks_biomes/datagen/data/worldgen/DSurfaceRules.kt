@@ -38,6 +38,8 @@ object DSurfaceRules {
     val POWDER_SNOW = block(Blocks.POWDER_SNOW)
     val SNOW_BLOCK = block(Blocks.SNOW_BLOCK)
     val STONE = block(Blocks.STONE)
+    val COBBLESTONE = block(Blocks.COBBLESTONE)
+    val COBBLED_DEEPSLATE = block(Blocks.COBBLED_DEEPSLATE)
 
     fun overworld(): RuleSource {
         val above97 = yBlockCheck(VerticalAnchor.absolute(97), 2)
@@ -287,11 +289,23 @@ object DSurfaceRules {
                 )
             )
         )
-
+        val cobbledDeepslateDepth =
+            verticalGradient("minecraft:deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8))
         val caveRules = sequence(
+            ifTrue(isBiome(DuskBiomes.SAND_CAVES), fallingBlockCaveSurface(SAND, SANDSTONE)),
+            ifTrue(isBiome(DuskBiomes.RED_SAND_CAVES), fallingBlockCaveSurface(RED_SAND, RED_SANDSTONE)),
             ifTrue(
-                isBiome(DuskBiomes.FROZEN_ERODED_BADLANDS),
-                MUD
+                isBiome(DuskBiomes.GRAVEL_CAVES),
+                sequence(
+                    ifTrue(
+                        cobbledDeepslateDepth,
+                        gravelCaves(GRAVEL, COBBLED_DEEPSLATE)
+                    ),
+                    ifTrue(
+                        not(cobbledDeepslateDepth),
+                        gravelCaves(GRAVEL, COBBLESTONE)
+                    )
+                )
             )
         )
 
@@ -308,10 +322,60 @@ object DSurfaceRules {
     // region Helpers
     fun block(block: Block): RuleSource = state(block.defaultBlockState())
     fun surfaceNoiseAbove(x: Double): ConditionSource = noiseCondition(Noises.SURFACE, x / 8.25, Double.MAX_VALUE)
+    fun surfaceNoiseAbove(x: Double, z: Double): ConditionSource = noiseCondition(Noises.SURFACE, x / 8.25, z / 8.25)
     fun surfaceSecondaryNoiseAbove(min: Double): ConditionSource =
         noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, Double.MAX_VALUE)
 
     fun surfaceSecondaryNoiseAbove(x: Double, z: Double): ConditionSource =
         noiseCondition(Noises.SURFACE_SECONDARY, x / 8.25, z / 8.25)
+
+    fun fallingBlockCaveSurface(fallingBlock: RuleSource, solidBlock: RuleSource): RuleSource {
+        return sequence(
+            ifTrue(
+                ON_FLOOR,
+                ifTrue(surfaceSecondaryNoiseAbove(0.0), fallingBlock)
+            ),
+            ifTrue(
+                UNDER_FLOOR,
+                sequence(
+                    ifTrue(surfaceNoiseAbove(-0.25), fallingBlock),
+                    ifTrue(surfaceNoiseAbove(-0.5), solidBlock)
+                )
+            ),
+            ifTrue(
+                ON_CEILING,
+                ifTrue(surfaceSecondaryNoiseAbove(-0.5), solidBlock)
+            ),
+            ifTrue(
+                UNDER_CEILING,
+                ifTrue(surfaceSecondaryNoiseAbove(0.5), solidBlock)
+            ),
+            ifTrue(ON_FLOOR, fallingBlock),
+        )
+    }
+
+    fun gravelCaves(fallingBlock: RuleSource, solidBlock: RuleSource): RuleSource {
+        return sequence(
+            ifTrue(
+                ON_FLOOR,
+                sequence(
+                    ifTrue(surfaceNoiseAbove(0.0), fallingBlock),
+                    ifTrue(surfaceSecondaryNoiseAbove(-0.5), solidBlock),
+                )
+            ),
+            ifTrue(
+                stoneDepthCheck(0, false, 2, CaveSurface.FLOOR),
+                sequence(
+                    ifTrue(surfaceNoiseAbove(0.6), fallingBlock),
+                    ifTrue(surfaceNoiseAbove(0.25), solidBlock)
+                )
+            ),
+            ifTrue(
+                ON_CEILING,
+                ifTrue(surfaceSecondaryNoiseAbove(-0.25), solidBlock)
+            ),
+            ifTrue(ON_FLOOR, fallingBlock),
+        )
+    }
     // endregion
 }
