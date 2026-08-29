@@ -80,6 +80,9 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
 //        getOrCreateTagBuilder(DuskBiomeTags.HAS_RED_DESERT_RUIN)
 //            .add(DuskBiomes.RED_DESERT)
 //            .add(DuskBiomes.RED_WARM_RIVER)
+
+        getOrCreateTagBuilder(BiomeTags.HAS_OCEAN_RUIN_WARM_STRUCTURE)
+            .forceAddTag(DuskBiomeTags.HAS_OCEAN_RUIN_RED_WARM)
         getOrCreateTagBuilder(DuskBiomeTags.HAS_OCEAN_RUIN_RED_WARM)
             .add(DuskBiomes.RED_WARM_OCEAN)
             .add(DuskBiomes.RED_LUKEWARM_OCEAN)

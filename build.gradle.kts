@@ -39,6 +39,7 @@ modSettings {
     entrypoint("fabric-datagen", "org.teamvoided.dusks_biomes.data.gen.DusksBiomesModData")
     mixinFile("${modId()}.mixins.json")
 //    accessWidener("${modId()}.accesswidener")
+    dependency("biolith", "*")
 }
 
 dependencies {
@@ -91,14 +92,14 @@ tasks {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
     }
-    jar {
-        val valTaskNames = gradle.startParameter.taskNames
-        if (!valTaskNames.contains("runDataGen")) {
-            exclude("org/teamvoided/dusks_biomes/data/gen/*")
-        } else {
-            println("Running datagen for task ${valTaskNames.joinToString(" ")}")
-        }
-    }
+//    jar {
+//        val valTaskNames = gradle.startParameter.taskNames
+//        if (!valTaskNames.contains("runDataGen")) {
+//            exclude("org/teamvoided/dusks_biomes/data/gen/*")
+//        } else {
+//            println("Running datagen for task ${valTaskNames.joinToString(" ")}")
+//        }
+//    }
 }
 
 publishScript {

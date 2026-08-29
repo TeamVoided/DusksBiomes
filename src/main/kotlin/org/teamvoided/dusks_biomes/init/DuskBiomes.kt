@@ -65,13 +65,13 @@ object DuskBiomes {
         )
         val snowyVariant = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.45f)
 
-        val coldRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.3f)
+        val coldRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1F, -0.25f)
 
-        val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.375F, 1f)
+        val warmRegion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, 0.25f, 1f)
 
-        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.223f)
+        val redSandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1f, -0.005f)
 
-        val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1F, 0.05f)
+        val redSandInlandVariant = CriterionBuilder.value(BiomeParameterTargets.EROSION, -1f, 0.05f)
 
 
         BiomePlacement.addSubOverworld(Biomes.FOREST, COLD_FOREST, coldRegion)
